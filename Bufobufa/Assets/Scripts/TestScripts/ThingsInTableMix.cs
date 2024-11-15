@@ -1,24 +1,68 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThingsInTableMix : MonoBehaviour
 {
-    public List<string> IngredientsIn = new();
-    private void OnTriggerEnter(Collider other)
+    [SerializeField] Button MixIngredientsButton;
+
+    public List<GameObject> IngredientsIn = new();
+    private List<string> ingredients = new();
+    public List<Recipe> Recipes = new();
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.GetComponent<Ingredient>())
+        if (collision.gameObject.GetComponent<Ingredient>())
         {
-            IngredientsIn.Add(other.gameObject.GetComponent<Ingredient>().IngredientName);
-            other.gameObject.GetComponent<Ingredient>().InTableMix = true;
+            IngredientsIn.Add(collision.gameObject);
+            collision.gameObject.GetComponent<Ingredient>().InTableMix = true;
         }
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.gameObject.GetComponent<Ingredient>())
+        if (collision.gameObject.GetComponent<Ingredient>())
         {
-            IngredientsIn.Remove(other.gameObject.GetComponent<Ingredient>().IngredientName);
-            other.gameObject.GetComponent<Ingredient>().InTableMix = false;
+            IngredientsIn.Remove(collision.gameObject);
+            collision.gameObject.GetComponent<Ingredient>().InTableMix = false;
         }
+    }
+    private void Start()
+    {
+        MixIngredientsButton.onClick.AddListener(MixIngredients);
+        for (int i = 0; i < Recipes.Count; i++)
+        {
+            Recipes[i].IngredientsForRecipe.Sort();
+        }
+    }
+    private void MixIngredients()
+    {
+        for (int i = 0; i < IngredientsIn.Count; i++)
+        {
+            ingredients.Add(IngredientsIn[i].GetComponent<Ingredient>().IngredientName);
+        }
+        ingredients.Sort();
+        for (int i = 0; i < Recipes.Count; i++)
+        {
+            if (ingredients.SequenceEqual(Recipes[i].IngredientsForRecipe))
+            {
+                if (Recipes[i].OutPut != null)
+                {
+                    Instantiate(Recipes[i].OutPut, transform.position, transform.rotation, transform.parent);
+                    for (int j = 0; j < IngredientsIn.Count; j++)
+                    {
+                        Destroy(IngredientsIn[i]);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    [Serializable]
+    public class Recipe
+    {
+        public List<string> IngredientsForRecipe;
+        public GameObject OutPut;
     }
 }
