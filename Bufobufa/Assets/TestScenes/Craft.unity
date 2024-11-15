@@ -1036,9 +1036,14 @@ MonoBehaviour:
   Recipes:
   - IngredientsForRecipe:
     - papilio
+    - eggplant
+    - papilio
+    OutPut: {fileID: 8628483798543188246, guid: 010d34f5ad084fb4f9acae8c6cea1b22, type: 3}
+  - IngredientsForRecipe:
     - papilio
     - papilio
-    OutPut: {fileID: 8628483798543188246, guid: 651462956ea123544b53eb7ea5ec6147, type: 3}
+    - papilio
+    OutPut: {fileID: 8628483798543188246, guid: d4a158446491e594989b6242703f2069, type: 3}
 --- !u!212 &895359909
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1423,7 +1428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IngredientName: papilio
-  count: 4
+  count: 5
   InTableMix: 0
   Ingredient: {fileID: 8628483798543188246, guid: 835822d51b5ec5840a8fd797522a7732, type: 3}
 --- !u!61 &1212789583
@@ -1590,6 +1595,10 @@ MonoBehaviour:
   TypesIngredients:
   - name: papilio
     Spawner: {fileID: 1212789580}
+  - name: eggplant
+    Spawner: {fileID: 2088097384}
+  - name: cucumis
+    Spawner: {fileID: 529928083}
 --- !u!1 &1323856194
 GameObject:
   m_ObjectHideFlags: 0

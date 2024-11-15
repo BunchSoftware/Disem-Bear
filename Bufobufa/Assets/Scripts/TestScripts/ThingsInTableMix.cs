@@ -10,7 +10,7 @@ public class ThingsInTableMix : MonoBehaviour
     [SerializeField] Button MixIngredientsButton;
 
     public List<GameObject> IngredientsIn = new();
-    private List<string> ingredients = new();
+    public List<string> ingredients = new();
     public List<Recipe> Recipes = new();
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -38,6 +38,7 @@ public class ThingsInTableMix : MonoBehaviour
     }
     private void MixIngredients()
     {
+        ingredients.Clear();
         for (int i = 0; i < IngredientsIn.Count; i++)
         {
             ingredients.Add(IngredientsIn[i].GetComponent<Ingredient>().IngredientName);
@@ -52,8 +53,9 @@ public class ThingsInTableMix : MonoBehaviour
                     Instantiate(Recipes[i].OutPut, IngredientsIn[i].transform.position, IngredientsIn[i].transform.rotation, transform.parent);
                     for (int j = IngredientsIn.Count - 1; j >= 0; j--)
                     {
-                        Destroy(IngredientsIn[i]);
+                        Destroy(IngredientsIn[j]);
                     }
+                    
                     break;
                 }
             }
