@@ -10,7 +10,7 @@ public class ThingsInTableMix : MonoBehaviour
     [SerializeField] Button MixIngredientsButton;
 
     public List<GameObject> IngredientsIn = new();
-    public List<string> ingredients = new();
+    private List<string> ingredients = new();
     public List<Recipe> Recipes = new();
     private void OnTriggerEnter2D(Collider2D collision)
     {
