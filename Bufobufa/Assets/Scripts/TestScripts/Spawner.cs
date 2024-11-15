@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
         if (count != 0)
         {
             count--;
-            IngredientObj = Instantiate(Ingredient, transform.position, transform.rotation, transform.parent);
+            IngredientObj = Instantiate(Ingredient, transform.position, transform.rotation, transform.parent.parent);
             IngredientObj.GetComponent<Ingredient>().IngredientName = IngredientName;
             IngredientObj.GetComponent<Ingredient>().spawner = gameObject;
             IngredientObj.GetComponent<SpriteRenderer>().sprite = spriteIngredient.GetComponent<SpriteRenderer>().sprite;

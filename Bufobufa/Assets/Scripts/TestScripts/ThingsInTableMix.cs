@@ -49,8 +49,8 @@ public class ThingsInTableMix : MonoBehaviour
             {
                 if (Recipes[i].OutPut != null)
                 {
-                    Instantiate(Recipes[i].OutPut, transform.position, transform.rotation, transform.parent);
-                    for (int j = 0; j < IngredientsIn.Count; j++)
+                    Instantiate(Recipes[i].OutPut, IngredientsIn[i].transform.position, IngredientsIn[i].transform.rotation, transform.parent);
+                    for (int j = IngredientsIn.Count - 1; j >= 0; j--)
                     {
                         Destroy(IngredientsIn[i]);
                     }
