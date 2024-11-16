@@ -10,7 +10,7 @@ public class ThingsInTableMix : MonoBehaviour
     [SerializeField] Button MixIngredientsButton;
 
     public List<GameObject> IngredientsIn = new();
-    private List<string> ingredients = new();
+    public List<string> ingredients = new();
     public List<Recipe> Recipes = new();
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,10 +31,6 @@ public class ThingsInTableMix : MonoBehaviour
     private void Start()
     {
         MixIngredientsButton.onClick.AddListener(MixIngredients);
-        for (int i = 0; i < Recipes.Count; i++)
-        {
-            Recipes[i].IngredientsForRecipe.Sort();
-        }
     }
     private void MixIngredients()
     {
@@ -46,7 +42,13 @@ public class ThingsInTableMix : MonoBehaviour
         ingredients.Sort();
         for (int i = 0; i < Recipes.Count; i++)
         {
-            if (ingredients.SequenceEqual(Recipes[i].IngredientsForRecipe))
+            List<string> IngredientStrings = new();
+            for (int k = 0; k < Recipes[i].IngredientsForRecipe.Count; k++)
+            {
+                IngredientStrings.Add(Recipes[i].IngredientsForRecipe[k].GetComponent<Ingredient>().IngredientName);
+            }
+            IngredientStrings.Sort();
+            if (ingredients.SequenceEqual(IngredientStrings))
             {
                 if (Recipes[i].OutPut != null)
                 {
@@ -64,7 +66,7 @@ public class ThingsInTableMix : MonoBehaviour
     [Serializable]
     public class Recipe
     {
-        public List<string> IngredientsForRecipe;
+        public List<GameObject> IngredientsForRecipe;
         public GameObject OutPut;
     }
 }

@@ -13,7 +13,6 @@ public class Spawner : MonoBehaviour
     private Vector3 mousePosition;
     public int count = 0;
     private bool OnDrag = false;
-    public bool InTableMix = false;
     private GameObject spriteIngredient;
     private GameObject DisplayCount;
 
