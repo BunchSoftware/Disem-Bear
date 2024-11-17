@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,9 +15,19 @@ namespace API
     }
 
     [Serializable]
+    // Лог с изменением данных у игрока
     public class ResourceChangedPlayer
     {
         public int add_apple;
+    }
+
+    [Serializable]
+    // Лог игрока
+    public class LogPlayer
+    {
+        public string comment;
+        public string player_name;
+        public ResourceChangedPlayer resources_changed;
     }
 
     // Данные магазина игрока для передачи на сервер
@@ -29,6 +38,7 @@ namespace API
     }
 
     [Serializable]
+    // Лог с изменением данных у магазина игрока
     public class ResourceChangedShop
     {
         public int add_apple;
@@ -36,6 +46,7 @@ namespace API
 
 
     [Serializable]
+    // Игрок с именем и ресурсами
     public class JSONPlayer
     {
         public string name;
@@ -43,15 +54,25 @@ namespace API
     }
 
     [Serializable]
+    // Магазин у игрока с именем магазином и его ресурсами
+    public class JSONShop
+    {
+        public string name;
+        public ResourceShop resources;
+    }
+
+    [Serializable]
+    // Ошибка при записи логов
     public class JSONErrorLog
     {
         public string Error;
     }
 
     [Serializable]
+    // Ошибка при получении ресурсов
     public class JSONError
     {
-        public string Error;
+        public string Detail;
     }
 
     public class ClientHandler : MonoBehaviour
@@ -60,50 +81,72 @@ namespace API
 
         private async void Start()
         {
-            ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
-            resourceChangedPlayer.add_apple = 10;
-            ResourceShop resourceShop = new ResourceShop();
-            resourceShop.apple = 10;
-            ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
-            resourceChangedShop.add_apple = 10;
-
-            // Пример регистрации игрока и задания ресурсов, если нужно отсутсвие ресурсов, укажите null
+            // Регистрация игрока и задания ресурсов, если нужно отсутсвие ресурсов, укажите null
             //ResourcePlayer resourcePlayer = new ResourcePlayer();
             //resourcePlayer.apple = 10;
             //RegistrationPlayer("Den4o", resourcePlayer);
             //RegistrationPlayer("Den4o", null);
 
-            // Пример отправки ресурсов игрока на сервер
+            // Отправка ресурсов игрока на сервер
             //ResourcePlayer resourcePlayer = new ResourcePlayer();
             //resourcePlayer.apple = 10;
             //SetResourcePlayer("Den4o", resourcePlayer);
 
-            // Пример получения ресурсов игрока
+            // Получение ресурсов игрока
             //ResourcePlayer resourcePlayerGet = await GetResourcePlayer("Den4o");
 
             // Получение списка игроков с их именами и ресурсами
             //List<JSONPlayer> listPlayer = await GetListPlayers();
 
-            // Удаление игрока по имени
-            DeletePlayer("Den4o");
+            // Проверка наличия игрока на сервере
+            //Debug.Log(await HasPlayerInServer("Den4o"));
 
-            // Создание логов о персонаже для орг. коммитета, указывается ник игрока, комментария к логу и измененные ресурсы у персонажа
+            // Удаление игрока по имени
+            //DeletePlayer("Den4o");
+
+            // Создание логов о игроке для орг. коммитета, указывается ник игрока, комментария к логу и измененные ресурсы у персонажа
+            //ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
+            //resourceChangedPlayer.add_apple = 10;
             //CreateLogPlayer("Den4o", "123", resourceChangedPlayer);
 
             // Получение всех логов игрока
-            //GetListLogsPlayer("Den4o");
+            //List<LogPlayer> listPlayer = await GetListLogsPlayer("Den4o");
+            //Debug.Log(listPlayer[0].player_name);
 
             // Регистрация магазина для игрока
+            //ResourceShop resourceShop = new ResourceShop();
+            //resourceShop.apple = 10;
             //RegistrationShop("Den4o", "Shop", resourceShop);
-            //SetResourceShopPlayer("Den4o", "Shop", resourceShop);
-            //GetResourceShopPlayer("Den4o", "Shop");
 
-            GetListShopPlayer("Den4o");
+            // Получение ресурсов в магазине игрока
+            //ResourceShop resourceShopGet = await GetResourceShopPlayer("Den4o", "Shop");
+            //Debug.Log(resourceShopGet.apple);
+
+            // Отправка ресурсов магазина игрока на сервер
+            //ResourceShop resourceShop = new ResourceShop();
+            //resourceShop.apple = 10;
+            //SetResourceShopPlayer("Den4o", "Shop", resourceShop);
+
+            // Удаление магазина у игрока
+            //DeleteShop("Den4o", "Shop");
+
+            // Получени списка магазинов у игрока
+            //List<JSONShop> listShop = await GetListShopPlayer("Den4o");
+            //Debug.Log(listShop.First().name);
+
+            // Создание логов о магазине игрока для орг. коммитета, указывается ник игрока, комментария к логу и измененные ресурсы у персонажа
+            //ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
+            //resourceChangedShop.add_apple = 10;
             //CreateLogShop("Den4o", "Shop", "123", resourceChangedShop);
+
+            // Получение всех логов магазина игрока
             //GetListLogsShop("Den4o", "Shop");
-            //GetListLogsGame();
+
+            // Получение всех логов в игре
+            //GetLogsGame();
         }
 
+        #region Player
 
         public async void RegistrationPlayer(string userName, ResourcePlayer resourcePlayer)
         {
@@ -159,8 +202,8 @@ namespace API
                     response.EnsureSuccessStatusCode();
                     string json = await response.Content.ReadAsStringAsync();
                     JSONPlayer JSONPlayer = JsonConvert.DeserializeObject<JSONPlayer>(json);
-                    Debug.Log(await response.Content.ReadAsStringAsync());
-                    Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {JSONPlayer.name}, возможны ошибки в реализации");
+                    if(JSONPlayer.resources == null)
+                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {JSONPlayer.name}, возможны ошибки в реализации");
                     return JSONPlayer.resources;
                 }
                 catch (Exception exc)
@@ -169,6 +212,28 @@ namespace API
                 }
             }
             return null;
+        }
+
+        public async Task<bool> HasPlayerInServer(string userName)
+        {
+            if (UUID.Length != 0)
+            {
+                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
+
+                HttpClient client = new HttpClient();
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
+                try
+                {
+                    HttpResponseMessage response = await client.SendAsync(request);
+                    response.EnsureSuccessStatusCode();
+                    return true;
+                }
+                catch (Exception exc)
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
         public async void SetResourcePlayer(string userName, ResourcePlayer resourcePlayer)
@@ -185,6 +250,16 @@ namespace API
                 });
                 request.Content = content;
                 var response = await client.SendAsync(request);
+
+                string json = await response.Content.ReadAsStringAsync();
+                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+
+                if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
+                {
+                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
+                    return;
+                }
+
                 Debug.Log(await response.Content.ReadAsStringAsync());
             }
         }
@@ -198,7 +273,16 @@ namespace API
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, URL);
                 var response = await client.SendAsync(request);
-                Debug.Log(await response.Content.ReadAsStringAsync());
+
+                string json = await response.Content.ReadAsStringAsync();
+                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+
+                if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
+                {
+                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
+                    return;
+                }
+
                 Debug.Log($"Игрок {userName} удален с сервера");
             }
         }
@@ -227,7 +311,8 @@ namespace API
             }
             return null;
         }
-
+        #endregion
+        #region LogPlayer
         public async void CreateLogPlayer(string userName, string comment, ResourceChangedPlayer resourceChangedPlayer)
         {
             if (UUID.Length != 0)
@@ -259,7 +344,7 @@ namespace API
         }
 
 
-        public async void GetListLogsPlayer(string userName)
+        public async Task<List<LogPlayer>> GetListLogsPlayer(string userName)
         {
             if (UUID.Length != 0)
             {
@@ -269,10 +354,17 @@ namespace API
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                Debug.Log(await response.Content.ReadAsStringAsync());
-            }
-        }
 
+                string json = await response.Content.ReadAsStringAsync();
+                List<LogPlayer> listLogsPlayer = JsonConvert.DeserializeObject<List<LogPlayer>>(json);
+
+                Debug.Log(await response.Content.ReadAsStringAsync());
+                return listLogsPlayer;
+            }
+            return null;
+        }
+        #endregion
+        #region Shop
         public async void RegistrationShop(string userName, string nameShop, ResourceShop resourceShop)
         {
             if (UUID.Length != 0)
@@ -300,21 +392,7 @@ namespace API
             }
         }
 
-        public async void GetListShopPlayer(string userName)
-        {
-            if (UUID.Length != 0)
-            {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
-
-                HttpClient client = new HttpClient();
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
-                HttpResponseMessage response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                Debug.Log(await response.Content.ReadAsStringAsync());
-            }
-        }
-
-        public async void GetResourceShopPlayer(string userName, string nameShop)
+        public async Task<ResourceShop> GetResourceShopPlayer(string userName, string nameShop)
         {
             if (UUID.Length != 0)
             {
@@ -322,17 +400,31 @@ namespace API
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
-                HttpResponseMessage response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                Debug.Log(await response.Content.ReadAsStringAsync());
+
+                try
+                {
+                    HttpResponseMessage response = await client.SendAsync(request);
+                    response.EnsureSuccessStatusCode();
+                    string json = await response.Content.ReadAsStringAsync();
+                    JSONShop JSONShop = JsonConvert.DeserializeObject<JSONShop>(json);
+                    if (JSONShop.resources == null)
+                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов в магазине {nameShop} у игрока {userName}, возможны ошибки в реализации");
+
+                    return JSONShop.resources;
+                }
+                catch (Exception exc)
+                {
+                    Debug.LogError($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: {exc.Message}");
+                }
             }
+            return null;
         }
 
-        public async void SetResourceShopPlayer(string name, string nameShop, ResourceShop resourceShop)
+        public async void SetResourceShopPlayer(string userName, string nameShop, ResourceShop resourceShop)
         {
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{name}/shops/{nameShop}/\r\n";
+                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, URL);
@@ -342,9 +434,70 @@ namespace API
                 });
                 request.Content = content;
                 var response = await client.SendAsync(request);
+
+                string json = await response.Content.ReadAsStringAsync();
+                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+
+                if (jsonError != null && jsonError.Detail == "No Shop matches the given query.")
+                {
+                    Debug.LogError($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: No Shop matches the given query.");
+                    return;
+                }
+
                 Debug.Log(await response.Content.ReadAsStringAsync());
             }
         }
+
+        public async Task<List<JSONShop>> GetListShopPlayer(string userName)
+        {
+            if (UUID.Length != 0)
+            {
+                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
+
+                HttpClient client = new HttpClient();
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
+                HttpResponseMessage response = await client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+
+                string json = await response.Content.ReadAsStringAsync();
+                List<JSONShop> listShop = JsonConvert.DeserializeObject<List<JSONShop>>(json);
+
+                for (int i = 0; i < listShop.Count; i++)
+                {
+                    if (listShop[i].resources == null)
+                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов в магазине {listShop[i].name} у игрока {userName}, возможны ошибки в реализации");
+                }
+
+                Debug.Log(await response.Content.ReadAsStringAsync());
+                return listShop;
+            }
+            return null;
+        }
+
+        public async void DeleteShop(string userName, string nameShop)
+        {
+            if (UUID.Length != 0)
+            {
+                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
+
+                HttpClient client = new HttpClient();
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, URL);
+                var response = await client.SendAsync(request);
+
+                string json = await response.Content.ReadAsStringAsync();
+                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+
+                if (jsonError != null && jsonError.Detail == "No Shop matches the given query.")
+                {
+                    Debug.LogError($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: No Shop matches the given query.");
+                    return;
+                }
+
+                Debug.Log($"Магазин {nameShop} у игрока {userName} удален с сервера");
+            }
+        }
+        #endregion
+        #region LogShop
 
         public async void CreateLogShop(string userName, string shopName, string comment, ResourceChangedShop resourceChangedShop)
         {
@@ -363,6 +516,16 @@ namespace API
                 });
                 request.Content = content;
                 var response = await client.SendAsync(request);
+
+                string json = await response.Content.ReadAsStringAsync();
+                JSONErrorLog jsonError = JsonConvert.DeserializeObject<JSONErrorLog>(json);
+
+                if (jsonError != null && jsonError.Error == "Not existing Shop")
+                {
+                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: Not existing Shop");
+                    return;
+                }
+
                 Debug.Log(await response.Content.ReadAsStringAsync());
             }
         }
@@ -381,7 +544,9 @@ namespace API
             }
         }
 
-        public async void GetListLogsGame()
+        #endregion
+
+        public async void GetLogsGame()
         {
             if (UUID.Length != 0)
             {
