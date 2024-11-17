@@ -1,3 +1,5 @@
+using Cinemachine;
+using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +39,7 @@ public class TableOpen : MonoBehaviour
     private void Update()
     {
         if (InTrigger && Input.GetKeyDown(KeyCode.E) && !TableIsOpen){
+            Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
             Vcam.GetComponent<Animator>().SetBool("On", true);
             Player.GetComponent<TableOpenAnim>().StartMove();
             TableIsOpen = true;
@@ -44,6 +47,7 @@ public class TableOpen : MonoBehaviour
         }
         else if (TableIsOpen && Input.GetKeyDown(KeyCode.E))
         {
+            Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
             Vcam.GetComponent<Animator>().SetBool("On", false);
             Player.GetComponent<MovePlayer>().ReturnMovePlayer();
             TableIsOpen = false;
