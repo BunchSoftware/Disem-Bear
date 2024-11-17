@@ -43,7 +43,7 @@ public class TableOpen : MonoBehaviour
         else if (TableIsOpen && Input.GetKeyDown(KeyCode.E))
         {
             GetComponent<Animator>().SetBool("On", false);
-            StartCoroutine("CoroutineForAnim");
+            StartCoroutine(CoroutineForAnim());
             MixButton.SetActive(false);
             TableIsOpen = false;
             Damper.SetActive(true);
@@ -52,6 +52,6 @@ public class TableOpen : MonoBehaviour
     private IEnumerator CoroutineForAnim()
     {
         yield return new WaitForSeconds(0.5f);
-        GetComponent<BoxCollider>().isTrigger = true;
+        GetComponent<BoxCollider>().isTrigger = false;
     }
 }
