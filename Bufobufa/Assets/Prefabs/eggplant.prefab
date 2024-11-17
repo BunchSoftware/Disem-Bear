@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8328892675079702255}
   - component: {fileID: -6460454378834798953}
   - component: {fileID: 8075800586164642727}
+  - component: {fileID: 621521455280905134}
+  - component: {fileID: 6297512129119343022}
   m_Layer: 0
   m_Name: eggplant
   m_TagString: Untagged
@@ -102,7 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IngredientName: eggplant
-  OnDrag: 0
   InTableMix: 0
   spawner: {fileID: 0}
 --- !u!50 &-6460454378834798953
@@ -178,3 +179,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.28125, y: 0.28125}
   m_EdgeRadius: 0
+--- !u!114 &621521455280905134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628483798543188246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec73ca1cad573f47a3b3e33355dc629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StaticObject: 0
+--- !u!114 &6297512129119343022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628483798543188246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b2aa8a934090c42bd895ac7d25cb42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDrag: 0
