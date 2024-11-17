@@ -7,10 +7,16 @@ public class Exercise : MonoBehaviour
 {
     [SerializeField] private RectTransform description;
     [SerializeField] private Button exerciseButton;
+
+    [SerializeField] private Text headerText;
+    [SerializeField] private Text rewardText;
+    [SerializeField] private Text descriptionText;
+    [SerializeField] private Image avatar;
+
     private bool isExpandExercise = false;
     private RectTransform rectTransform;
 
-    public void Init(Action<Exercise> ExpandAllExercise)
+    public void Init(Action<Exercise> ExpandAllExercise, JSONExercise JSONExercise)
     {
         rectTransform = GetComponent<RectTransform>();
         exerciseButton.onClick.AddListener(() =>
@@ -22,6 +28,11 @@ public class Exercise : MonoBehaviour
             else
                 ExpandExercise(true);
         });
+
+        headerText.text = JSONExercise.header;
+        rewardText.text = JSONExercise.reward;
+        descriptionText.text = JSONExercise.description;
+        avatar.sprite = Resources.Load<Sprite>("Avatars/" + JSONExercise.pathToAvatar);
     }
 
     public void ExpandExercise(bool isExpandExercise)
