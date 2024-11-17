@@ -34,7 +34,7 @@ public class TableOpen : MonoBehaviour
     private void Update()
     {
         if (InTrigger && Input.GetKeyDown(KeyCode.E) && !TableIsOpen){
-            GetComponent<BoxCollider>().isTrigger = true;
+            //GetComponent<BoxCollider>().isTrigger = true;
             GetComponent<Animator>().SetBool("On", true);
             MixButton.SetActive(true);
             TableIsOpen = true;
@@ -52,6 +52,6 @@ public class TableOpen : MonoBehaviour
     private IEnumerator CoroutineForAnim()
     {
         yield return new WaitForSeconds(0.5f);
-        GetComponent<BoxCollider>().isTrigger = false;
+        //GetComponent<BoxCollider>().isTrigger = false;
     }
 }
