@@ -9,6 +9,7 @@ public class MovePlayer : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 moveVector;
+    public bool MoveOn = true;
 
     void Start()
     {
@@ -24,6 +25,17 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(transform.position + moveVector * speed * Time.deltaTime);
+        if (MoveOn)
+        {
+            rb.MovePosition(transform.position + moveVector * speed * Time.deltaTime);
+        }
+    }
+    public void StopMovePlayer()
+    {
+        MoveOn = false;
+    }
+    public void ReturnMovePlayer()
+    {
+        MoveOn = true;
     }
 }

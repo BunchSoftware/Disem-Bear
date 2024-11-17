@@ -23,7 +23,7 @@ public class MoveObjectMouse : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).y, transform.position.z);
+        transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).x, transform.position.y, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).z);
     }
     private void OnMouseUp()
     {

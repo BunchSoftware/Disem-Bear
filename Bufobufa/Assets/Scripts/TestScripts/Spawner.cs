@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
             IngredientObj.GetComponent<Ingredient>().IngredientName = IngredientName;
             IngredientObj.GetComponent<Ingredient>().spawner = gameObject;
             IngredientObj.GetComponent<SpriteRenderer>().sprite = spriteIngredient.GetComponent<SpriteRenderer>().sprite;
-            IngredientObj.AddComponent<BoxCollider2D>();
+            IngredientObj.AddComponent<BoxCollider>();
             OnDrag = true;
             mousePosition = Input.mousePosition - GetMousePos();
         }
@@ -41,7 +41,7 @@ public class Spawner : MonoBehaviour
     {
         if (OnDrag)
         {
-            IngredientObj.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).y, transform.position.z);
+            IngredientObj.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).x, transform.position.y, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).z);
         }
     }
     private void OnMouseUp()

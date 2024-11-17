@@ -8,11 +8,14 @@ public class TableOpen : MonoBehaviour
     public bool InTrigger = false;
     private bool TableIsOpen = false;
 
-    [SerializeField] GameObject MixButton;
     [SerializeField] GameObject Damper;
+    private GameObject Player;
+    private GameObject Vcam;
 
     private void Start()
     {
+        Vcam = GameObject.FindGameObjectWithTag("Vcam");
+        Player = GameObject.FindGameObjectWithTag("Player");
         DisplayCount = transform.Find("DisplayCount").gameObject;
     }
     public void OnTrigEnter(Collider other)
@@ -34,24 +37,17 @@ public class TableOpen : MonoBehaviour
     private void Update()
     {
         if (InTrigger && Input.GetKeyDown(KeyCode.E) && !TableIsOpen){
-            //GetComponent<BoxCollider>().isTrigger = true;
-            GetComponent<Animator>().SetBool("On", true);
-            MixButton.SetActive(true);
+            Vcam.GetComponent<Animator>().SetBool("On", true);
+            Player.GetComponent<TableOpenAnim>().StartMove();
             TableIsOpen = true;
             Damper.SetActive(false);
         }
         else if (TableIsOpen && Input.GetKeyDown(KeyCode.E))
         {
-            GetComponent<Animator>().SetBool("On", false);
-            StartCoroutine(CoroutineForAnim());
-            MixButton.SetActive(false);
+            Vcam.GetComponent<Animator>().SetBool("On", false);
+            Player.GetComponent<MovePlayer>().ReturnMovePlayer();
             TableIsOpen = false;
             Damper.SetActive(true);
         }
-    }
-    private IEnumerator CoroutineForAnim()
-    {
-        yield return new WaitForSeconds(0.5f);
-        //GetComponent<BoxCollider>().isTrigger = false;
     }
 }
