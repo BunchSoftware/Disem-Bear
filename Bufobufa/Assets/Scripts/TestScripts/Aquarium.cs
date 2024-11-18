@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Aquarium : MonoBehaviour
 {
     public string NameIngredient = "None";
     private GameObject DisplayCount;
-    private bool InTrigger = false;
     public bool NormalTemperature = false;
     public bool NormalGround = false;
     public bool OnAquarium = false;
@@ -14,14 +14,26 @@ public class Aquarium : MonoBehaviour
     private float TimeCell = 666f;
     private float timerCell = 0f;
     public int CountCells = 0;
+    public bool AquariumOpen = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnMouseDown()
     {
-        InTrigger = true;
+        if (AquariumOpen)
+        {
+            DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
+            DisplayCount.GetComponent<Animator>().SetBool("On", true);
+            StartCoroutine(waitDisplayCount());
+            for (int i = 0; i < CountCells; i++)
+            {
+                StoreManager.Instance.AddIngridient(NameIngredient);
+            }
+            CountCells = 0;
+        }
     }
-    private void OnTriggerExit(Collider other)
+    IEnumerator waitDisplayCount()
     {
-        InTrigger = false;
+        yield return new WaitForSeconds(2);
+        DisplayCount.GetComponent<Animator>().SetBool("On", false);
     }
     private void Start()
     {
@@ -30,8 +42,6 @@ public class Aquarium : MonoBehaviour
     }
     private void Update()
     {
-        if (InTrigger && CountCells > 0) DisplayCount.GetComponent<Animator>().SetBool("On", true);
-        else DisplayCount.GetComponent<Animator>().SetBool("On", false);
         if (NormalTemperature || NormalGround) OnAquarium = true;
         else OnAquarium = false;
         if (OnAquarium) timerCell += Time.deltaTime;
@@ -42,14 +52,5 @@ public class Aquarium : MonoBehaviour
         }
         if (NormalTemperature && NormalGround) TimeCell = NormalTimeCell;
         else if (NormalTemperature || NormalGround) TimeCell = NormalTimeCell * 2;
-
-        if (InTrigger && Input.GetKeyDown(KeyCode.E))
-        {
-            for (int i = 0; i < CountCells; i++)
-            {
-                StoreManager.Instance.AddIngridient(NameIngredient);
-            }
-            CountCells = 0;
-        }
     }
 }

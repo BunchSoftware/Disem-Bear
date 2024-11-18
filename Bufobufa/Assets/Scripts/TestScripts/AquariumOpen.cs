@@ -1,34 +1,44 @@
 using Cinemachine;
-using NUnit.Framework.Constraints;
+using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableOpen : MonoBehaviour
+public class AquariumOpen : MonoBehaviour
 {
     public GameObject DisplayCount;
     public bool InTrigger = false;
-    private bool TableIsOpen = false;
+    private bool AquariumIsOpen = false;
 
-    [SerializeField] GameObject Damper;
     private GameObject Player;
     private GameObject Vcam;
+    private GameObject AquariumSprite;
+    private GameObject Temperature;
 
-    [Header("Координаты куда должен уйти объект при открытии стола(Игрок и камера)")]
+    [Header("Координаты куда должен уйти объект при открытии стола(Игрок, камера и сам аквариум)")]
     public Vector3 CoordPlayer = new();
+    public Quaternion RotatePlayer = new();
     public float TimeAnimationPlayer = 1f;
+
     public Vector3 CoordVcam = new();
     public Quaternion RotateVcam = new();
     public float TimeAnimationVcam = 1f;
+
+    public Vector3 CoordAquarium = new();
+    public Quaternion RotateAquarium = new();
+    public float TimeAnimationAquarium = 1f;
 
 
     private void Start()
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
+        AquariumSprite = transform.Find("AquariumSprite").gameObject;
         DisplayCount = transform.Find("DisplayCount").gameObject;
+        Temperature = AquariumSprite.transform.Find("Termometr").gameObject;
     }
-    public void OnTrigEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -36,17 +46,18 @@ public class TableOpen : MonoBehaviour
             DisplayCount.GetComponent<Animator>().SetBool("On", true);
         }
     }
-    public void OnTrigExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
             InTrigger = false;
-            DisplayCount.GetComponent<Animator>().SetBool("On", false);
+            DisplayCount.GetComponent<Animator>().SetBool("On", true);
         }
     }
     private void Update()
     {
-        if (InTrigger && Input.GetKeyDown(KeyCode.E) && !TableIsOpen){
+        if (InTrigger && !AquariumIsOpen && Input.GetKeyDown(KeyCode.E))
+        {
             DisplayCount.GetComponent<Animator>().SetBool("On", false);
 
 
@@ -65,11 +76,19 @@ public class TableOpen : MonoBehaviour
             Player.GetComponent<MoveAnimation>().TimeAnimation = TimeAnimationPlayer;
             Player.GetComponent<MoveAnimation>().StartMove();
 
+            AquariumSprite.GetComponent<MoveAnimation>().startCoords = CoordAquarium;
+            AquariumSprite.GetComponent<MoveAnimation>().needPosition = true;
+            AquariumSprite.GetComponent<MoveAnimation>().startRotate = RotateAquarium;
+            AquariumSprite.GetComponent<MoveAnimation>().needRotate = true;
+            AquariumSprite.GetComponent<MoveAnimation>().TimeAnimation = TimeAnimationAquarium;
+            AquariumSprite.GetComponent<MoveAnimation>().StartMove();
 
-            TableIsOpen = true;
-            Damper.SetActive(false);
+
+            AquariumIsOpen = true;
+            AquariumSprite.GetComponent<Aquarium>().AquariumOpen = true;
+            Temperature.GetComponent<Temperature>().AquariumOpen = true;
         }
-        else if (TableIsOpen && Input.GetKeyDown(KeyCode.Escape))
+        else if (AquariumIsOpen && Input.GetKeyDown(KeyCode.Escape))
         {
             Vcam.GetComponent<MoveAnimation>().EndMove();
             StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
@@ -77,8 +96,11 @@ public class TableOpen : MonoBehaviour
             Player.GetComponent<MoveAnimation>().EndMove();
             Player.GetComponent<MovePlayer>().ReturnMovePlayer();
 
-            TableIsOpen = false;
-            Damper.SetActive(true);
+            AquariumSprite.GetComponent<MoveAnimation>().EndMove();
+
+            AquariumIsOpen = false;
+            AquariumSprite.GetComponent<Aquarium>().AquariumOpen = false;
+            Temperature.GetComponent<Temperature>().AquariumOpen = false;
         }
     }
     IEnumerator WaitAnimCamera(float f)
