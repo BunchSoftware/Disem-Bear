@@ -50,10 +50,16 @@ public class TableOpen : MonoBehaviour
         else if (TableIsOpen && Input.GetKeyDown(KeyCode.E))
         {
             Vcam.GetComponent<MoveAnimation>().EndMove();
+            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             Player.GetComponent<MoveAnimation>().EndMove();
             Player.GetComponent<MovePlayer>().ReturnMovePlayer();
             TableIsOpen = false;
             Damper.SetActive(true);
         }
+    }
+    IEnumerator WaitAnimCamera(float f)
+    {
+        yield return new WaitForSeconds(f);
+        Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
     }
 }
