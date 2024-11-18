@@ -28,6 +28,7 @@ public class ExerciseManager : MonoBehaviour
 
         for (int i = 0; i < JSONExercises.Count; i++)
         {
+            prefab.name = $"Exercise {i}";
             Instantiate(prefab, transform);
         }
 
@@ -36,12 +37,38 @@ public class ExerciseManager : MonoBehaviour
             Exercise exercise;
             if (gameObject.transform.GetChild(i).TryGetComponent<Exercise>(out exercise))
             {
-                exercise.Init((exercise) =>
+                exercise.Init((exercise, isExpandExercise) =>
                 {
-                    for (int j = 0; j < exercises.Count; j++)
+                    if(isExpandExercise)
                     {
-                        if (exercises[j] != exercise)
-                            exercises[j].ExpandExercise(false);
+                        for (int j = 0; j < exercises.Count; j++)
+                        {
+                            if (exercises[j] != exercise)
+                                exercises[j].ExpandExercise(false);
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < exercises.Count; j++)
+                        {
+                            if (exercises[j] != exercise && exercises[j].GetExerciseCompletion() != TypeOfExerciseCompletion.Done)
+                                exercises[j].SetExerciseCompletion(TypeOfExerciseCompletion.NotDone);
+                            else if (exercises[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Run)
+                                transform.GetChild(j).SetSiblingIndex(0);
+                        }
+
+                        for (var i = 1; i < exercises.Count; i++)
+                        {
+                            for (var j = 0; j < exercises.Count - i; j++)
+                            {
+                                if (exercises[j].GetExerciseCompletion() < exercises[j + 1].GetExerciseCompletion())
+                                {
+                                    var temp = exercises[j];
+                                    exercises[j] = exercises[j + 1];
+                                    exercises[j + 1] = temp;
+                                }
+                            }
+                        }
                     }
                 }, JSONExercises[i]);
                 exercise.ExpandExercise(false);
