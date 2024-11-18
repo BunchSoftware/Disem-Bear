@@ -39,24 +39,21 @@ public class TableOpen : MonoBehaviour
     private void Update()
     {
         if (InTrigger && Input.GetKeyDown(KeyCode.E) && !TableIsOpen){
+            DisplayCount.GetComponent<Animator>().SetBool("On", false);
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
-            Vcam.GetComponent<Animator>().SetBool("On", true);
-            Player.GetComponent<TableOpenAnim>().StartMove();
+            Vcam.GetComponent<MoveAnimation>().StartMove();
+            Player.GetComponent<MovePlayer>().StopMovePlayer();
+            Player.GetComponent<MoveAnimation>().StartMove();
             TableIsOpen = true;
             Damper.SetActive(false);
         }
         else if (TableIsOpen && Input.GetKeyDown(KeyCode.E))
         {
-            Vcam.GetComponent<Animator>().SetBool("On", false);
-            StartCoroutine(WaitAnimVcam());
+            Vcam.GetComponent<MoveAnimation>().EndMove();
+            Player.GetComponent<MoveAnimation>().EndMove();
             Player.GetComponent<MovePlayer>().ReturnMovePlayer();
             TableIsOpen = false;
             Damper.SetActive(true);
         }
-    }
-    IEnumerator WaitAnimVcam()
-    {
-        yield return new WaitForSeconds(1f);
-        Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
     }
 }

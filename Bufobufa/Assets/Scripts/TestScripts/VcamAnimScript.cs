@@ -1,8 +1,9 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableOpenAnim : MonoBehaviour
+public class VcamAnimScript : MonoBehaviour
 {
     public Vector3 endCoords = new();
     public Vector3 startCoords = new();
@@ -11,7 +12,6 @@ public class TableOpenAnim : MonoBehaviour
 
     public void StartMove()
     {
-        GetComponent<MovePlayer>().StopMovePlayer();
         endCoords = startCoords;
         startCoords = transform.position;
         timer = 0f;
