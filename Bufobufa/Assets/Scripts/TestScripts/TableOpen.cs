@@ -8,7 +8,7 @@ public class TableOpen : MonoBehaviour
 {
     public GameObject DisplayCount;
     public bool InTrigger = false;
-    private bool TableIsOpen = false;
+    public bool TableIsOpen = false;
 
     [SerializeField] GameObject Damper;
     private GameObject Player;
@@ -67,7 +67,7 @@ public class TableOpen : MonoBehaviour
 
 
             TableIsOpen = true;
-            Damper.SetActive(false);
+            GetComponent<BoxCollider>().enabled = false;
         }
         else if (TableIsOpen && Input.GetKeyDown(KeyCode.Escape))
         {
@@ -78,7 +78,7 @@ public class TableOpen : MonoBehaviour
             Player.GetComponent<MovePlayer>().ReturnMovePlayer();
 
             TableIsOpen = false;
-            Damper.SetActive(true);
+            GetComponent<BoxCollider>().enabled = true;
         }
     }
     IEnumerator WaitAnimCamera(float f)
