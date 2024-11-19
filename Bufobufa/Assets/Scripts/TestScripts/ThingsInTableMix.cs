@@ -7,12 +7,11 @@ using UnityEngine.UI;
 
 public class ThingsInTableMix : MonoBehaviour
 {
-    [SerializeField] Button MixIngredientsButton;
 
     public List<GameObject> IngredientsIn = new();
     public List<string> ingredients = new();
     public List<Recipe> Recipes = new();
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ingredient>())
         {
@@ -20,7 +19,7 @@ public class ThingsInTableMix : MonoBehaviour
             collision.gameObject.GetComponent<Ingredient>().InTableMix = true;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ingredient>())
         {
@@ -28,11 +27,8 @@ public class ThingsInTableMix : MonoBehaviour
             collision.gameObject.GetComponent<Ingredient>().InTableMix = false;
         }
     }
-    private void Start()
-    {
-        MixIngredientsButton.onClick.AddListener(MixIngredients);
-    }
-    private void MixIngredients()
+
+    public void MixIngredients()
     {
         ingredients.Clear();
         for (int i = 0; i < IngredientsIn.Count; i++)
@@ -52,16 +48,26 @@ public class ThingsInTableMix : MonoBehaviour
             {
                 if (Recipes[i].OutPut != null)
                 {
-                    Instantiate(Recipes[i].OutPut, IngredientsIn[i].transform.position, IngredientsIn[i].transform.rotation, transform.parent);
+                    GameObject tempObj = IngredientsIn[0];
                     for (int j = IngredientsIn.Count - 1; j >= 0; j--)
                     {
                         Destroy(IngredientsIn[j]);
                     }
-                    
+                    IngredientsIn.Clear();
+                    Instantiate(Recipes[i].OutPut, tempObj.transform.position, tempObj.transform.rotation, transform.parent);
                     break;
                 }
             }
         }
+    }
+    public void ClearIngredients()
+    {
+        for (int j = IngredientsIn.Count - 1; j >= 0; j--)
+        {
+            IngredientsIn[j].GetComponent<Ingredient>().ResetIngredient();
+            Destroy(IngredientsIn[j]);
+        }
+        IngredientsIn = new();
     }
     [Serializable]
     public class Recipe
