@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerMouseMove : MonoBehaviour
 {
-    //LayerMask layerMask = LayerMask.GetMask("Player", "water");
     private NavMeshAgent agent;
     public bool MoveOn = true;
 
@@ -15,13 +15,25 @@ public class PlayerMouseMove : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetMouseButton(0))
+        if(MoveOn && Input.GetMouseButton(0))
         {
             Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor")))
+            if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "Box")))
             {
                 agent.SetDestination(hitInfo.point);
             }
         }
+    }
+    public void MovePlayer(Vector3 pos)
+    {
+        agent.SetDestination(pos);
+    }
+    public void StopPlayerMove()
+    {
+        MoveOn = false;
+    }
+    public void ReturnPlayerMove()
+    {
+        MoveOn = true;
     }
 }

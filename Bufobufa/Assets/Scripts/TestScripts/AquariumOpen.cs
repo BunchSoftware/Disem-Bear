@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class AquariumOpen : MonoBehaviour
 {
-    public GameObject DisplayCount;
     public bool InTrigger = false;
     private bool AquariumIsOpen = false;
+    private bool AquariumAnim = false;
+    private bool ClickedMouse = false;
 
     private GameObject Player;
     private GameObject Vcam;
@@ -28,13 +29,14 @@ public class AquariumOpen : MonoBehaviour
     public Quaternion RotateAquarium = new();
     public float TimeAnimationAquarium = 1f;
 
+    private Vector3 currentPos = new();
+
 
     private void Start()
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
         AquariumSprite = transform.Find("AquariumSprite").gameObject;
-        DisplayCount = transform.Find("DisplayCount").gameObject;
         Temperature = AquariumSprite.transform.Find("Termometr").gameObject;
     }
 
@@ -43,7 +45,6 @@ public class AquariumOpen : MonoBehaviour
         if (other.tag == "Player")
         {
             InTrigger = true;
-            DisplayCount.GetComponent<Animator>().SetBool("On", true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -51,16 +52,32 @@ public class AquariumOpen : MonoBehaviour
         if (other.tag == "Player")
         {
             InTrigger = false;
-            DisplayCount.GetComponent<Animator>().SetBool("On", true);
         }
     }
     private void Update()
     {
-        if (InTrigger && !AquariumIsOpen && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetMouseButtonDown(0))
         {
-            DisplayCount.GetComponent<Animator>().SetBool("On", false);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var infoHit))
+            {
+                if (infoHit.collider.gameObject == gameObject)
+                {
+                    ClickedMouse = true;
+                }
+                else
+                {
+                    ClickedMouse = false;
+                }
+            }
+        }
 
 
+        if (!AquariumAnim && InTrigger && !AquariumIsOpen && ClickedMouse)
+        {
+            AquariumIsOpen = true;
+            AquariumAnim = true;
+            ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
             Vcam.GetComponent<MoveAnimation>().startCoords = CoordVcam;
             Vcam.GetComponent<MoveAnimation>().needPosition = true;
@@ -70,11 +87,9 @@ public class AquariumOpen : MonoBehaviour
             Vcam.GetComponent<MoveAnimation>().StartMove();
 
 
-            Player.GetComponent<MovePlayer>().StopMovePlayer();
-            Player.GetComponent<MoveAnimation>().startCoords = CoordPlayer;
-            Player.GetComponent<MoveAnimation>().needPosition = true;
-            Player.GetComponent<MoveAnimation>().TimeAnimation = TimeAnimationPlayer;
-            Player.GetComponent<MoveAnimation>().StartMove();
+            currentPos = Player.transform.position;
+            Player.GetComponent<PlayerMouseMove>().MovePlayer(CoordPlayer);
+            Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
 
             AquariumSprite.GetComponent<MoveAnimation>().startCoords = CoordAquarium;
             AquariumSprite.GetComponent<MoveAnimation>().needPosition = true;
@@ -84,24 +99,32 @@ public class AquariumOpen : MonoBehaviour
             AquariumSprite.GetComponent<MoveAnimation>().StartMove();
 
 
-            AquariumIsOpen = true;
+            StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             AquariumSprite.GetComponent<Aquarium>().AquariumOpen = true;
             Temperature.GetComponent<Temperature>().AquariumOpen = true;
         }
-        else if (AquariumIsOpen && Input.GetKeyDown(KeyCode.Escape))
+        else if (!AquariumAnim && AquariumIsOpen && Input.GetMouseButtonDown(1))
         {
+            AquariumIsOpen = false;
+            AquariumAnim = true;
             Vcam.GetComponent<MoveAnimation>().EndMove();
+            StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
 
-            Player.GetComponent<MoveAnimation>().EndMove();
-            Player.GetComponent<MovePlayer>().ReturnMovePlayer();
+            Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
+            Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
 
             AquariumSprite.GetComponent<MoveAnimation>().EndMove();
 
-            AquariumIsOpen = false;
+            
             AquariumSprite.GetComponent<Aquarium>().AquariumOpen = false;
             Temperature.GetComponent<Temperature>().AquariumOpen = false;
         }
+    }
+    IEnumerator WaitAnimAquarium(float f)
+    {
+        yield return new WaitForSeconds(f);
+        AquariumAnim = false;
     }
     IEnumerator WaitAnimCamera(float f)
     {
