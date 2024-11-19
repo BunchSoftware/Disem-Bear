@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1210340649243863391}
   - component: {fileID: 5188828811109701773}
-  - component: {fileID: 34868694199470985}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -87,19 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &34868694199470985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145709195464622098}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ec73ca1cad573f47a3b3e33355dc629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StaticObject: 0
 --- !u!1 &8708292113214086128
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +213,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DisplayCount
       objectReference: {fileID: 0}
+    - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3519669001316087962, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -235,7 +225,8 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 288353455856146793, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

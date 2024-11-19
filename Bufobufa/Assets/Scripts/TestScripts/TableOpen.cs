@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class TableOpen : MonoBehaviour
 {
-    public GameObject DisplayCount;
     public bool InTrigger = false;
     public bool TableIsOpen = false;
+    private bool TableAnim = false;
+    private bool ClickedMouse = false;
 
     [SerializeField] GameObject Damper;
     private GameObject Player;
@@ -21,19 +22,19 @@ public class TableOpen : MonoBehaviour
     public Quaternion RotateVcam = new();
     public float TimeAnimationVcam = 1f;
 
+    private Vector3 currentPos = new();
+
 
     private void Start()
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
-        DisplayCount = transform.Find("DisplayCount").gameObject;
     }
     public void OnTrigEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             InTrigger = true;
-            DisplayCount.GetComponent<Animator>().SetBool("On", true);
         }
     }
     public void OnTrigExit(Collider other)
@@ -41,15 +42,30 @@ public class TableOpen : MonoBehaviour
         if (other.tag == "Player")
         {
             InTrigger = false;
-            DisplayCount.GetComponent<Animator>().SetBool("On", false);
         }
     }
     private void Update()
     {
-        if (InTrigger && Input.GetKeyDown(KeyCode.E) && !TableIsOpen){
-            DisplayCount.GetComponent<Animator>().SetBool("On", false);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var infoHit))
+            {
+                if (infoHit.collider.gameObject == gameObject)
+                {
+                    ClickedMouse = true;
+                }
+                else
+                {
+                    ClickedMouse = false;
+                }
+            }
+        }
 
 
+        if (!TableAnim && InTrigger && ClickedMouse && !TableIsOpen){
+
+            ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
             Vcam.GetComponent<MoveAnimation>().startCoords = CoordVcam;
             Vcam.GetComponent<MoveAnimation>().needPosition = true;
@@ -59,27 +75,37 @@ public class TableOpen : MonoBehaviour
             Vcam.GetComponent<MoveAnimation>().StartMove();
 
 
-            Player.GetComponent<MovePlayer>().StopMovePlayer();
-            Player.GetComponent<MoveAnimation>().startCoords = CoordPlayer;
-            Player.GetComponent<MoveAnimation>().needPosition = true;
-            Player.GetComponent<MoveAnimation>().TimeAnimation = TimeAnimationPlayer;
-            Player.GetComponent<MoveAnimation>().StartMove();
+            currentPos = Player.transform.position;
+            Player.GetComponent<PlayerMouseMove>().MovePlayer(CoordPlayer);
+            Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
+            
 
 
             TableIsOpen = true;
+            TableAnim = true;
+            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (TableIsOpen && Input.GetKeyDown(KeyCode.Escape))
+        else if (!TableAnim && TableIsOpen && Input.GetMouseButtonDown(1))
         {
+            TableIsOpen = false;
+            TableAnim = true;
+            ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
+            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
 
-            Player.GetComponent<MoveAnimation>().EndMove();
-            Player.GetComponent<MovePlayer>().ReturnMovePlayer();
+            Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
+            Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
 
-            TableIsOpen = false;
+            
             GetComponent<BoxCollider>().enabled = true;
         }
+    }
+    IEnumerator WaitAnimTable(float f)
+    {
+        yield return new WaitForSeconds(f);
+        TableAnim = false;
     }
     IEnumerator WaitAnimCamera(float f)
     {
