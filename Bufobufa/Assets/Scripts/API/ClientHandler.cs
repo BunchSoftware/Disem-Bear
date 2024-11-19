@@ -12,6 +12,9 @@ namespace API
     public class ResourcePlayer
     {
         public int apple;
+        public int count;
+        public string name;
+        public ResourceChangedPlayer a;
     }
 
     [Serializable]

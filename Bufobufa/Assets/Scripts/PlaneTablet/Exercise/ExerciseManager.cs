@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class JSONExercise
@@ -16,8 +17,11 @@ public class JSONExercise
 public class ExerciseManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
-    private List<Exercise> exercises = new List<Exercise>();
+    public UnityEvent<ExerciseReward> GetExerciseReward;
+    private List<ExerciseGUI> exercises = new List<ExerciseGUI>();
     private List<JSONExercise> JSONExercises = new List<JSONExercise>();
+
+    private ExerciseGUI currentExerciseGUI;
 
     private void Start()
     {
@@ -34,12 +38,14 @@ public class ExerciseManager : MonoBehaviour
 
         for (int i = 0; i < JSONExercises.Count; i++)
         {
-            Exercise exercise;
-            if (gameObject.transform.GetChild(i).TryGetComponent<Exercise>(out exercise))
+            ExerciseGUI exercise;
+            if (gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exercise))
             {
                 exercise.Init((exercise, isExpandExercise) =>
                 {
-                    if(isExpandExercise)
+                    currentExerciseGUI = exercise;
+
+                    if (isExpandExercise)
                     {
                         for (int j = 0; j < exercises.Count; j++)
                         {
@@ -48,33 +54,44 @@ public class ExerciseManager : MonoBehaviour
                         }
                     }
                     else
-                    {
-                        for (int j = 0; j < exercises.Count; j++)
-                        {
-                            if (exercises[j] != exercise && exercises[j].GetExerciseCompletion() != TypeOfExerciseCompletion.Done)
-                                exercises[j].SetExerciseCompletion(TypeOfExerciseCompletion.NotDone);
-                            else if (exercises[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Run)
-                                transform.GetChild(j).SetSiblingIndex(0);
-                        }
-
-                        for (var i = 1; i < exercises.Count; i++)
-                        {
-                            for (var j = 0; j < exercises.Count - i; j++)
-                            {
-                                if (exercises[j].GetExerciseCompletion() < exercises[j + 1].GetExerciseCompletion())
-                                {
-                                    var temp = exercises[j];
-                                    exercises[j] = exercises[j + 1];
-                                    exercises[j + 1] = temp;
-                                }
-                            }
-                        }
-                    }
-                }, JSONExercises[i]);
+                        Sort(exercise);
+                }, JSONExercises[i], new Exercise());
                 exercise.ExpandExercise(false);
 
                 exercises.Add(exercise);
             };
+        }
+    }
+
+    public void DoneCurrentExercise()
+    {
+        currentExerciseGUI.DoneExercise();
+        Sort(currentExerciseGUI);
+    }
+
+    private void Sort(ExerciseGUI exercise)
+    {
+        for (int j = 0; j < exercises.Count; j++)
+        {
+            if (exercises[j] != exercise && exercises[j].GetExerciseCompletion() != TypeOfExerciseCompletion.Done)
+                exercises[j].SetExerciseCompletion(TypeOfExerciseCompletion.NotDone);
+            else if (exercises[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Run)
+                transform.GetChild(j).SetAsFirstSibling();
+            else if (exercises[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Done)
+                transform.GetChild(j).SetAsLastSibling();
+        }
+
+        for (var i = 1; i < exercises.Count; i++)
+        {
+            for (var j = 0; j < exercises.Count - i; j++)
+            {
+                if (exercises[j].GetExerciseCompletion() < exercises[j + 1].GetExerciseCompletion())
+                {
+                    var temp = exercises[j];
+                    exercises[j] = exercises[j + 1];
+                    exercises[j + 1] = temp;
+                }
+            }
         }
     }
 }
