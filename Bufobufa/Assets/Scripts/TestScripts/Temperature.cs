@@ -14,7 +14,7 @@ public class Temperature : MonoBehaviour
         if (AquariumOpen)
         {
             numState = Mathf.Min(numState + 1, States.Count - 1);
-            GetComponent<SpriteRenderer>().sprite = States[Mathf.Min(numState, States.Count - 1)];
+            GetComponent<SpriteRenderer>().sprite = States[numState];
             if (numState > 3)
             {
                 transform.parent.gameObject.GetComponent<Aquarium>().NormalTemperature = true;
@@ -27,7 +27,8 @@ public class Temperature : MonoBehaviour
     }
     private void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = States[Mathf.Min(numState, States.Count - 1)];
+        numState = Mathf.Min(numState, States.Count - 1);
+        GetComponent<SpriteRenderer>().sprite = States[numState];
     }
     private void Update()
     {
@@ -36,7 +37,7 @@ public class Temperature : MonoBehaviour
         {
             timer = 0f;
             numState = Mathf.Max(0, numState - 1);
-            GetComponent<SpriteRenderer>().sprite = States[Mathf.Min(numState, States.Count - 1)];
+            GetComponent<SpriteRenderer>().sprite = States[numState];
             if (numState > 3)
             {
                 transform.parent.gameObject.GetComponent<Aquarium>().NormalTemperature = true;
