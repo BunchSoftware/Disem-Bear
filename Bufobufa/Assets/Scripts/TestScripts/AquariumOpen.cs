@@ -102,6 +102,7 @@ public class AquariumOpen : MonoBehaviour
             StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             AquariumSprite.GetComponent<Aquarium>().AquariumOpen = true;
             Temperature.GetComponent<Temperature>().AquariumOpen = true;
+            GetComponent<BoxCollider>().enabled = false;
         }
         else if (!AquariumAnim && AquariumIsOpen && Input.GetMouseButtonDown(1))
         {
@@ -119,6 +120,7 @@ public class AquariumOpen : MonoBehaviour
             
             AquariumSprite.GetComponent<Aquarium>().AquariumOpen = false;
             Temperature.GetComponent<Temperature>().AquariumOpen = false;
+            GetComponent<BoxCollider>().enabled = true;
         }
     }
     IEnumerator WaitAnimAquarium(float f)
