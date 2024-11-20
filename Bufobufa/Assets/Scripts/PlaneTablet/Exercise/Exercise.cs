@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class Exercise
 {
-    private ExerciseReward exerciseReward;
     private bool isCompletedExercise = false;
+
+    public ExerciseReward exerciseReward;
+    public string rewardText;
+    public string header;
+    public string description;
+    public string pathToAvatar;
+
+    public string conditionExercise;
 
     public bool GetIsCompletedExercise()
     {
         return isCompletedExercise;
     }
 
-    public ExerciseReward DoneExercise()
+    public ExerciseReward DoneExercise(string messageCondition)
     {
-        isCompletedExercise = true;
-        return exerciseReward;
+        if(conditionExercise == messageCondition)
+        {
+            isCompletedExercise = true;
+            return exerciseReward;
+        }
+        else
+            return null;
     }
 }
