@@ -38,7 +38,7 @@ public class ExerciseGUI : MonoBehaviour
     private RectTransform rectTransform;
     private Exercise exercise;
 
-    public void Init(Action<ExerciseGUI, bool> ActionExercise, JSONExercise JSONExercise, Exercise exercise)
+    public void Init(Action<ExerciseGUI, bool> ActionExercise, Exercise exercise)
     {
         rectTransform = GetComponent<RectTransform>();
         exerciseButton.onClick.AddListener(() =>
@@ -59,10 +59,10 @@ public class ExerciseGUI : MonoBehaviour
 
         this.exercise = exercise;   
 
-        headerText.text = JSONExercise.header;
-        rewardText.text = JSONExercise.reward;
-        descriptionText.text = JSONExercise.description;
-        avatar.sprite = Resources.Load<Sprite>("Avatars/" + JSONExercise.pathToAvatar);
+        headerText.text = exercise.header;
+        rewardText.text = exercise.rewardText;
+        descriptionText.text = exercise.description;
+        avatar.sprite = Resources.Load<Sprite>("Avatars/" + exercise.pathToAvatar);
     }
 
     public void ExpandExercise(bool isExpandExercise)
@@ -71,16 +71,6 @@ public class ExerciseGUI : MonoBehaviour
         if (description != null)
         {
             description.gameObject.SetActive(isExpandExercise);
-            if (isExpandExercise)
-            {
-                RectTransform rectTransformButton = exerciseButton.gameObject.GetComponent<RectTransform>();
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, description.sizeDelta.y + rectTransformButton.sizeDelta.y);
-            }
-            else
-            {
-                RectTransform rectTransformButton = exerciseButton.gameObject.GetComponent<RectTransform>();
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransformButton.sizeDelta.y);
-            }
         }
         else
             throw new System.Exception("Ошибка ! Добавьте обьект Description");
@@ -127,10 +117,11 @@ public class ExerciseGUI : MonoBehaviour
         return exercise;
     }
 
-    public ExerciseReward DoneExercise()
+    public ExerciseReward DoneExercise(string messageCondition)
     {
+        ExerciseReward exerciseReward = exercise.DoneExercise(messageCondition);
         SetExerciseCompletion(TypeOfExerciseCompletion.Done);
-        return exercise.DoneExercise();
+        return exerciseReward;
     }
 
     public TypeOfExerciseCompletion GetExerciseCompletion()
