@@ -15,7 +15,7 @@ public class PlayerMouseMove : MonoBehaviour
     }
     private void Update()
     {
-        if(MoveOn && Input.GetMouseButton(0))
+        if(MoveOn && Input.GetMouseButtonDown(0))
         {
             Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "Box")))

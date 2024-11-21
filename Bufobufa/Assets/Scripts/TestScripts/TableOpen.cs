@@ -63,7 +63,7 @@ public class TableOpen : MonoBehaviour
         }
 
 
-        if (!TableAnim && InTrigger && ClickedMouse && !TableIsOpen){
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TableAnim && InTrigger && ClickedMouse && !TableIsOpen){
 
             ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
@@ -82,6 +82,7 @@ public class TableOpen : MonoBehaviour
 
 
             TableIsOpen = true;
+            Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             TableAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             GetComponent<BoxCollider>().enabled = false;
@@ -89,6 +90,7 @@ public class TableOpen : MonoBehaviour
         else if (!TableAnim && TableIsOpen && Input.GetMouseButtonDown(1))
         {
             TableIsOpen = false;
+            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             TableAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
