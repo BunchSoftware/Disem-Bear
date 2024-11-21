@@ -14,13 +14,14 @@ public class Dialog
     public DropEnum enterDrop = DropEnum.DropRight;
     public DropEnum exitDrop = DropEnum.DropLeft;
     public float speedText = 0.05f;
+    public bool skipDialog = false;
+    public bool stopTheEndDialog = false;
+    public float waitSecond = 0;
     [JsonIgnore] public Color colorText = Color.black;
     [HideInInspector] public string jsonHTMLColorRGBA;
     public FontStyle fontStyleText = FontStyle.Normal;
     public int fontSizeText = 40;
-    public bool skipDialog = false;
-    public bool stopTheEndDialog = false;
+    public string pathToAvatar;
     [TextArea(10, 100)]
     public string textDialog = "";
-    public float waitSecond = 0;
 }

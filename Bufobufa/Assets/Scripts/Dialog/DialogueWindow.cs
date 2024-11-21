@@ -57,5 +57,6 @@ public class DialogueWindow : MonoBehaviour
         textDialog.fontStyle = dialog.fontStyleText;
         textDialog.fontSize = dialog.fontSizeText;
         textDialog.color = dialog.colorText;
+        iconDialog.sprite = Resources.Load<Sprite>(dialog.pathToAvatar);
     }
 }
