@@ -40,14 +40,14 @@ public class AquariumOpen : MonoBehaviour
         Temperature = AquariumSprite.transform.Find("Termometr").gameObject;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTrigEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             InTrigger = true;
         }
     }
-    private void OnTriggerExit(Collider other)
+    public void OnTrigExit(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -73,9 +73,10 @@ public class AquariumOpen : MonoBehaviour
         }
 
 
-        if (!AquariumAnim && InTrigger && !AquariumIsOpen && ClickedMouse)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !AquariumAnim && InTrigger && !AquariumIsOpen && ClickedMouse)
         {
             AquariumIsOpen = true;
+            Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             AquariumAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
@@ -107,6 +108,7 @@ public class AquariumOpen : MonoBehaviour
         else if (!AquariumAnim && AquariumIsOpen && Input.GetMouseButtonDown(1))
         {
             AquariumIsOpen = false;
+            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             AquariumAnim = true;
             Vcam.GetComponent<MoveAnimation>().EndMove();
             StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
