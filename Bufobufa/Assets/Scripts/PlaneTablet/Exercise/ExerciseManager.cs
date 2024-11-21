@@ -1,11 +1,9 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class ExerciseManager : MonoBehaviour
 {
@@ -16,6 +14,11 @@ public class ExerciseManager : MonoBehaviour
     public Action<ExerciseReward> GetExerciseReward;
 
     private ExerciseGUI currentExerciseGUI;
+
+    private void Update()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
+    }
 
     private void Start()
     {
@@ -31,6 +34,7 @@ public class ExerciseManager : MonoBehaviour
         for (int i = 0; i < exercises.Count; i++)
         {
             ExerciseGUI exercise;
+
             if (gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exercise))
             {
                 exercise.Init((exercise, isExpandExercise) =>

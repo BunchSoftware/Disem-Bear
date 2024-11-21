@@ -71,16 +71,6 @@ public class ExerciseGUI : MonoBehaviour
         if (description != null)
         {
             description.gameObject.SetActive(isExpandExercise);
-            if (isExpandExercise)
-            {
-                RectTransform rectTransformButton = exerciseButton.gameObject.GetComponent<RectTransform>();
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, description.sizeDelta.y + rectTransformButton.sizeDelta.y);
-            }
-            else
-            {
-                RectTransform rectTransformButton = exerciseButton.gameObject.GetComponent<RectTransform>();
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransformButton.sizeDelta.y);
-            }
         }
         else
             throw new System.Exception("Ошибка ! Добавьте обьект Description");
