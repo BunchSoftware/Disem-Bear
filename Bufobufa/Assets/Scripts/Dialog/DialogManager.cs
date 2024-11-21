@@ -1,5 +1,7 @@
-  using System.Collections;
+using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -9,8 +11,10 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour
 {
     [SerializeField] private DialogueWindow dialogueWindow;
-    [SerializeField] private List<DialogPoint> dialogPoints = new List<DialogPoint>();
+    [SerializeField] private string pathToFileJSON;
     public UnityEvent<Dialog> EndDialog;
+
+    private List<DialogPoint> dialogPoints = new List<DialogPoint>();
     private int currentIndexDialogPoint = 0;
     private int currentIndexDialog = 0;
 
@@ -19,6 +23,17 @@ public class DialogManager : MonoBehaviour
 
     private void Start()
     {
+        string path = Application.streamingAssetsPath + "/" + pathToFileJSON;
+        dialogPoints = JsonConvert.DeserializeObject<List<DialogPoint>>(File.ReadAllText(path));
+
+        for (int i = 0; i < dialogPoints.Count; i++)
+        {
+            for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
+            {
+                ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
+            }
+        }
+
         dialogueWindow.Init(this);
     }
 
@@ -82,6 +97,8 @@ public class DialogManager : MonoBehaviour
             EnterDrop(dialogPoint.dialog[i]);
             dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
             yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
+
+            EndDialog?.Invoke(dialogPoint.dialog[i]);
 
             if (dialogPoint.dialog[i].stopTheEndDialog == true)
             {

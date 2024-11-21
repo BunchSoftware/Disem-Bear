@@ -38,6 +38,7 @@ public class DialogueWindow : MonoBehaviour
     IEnumerator TypeLineIE(Dialog dialog)
     {
         textDialog.text = "";
+        SetParametres(dialog);
         for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
         {
             textDialog.text += dialog.textDialog[j];
@@ -47,6 +48,14 @@ public class DialogueWindow : MonoBehaviour
 
     public void DialogLast(Dialog dialog)
     {
+        SetParametres(dialog);
         textDialog.text = dialog.textDialog;
+    }
+
+    private void SetParametres(Dialog dialog)
+    {
+        textDialog.fontStyle = dialog.fontStyleText;
+        textDialog.fontSize = dialog.fontSizeText;
+        textDialog.color = dialog.colorText;
     }
 }

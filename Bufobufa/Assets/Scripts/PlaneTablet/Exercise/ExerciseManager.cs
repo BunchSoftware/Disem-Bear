@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class ExerciseManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
+    [SerializeField] private string pathToFileJSON;
     private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
 
     public Action<Exercise> GetCurrentExercise;
@@ -22,7 +23,7 @@ public class ExerciseManager : MonoBehaviour
 
     private void Start()
     {
-        string path = Application.streamingAssetsPath + "/" + "exercises.json";
+        string path = Application.streamingAssetsPath + "/" + pathToFileJSON;
         List<Exercise> exercises = JsonConvert.DeserializeObject<List<Exercise>>(File.ReadAllText(path));
 
         for (int i = 0; i < exercises.Count; i++)
