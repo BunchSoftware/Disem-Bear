@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PlayerMouseMove : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class PlayerMouseMove : MonoBehaviour
             Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "Box")))
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
                 agent.SetDestination(hitInfo.point);
             }
         }
