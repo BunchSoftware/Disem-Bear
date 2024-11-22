@@ -2,12 +2,15 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
 public class GeneratorJSONDialog : MonoBehaviour
 {
    [SerializeField] private List<DialogPoint> dialogPoints = new List<DialogPoint>();
+   [SerializeField] private TextAsset textOutput;
    [TextAreaAttribute(10, 100)]
    [SerializeField] private string jsonOutput;
 
@@ -25,7 +28,9 @@ public class GeneratorJSONDialog : MonoBehaviour
             }
         }
 
-
         jsonOutput = JsonConvert.SerializeObject(dialogPoints);
+
+        if(textOutput != null)
+            File.WriteAllText(AssetDatabase.GetAssetPath(textOutput), jsonOutput, Encoding.UTF8);
     }
 }

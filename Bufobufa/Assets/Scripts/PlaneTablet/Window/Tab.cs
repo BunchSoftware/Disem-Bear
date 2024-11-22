@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tab : MonoBehaviour
 {
-    [SerializeField] private int indexTab;
+    public int indexTab;
     private bool isSelected = false;
 
     public void SelectTab(bool isSelected)

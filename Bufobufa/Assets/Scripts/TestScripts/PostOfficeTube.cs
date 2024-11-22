@@ -28,6 +28,7 @@ public class PostOfficeTube : MonoBehaviour
             {
                 currentFallObj = Instantiate(currentObj, TubePosition, currentObj.transform.rotation);
                 currentFallObj.GetComponent<MoveAnimation>().StartMove();
+                Player.GetComponent<PlayerInfo>().currentPickObject = currentFallObj;
                 ItemExist = false;
             }
         }

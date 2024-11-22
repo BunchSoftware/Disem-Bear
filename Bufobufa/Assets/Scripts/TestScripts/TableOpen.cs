@@ -1,18 +1,19 @@
 using Cinemachine;
+using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TVOpen : MonoBehaviour
+public class TableOpen : MonoBehaviour
 {
     public bool InTrigger = false;
-    public bool TVIsOpen = false;
-    private bool TVAnim = false;
+    public bool TableIsOpen = false;
+    private bool TableAnim = false;
     private bool ClickedMouse = false;
 
     private GameObject Player;
     private GameObject Vcam;
-    private GameObject TriggerTV;
+    private GameObject TriggerTable;
 
     [Header("Координаты куда должен уйти объект при открытии стола(Игрок и камера)")]
     public Vector3 CoordPlayer = new();
@@ -23,11 +24,12 @@ public class TVOpen : MonoBehaviour
 
     private Vector3 currentPos = new();
 
+
     private void Start()
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
-        TriggerTV = transform.Find("TriggerTV").gameObject;
+        TriggerTable = transform.Find("TriggerTable").gameObject;
     }
     public void OnTrigEnter(Collider other)
     {
@@ -48,23 +50,23 @@ public class TVOpen : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "Box")))
             {
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
-                    TriggerTV.SetActive(true);
+                    TriggerTable.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
-                    TriggerTV.SetActive(false);
+                    TriggerTable.SetActive(false);
                 }
             }
         }
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TVAnim && InTrigger && ClickedMouse && !TVIsOpen)
-        {
+
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TableAnim && InTrigger && ClickedMouse && !TableIsOpen){
 
             ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
@@ -79,37 +81,37 @@ public class TVOpen : MonoBehaviour
             currentPos = Player.transform.position;
             Player.GetComponent<PlayerMouseMove>().MovePlayer(CoordPlayer);
             Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
+            
 
 
-
-            TVIsOpen = true;
+            TableIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
-            TVAnim = true;
-            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            TableAnim = true;
+            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (!TVAnim && TVIsOpen && Input.GetMouseButtonDown(1))
+        else if (!TableAnim && TableIsOpen && Input.GetMouseButtonDown(1))
         {
-            TriggerTV.SetActive(false);
-            TVIsOpen = false;
+            TriggerTable.SetActive(false);
+            TableIsOpen = false;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
-            TVAnim = true;
+            TableAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
-            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
 
             Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
 
-
+            
             GetComponent<BoxCollider>().enabled = true;
         }
     }
-    IEnumerator WaitAnimBoard(float f)
+    IEnumerator WaitAnimTable(float f)
     {
         yield return new WaitForSeconds(f);
-        TVAnim = false;
+        TableAnim = false;
     }
     IEnumerator WaitAnimCamera(float f)
     {

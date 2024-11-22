@@ -7,11 +7,11 @@ using UnityEngine;
 public class PickUpObject : MonoBehaviour
 {
     private GameObject Player;
-    public bool Clicked = false;
-    public bool falling = true;
+    private bool Clicked = false;
+    private bool falling = true;
     [SerializeField] private Vector3 positionItem = new();
     private Vector3 lcScale = new();
-    public bool PickUp = false;
+    private bool PickUp = false;
     private float timer = 0f;
     private void Start()
     {
@@ -32,7 +32,7 @@ public class PickUpObject : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (!falling && Clicked)
+        if (!falling)
         {
             PickUp = true;
             GetComponent<BoxCollider>().enabled = false;
@@ -41,7 +41,6 @@ public class PickUpObject : MonoBehaviour
             transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
             transform.localPosition = positionItem;
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-            Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
         }
     }
     
