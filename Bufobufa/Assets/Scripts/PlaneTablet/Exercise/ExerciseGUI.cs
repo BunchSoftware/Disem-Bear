@@ -62,7 +62,7 @@ public class ExerciseGUI : MonoBehaviour
         headerText.text = exercise.header;
         rewardText.text = exercise.rewardText;
         descriptionText.text = exercise.description;
-        avatar.sprite = Resources.Load<Sprite>(exercise.pathToAvatar);
+        avatar.sprite = exercise.avatar;
     }
 
     public void ExpandExercise(bool isExpandExercise)

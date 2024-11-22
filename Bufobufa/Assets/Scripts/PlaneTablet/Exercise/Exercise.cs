@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ public class Exercise
     public string rewardText;
     public string header;
     public string description;
-    public string pathToAvatar;
+    [JsonIgnore] public Sprite avatar;
+    [HideInInspector] public string pathToAvatar;
 
     public string conditionExercise;
 

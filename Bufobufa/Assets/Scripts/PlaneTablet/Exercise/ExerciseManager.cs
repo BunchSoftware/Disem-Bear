@@ -2,13 +2,14 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ExerciseManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
-    [SerializeField] private string pathToFileJSON;
+    [SerializeField] private TextAsset JsonFile;
     private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
 
     public Action<Exercise> GetCurrentExercise;
@@ -23,8 +24,12 @@ public class ExerciseManager : MonoBehaviour
 
     private void Start()
     {
-        string path = Application.streamingAssetsPath + "/" + pathToFileJSON;
-        List<Exercise> exercises = JsonConvert.DeserializeObject<List<Exercise>>(File.ReadAllText(path));
+        List<Exercise> exercises = JsonConvert.DeserializeObject<List<Exercise>>(File.ReadAllText(AssetDatabase.GetAssetPath(JsonFile)));
+
+        for (int i = 0; i < exercises.Count; i++)
+        {
+            exercises[i].avatar = AssetDatabase.LoadAssetAtPath<Sprite>(exercises[i].pathToAvatar);
+        }
 
         for (int i = 0; i < exercises.Count; i++)
         {

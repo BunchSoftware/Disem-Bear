@@ -20,8 +20,11 @@ public class Dialog
     [JsonIgnore] public Color colorText = Color.black;
     [HideInInspector] public string jsonHTMLColorRGBA;
     public FontStyle fontStyleText = FontStyle.Normal;
+    [JsonIgnore] public Font fontText;
+    [HideInInspector] public string pathToFont;
     public int fontSizeText = 40;
-    public string pathToAvatar;
+    [HideInInspector] public string pathToAvatar;
+    [JsonIgnore] public Sprite avatar;
     [TextArea(10, 100)]
     public string textDialog = "";
 }

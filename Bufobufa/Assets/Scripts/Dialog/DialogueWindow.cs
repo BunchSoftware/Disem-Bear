@@ -54,9 +54,10 @@ public class DialogueWindow : MonoBehaviour
 
     private void SetParametres(Dialog dialog)
     {
+        textDialog.font = dialog.fontText;
         textDialog.fontStyle = dialog.fontStyleText;
         textDialog.fontSize = dialog.fontSizeText;
         textDialog.color = dialog.colorText;
-        iconDialog.sprite = Resources.Load<Sprite>(dialog.pathToAvatar);
+        iconDialog.sprite = dialog.avatar;
     }
 }

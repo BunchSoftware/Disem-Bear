@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -31,6 +32,8 @@ public class DialogManager : MonoBehaviour
             for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
             {
                 ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
+                dialogPoints[i].dialog[j].avatar = AssetDatabase.LoadAssetAtPath<Sprite>(dialogPoints[i].dialog[j].pathToAvatar);
+                dialogPoints[i].dialog[j].fontText = AssetDatabase.LoadAssetAtPath<Font>(dialogPoints[i].dialog[j].pathToFont);
             }
         }
 

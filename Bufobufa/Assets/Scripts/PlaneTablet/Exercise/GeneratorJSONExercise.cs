@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GeneratorJSONExercise : MonoBehaviour
@@ -11,6 +12,11 @@ public class GeneratorJSONExercise : MonoBehaviour
 
     private void OnValidate()
     {
+        for (int i = 0; i < exercises.Count; i++)
+        { 
+            exercises[i].pathToAvatar = AssetDatabase.GetAssetPath(exercises[i].avatar);
+        }
+
         jsonOutput = JsonConvert.SerializeObject(exercises);
     }
 }
