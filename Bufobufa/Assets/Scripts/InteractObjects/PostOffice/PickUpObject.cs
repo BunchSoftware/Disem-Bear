@@ -32,7 +32,7 @@ public class PickUpObject : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (!falling)
+        if (!falling && Clicked)
         {
             PickUp = true;
             GetComponent<BoxCollider>().enabled = false;
