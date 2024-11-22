@@ -147,8 +147,8 @@ Transform:
   m_GameObject: {fileID: 47910187}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 9.03, y: -0.5493, z: 0.41}
-  m_LocalScale: {x: 0.19880402, y: 0.15770608, z: 0.43984428}
+  m_LocalPosition: {x: 8.7942, y: -1, z: 0.41}
+  m_LocalScale: {x: 0.33160847, y: 0.15770608, z: 0.4598132}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2127619092}
@@ -197,7 +197,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f3d8e88e4ff2474580c43b1cb1a95f5, type: 2}
+  - {fileID: 2100000, guid: d003e0b6ca125ed45bad0c93b2ffeba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -506,6 +506,14 @@ PrefabInstance:
     - target: {fileID: 4501427065686955131, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_Type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5071086560440827212, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e5a1247d0f6f54b4d8f273d820576e42, type: 3}
+    - target: {fileID: 5071086560440827212, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5583072563597673353, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_MinHeight
@@ -1202,32 +1210,65 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: jsonOutput
-      value: "[{\"dialog\":[{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":false,\"stopTheEndDialog\":false,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u042F
+      value: "[{\"dialog\":[{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"Assets/Dialog/Avatars/ikonGirl.png\",\"textDialog\":\"\u041F\u0440\u0438\u0432\u0435\u0442!
+        \u042F ** - \u0442\u0432\u043E\u0439 \u043B\u0438\u0447\u043D\u044B\u0439
+        \u043D\u0430\u0441\u0442\u0430\u0432\u043D\u0438\u043A. \u041C\u043E\u044F
+        \u0437\u0430\u0434\u0430\u0447\u0430 \u043F\u043E\u043C\u043E\u0447\u044C
+        \u0442\u0435\u0431\u0435 \u0432\u043B\u0438\u0442\u044C\u0441\u044F \u0432
+        \u0440\u0430\u0431\u043E\u0442\u0443\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"Assets/Dialog/Avatars/ikonGirl.png\",\"textDialog\":\"\u042F
         \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0442\u0435\u0431\u0435
-        \u043F\u043E\u0441\u044B\u043B\u043A\u0443, \u0431\u0435\u0440\u0438 \u0435\u0435\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u041A\u043E\u0433\u0434\u0430
+        \u043F\u043E\u0441\u044B\u043B\u043A\u0443, \u0431\u0435\u0440\u0438 \u0435\u0435\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"Assets/Dialog/Avatars/ikonGirl.png\",\"textDialog\":\"\u041A\u043E\u0433\u0434\u0430
         \u0431\u0443\u0434\u0435\u0448\u044C \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0442\u044C
         \u0437\u0430\u044F\u0432\u043A\u0438, \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E
         \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439 \u0447\u0435\u0440\u0442\u0435\u0436\u0438,
-        \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043A \u043D\u0438 \u043F\u0440\u0438\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u044B\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u0438\u0437\u0443\u0447\u0438\u043B
-        \u043C\u043E\u044E \u0441\u0445\u0435\u043C\u0443?\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u043F\u0435\u0440\u0432\u044B\u043C
+        \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043A \u043D\u0438 \u043F\u0440\u0438\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u044B\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"Assets/Dialog/Avatars/ikonGirl.png\",\"textDialog\":\"\u0438\u0437\u0443\u0447\u0438\u043B
+        \u043C\u043E\u044E \u0441\u0445\u0435\u043C\u0443?\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"Assets/Dialog/Avatars/ikonGirl.png\",\"textDialog\":\"\u043F\u0435\u0440\u0432\u044B\u043C
         \u0434\u0435\u043B\u043E\u043C \u0442\u0435\u0431\u0435 \u043D\u0443\u0436\u043D\u043E
         \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0441\u0442\u0432\u043E\u043B\u043E\u0432\u044B\u0435
-        \u043A\u043B\u0435\u0442\u043A\u0438\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u0442\u0435\u0431\u0435
+        \u043A\u043B\u0435\u0442\u043A\u0438\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"Assets/Dialog/Avatars/ikonGirl.png\",\"textDialog\":\"\u0442\u0435\u0431\u0435
         \u0432\u0441\u0435\u0433\u043E \u043B\u0438\u0448\u044C \u043D\u0443\u0436\u043D\u043E
         \u0441\u043B\u0435\u0434\u0438\u0442\u044C \u0437\u0430 \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u043E\u0439
         \u0438 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C
-        \u0435\u0435\u043A\u043B\u0435\u0442\u043A\u0438\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u0442\u0435\u0431\u0435
+        \u0435\u0435\u043A\u043B\u0435\u0442\u043A\u0438\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"\",\"textDialog\":\"\u0442\u0435\u0431\u0435
         \u0432\u0441\u0435\u0433\u043E \u043B\u0438\u0448\u044C \u043D\u0443\u0436\u043D\u043E
         \u0441\u043B\u0435\u0434\u0438\u0442\u044C \u0437\u0430 \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u043E\u0439
         \u0438 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C
-        \u0435\u0435\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"fontSizeText\":40,\"pathToAvatar\":\"Avatars/base\",\"textDialog\":\"\u0441\u043E\u0431\u0438\u0440\u0430\u0439
+        \u0435\u0435\"},{\"enterDrop\":3,\"exitDrop\":4,\"speedText\":0.05,\"skipDialog\":true,\"stopTheEndDialog\":true,\"waitSecond\":0.0,\"jsonHTMLColorRGBA\":\"#9FAEC6FF\",\"fontStyleText\":0,\"pathToFont\":\"\",\"fontSizeText\":40,\"pathToAvatar\":\"\",\"textDialog\":\"\u0441\u043E\u0431\u0438\u0440\u0430\u0439
         \u043A\u043B\u0435\u0442\u043A\u0438 \u0438 \u043F\u0440\u0438\u0441\u0442\u0443\u043F\u0430\u0439
         \u043A \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044E\"}]}]"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: textOutput
+      value: 
+      objectReference: {fileID: 4900000, guid: a2bd98aa67312d84baafed0fa4d3ba8e, type: 3}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[0].avatar
+      value: 
+      objectReference: {fileID: 1277154410, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[1].avatar
+      value: 
+      objectReference: {fileID: 1277154410, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[2].avatar
+      value: 
+      objectReference: {fileID: 279540293, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].avatar
+      value: 
+      objectReference: {fileID: 327400346, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[4].avatar
+      value: 
+      objectReference: {fileID: -2119747114, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[5].avatar
+      value: 
+      objectReference: {fileID: -1599670872, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].exitDrop
       value: 4
@@ -1290,15 +1331,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[0].skipDialog
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[0].textDialog
+      value: "\u041F\u0440\u0438\u0432\u0435\u0442! \u042F ** - \u0442\u0432\u043E\u0439
+        \u043B\u0438\u0447\u043D\u044B\u0439 \u043D\u0430\u0441\u0442\u0430\u0432\u043D\u0438\u043A.
+        \u041C\u043E\u044F \u0437\u0430\u0434\u0430\u0447\u0430 \u043F\u043E\u043C\u043E\u0447\u044C
+        \u0442\u0435\u0431\u0435 \u0432\u043B\u0438\u0442\u044C\u0441\u044F \u0432
+        \u0440\u0430\u0431\u043E\u0442\u0443"
+      objectReference: {fileID: 0}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[1].textDialog
       value: "\u042F \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0442\u0435\u0431\u0435
         \u043F\u043E\u0441\u044B\u043B\u043A\u0443, \u0431\u0435\u0440\u0438 \u0435\u0435"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
-      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[1].textDialog
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[2].textDialog
       value: "\u041A\u043E\u0433\u0434\u0430 \u0431\u0443\u0434\u0435\u0448\u044C
         \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0442\u044C \u0437\u0430\u044F\u0432\u043A\u0438,
         \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439
@@ -1306,18 +1355,12 @@ PrefabInstance:
         \u043A \u043D\u0438 \u043F\u0440\u0438\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u044B"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
-      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[2].textDialog
-      value: "\u0438\u0437\u0443\u0447\u0438\u043B \u043C\u043E\u044E \u0441\u0445\u0435\u043C\u0443?"
-      objectReference: {fileID: 0}
-    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].skipDialog
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].textDialog
-      value: "\u043F\u0435\u0440\u0432\u044B\u043C \u0434\u0435\u043B\u043E\u043C
-        \u0442\u0435\u0431\u0435 \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C
-        \u0441\u0442\u0432\u043E\u043B\u043E\u0432\u044B\u0435 \u043A\u043B\u0435\u0442\u043A\u0438"
+      value: "\u0438\u0437\u0443\u0447\u0438\u043B \u043C\u043E\u044E \u0441\u0445\u0435\u043C\u0443?"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[4].skipDialog
@@ -1325,11 +1368,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[4].textDialog
-      value: "\u0442\u0435\u0431\u0435 \u0432\u0441\u0435\u0433\u043E \u043B\u0438\u0448\u044C
-        \u043D\u0443\u0436\u043D\u043E \u0441\u043B\u0435\u0434\u0438\u0442\u044C
-        \u0437\u0430 \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u043E\u0439
-        \u0438 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C
-        \u0435\u0435\u043A\u043B\u0435\u0442\u043A\u0438"
+      value: "\u043F\u0435\u0440\u0432\u044B\u043C \u0434\u0435\u043B\u043E\u043C
+        \u0442\u0435\u0431\u0435 \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C
+        \u0441\u0442\u0432\u043E\u043B\u043E\u0432\u044B\u0435 \u043A\u043B\u0435\u0442\u043A\u0438"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[5].skipDialog
@@ -1341,7 +1382,7 @@ PrefabInstance:
         \u043D\u0443\u0436\u043D\u043E \u0441\u043B\u0435\u0434\u0438\u0442\u044C
         \u0437\u0430 \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u043E\u0439
         \u0438 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C
-        \u0435\u0435"
+        \u0435\u0435\u043A\u043B\u0435\u0442\u043A\u0438"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[6].skipDialog
@@ -1349,8 +1390,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[6].textDialog
-      value: "\u0441\u043E\u0431\u0438\u0440\u0430\u0439 \u043A\u043B\u0435\u0442\u043A\u0438
-        \u0438 \u043F\u0440\u0438\u0441\u0442\u0443\u043F\u0430\u0439 \u043A \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044E"
+      value: "\u0442\u0435\u0431\u0435 \u0432\u0441\u0435\u0433\u043E \u043B\u0438\u0448\u044C
+        \u043D\u0443\u0436\u043D\u043E \u0441\u043B\u0435\u0434\u0438\u0442\u044C
+        \u0437\u0430 \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u043E\u0439
+        \u0438 \u0440\u0435\u0433\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C
+        \u0435\u0435"
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[7].skipDialog
@@ -1478,12 +1522,24 @@ PrefabInstance:
       value: 0.62352943
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[0].pathToAvatar
+      value: Assets/Dialog/Avatars/ikonGirl.png
+      objectReference: {fileID: 0}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[1].pathToAvatar
+      value: Assets/Dialog/Avatars/ikonGirl.png
+      objectReference: {fileID: 0}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: dialogPoints.Array.data[0].dialog.Array.data[2].pathToAvatar
+      value: Assets/Dialog/Avatars/ikonGirl.png
+      objectReference: {fileID: 0}
+    - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].fontSizeText
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].pathToAvatar
-      value: Avatars/base
+      value: Assets/Dialog/Avatars/ikonGirl.png
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[4].fontSizeText
@@ -1491,7 +1547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[4].pathToAvatar
-      value: Avatars/base
+      value: Assets/Dialog/Avatars/ikonGirl.png
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[5].fontSizeText
@@ -1499,7 +1555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[5].pathToAvatar
-      value: Avatars/base
+      value: Assets/Dialog/Avatars/ikonGirl.png
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[6].fontSizeText
@@ -1507,7 +1563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[6].pathToAvatar
-      value: Avatars/base
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[7].fontSizeText
@@ -1515,11 +1571,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[7].pathToAvatar
-      value: Avatars/base
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[0].stopTheEndDialog
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 332875105180427362, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[3].stopTheEndDialog
@@ -1573,6 +1629,10 @@ PrefabInstance:
       propertyPath: dialogPoints.Array.data[0].dialog.Array.data[7].jsonHTMLColorRGBA
       value: '#9FAEC6FF'
       objectReference: {fileID: 0}
+    - target: {fileID: 5770838763620908544, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
+      propertyPath: JsonFile
+      value: 
+      objectReference: {fileID: 4900000, guid: a2bd98aa67312d84baafed0fa4d3ba8e, type: 3}
     - target: {fileID: 5770838763620908544, guid: 96416cda1e8da6d43b8e87d66d9a287a, type: 3}
       propertyPath: dialogueWindow
       value: 
@@ -1840,8 +1900,8 @@ Transform:
   m_GameObject: {fileID: 310607957}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -3.86, y: -0.5493, z: -1.07}
-  m_LocalScale: {x: 0.19880402, y: 0.15770608, z: 0.43984428}
+  m_LocalPosition: {x: -3.1931, y: -0.7103, z: -1.07}
+  m_LocalScale: {x: 0.33218163, y: 0.15770608, z: 0.52667}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2127619092}
@@ -1890,7 +1950,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f3d8e88e4ff2474580c43b1cb1a95f5, type: 2}
+  - {fileID: 2100000, guid: d003e0b6ca125ed45bad0c93b2ffeba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2333,8 +2393,8 @@ Transform:
   m_GameObject: {fileID: 379238738}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 7.8, y: -1.87, z: 0.7}
-  m_LocalScale: {x: 0.1, y: 0.10805946, z: 0.24}
+  m_LocalPosition: {x: 7.3786, y: -1.6781, z: 0.7}
+  m_LocalScale: {x: 0.31387803, y: 0.10805946, z: 0.27837598}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2127619092}
@@ -2383,7 +2443,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8b90689996df51a43a715b5835e76400, type: 2}
+  - {fileID: 2100000, guid: d003e0b6ca125ed45bad0c93b2ffeba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3363,8 +3423,8 @@ Transform:
   m_GameObject: {fileID: 905694562}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 8.03, y: -2.09, z: -0.38}
-  m_LocalScale: {x: 0.10745999, y: 0.17, z: 0.15183148}
+  m_LocalPosition: {x: 7.7855, y: -2.212, z: -0.38}
+  m_LocalScale: {x: 0.20959456, y: 0.17, z: 0.12743215}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2127619092}
@@ -3413,7 +3473,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f3d8e88e4ff2474580c43b1cb1a95f5, type: 2}
+  - {fileID: 2100000, guid: d003e0b6ca125ed45bad0c93b2ffeba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3637,8 +3697,8 @@ Transform:
   m_GameObject: {fileID: 1005871776}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -1.22, y: -0.94, z: -0.38}
-  m_LocalScale: {x: 0.18502003, y: 0.15770608, z: 0.36171407}
+  m_LocalPosition: {x: -0.9927, y: -1.1538, z: -0.38}
+  m_LocalScale: {x: 0.33310175, y: 0.15770608, z: 0.43117052}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2127619092}
@@ -3687,7 +3747,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f3d8e88e4ff2474580c43b1cb1a95f5, type: 2}
+  - {fileID: 2100000, guid: d003e0b6ca125ed45bad0c93b2ffeba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6829,8 +6889,8 @@ Transform:
   m_GameObject: {fileID: 1871919086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -3.2, y: -1.4801, z: -0.05}
-  m_LocalScale: {x: 0.1459438, y: 0.15770608, z: 0.25370625}
+  m_LocalPosition: {x: -2.6578, y: -1.6575, z: -0.05}
+  m_LocalScale: {x: 0.25439465, y: 0.15770608, z: 0.28917438}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2127619092}
@@ -6879,7 +6939,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8b90689996df51a43a715b5835e76400, type: 2}
+  - {fileID: 2100000, guid: d003e0b6ca125ed45bad0c93b2ffeba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
