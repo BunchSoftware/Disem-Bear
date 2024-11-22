@@ -11,6 +11,8 @@ public class ThingsInTableMix : MonoBehaviour
     public List<GameObject> IngredientsIn = new();
     public List<string> ingredients = new();
     public List<Recipe> Recipes = new();
+    public bool MixTableOn = false;
+    public GameObject currentPrinterObject;
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ingredient>())
@@ -54,7 +56,12 @@ public class ThingsInTableMix : MonoBehaviour
                         Destroy(IngredientsIn[j]);
                     }
                     IngredientsIn.Clear();
-                    Instantiate(Recipes[i].OutPut, tempObj.transform.position, tempObj.transform.rotation, transform.parent);
+                    GameObject obj = Instantiate(Recipes[i].OutPut, tempObj.transform.position, tempObj.transform.rotation, transform.parent);
+                    if (obj.GetComponent<PrinterObjectInfo>())
+                    {
+                        MixTableOn = false;
+                        currentPrinterObject = obj;
+                    }
                     break;
                 }
             }
