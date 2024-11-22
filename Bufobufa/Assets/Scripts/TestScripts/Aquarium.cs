@@ -14,21 +14,17 @@ public class Aquarium : MonoBehaviour
     private float TimeCell = 666f;
     private float timerCell = 0f;
     public int CountCells = 0;
-    public bool AquariumOpen = false;
 
     private void OnMouseDown()
     {
-        if (AquariumOpen)
+        DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
+        DisplayCount.GetComponent<Animator>().SetBool("On", true);
+        StartCoroutine(waitDisplayCount());
+        for (int i = 0; i < CountCells; i++)
         {
-            DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
-            DisplayCount.GetComponent<Animator>().SetBool("On", true);
-            StartCoroutine(waitDisplayCount());
-            for (int i = 0; i < CountCells; i++)
-            {
-                StoreManager.Instance.AddIngridient(NameIngredient);
-            }
-            CountCells = 0;
+            StoreManager.Instance.AddIngridient(NameIngredient);
         }
+        CountCells = 0;
     }
     IEnumerator waitDisplayCount()
     {

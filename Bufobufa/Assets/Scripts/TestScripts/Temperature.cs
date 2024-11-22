@@ -8,21 +8,17 @@ public class Temperature : MonoBehaviour
     public int numState = 5;
     private float timer = 0;
     public float TimeLessOneLevel = 5f;
-    public bool AquariumOpen = false;
     private void OnMouseDown()
     {
-        if (AquariumOpen)
+        numState = Mathf.Min(numState + 1, States.Count - 1);
+        GetComponent<SpriteRenderer>().sprite = States[numState];
+        if (numState > 3)
         {
-            numState = Mathf.Min(numState + 1, States.Count - 1);
-            GetComponent<SpriteRenderer>().sprite = States[numState];
-            if (numState > 3)
-            {
-                transform.parent.gameObject.GetComponent<Aquarium>().NormalTemperature = true;
-            }
-            else
-            {
-                transform.parent.gameObject.GetComponent<Aquarium>().NormalTemperature = false;
-            }
+            transform.parent.gameObject.GetComponent<Aquarium>().NormalTemperature = true;
+        }
+        else
+        {
+            transform.parent.gameObject.GetComponent<Aquarium>().NormalTemperature = false;
         }
     }
     private void Start()

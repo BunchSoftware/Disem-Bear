@@ -15,6 +15,7 @@ public class AquariumOpen : MonoBehaviour
     private GameObject Vcam;
     private GameObject AquariumSprite;
     private GameObject Temperature;
+    private GameObject TriggerAquarium;
 
     [Header("Координаты куда должен уйти объект при открытии стола(Игрок, камера и сам аквариум)")]
     public Vector3 CoordPlayer = new();
@@ -38,6 +39,7 @@ public class AquariumOpen : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         AquariumSprite = transform.Find("AquariumSprite").gameObject;
         Temperature = AquariumSprite.transform.Find("Termometr").gameObject;
+        TriggerAquarium = transform.Find("TriggerAquarium").gameObject;
     }
 
     public void OnTrigEnter(Collider other)
@@ -59,15 +61,17 @@ public class AquariumOpen : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "Box")))
             {
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
+                    TriggerAquarium.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
+                    TriggerAquarium.SetActive(false);
                 }
             }
         }
@@ -101,12 +105,13 @@ public class AquariumOpen : MonoBehaviour
 
 
             StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
-            AquariumSprite.GetComponent<Aquarium>().AquariumOpen = true;
-            Temperature.GetComponent<Temperature>().AquariumOpen = true;
+            AquariumSprite.GetComponent<BoxCollider>().enabled = true;
+            Temperature.GetComponent<BoxCollider>().enabled = true;
             GetComponent<BoxCollider>().enabled = false;
         }
         else if (!AquariumAnim && AquariumIsOpen && Input.GetMouseButtonDown(1))
         {
+            TriggerAquarium.SetActive(false);
             AquariumIsOpen = false;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             AquariumAnim = true;
@@ -119,9 +124,9 @@ public class AquariumOpen : MonoBehaviour
 
             AquariumSprite.GetComponent<MoveAnimation>().EndMove();
 
-            
-            AquariumSprite.GetComponent<Aquarium>().AquariumOpen = false;
-            Temperature.GetComponent<Temperature>().AquariumOpen = false;
+
+            AquariumSprite.GetComponent<BoxCollider>().enabled = false;
+            Temperature.GetComponent<BoxCollider>().enabled = false;
             GetComponent<BoxCollider>().enabled = true;
         }
     }

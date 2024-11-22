@@ -6,7 +6,6 @@ public class MouseTrigger : MonoBehaviour
 {
     private Vector3 originalScale;
     private bool OnScaleChange = false;
-    private bool OffScaleChange = false;
     public float TimeAnim = 0.2f;
     private float timer = 0f;
     private GameObject Player;
