@@ -11,6 +11,8 @@ public class DialogueWindow : MonoBehaviour
     [SerializeField] private Button skipButton;
     [HideInInspector] public Animator animator;
 
+    private Font standartFont;
+
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -18,6 +20,7 @@ public class DialogueWindow : MonoBehaviour
 
     public void Init(DialogManager dialogManager)
     {
+        standartFont = textDialog.font;
         skipButton.onClick.AddListener(() =>
         {
             dialogManager.SkipDialog();
@@ -54,7 +57,10 @@ public class DialogueWindow : MonoBehaviour
 
     private void SetParametres(Dialog dialog)
     {
-        textDialog.font = dialog.fontText;
+        if (dialog.fontText != null)
+            textDialog.font = dialog.fontText;
+        else
+            textDialog.font = standartFont;
         textDialog.fontStyle = dialog.fontStyleText;
         textDialog.fontSize = dialog.fontSizeText;
         textDialog.color = dialog.colorText;
