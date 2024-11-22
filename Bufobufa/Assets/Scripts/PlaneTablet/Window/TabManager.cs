@@ -24,12 +24,6 @@ public class TabManager : MonoBehaviour
             Tab tab;
             if (tabsContent.transform.GetChild(i).TryGetComponent<Tab>(out tab))
             {
-                if(tab.indexTab == 0)
-                {
-                    tab.SelectTab(true);
-                    tabs.Add(tab);
-                    continue;
-                }
                 tab.SelectTab(false);
                 tabs.Add(tab);
             };
@@ -38,6 +32,8 @@ public class TabManager : MonoBehaviour
 
         if (tabBarButtons.Count >= 1)
             tabBarButtons[0].SelectButton(true);
+        if (tabs.Count >= 1)
+            tabs[0].SelectTab(true);
     }
 
     public void SetCurrentIndexTab(int index)

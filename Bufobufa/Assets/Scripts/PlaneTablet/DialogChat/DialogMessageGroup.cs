@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +70,6 @@ public class DialogMessageGroup : MonoBehaviour
         currentMessage.textMessage.fontStyle = dialog.fontStyleText;
         currentMessage.textMessage.fontSize = dialog.fontSizeText;
         currentMessage.textMessage.color = dialog.colorText;
-        currentMessage.iconMessage.sprite = dialog.avatar;
+        currentMessage.iconMessage.sprite = Resources.Load<Sprite>(dialog.pathToAvatar);
     }
 }

@@ -1,15 +1,12 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using UnityEditor;
 using UnityEngine;
 
 public class GeneratorJSONExercise : MonoBehaviour
 {
     [SerializeField] private List<Exercise> exercises  = new List<Exercise>();
-    [SerializeField] private TextAsset textOutput;
     [TextAreaAttribute(10, 100)]
     [SerializeField] private string jsonOutput;
 
@@ -21,8 +18,5 @@ public class GeneratorJSONExercise : MonoBehaviour
         }
 
         jsonOutput = JsonConvert.SerializeObject(exercises);
-
-        if (textOutput != null)
-            File.WriteAllText(AssetDatabase.GetAssetPath(textOutput), jsonOutput, Encoding.UTF8);
     }
 }

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour
 {
     [SerializeField] private DialogueWindow dialogueWindow;
-    [SerializeField] private TextAsset JsonFile;
+    [SerializeField] private string pathToFileJSON;
     public UnityEvent<Dialog> EndDialog;
 
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
@@ -24,7 +24,7 @@ public class DialogManager : MonoBehaviour
 
     private void Start()
     {
-        string path = AssetDatabase.GetAssetPath(JsonFile);
+        string path = Application.streamingAssetsPath + "/" + pathToFileJSON;
         dialogPoints = JsonConvert.DeserializeObject<List<DialogPoint>>(File.ReadAllText(path));
 
         for (int i = 0; i < dialogPoints.Count; i++)

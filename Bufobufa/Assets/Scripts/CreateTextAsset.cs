@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,9 +13,10 @@ public static class CreateTextFile
         string projectFolderPath = AssetDatabase.GUIDToAssetPath(folderGUID);
         string folderDirectory = Path.GetFullPath(projectFolderPath);
 
-        string contents = "This is a new text file!";
-
-        File.WriteAllText(folderDirectory + "/NewTextFile.txt", contents, Encoding.UTF8);
+        using (StreamWriter sw = File.CreateText(folderDirectory + "/NewTextFile.txt"))
+        {
+            sw.WriteLine("This is a new text file!");
+        }
 
         AssetDatabase.Refresh();
     }
