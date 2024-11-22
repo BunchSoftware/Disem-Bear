@@ -1,20 +1,18 @@
 using Cinemachine;
-using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableOpen : MonoBehaviour
+public class PrinterOpen : MonoBehaviour
 {
     public bool InTrigger = false;
-    public bool TableIsOpen = false;
-    private bool TableAnim = false;
+    public bool PrinterIsOpen = false;
+    private bool PrinterAnim = false;
     private bool ClickedMouse = false;
 
     private GameObject Player;
     private GameObject Vcam;
-    private GameObject TriggerTable;
-    private GameObject MixTable;
+    private GameObject TriggerPrinter;
 
     [Header("Координаты куда должен уйти объект при открытии стола(Игрок и камера)")]
     public Vector3 CoordPlayer = new();
@@ -30,8 +28,7 @@ public class TableOpen : MonoBehaviour
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
-        TriggerTable = transform.Find("TriggerTable").gameObject;
-        MixTable = transform.Find("MixTable").gameObject;
+        TriggerPrinter = transform.Find("TriggerPrinter").gameObject;
     }
     public void OnTrigEnter(Collider other)
     {
@@ -57,19 +54,20 @@ public class TableOpen : MonoBehaviour
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
-                    TriggerTable.SetActive(true);
+                    TriggerPrinter.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
-                    TriggerTable.SetActive(false);
+                    TriggerPrinter.SetActive(false);
                 }
             }
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TableAnim && InTrigger && ClickedMouse && !TableIsOpen){
-            MixTable.GetComponent<ThingsInTableMix>().MixTableOn = true;
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !PrinterAnim && InTrigger && ClickedMouse && !PrinterIsOpen)
+        {
+
             ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
             Vcam.GetComponent<MoveAnimation>().startCoords = CoordVcam;
@@ -83,21 +81,21 @@ public class TableOpen : MonoBehaviour
             currentPos = Player.transform.position;
             Player.GetComponent<PlayerMouseMove>().MovePlayer(CoordPlayer);
             Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
-            
 
 
-            TableIsOpen = true;
+
+            PrinterIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
-            TableAnim = true;
+            PrinterAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (!TableAnim && TableIsOpen && Input.GetMouseButtonDown(1))
+        else if (!PrinterAnim && PrinterIsOpen && Input.GetMouseButtonDown(1))
         {
-            TriggerTable.SetActive(false);
-            TableIsOpen = false;
+            TriggerPrinter.SetActive(false);
+            PrinterIsOpen = false;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
-            TableAnim = true;
+            PrinterAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
@@ -106,13 +104,6 @@ public class TableOpen : MonoBehaviour
             Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
 
-            
-            if (MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject != null)
-            {
-                Player.GetComponent<PlayerInfo>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
-                MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject = null;
-                Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-            }
 
             GetComponent<BoxCollider>().enabled = true;
         }
@@ -120,7 +111,7 @@ public class TableOpen : MonoBehaviour
     IEnumerator WaitAnimTable(float f)
     {
         yield return new WaitForSeconds(f);
-        TableAnim = false;
+        PrinterAnim = false;
     }
     IEnumerator WaitAnimCamera(float f)
     {
