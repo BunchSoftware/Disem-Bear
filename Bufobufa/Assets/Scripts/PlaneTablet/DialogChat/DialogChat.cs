@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public class DialogChat : MonoBehaviour
 {
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject prefab;
-    [SerializeField] private string pathToFileJSON;
+    [SerializeField] private TextAsset JsonFile;
     [SerializeField] private Button skipButton;
     private List<DialogMessageGroup> dialogMessageGroups = new List<DialogMessageGroup>();
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
@@ -25,14 +26,15 @@ public class DialogChat : MonoBehaviour
 
     private void Start()
     {
-        string path = Application.streamingAssetsPath + "/" + pathToFileJSON;
-        dialogPoints = JsonConvert.DeserializeObject<List<DialogPoint>>(File.ReadAllText(path));
+        dialogPoints = JsonConvert.DeserializeObject<List<DialogPoint>>(File.ReadAllText(AssetDatabase.GetAssetPath(JsonFile)));
 
         for (int i = 0; i < dialogPoints.Count; i++)
         {
             for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
             {
                 ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
+                dialogPoints[i].dialog[j].avatar = AssetDatabase.LoadAssetAtPath<Sprite>(dialogPoints[i].dialog[j].pathToAvatar);
+                dialogPoints[i].dialog[j].fontText = AssetDatabase.LoadAssetAtPath<Font>(dialogPoints[i].dialog[j].pathToFont);
             }
         }
     }
@@ -98,11 +100,11 @@ public class DialogChat : MonoBehaviour
             prefab.name = $"Message {dialogMessageGroups.Count}";
             GameObject message = Instantiate(prefab, content.transform);
             currentDialogMessageGroup = message.GetComponent<DialogMessageGroup>();
-            currentDialogMessageGroup.Init(this, DialogSide.Right);
+            currentDialogMessageGroup.Init(this, DialogSide.Left);
             dialogMessageGroups.Add(currentDialogMessageGroup);
 
             EnterDrop(dialogPoint.dialog[i]);
-
+            currentDialogMessageGroup.StartTypeLine(dialogPoint.dialog[i]);
             yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
 
             EndDialog?.Invoke(dialogPoint.dialog[i]);
@@ -136,6 +138,7 @@ public class DialogChat : MonoBehaviour
 
     private void EnterDrop(Dialog dialog)
     {
+        currentDialogMessageGroup.currentMessage.gameObject.SetActive(true);
         switch (dialog.enterDrop)
         {
             case DropEnum.DropRight:
@@ -163,6 +166,7 @@ public class DialogChat : MonoBehaviour
     }
     private void ExitDrop(Dialog dialog)
     {
+        currentDialogMessageGroup.currentMessage.gameObject.SetActive(false);
         switch (dialog.exitDrop)
         {
             case DropEnum.DropRight:

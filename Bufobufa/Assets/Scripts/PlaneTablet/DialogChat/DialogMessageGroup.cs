@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,6 +58,15 @@ public class DialogMessageGroup : MonoBehaviour
             currentMessage.textMessage.text += dialog.textDialog[j];
             yield return new WaitForSeconds(dialog.speedText);
         }
+
+
+        float y = currentMessage.textMessage.transform.GetComponent<RectTransform>().sizeDelta.y +
+            (Math.Abs(currentMessage.iconMessage.transform.GetComponent<RectTransform>().position.y
+            - Math.Abs(currentMessage.textMessage.transform.parent.GetComponent<RectTransform>().position.y)));
+        transform.GetComponent<RectTransform>().sizeDelta
+            = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, y);
+
+        print(y);
     }
 
     public void DialogLast(Dialog dialog)
@@ -70,6 +80,6 @@ public class DialogMessageGroup : MonoBehaviour
         currentMessage.textMessage.fontStyle = dialog.fontStyleText;
         currentMessage.textMessage.fontSize = dialog.fontSizeText;
         currentMessage.textMessage.color = dialog.colorText;
-        currentMessage.iconMessage.sprite = Resources.Load<Sprite>(dialog.pathToAvatar);
+        currentMessage.iconMessage.sprite = dialog.avatar;
     }
 }
