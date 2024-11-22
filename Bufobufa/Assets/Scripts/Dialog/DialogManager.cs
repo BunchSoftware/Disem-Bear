@@ -32,7 +32,11 @@ public class DialogManager : MonoBehaviour
             for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
             {
                 ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
-                dialogPoints[i].dialog[j].avatar = AssetDatabase.LoadAssetAtPath<Sprite>(dialogPoints[i].dialog[j].pathToAvatar);
+                string imageName = dialogPoints[i].dialog[j].pathToAvatar;
+                string[] sub = dialogPoints[i].dialog[j].pathToAvatar.Split("#");
+                imageName = sub[0];
+                string spriteName = sub[1];
+                dialogPoints[i].dialog[j].avatar = Load(imageName, spriteName);
                 dialogPoints[i].dialog[j].fontText = AssetDatabase.LoadAssetAtPath<Font>(dialogPoints[i].dialog[j].pathToFont);
             }
         }
@@ -183,5 +187,19 @@ public class DialogManager : MonoBehaviour
                 }
                 break;         
         }
+    }
+
+    private Sprite Load(string imageName, string spriteName)
+    {
+        Object[] all = AssetDatabase.LoadAllAssetsAtPath(imageName);
+
+        foreach (var s in all)
+        {
+            if (s.name == spriteName)
+            {
+                return s as Sprite;
+            }
+        }
+        return null;
     }
 }
