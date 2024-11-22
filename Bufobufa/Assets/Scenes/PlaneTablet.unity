@@ -1075,6 +1075,7 @@ GameObject:
   - component: {fileID: 411824707}
   - component: {fileID: 411824706}
   - component: {fileID: 411824708}
+  - component: {fileID: 411824709}
   m_Layer: 0
   m_Name: DialogChat
   m_TagString: Untagged
@@ -1146,6 +1147,18 @@ MonoBehaviour:
       avatar: {fileID: 0}
       textDialog: 1252525252525
   jsonOutput: '[{"dialog":[{"enterDrop":4,"exitDrop":0,"speedText":0.05,"skipDialog":true,"stopTheEndDialog":true,"waitSecond":0.0,"jsonHTMLColorRGBA":"#000000FF","fontStyleText":0,"pathToFont":"","fontSizeText":40,"pathToAvatar":"","textDialog":"1252525252525"}]}]'
+--- !u!114 &411824709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411824705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab45fbaa06e3c64388e21d8ffec91ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &541451600
 GameObject:
   m_ObjectHideFlags: 0
@@ -4766,7 +4779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8680238589761701062, guid: 7f609e01fb054f2429693cfd4aeafc49, type: 3}
-  pathToFileJSON: exercises.json
+  JsonFile: {fileID: 4900000, guid: 73a79399807f4e8388c2cbb5494681ca, type: 3}
 --- !u!114 &1895453428
 MonoBehaviour:
   m_ObjectHideFlags: 0
