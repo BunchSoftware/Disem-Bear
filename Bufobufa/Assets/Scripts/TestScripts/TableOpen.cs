@@ -11,9 +11,9 @@ public class TableOpen : MonoBehaviour
     private bool TableAnim = false;
     private bool ClickedMouse = false;
 
-    [SerializeField] GameObject Damper;
     private GameObject Player;
     private GameObject Vcam;
+    private GameObject TriggerTable;
 
     [Header("Координаты куда должен уйти объект при открытии стола(Игрок и камера)")]
     public Vector3 CoordPlayer = new();
@@ -29,6 +29,7 @@ public class TableOpen : MonoBehaviour
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
+        TriggerTable = transform.Find("TriggerTable").gameObject;
     }
     public void OnTrigEnter(Collider other)
     {
@@ -49,15 +50,17 @@ public class TableOpen : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "Box")))
             {
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
+                    TriggerTable.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
+                    TriggerTable.SetActive(false);
                 }
             }
         }
@@ -89,6 +92,7 @@ public class TableOpen : MonoBehaviour
         }
         else if (!TableAnim && TableIsOpen && Input.GetMouseButtonDown(1))
         {
+            TriggerTable.SetActive(false);
             TableIsOpen = false;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             TableAnim = true;

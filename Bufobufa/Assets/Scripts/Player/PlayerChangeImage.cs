@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerChangeImage : MonoBehaviour
@@ -10,6 +11,11 @@ public class PlayerChangeImage : MonoBehaviour
     [SerializeField] private Sprite Right;
     [SerializeField] private Sprite Forward;
     [SerializeField] private Sprite Back;
+
+    private float HorizontalChangePos;
+    private float VerticalChangePos;
+    private Sprite HorizontalSprite;
+    private Sprite VerticalSprite;
     private void Start()
     {
         LastPos = transform.position;
@@ -17,24 +23,32 @@ public class PlayerChangeImage : MonoBehaviour
     }
     private void Update()
     {
-        if (LastPos.x - transform.position.x > 0.015f)
+        HorizontalChangePos = LastPos.x - transform.position.x;
+        VerticalChangePos = LastPos.z - transform.position.z;
+        if (HorizontalChangePos >= 0.01f)
         {
-            spriteRender.sprite = Left;
+            HorizontalSprite = Left;
         }
-        else if (transform.position.x - LastPos.x > 0.015f)
+        else
         {
-            spriteRender.sprite = Right;
+            HorizontalSprite = Right;
         }
-        else if (transform.position.z <= LastPos.z)
+        if (VerticalChangePos < -0.01f)
         {
-            spriteRender.sprite = Forward;
+            VerticalSprite = Back;
         }
-        else if (transform.position.z > LastPos.z)
+        else
         {
-            spriteRender.sprite = Back;
+            VerticalSprite = Forward;
         }
-        
-        
+        if (Mathf.Abs(HorizontalChangePos) > Mathf.Abs(VerticalChangePos))
+        {
+            spriteRender.sprite = HorizontalSprite;
+        }
+        else
+        {
+            spriteRender.sprite = VerticalSprite;
+        }
         LastPos = transform.position;
     }
 }

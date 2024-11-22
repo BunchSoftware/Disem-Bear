@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7775523155591822077}
   - component: {fileID: 6898449816234771521}
   - component: {fileID: 5417974227223118406}
+  - component: {fileID: 1360009761462390633}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -111,8 +112,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.5274467, y: 9.598126, z: 0.2}
-  m_Center: {x: 0.030620575, y: -0.2605672, z: 0}
+  m_Size: {x: 3.7133522, y: 9.598126, z: 0.9235436}
+  m_Center: {x: 0, y: 0, z: 0.36177176}
 --- !u!54 &1892693423988651759
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -172,6 +173,7 @@ MonoBehaviour:
   Left: {fileID: 21300000, guid: 2434bd2120ddc0543867d4398c1aaee5, type: 3}
   Right: {fileID: 21300000, guid: 2d97a62191e55004ea1546bf4b34b009, type: 3}
   Forward: {fileID: 21300000, guid: 72d37f7ec91332f45a11aeef8571f02a, type: 3}
+  Back: {fileID: 21300000, guid: e6574dc576f6d6744894f3fbbc099bf6, type: 3}
 --- !u!114 &6898449816234771521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,8 +204,23 @@ NavMeshAgent:
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 10.24
   m_BaseOffset: 5.12
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1360009761462390633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637504109331753141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3709b8bafb850b458b2b9e9111ade80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerInSomething: 0
+  PlayerPickSometing: 0
+  currentPickObject: {fileID: 0}
