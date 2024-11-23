@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1798414506367105030}
   - component: {fileID: 1230801010732381242}
   - component: {fileID: 8328892675079702255}
-  - component: {fileID: 5273323756917914970}
   - component: {fileID: 1791344529625399707}
   - component: {fileID: 2489655592869789262}
   - component: {fileID: 4092997152617815322}
@@ -100,25 +99,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8628483798543188246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b1fd87493efa443b43986899e42937, type: 3}
+  m_Script: {fileID: 11500000, guid: 8edde6e76c945ca4885967e46edda282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IngredientName: papilio
+  IngredientName: detoxification
   InTableMix: 0
   spawner: {fileID: 0}
---- !u!114 &5273323756917914970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8628483798543188246}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ec73ca1cad573f47a3b3e33355dc629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StaticObject: 0
 --- !u!114 &1791344529625399707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +114,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8628483798543188246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9b2aa8a934090c42bd895ac7d25cb42, type: 3}
+  m_Script: {fileID: 11500000, guid: fdc043fdfa1abd346b008d3ebdbfd835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnDrag: 0
