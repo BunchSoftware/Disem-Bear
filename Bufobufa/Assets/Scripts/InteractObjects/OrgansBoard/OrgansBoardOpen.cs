@@ -104,7 +104,6 @@ public class OrgansBoardOpen : MonoBehaviour
         {
             TriggerOrgansBoard.SetActive(false);
             OrgansBoardIsOpen = false;
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             OrgansBoardAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
@@ -152,5 +151,6 @@ public class OrgansBoardOpen : MonoBehaviour
     {
         yield return new WaitForSeconds(f);
         Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
+        Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
     }
 }

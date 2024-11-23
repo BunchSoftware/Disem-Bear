@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 302775234}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
@@ -2713,6 +2713,7 @@ MonoBehaviour:
   - NameItemForPrint: Heart
     TimePrint: 5
     ReturnItem: {fileID: 5610431095258980298, guid: 1164e8630954a6949b59aba0fd7e2c41, type: 3}
+  Dialog: {fileID: 283726787}
 --- !u!1 &565671591
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,6 +3457,7 @@ MonoBehaviour:
     Spawner: {fileID: 840114306}
   - name: adaptation
     Spawner: {fileID: 1975000769}
+  Dialog: {fileID: 283726787}
 --- !u!1 &746310728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5214,6 +5216,7 @@ MonoBehaviour:
     OutPut: {fileID: 5610431095258980298, guid: 1164e8630954a6949b59aba0fd7e2c41, type: 3}
   MixTableOn: 0
   currentPrinterObject: {fileID: 0}
+  Dialog: {fileID: 283726787}
 --- !u!212 &1115444604
 SpriteRenderer:
   m_ObjectHideFlags: 0

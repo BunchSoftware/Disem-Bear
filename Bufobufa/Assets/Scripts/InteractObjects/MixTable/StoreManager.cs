@@ -9,6 +9,8 @@ public class StoreManager : MonoBehaviour
 
     public static StoreManager Instance;
 
+    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,6 +21,10 @@ public class StoreManager : MonoBehaviour
 
     public void AddIngridient(string nameIngridient)
     {
+        if (nameIngridient == "filtering") //”ƒ¿À»“‹
+        {
+            Dialog.StartDialog(1);
+        }
         for (int i = 0; i < TypesIngredients.Count; i++)
         {
             if (TypesIngredients[i].name == nameIngridient)
