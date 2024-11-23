@@ -65,5 +65,6 @@ public class DialogueWindow : MonoBehaviour
         textDialog.fontSize = dialog.fontSizeText;
         textDialog.color = dialog.colorText;
         iconDialog.sprite = dialog.avatar;
+        iconDialog.preserveAspect = true;
     }
 }

@@ -28,7 +28,18 @@ public class ExerciseManager : MonoBehaviour
 
         for (int i = 0; i < exercises.Count; i++)
         {
-            exercises[i].avatar = AssetDatabase.LoadAssetAtPath<Sprite>(exercises[i].pathToAvatar);
+            if (exercises[i].pathToAvatar != null)
+            {
+                string imageName = exercises[i].pathToAvatar;
+                string[] sub = exercises[i].pathToAvatar.Split("#");
+
+                if (sub.Length == 2)
+                {
+                    imageName = sub[0];
+                    string spriteName = sub[1];
+                    exercises[i].avatar = Load(imageName, spriteName);
+                }
+            }
         }
 
         for (int i = 0; i < exercises.Count; i++)
@@ -96,5 +107,19 @@ public class ExerciseManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Sprite Load(string imageName, string spriteName)
+    {
+        UnityEngine.Object[] all = AssetDatabase.LoadAllAssetsAtPath(imageName);
+
+        foreach (var s in all)
+        {
+            if (s.name == spriteName)
+            {
+                return s as Sprite;
+            }
+        }
+        return null;
     }
 }

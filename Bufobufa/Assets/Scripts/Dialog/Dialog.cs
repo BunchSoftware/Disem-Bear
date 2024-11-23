@@ -15,6 +15,7 @@ public class Dialog
     public DropEnum exitDrop = DropEnum.DropLeft;
     public float speedText = 0.05f;
     public bool skipDialog = false;
+    public string conditionSkipDialog;
     public bool stopTheEndDialog = false;
     public float waitSecond = 0;
     [JsonIgnore] public Color colorText = Color.black;
