@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 1798414506367105030}
   - component: {fileID: 1230801010732381242}
   - component: {fileID: 8328892675079702255}
-  - component: {fileID: 621521455280905134}
-  - component: {fileID: 6297512129119343022}
-  - component: {fileID: 6444504760749885651}
-  - component: {fileID: 8231798575586109197}
+  - component: {fileID: 315223350120791957}
+  - component: {fileID: 7967345627986332447}
+  - component: {fileID: 6582413136795209603}
+  - component: {fileID: 7379255367490559250}
   m_Layer: 0
-  m_Name: eggplant
+  m_Name: adaptation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1683196615, guid: f635bd5fd3df6bb4084b9048748105a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e81df001f2ea6df41839d80ee53540b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.46875, y: 0.28125}
+  m_Size: {x: 0.15625, y: 0.15625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b1fd87493efa443b43986899e42937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IngredientName: eggplant
+  IngredientName: cell
   InTableMix: 0
   spawner: {fileID: 0}
---- !u!114 &621521455280905134
+--- !u!114 &315223350120791957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StaticObject: 0
---- !u!114 &6297512129119343022
+--- !u!114 &7967345627986332447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnDrag: 0
---- !u!65 &6444504760749885651
+--- !u!65 &6582413136795209603
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,9 +151,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.28125, y: 0.28125, z: 0.2}
+  m_Size: {x: 0.25, y: 0.25, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8231798575586109197
+--- !u!54 &7379255367490559250
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

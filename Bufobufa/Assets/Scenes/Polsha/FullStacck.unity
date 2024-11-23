@@ -2802,11 +2802,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.155
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.19600002
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2855,7 +2855,7 @@ PrefabInstance:
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -459560698, guid: f635bd5fd3df6bb4084b9048748105a4, type: 3}
+      objectReference: {fileID: 21300000, guid: 97eecc9b577529746a90b1dcd0150824, type: 3}
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -2874,7 +2874,7 @@ PrefabInstance:
       objectReference: {fileID: 8628483798543188246, guid: 835822d51b5ec5840a8fd797522a7732, type: 3}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: IngredientName
-      value: papilio
+      value: detoxification
       objectReference: {fileID: 0}
     - target: {fileID: 6536610327159149068, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
@@ -2882,7 +2882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Name
-      value: Spawner (1)
+      value: SpawnerD
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
@@ -3063,7 +3063,7 @@ MonoBehaviour:
     Spawner: {fileID: 1651407600}
   - name: eggplant
     Spawner: {fileID: 840114306}
-  - name: cucumis
+  - name: adaptation
     Spawner: {fileID: 1975000769}
 --- !u!1 &746310728
 GameObject:
@@ -4050,11 +4050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.2
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21700004
+      value: -0.006
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4103,7 +4103,7 @@ PrefabInstance:
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1960126459, guid: f635bd5fd3df6bb4084b9048748105a4, type: 3}
+      objectReference: {fileID: 21300000, guid: e81df001f2ea6df41839d80ee53540b3, type: 3}
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_SortingOrder
       value: 0
@@ -4126,7 +4126,7 @@ PrefabInstance:
       objectReference: {fileID: 8628483798543188246, guid: 835822d51b5ec5840a8fd797522a7732, type: 3}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: IngredientName
-      value: cucumis
+      value: adaptation
       objectReference: {fileID: 0}
     - target: {fileID: 6536610327159149068, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
@@ -4134,11 +4134,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Name
-      value: Spawner (3)
+      value: SpawnerA
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4588,7 +4592,7 @@ Transform:
   m_GameObject: {fileID: 1115444599}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 0.193, z: -0.058}
+  m_LocalPosition: {x: 0.35, y: 0.193, z: -0.041}
   m_LocalScale: {x: 0.33709, y: 0.33709, z: 0.33709}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6267,11 +6271,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02
+      value: -0.345
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14200003
+      value: 0.319
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6320,7 +6324,7 @@ PrefabInstance:
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1683196615, guid: f635bd5fd3df6bb4084b9048748105a4, type: 3}
+      objectReference: {fileID: 21300000, guid: db7255a81c9c2c94780bedc5bdfb5d4e, type: 3}
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -6339,7 +6343,7 @@ PrefabInstance:
       objectReference: {fileID: 8628483798543188246, guid: 835822d51b5ec5840a8fd797522a7732, type: 3}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: IngredientName
-      value: eggplant
+      value: digestion
       objectReference: {fileID: 0}
     - target: {fileID: 6536610327159149068, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
@@ -6347,7 +6351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Name
-      value: Spawner (2)
+      value: SpawnerDi
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
@@ -6616,11 +6620,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.357
+      value: -0.371
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.172
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 2699481424296046412, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6668,7 +6672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Name
-      value: Spawner
+      value: SpawnerS
       objectReference: {fileID: 0}
     - target: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Layer
