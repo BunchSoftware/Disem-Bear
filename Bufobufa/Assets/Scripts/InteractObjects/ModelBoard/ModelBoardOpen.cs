@@ -9,6 +9,8 @@ public class ModelBoardOpen : MonoBehaviour
     public bool BoardIsOpen = false;
     private bool BoardAnim = false;
     private bool ClickedMouse = false;
+    public List<GameObject> points = new List<GameObject>();
+    public List<GameObject> items = new List<GameObject>();
 
     private GameObject Player;
     private GameObject Vcam;
@@ -104,6 +106,26 @@ public class ModelBoardOpen : MonoBehaviour
 
 
             GetComponent<BoxCollider>().enabled = true;
+        }
+        else if (InTrigger && ClickedMouse && !BoardIsOpen && Player.GetComponent<PlayerInfo>().PlayerPickSometing)
+        {
+            ClickedMouse = false;
+            if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>())
+            {
+                if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().PackageName == "Document")
+                {
+                    if (items.Count < points.Count)
+                    {
+                        items.Add(Player.GetComponent<PlayerInfo>().currentPickObject.transform.GetChild(0).gameObject);
+                        items[items.Count - 1].transform.parent = transform;
+                        items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
+                        items[items.Count - 1].SetActive(true);
+                        Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                        Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
+                        Player.GetComponent<PlayerInfo>().currentPickObject = null;
+                    }
+                }
+            }
         }
     }
     IEnumerator WaitAnimBoard(float f)
