@@ -19,6 +19,8 @@ public class DialogManager : MonoBehaviour
     private int currentIndexDialogPoint = 0;
     private int currentIndexDialog = 0;
 
+    private string currentConditionSkip;
+
     private bool isCanSkipDialog = false;
     private bool isDialogLast = false;
 
@@ -70,7 +72,9 @@ public class DialogManager : MonoBehaviour
             if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
                 dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
 
-            if (dialog != null && dialog.skipDialog == true)
+            if (dialog != null 
+                && dialog.skipDialog == true 
+                && currentConditionSkip == dialog.conditionSkipDialog)
             {
                 StopTypeLine();
 
@@ -89,8 +93,16 @@ public class DialogManager : MonoBehaviour
                     currentIndexDialog++;
                     TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
                 }
+
+                currentConditionSkip = "";
             }
         }
+    }
+
+    public void RunConditionSkip(string conditionSkip)
+    {
+        currentConditionSkip = conditionSkip;
+        SkipDialog();
     }
 
     public void TypeLine(DialogPoint dialogPoint, int indexDialog)
