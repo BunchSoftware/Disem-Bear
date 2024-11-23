@@ -107,26 +107,7 @@ public class ModelBoardOpen : MonoBehaviour
 
             GetComponent<BoxCollider>().enabled = true;
         }
-        else if (InTrigger && ClickedMouse && !BoardIsOpen && Player.GetComponent<PlayerInfo>().PlayerPickSometing)
-        {
-            ClickedMouse = false;
-            if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>())
-            {
-                if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().PackageName == "Document")
-                {
-                    if (items.Count < points.Count)
-                    {
-                        items.Add(Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().InPackage);
-                        items[items.Count - 1].transform.parent = transform;
-                        items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
-                        items[items.Count - 1].SetActive(true);
-                        Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
-                        Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
-                        Player.GetComponent<PlayerInfo>().currentPickObject = null;
-                    }
-                }
-            }
-        }
+        
     }
     IEnumerator WaitAnimBoard(float f)
     {
