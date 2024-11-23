@@ -82,7 +82,7 @@ namespace API
     {
         [SerializeField] private string UUID;
 
-        private async void Start()
+        private void Start()
         {
             // Регистрация игрока и задания ресурсов, если нужно отсутсвие ресурсов, укажите null
             //ResourcePlayer resourcePlayer = new ResourcePlayer();

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour
 {
     [SerializeField] private DialogueWindow dialogueWindow;
-    [SerializeField] private TextAsset JsonFile;
+    [SerializeField] private FileDialog fileDialog;
     public UnityEvent<Dialog> EndDialog;
 
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
@@ -26,30 +26,7 @@ public class DialogManager : MonoBehaviour
 
     private void Start()
     {
-        string path = AssetDatabase.GetAssetPath(JsonFile);
-        dialogPoints = JsonConvert.DeserializeObject<List<DialogPoint>>(File.ReadAllText(path));
-
-        for (int i = 0; i < dialogPoints.Count; i++)
-        {
-            for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
-            {
-                ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
-                if (dialogPoints[i].dialog[j].pathToAvatar != null)
-                {
-                    string imageName = dialogPoints[i].dialog[j].pathToAvatar;
-                    string[] sub = dialogPoints[i].dialog[j].pathToAvatar.Split("#");
-
-                    if(sub.Length == 2)
-                    {
-                        imageName = sub[0];
-                        string spriteName = sub[1];
-                        dialogPoints[i].dialog[j].avatar = Load(imageName, spriteName);
-                    }
-                }
-                dialogPoints[i].dialog[j].fontText = AssetDatabase.LoadAssetAtPath<Font>(dialogPoints[i].dialog[j].pathToFont);
-            }
-        }
-
+        dialogPoints = fileDialog.dialogPoints;
         dialogueWindow.Init(this);
     }
 
@@ -206,19 +183,5 @@ public class DialogManager : MonoBehaviour
                 }
                 break;         
         }
-    }
-
-    private Sprite Load(string imageName, string spriteName)
-    {
-        Object[] all = AssetDatabase.LoadAllAssetsAtPath(imageName);
-
-        foreach (var s in all)
-        {
-            if (s.name == spriteName)
-            {
-                return s as Sprite;
-            }
-        }
-        return null;
     }
 }
