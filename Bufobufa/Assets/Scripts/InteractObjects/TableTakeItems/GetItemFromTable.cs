@@ -8,6 +8,21 @@ public class GetItemFromTable : MonoBehaviour
     private bool InTrigger = false;
     private bool ClickedMouse = false;
 
+    public void OnTrigEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            InTrigger = true;
+        }
+    }
+    public void OnTrigExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            InTrigger = false;
+        }
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))

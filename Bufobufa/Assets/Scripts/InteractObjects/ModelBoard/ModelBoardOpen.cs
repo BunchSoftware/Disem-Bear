@@ -65,7 +65,7 @@ public class ModelBoardOpen : MonoBehaviour
             }
         }
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !BoardAnim && InTrigger && ClickedMouse && !BoardIsOpen)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !BoardAnim && InTrigger && ClickedMouse && !BoardIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
 
             ClickedMouse = false;
@@ -116,7 +116,7 @@ public class ModelBoardOpen : MonoBehaviour
                 {
                     if (items.Count < points.Count)
                     {
-                        items.Add(Player.GetComponent<PlayerInfo>().currentPickObject.transform.GetChild(0).gameObject);
+                        items.Add(Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().InPackage);
                         items[items.Count - 1].transform.parent = transform;
                         items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
                         items[items.Count - 1].SetActive(true);
