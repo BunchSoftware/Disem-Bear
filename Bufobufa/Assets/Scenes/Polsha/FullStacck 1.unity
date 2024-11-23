@@ -974,6 +974,9 @@ MonoBehaviour:
   OnAquarium: 0
   NormalTimeCell: 3
   CountCells: 0
+  Dialog: {fileID: 0}
+  CodeWord: 
+  OffStrela: {fileID: 0}
 --- !u!1 &189995447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,6 +1827,7 @@ MonoBehaviour:
   - {fileID: 458237752}
   - {fileID: 1261938192}
   items: []
+  ScaleVector: {x: 0, y: 0, z: 0}
 --- !u!114 &302775239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2863,6 +2867,10 @@ MonoBehaviour:
   - NameItemForPrint: Heart
     TimePrint: 5
     ReturnItem: {fileID: 5610431095258980298, guid: 1164e8630954a6949b59aba0fd7e2c41, type: 3}
+  OrigPrinter: {fileID: 0}
+  DonePrinter: {fileID: 0}
+  PrinterImage: {fileID: 0}
+  Dialog: {fileID: 0}
 --- !u!1 &583318569 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
@@ -3746,6 +3754,7 @@ MonoBehaviour:
     Spawner: {fileID: 1626309113}
   - name: reduction
     Spawner: {fileID: 1606207458}
+  Dialog: {fileID: 0}
 --- !u!1 &746310728
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,12 +4343,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982313343}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19684519, y: 0.7586813, z: -0.5996957, w: 0.16130634}
-  m_LocalPosition: {x: -4.6859307, y: 11.657439, z: -42.47071}
-  m_LocalScale: {x: 0.10000005, y: 0.10805947, z: 0.11991372}
+  m_LocalRotation: {x: 0.1968452, y: 0.75868136, z: -0.59969574, w: 0.16130635}
+  m_LocalPosition: {x: -5.06, y: 2.2902212, z: -7.010521}
+  m_LocalScale: {x: 0.100000024, y: 0.108059466, z: 0.11991372}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1194076176}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -13.2, y: 179.49, z: 29.6}
 --- !u!64 &982313345
 MeshCollider:
@@ -5695,6 +5704,7 @@ MonoBehaviour:
     OutPut: {fileID: 8628483798543188246, guid: d4a158446491e594989b6242703f2069, type: 3}
   MixTableOn: 0
   currentPrinterObject: {fileID: 0}
+  Dialog: {fileID: 0}
 --- !u!212 &1115444604
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6131,7 +6141,7 @@ Transform:
   m_Children:
   - {fileID: 1009302866}
   - {fileID: 2127619092}
-  - {fileID: 982313344}
+  - {fileID: 2065233324}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1199293485
@@ -7849,6 +7859,10 @@ MonoBehaviour:
   CoordAquarium: {x: -0.28, y: 0.669, z: -0.015}
   RotateAquarium: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
   TimeAnimationAquarium: 1
+  Dialog: {fileID: 0}
+  CodeWord: 
+  OffStrela: {fileID: 0}
+  OnStrela: {fileID: 0}
 --- !u!114 &1666216646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8484,6 +8498,10 @@ MonoBehaviour:
   - {fileID: 1027586312, guid: b9eb896d67509f341abe1b19e5e15c74, type: 3}
   numState: 6
   TimeLessOneLevel: 5
+  Dialog: {fileID: 0}
+  CodeWord: 
+  OffStrela: {fileID: 0}
+  OnStrela: {fileID: 0}
 --- !u!1 &1871919086
 GameObject:
   m_ObjectHideFlags: 0
@@ -8796,7 +8814,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 479065461}
-  - {fileID: 2065233324}
   - {fileID: 1877706413}
   - {fileID: 746310729}
   m_Father: {fileID: 0}
@@ -8837,14 +8854,14 @@ Transform:
   m_GameObject: {fileID: 2065233323}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.809523, y: 5.2150655, z: -11.531499}
+  m_LocalPosition: {x: 5.4387226, y: 13.173358, z: -44.584522}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1215681776}
   - {fileID: 983451257}
   - {fileID: 542700866}
-  m_Father: {fileID: 1945771022}
+  m_Father: {fileID: 1194076176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2065233325
 MonoBehaviour:
@@ -9163,11 +9180,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InTrigger: 0
   OrgansBoardIsOpen: 0
+  OpenModel: 0
+  points: []
+  items: []
   CoordPlayer: {x: 6.882, y: 2.4, z: -6.878}
   TimeAnimationPlayer: 1
   CoordVcam: {x: 6.93, y: 3.715, z: -7.755}
   RotateVcam: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   TimeAnimationVcam: 1
+  Dialog: {fileID: 0}
+  CodeWord: 
+  OffStrela: {fileID: 0}
+  OnStrela: {fileID: 0}
 --- !u!114 &2131093814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9276,4 +9300,5 @@ SceneRoots:
   - {fileID: 1027153482}
   - {fileID: 687337491}
   - {fileID: 2082714265}
+  - {fileID: 982313344}
   - {fileID: 1194076176}

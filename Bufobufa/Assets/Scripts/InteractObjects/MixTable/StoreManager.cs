@@ -18,12 +18,13 @@ public class StoreManager : MonoBehaviour
             Instance = this;
         }
     }
-
+    
     public void AddIngridient(string nameIngridient)
     {
-        if (nameIngridient == "filtering") //”ƒ¿À»“‹
+        if (nameIngridient == "filtering" && flag== true) //”ƒ¿À»“‹
         {
             Dialog.StartDialog(1);
+            flag = false;
         }
         for (int i = 0; i < TypesIngredients.Count; i++)
         {
@@ -33,6 +34,7 @@ public class StoreManager : MonoBehaviour
             }
         }
     }
+    bool flag = true;
 
     [Serializable]
     public class Ingredient
