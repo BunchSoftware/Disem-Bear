@@ -56,12 +56,14 @@ public class ThingsInTableMix : MonoBehaviour
                         Destroy(IngredientsIn[j]);
                     }
                     IngredientsIn.Clear();
-                    GameObject obj = Instantiate(Recipes[i].OutPut, tempObj.transform.position, Recipes[i].OutPut.transform.rotation, transform.parent);
-                    obj.transform.localScale = new Vector3(obj.transform.localScale.x / transform.parent.localScale.x, obj.transform.localScale.y / transform.parent.localScale.y, obj.transform.localScale.z / transform.parent.localScale.z);
+                    GameObject obj = Instantiate(Recipes[i].OutPut, tempObj.transform.position, tempObj.transform.rotation, transform.parent);
+                    
                     if (obj.GetComponent<PrinterObjectInfo>())
                     {
                         MixTableOn = false;
                         currentPrinterObject = obj;
+                        obj.transform.rotation = Recipes[i].OutPut.transform.rotation;
+                        obj.transform.localScale = new Vector3(obj.transform.localScale.x / transform.parent.localScale.x, obj.transform.localScale.y / transform.parent.localScale.y, obj.transform.localScale.z / transform.parent.localScale.z);
                     }
                     break;
                 }
