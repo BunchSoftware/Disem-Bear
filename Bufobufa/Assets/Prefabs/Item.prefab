@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4740196322975491058}
   - component: {fileID: 7533303543615071129}
   - component: {fileID: -2373840591451302051}
+  - component: {fileID: 1867881867432487497}
   m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5877580162245261113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 830ec92fe8a4e5d449bd730b1fdb92dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   needPosition: 1
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5877580162245261113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b9d64e97fd2d7840825110247cffb75, type: 3}
+  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TimeAnim: 0.2
@@ -149,7 +150,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 5877580162245261113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a86abfb6a766f4ea9f25df60111735, type: 3}
+  m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionItem: {x: 0, y: -1.62, z: -1.331}
+  Clicked: 1
+  falling: 1
+  PickUp: 0
+--- !u!54 &1867881867432487497
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877580162245261113}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
