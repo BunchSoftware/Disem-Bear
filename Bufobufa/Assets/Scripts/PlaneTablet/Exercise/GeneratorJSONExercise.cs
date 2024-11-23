@@ -18,6 +18,8 @@ public class GeneratorJSONExercise : MonoBehaviour
         for (int i = 0; i < exercises.Count; i++)
         { 
             exercises[i].pathToAvatar = AssetDatabase.GetAssetPath(exercises[i].avatar);
+            if (exercises[i].avatar != null)
+                exercises[i].pathToAvatar = AssetDatabase.GetAssetPath(exercises[i].avatar) + "#" + exercises[i].avatar.name;
         }
 
         jsonOutput = JsonConvert.SerializeObject(exercises);
@@ -25,4 +27,6 @@ public class GeneratorJSONExercise : MonoBehaviour
         if (textOutput != null)
             File.WriteAllText(AssetDatabase.GetAssetPath(textOutput), jsonOutput, Encoding.UTF8);
     }
+
+
 }

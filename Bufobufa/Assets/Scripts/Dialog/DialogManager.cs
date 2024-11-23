@@ -32,11 +32,18 @@ public class DialogManager : MonoBehaviour
             for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
             {
                 ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
-                string imageName = dialogPoints[i].dialog[j].pathToAvatar;
-                string[] sub = dialogPoints[i].dialog[j].pathToAvatar.Split("#");
-                imageName = sub[0];
-                string spriteName = sub[1];
-                dialogPoints[i].dialog[j].avatar = Load(imageName, spriteName);
+                if (dialogPoints[i].dialog[j].pathToAvatar != null)
+                {
+                    string imageName = dialogPoints[i].dialog[j].pathToAvatar;
+                    string[] sub = dialogPoints[i].dialog[j].pathToAvatar.Split("#");
+
+                    if(sub.Length == 2)
+                    {
+                        imageName = sub[0];
+                        string spriteName = sub[1];
+                        dialogPoints[i].dialog[j].avatar = Load(imageName, spriteName);
+                    }
+                }
                 dialogPoints[i].dialog[j].fontText = AssetDatabase.LoadAssetAtPath<Font>(dialogPoints[i].dialog[j].pathToFont);
             }
         }
