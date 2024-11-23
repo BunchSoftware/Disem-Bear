@@ -63,7 +63,7 @@ public class TVOpen : MonoBehaviour
             }
         }
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TVAnim && InTrigger && ClickedMouse && !TVIsOpen)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TVAnim && InTrigger && ClickedMouse && !TVIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
 
             ClickedMouse = false;

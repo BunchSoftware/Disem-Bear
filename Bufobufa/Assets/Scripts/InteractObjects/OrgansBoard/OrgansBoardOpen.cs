@@ -65,7 +65,7 @@ public class OrgansBoardOpen : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !OrgansBoardAnim && InTrigger && ClickedMouse && !OrgansBoardIsOpen)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !OrgansBoardAnim && InTrigger && ClickedMouse && !OrgansBoardIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
 
             ClickedMouse = false;

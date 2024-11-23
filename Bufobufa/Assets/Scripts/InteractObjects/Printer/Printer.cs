@@ -53,7 +53,7 @@ public class Printer : MonoBehaviour
             }
         }
 
-        if (!PrinterWork && ClickedMouse && InTrigger && Player.GetComponent<PlayerInfo>().PlayerPickSometing)
+        if (!PrinterWork && ClickedMouse && InTrigger && Player.GetComponent<PlayerInfo>().PlayerPickSometing && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
             InTrigger = false;
             if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PrinterObjectInfo>())
