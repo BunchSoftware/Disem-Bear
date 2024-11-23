@@ -11,7 +11,7 @@ public class DialogChat : MonoBehaviour
 {
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject prefab;
-    [SerializeField] private TextAsset JsonFile;
+    [SerializeField] private FileDialog fileDialog;
     [SerializeField] private Button skipButton;
     private List<DialogMessageGroup> dialogMessageGroups = new List<DialogMessageGroup>();
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
@@ -26,17 +26,7 @@ public class DialogChat : MonoBehaviour
 
     private void Start()
     {
-        dialogPoints = JsonConvert.DeserializeObject<List<DialogPoint>>(File.ReadAllText(AssetDatabase.GetAssetPath(JsonFile)));
-
-        for (int i = 0; i < dialogPoints.Count; i++)
-        {
-            for (int j = 0; j < dialogPoints[i].dialog.Count; j++)
-            {
-                ColorUtility.TryParseHtmlString(dialogPoints[i].dialog[j].jsonHTMLColorRGBA, out dialogPoints[i].dialog[j].colorText);
-                dialogPoints[i].dialog[j].avatar = AssetDatabase.LoadAssetAtPath<Sprite>(dialogPoints[i].dialog[j].pathToAvatar);
-                dialogPoints[i].dialog[j].fontText = AssetDatabase.LoadAssetAtPath<Font>(dialogPoints[i].dialog[j].pathToFont);
-            }
-        }
+        dialogPoints = fileDialog.dialogPoints;
     }
 
     private void Update()

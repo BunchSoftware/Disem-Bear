@@ -18,14 +18,11 @@ public class Dialog
     public string conditionSkipDialog;
     public bool stopTheEndDialog = false;
     public float waitSecond = 0;
-    [JsonIgnore] public Color colorText = Color.black;
-    [HideInInspector] public string jsonHTMLColorRGBA;
+    public Color colorText = Color.black;
     public FontStyle fontStyleText = FontStyle.Normal;
-    [JsonIgnore] public Font fontText;
-    [HideInInspector] public string pathToFont;
+    public Font fontText;
     public int fontSizeText = 40;
-    [HideInInspector] public string pathToAvatar;
-    [JsonIgnore] public Sprite avatar;
+    public Sprite avatar;
     [TextArea(10, 100)]
     public string textDialog = "";
 }
