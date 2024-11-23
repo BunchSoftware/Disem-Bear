@@ -7,7 +7,7 @@ using UnityEngine;
 
 public static class CreateTextFile
 {
-    [MenuItem("Assets/Create/Text File/New Text File", priority = 100)]
+    [MenuItem("Assets/Create/Text File/New Text File")]
     private static void CreateNewTextFile()
     {
         string folderGUID = Selection.assetGUIDs[0];

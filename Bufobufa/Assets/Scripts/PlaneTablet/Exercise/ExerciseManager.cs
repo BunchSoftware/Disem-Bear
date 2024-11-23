@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class ExerciseManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
-    [SerializeField] private TextAsset JsonFile;
+    [SerializeField] private FileExercise fileExercise;
     private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
 
     public Action<Exercise> GetCurrentExercise;
@@ -24,23 +24,8 @@ public class ExerciseManager : MonoBehaviour
 
     private void Start()
     {
-        List<Exercise> exercises = JsonConvert.DeserializeObject<List<Exercise>>(File.ReadAllText(AssetDatabase.GetAssetPath(JsonFile)));
 
-        for (int i = 0; i < exercises.Count; i++)
-        {
-            if (exercises[i].pathToAvatar != null)
-            {
-                string imageName = exercises[i].pathToAvatar;
-                string[] sub = exercises[i].pathToAvatar.Split("#");
-
-                if (sub.Length == 2)
-                {
-                    imageName = sub[0];
-                    string spriteName = sub[1];
-                    exercises[i].avatar = Load(imageName, spriteName);
-                }
-            }
-        }
+        List<Exercise> exercises = fileExercise.exercises;
 
         for (int i = 0; i < exercises.Count; i++)
         {
@@ -107,19 +92,5 @@ public class ExerciseManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    private Sprite Load(string imageName, string spriteName)
-    {
-        UnityEngine.Object[] all = AssetDatabase.LoadAllAssetsAtPath(imageName);
-
-        foreach (var s in all)
-        {
-            if (s.name == spriteName)
-            {
-                return s as Sprite;
-            }
-        }
-        return null;
     }
 }

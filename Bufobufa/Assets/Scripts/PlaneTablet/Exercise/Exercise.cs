@@ -13,8 +13,7 @@ public class Exercise
     public string rewardText;
     public string header;
     public string description;
-    [JsonIgnore] public Sprite avatar;
-    [HideInInspector] public string pathToAvatar;
+    public Sprite avatar;
 
     public string conditionExercise;
 
