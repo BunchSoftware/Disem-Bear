@@ -9,6 +9,10 @@ public class OrgansBoardOpen : MonoBehaviour
     public bool OrgansBoardIsOpen = false;
     private bool OrgansBoardAnim = false;
     private bool ClickedMouse = false;
+    public bool OpenModel = false;
+
+    public List<GameObject> points = new List<GameObject>();
+    public List<GameObject> items = new List<GameObject>();
 
     private GameObject Player;
     private GameObject Vcam;
@@ -23,9 +27,16 @@ public class OrgansBoardOpen : MonoBehaviour
 
     private Vector3 currentPos = new();
 
+    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
+    public string CodeWord = ""; //”ƒ¿À»“‹
+    [SerializeField] GameObject OffStrela; //”ƒ¿À»“‹
+    [SerializeField] GameObject OnStrela; //”ƒ¿À»“‹
+
 
     private void Start()
     {
+        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //”ƒ¿À»“‹
+
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
         TriggerOrgansBoard = transform.Find("TriggerOrgansBoard").gameObject;
@@ -65,7 +76,7 @@ public class OrgansBoardOpen : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !OrgansBoardAnim && InTrigger && ClickedMouse && !OrgansBoardIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
+        if (!OpenModel && !Player.GetComponent<PlayerInfo>().PlayerPickSometing && !OrgansBoardAnim && InTrigger && ClickedMouse && !OrgansBoardIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
 
             ClickedMouse = false;
@@ -83,14 +94,13 @@ public class OrgansBoardOpen : MonoBehaviour
             Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
 
 
-
             OrgansBoardIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             OrgansBoardAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (!OrgansBoardAnim && OrgansBoardIsOpen && Input.GetMouseButtonDown(1))
+        else if (!OpenModel && !OrgansBoardAnim && OrgansBoardIsOpen && Input.GetMouseButtonDown(1))
         {
             TriggerOrgansBoard.SetActive(false);
             OrgansBoardIsOpen = false;
@@ -106,6 +116,31 @@ public class OrgansBoardOpen : MonoBehaviour
 
 
             GetComponent<BoxCollider>().enabled = true;
+        }
+        else if (!OpenModel && InTrigger && ClickedMouse && !OrgansBoardIsOpen && Player.GetComponent<PlayerInfo>().PlayerPickSometing)
+        {
+            ClickedMouse = false;
+            if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>())
+            {
+                if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().PackageName == "Document")
+                {
+                    if (items.Count < points.Count)
+                    {
+                        Dialog.RunConditionSkip(CodeWord); //”ƒ¿À»“‹
+                        OffStrela.SetActive(false); //”ƒ¿À»“‹
+                        OnStrela.SetActive(true); //”ƒ¿À»“‹
+
+                        GameObject item = Instantiate(Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().ItemInPackage);
+                        items.Add(item);
+                        items[items.Count - 1].transform.parent = transform;
+                        items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
+                        items[items.Count - 1].SetActive(true);
+                        Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                        Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
+                        Player.GetComponent<PlayerInfo>().currentPickObject = null;
+                    }
+                }
+            }
         }
     }
     IEnumerator WaitAnimTable(float f)
