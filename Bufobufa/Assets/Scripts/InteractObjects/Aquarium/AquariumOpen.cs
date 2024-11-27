@@ -32,9 +32,16 @@ public class AquariumOpen : MonoBehaviour
 
     private Vector3 currentPos = new();
 
+    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
+    public string CodeWord = ""; //”ƒ¿À»“‹
+    [SerializeField] GameObject OffStrela;
+    [SerializeField] GameObject OnStrela;
+
 
     private void Start()
     {
+        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //”ƒ¿À»“‹
+
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
         AquariumSprite = transform.Find("AquariumSprite").gameObject;
@@ -77,8 +84,12 @@ public class AquariumOpen : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !AquariumAnim && InTrigger && !AquariumIsOpen && ClickedMouse)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !AquariumAnim && InTrigger && !AquariumIsOpen && ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
+            Dialog.RunConditionSkip(CodeWord); //”ƒ¿À»“‹
+            OffStrela.SetActive(false); //”ƒ¿À»“‹
+            OnStrela.SetActive(true); //”ƒ¿À»“‹
+
             AquariumIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             AquariumAnim = true;
@@ -113,7 +124,6 @@ public class AquariumOpen : MonoBehaviour
         {
             TriggerAquarium.SetActive(false);
             AquariumIsOpen = false;
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             AquariumAnim = true;
             Vcam.GetComponent<MoveAnimation>().EndMove();
             StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
@@ -139,5 +149,6 @@ public class AquariumOpen : MonoBehaviour
     {
         yield return new WaitForSeconds(f);
         Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
+        Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
     }
 }

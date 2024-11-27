@@ -68,7 +68,7 @@ public class TableOpen : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TableAnim && InTrigger && ClickedMouse && !TableIsOpen){
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !TableAnim && InTrigger && ClickedMouse && !TableIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething){
             MixTable.GetComponent<ThingsInTableMix>().MixTableOn = true;
             ClickedMouse = false;
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
@@ -96,7 +96,6 @@ public class TableOpen : MonoBehaviour
         {
             TriggerTable.SetActive(false);
             TableIsOpen = false;
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
             TableAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
@@ -126,5 +125,6 @@ public class TableOpen : MonoBehaviour
     {
         yield return new WaitForSeconds(f);
         Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
+        Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
     }
 }

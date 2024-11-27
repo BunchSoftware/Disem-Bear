@@ -9,6 +9,7 @@ public class TableTakesItem : MonoBehaviour
     private bool InTrigger = false;
     private bool ClickedMouse = false;
     private GameObject Player;
+    public Vector3 ScaleVector;
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -44,15 +45,14 @@ public class TableTakesItem : MonoBehaviour
                 }
             }
         }
-        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse)
+        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>() && !Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<NoStol>())
         {
+            ClickedMouse = false;
             if (items.Count < points.Count)
             {
                 items.Add(Player.GetComponent<PlayerInfo>().currentPickObject);
-                Vector3 sc = Player.GetComponent<PlayerInfo>().currentPickObject.transform.localScale;
                 items[items.Count - 1].transform.parent = transform;
                 items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
-                //items[items.Count - 1].transform.localRotation = points[items.Count - 1].transform.localRotation;
                 Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                 Player.GetComponent<PlayerInfo>().currentPickObject = null;
             }

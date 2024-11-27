@@ -14,6 +14,13 @@ public class Printer : MonoBehaviour
 
     private GameObject Player;
     private GameObject TriggerPrinter;
+
+    [SerializeField] Material OrigPrinter;
+    [SerializeField] Material DonePrinter;
+
+    [SerializeField] GameObject PrinterImage;
+
+    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -75,6 +82,9 @@ public class Printer : MonoBehaviour
         }
         else if (PrinterWork && ObjectDone && InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerPickSometing)
         {
+            Dialog.RunConditionSkip("PrinterWork"); //”ƒ¿À»“‹
+
+            PrinterImage.GetComponent<MeshRenderer>().material = OrigPrinter;
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = Instantiate(currentObject);
             currentObject = null;
@@ -87,6 +97,7 @@ public class Printer : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         ObjectDone = true;
+        PrinterImage.GetComponent<MeshRenderer>().material = DonePrinter;
     }
     [System.Serializable]
     public class ObjectInfo

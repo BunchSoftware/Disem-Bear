@@ -5,5 +5,6 @@ using UnityEngine;
 public class PackageInfo : MonoBehaviour
 {
     public string PackageName = "Document";
-    public GameObject InPackage;
+    public GameObject TriggerPackage;
+    public GameObject ItemInPackage;
 }

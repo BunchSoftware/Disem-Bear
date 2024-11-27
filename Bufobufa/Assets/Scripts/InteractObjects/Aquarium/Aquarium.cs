@@ -15,8 +15,15 @@ public class Aquarium : MonoBehaviour
     private float timerCell = 0f;
     public int CountCells = 0;
 
+    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
+    public string CodeWord = ""; //”ƒ¿À»“‹
+    [SerializeField] GameObject OffStrela;
+
     private void OnMouseDown()
     {
+        Dialog.RunConditionSkip(CodeWord); //”ƒ¿À»“‹
+        OffStrela.SetActive(false); //”ƒ¿À»“‹
+
         DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
         DisplayCount.GetComponent<Animator>().SetBool("On", true);
         StartCoroutine(waitDisplayCount());
@@ -33,6 +40,8 @@ public class Aquarium : MonoBehaviour
     }
     private void Start()
     {
+        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //”ƒ¿À»“‹
+
         TimeCell = NormalTimeCell;
         DisplayCount = transform.Find("DisplayCount").gameObject;
     }
