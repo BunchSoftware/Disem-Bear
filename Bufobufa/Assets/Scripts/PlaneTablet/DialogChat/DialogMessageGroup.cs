@@ -25,16 +25,16 @@ public class DialogMessageGroup : MonoBehaviour
             case DialogSide.Right:
                 {
                     currentMessage = messageRight;
-                    messageLeft.gameObject.SetActive(false);
                 }
                 break;
             case DialogSide.Left:
                 {
                     currentMessage = messageLeft;
-                    messageRight.gameObject.SetActive(false);
                 }
                 break;
         }
+        messageLeft.gameObject.SetActive(false);
+        messageRight.gameObject.SetActive(false);
         currentMessage.Init();
     }
 
@@ -60,7 +60,7 @@ public class DialogMessageGroup : MonoBehaviour
         }
     }
 
-    public void DialogLast(Dialog dialog)
+    public void DialogFinish(Dialog dialog)
     {
         SetParametres(dialog);
         currentMessage.textMessage.text = dialog.textDialog;

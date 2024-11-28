@@ -41,6 +41,9 @@ public class ExerciseGUI : MonoBehaviour
     public void Init(Action<ExerciseGUI, bool> ActionExercise, Exercise exercise)
     {
         rectTransform = GetComponent<RectTransform>();
+
+        executionButton.onClick.RemoveAllListeners();
+
         exerciseButton.onClick.AddListener(() =>
         {
             ActionExercise.Invoke(this, true);
@@ -50,6 +53,8 @@ public class ExerciseGUI : MonoBehaviour
             else
                 ExpandExercise(true);
         });
+
+        runButton.onClick.RemoveAllListeners();
 
         runButton.onClick.AddListener(() => 
         {

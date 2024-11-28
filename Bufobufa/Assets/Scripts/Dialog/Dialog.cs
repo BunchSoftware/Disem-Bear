@@ -25,4 +25,5 @@ public class Dialog
     public Sprite avatar;
     [TextArea(10, 100)]
     public string textDialog = "";
+    public List<DialogChoice> dialogChoices;
 }

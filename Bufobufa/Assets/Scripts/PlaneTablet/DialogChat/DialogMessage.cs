@@ -12,10 +12,6 @@ public class DialogMessage : MonoBehaviour
     public void Init()
     {
         animator = GetComponent<Animator>();
-    }
-
-    public void SetActive(bool isActive)
-    {
-        gameObject.SetActive(isActive);
+        gameObject.SetActive(true);
     }
 }

@@ -9,11 +9,13 @@ using UnityEngine.UI;
 
 public class DialogChat : MonoBehaviour
 {
-    [SerializeField] private GameObject content;
-    [SerializeField] private GameObject prefab;
-    [SerializeField] private FileDialog fileDialog;
-    [SerializeField] private Button skipButton;
+    [SerializeField] private GameObject contentMessage;
+    [SerializeField] private GameObject prefabMessage;
     private List<DialogMessageGroup> dialogMessageGroups = new List<DialogMessageGroup>();
+    [SerializeField] private GameObject contentPanelChoices;
+    [SerializeField] private GameObject prefabButtonChoice;
+    private List<DialogChoiceButton> dialogChoiceButtons = new List<DialogChoiceButton>();
+    [SerializeField] private FileDialog fileDialog;
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
     public UnityEvent<Dialog> EndDialog;
 
@@ -22,26 +24,33 @@ public class DialogChat : MonoBehaviour
     private DialogMessageGroup currentDialogMessageGroup;
 
     private bool isCanSkipDialog = false;
-    private bool isDialogLast = false;
 
-    private void Start()
+    private void OnEnable()
     {
         dialogPoints = fileDialog.dialogPoints;
+        contentPanelChoices.SetActive(false);
     }
 
     private void Update()
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentMessage.GetComponent<RectTransform>());
     }
 
     public void StartDialog(int indexDialogPoint)
     {
-        currentIndexDialogPoint = indexDialogPoint;
-        TypeLine(dialogPoints[indexDialogPoint], 0);
+        if(currentDialogMessageGroup != null)
+            currentDialogMessageGroup.StopTypeLine();
+        if (indexDialogPoint >= 0 && indexDialogPoint <= dialogPoints.Count)
+        {
+            currentIndexDialogPoint = indexDialogPoint;
+            TypeLine(dialogPoints[indexDialogPoint], 0);
+        }
+        else
+            Debug.LogError("Ошибка ! Индекс диалога выходит за рамки количества диалогов !");
     }
     public void SkipDialog()
     {
-        if (isCanSkipDialog || isDialogLast)
+        if (isCanSkipDialog)
         {
             Dialog dialog = null;
 
@@ -51,22 +60,10 @@ public class DialogChat : MonoBehaviour
             if (dialog != null && dialog.skipDialog == true)
             {
                 StopTypeLine();
-
-                if (isDialogLast == true)
-                {
-                    isDialogLast = false;
-                    ExitDrop(dialog);
-                }
-                else if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
-                {
-                    currentDialogMessageGroup.DialogLast(dialog);
-                    isDialogLast = true;
-                }
-                else
-                {
-                    currentIndexDialog++;
-                    TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
-                }
+                ExitDrop(dialog);
+                currentDialogMessageGroup.DialogFinish(dialog);
+                currentIndexDialog++;
+                TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
             }
         }
     }
@@ -84,38 +81,67 @@ public class DialogChat : MonoBehaviour
         {
             currentIndexDialog = i;
             isCanSkipDialog = true;
-            isDialogLast = false;
+            contentPanelChoices.SetActive(false);
 
-
-            prefab.name = $"Message {dialogMessageGroups.Count}";
-            GameObject message = Instantiate(prefab, content.transform);
-            currentDialogMessageGroup = message.GetComponent<DialogMessageGroup>();
-            currentDialogMessageGroup.Init(this, DialogSide.Left);
-            dialogMessageGroups.Add(currentDialogMessageGroup);
-
-            EnterDrop(dialogPoint.dialog[i]);
-            currentDialogMessageGroup.StartTypeLine(dialogPoint.dialog[i]);
-            yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
-
-            EndDialog?.Invoke(dialogPoint.dialog[i]);
-
-            if (dialogPoint.dialog[i].stopTheEndDialog == true)
+            foreach (Transform child in contentPanelChoices.transform)
             {
-                if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
-                    isDialogLast = true;
-                if (dialogPoint.dialog[i].skipDialog == false)
+                Destroy(child.gameObject);
+            }
+
+            if (dialogPoint.dialog[i].dialogChoices.Count >= 1)
+            {
+                contentPanelChoices.SetActive(true);
+                for (int j = 0; j < dialogPoint.dialog[i].dialogChoices.Count; j++)
                 {
-                    yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
-                    ExitDrop(dialogPoint.dialog[i]);
+                    prefabButtonChoice.name = $"Button Choice {j}";
+                    GameObject button = Instantiate(prefabButtonChoice, contentPanelChoices.transform);
+                    DialogChoiceButton dialogChoiceButton = button.GetComponent<DialogChoiceButton>();
+                    dialogChoiceButton.Init((indexDialogPoint) =>
+                    {
+                        StartDialog(indexDialogPoint);
+                    }, dialogPoint.dialog[i].dialogChoices[j]);
+                    dialogChoiceButtons.Add(dialogChoiceButton);
                 }
-                break;
+
+                EndDialog?.Invoke(dialogPoint.dialog[i]);
             }
             else
-                yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
+            {
+                prefabMessage.name = $"Message {dialogMessageGroups.Count}";
+                GameObject message = Instantiate(prefabMessage, contentMessage.transform);
+                currentDialogMessageGroup = message.GetComponent<DialogMessageGroup>();
 
-            ExitDrop(dialogPoint.dialog[i]);
+                if (dialogPoint.dialog[i].enterDrop == DropEnum.DropLeft)
+                    currentDialogMessageGroup.Init(this, DialogSide.Right);
+                else if (dialogPoint.dialog[i].enterDrop == DropEnum.DropRight)
+                    currentDialogMessageGroup.Init(this, DialogSide.Left);
+                else
+                    Debug.LogWarning("Предупреждение ! Чат не поддерживает анимации этого типа");
 
-            isCanSkipDialog = false;
+                dialogMessageGroups.Add(currentDialogMessageGroup);
+
+                EnterDrop(dialogPoint.dialog[i]);
+                currentDialogMessageGroup.StartTypeLine(dialogPoint.dialog[i]);
+                yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
+
+                EndDialog?.Invoke(dialogPoint.dialog[i]);
+
+                if (dialogPoint.dialog[i].stopTheEndDialog == true)
+                {
+                    if (dialogPoint.dialog[i].skipDialog == false)
+                    {
+                        yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
+                        ExitDrop(dialogPoint.dialog[i]);
+                    }
+                    break;
+                }
+                else
+                    yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
+
+                ExitDrop(dialogPoint.dialog[i]);
+
+                isCanSkipDialog = false;
+            }
         }
     }
 
@@ -128,7 +154,6 @@ public class DialogChat : MonoBehaviour
 
     private void EnterDrop(Dialog dialog)
     {
-        currentDialogMessageGroup.currentMessage.gameObject.SetActive(true);
         switch (dialog.enterDrop)
         {
             case DropEnum.DropRight:
@@ -156,7 +181,6 @@ public class DialogChat : MonoBehaviour
     }
     private void ExitDrop(Dialog dialog)
     {
-        currentDialogMessageGroup.currentMessage.gameObject.SetActive(false);
         switch (dialog.exitDrop)
         {
             case DropEnum.DropRight:
