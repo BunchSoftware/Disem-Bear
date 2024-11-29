@@ -20,7 +20,6 @@ public class Printer : MonoBehaviour
 
     [SerializeField] GameObject PrinterImage;
 
-    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -82,7 +81,6 @@ public class Printer : MonoBehaviour
         }
         else if (PrinterWork && ObjectDone && InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerPickSometing)
         {
-            Dialog.RunConditionSkip("PrinterWork"); //”ƒ¿À»“‹
 
             PrinterImage.GetComponent<MeshRenderer>().material = OrigPrinter;
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
