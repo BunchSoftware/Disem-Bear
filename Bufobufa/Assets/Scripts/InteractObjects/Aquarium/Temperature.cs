@@ -9,15 +9,8 @@ public class Temperature : MonoBehaviour
     private float timer = 0;
     public float TimeLessOneLevel = 5f;
 
-    [SerializeField] DialogManager Dialog; //ÓÄÀËÈÒÜ
-    public string CodeWord = ""; //ÓÄÀËÈÒÜ
-    [SerializeField] GameObject OffStrela;
-    [SerializeField] GameObject OnStrela;
     private void OnMouseDown()
     {
-        Dialog.RunConditionSkip(CodeWord); //ÓÄÀËÈÒÜ
-        OffStrela.SetActive(false); //ÓÄÀËÈÒÜ
-        OnStrela.SetActive(true); //ÓÄÀËÈÒÜ
 
         numState = Mathf.Min(numState + 1, States.Count - 1);
         GetComponent<SpriteRenderer>().sprite = States[numState];
@@ -32,7 +25,6 @@ public class Temperature : MonoBehaviour
     }
     private void Start()
     {
-        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //ÓÄÀËÈÒÜ
 
         numState = Mathf.Min(numState, States.Count - 1);
         GetComponent<SpriteRenderer>().sprite = States[numState];

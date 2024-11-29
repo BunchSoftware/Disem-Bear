@@ -27,15 +27,10 @@ public class OrgansBoardOpen : MonoBehaviour
 
     private Vector3 currentPos = new();
 
-    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
-    public string CodeWord = ""; //”ƒ¿À»“‹
-    [SerializeField] GameObject OffStrela; //”ƒ¿À»“‹
-    [SerializeField] GameObject OnStrela; //”ƒ¿À»“‹
 
 
     private void Start()
     {
-        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //”ƒ¿À»“‹
 
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -125,9 +120,6 @@ public class OrgansBoardOpen : MonoBehaviour
                 {
                     if (items.Count < points.Count)
                     {
-                        Dialog.RunConditionSkip(CodeWord); //”ƒ¿À»“‹
-                        OffStrela.SetActive(false); //”ƒ¿À»“‹
-                        OnStrela.SetActive(true); //”ƒ¿À»“‹
 
                         GameObject item = Instantiate(Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().ItemInPackage);
                         items.Add(item);

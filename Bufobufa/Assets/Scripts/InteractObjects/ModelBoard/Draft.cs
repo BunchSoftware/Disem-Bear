@@ -7,26 +7,12 @@ public class Draft : MonoBehaviour
     private bool InText = false;
     private bool WhileAnimGo = false;
     private float OrigXSizeColliser;
-    [SerializeField] DialogManager Dialog; //сдюкхрэ
-    public string CodeWord = ""; //сдюкхрэ
-    [SerializeField] GameObject OffStrela; //сдюкхрэ
-    [SerializeField] GameObject OnStrela; //сдюкхрэ
-    private void Start()
-    {
-        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //сдюкхрэ
-        OffStrela = GameObject.Find("Strelki").transform.Find("Strelka (2)").gameObject; //сдюкхрэ
-        OnStrela = GameObject.Find("Strelki").transform.Find("Strelka (3)").gameObject; //сдюкхрэ
 
-    }
     private void OnMouseDown()
     {
         if (!WhileAnimGo && !transform.parent.GetComponent<OrgansBoardOpen>().OpenModel)
         {
             transform.parent.GetComponent<OrgansBoardOpen>().OpenModel = true;
-
-            Dialog.RunConditionSkip(CodeWord); //сдюкхрэ
-            OffStrela.SetActive(false); //сдюкхрэ
-            OnStrela.SetActive(true); //сдюкхрэ
 
             OrigXSizeColliser = GetComponent<BoxCollider>().size.x;
             GetComponent<BoxCollider>().size = new Vector3(1f, GetComponent<BoxCollider>().size.y, GetComponent<BoxCollider>().size.z);
