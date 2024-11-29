@@ -35,13 +35,10 @@ public class ExerciseGUI : MonoBehaviour
 
     private TypeOfExerciseCompletion currentExerciseCompletion = TypeOfExerciseCompletion.NotDone;
     private bool isExpandExercise = false;
-    private RectTransform rectTransform;
     private Exercise exercise;
 
     public void Init(Action<ExerciseGUI, bool> ActionExercise, Exercise exercise)
     {
-        rectTransform = GetComponent<RectTransform>();
-
         executionButton.onClick.RemoveAllListeners();
 
         exerciseButton.onClick.AddListener(() =>
