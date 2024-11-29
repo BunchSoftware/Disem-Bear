@@ -12,16 +12,9 @@ public class PickUpObject : MonoBehaviour
     private Vector3 lcScale = new();
     public bool PickUp = false;
     private float timer = 0f;
-    [SerializeField] DialogManager Dialog; //сдюкхрэ
-    public string CodeWord = ""; //сдюкхрэ
-    [SerializeField] GameObject OffStrelka;
-    [SerializeField] GameObject OnStrelka;
+
     private void Start()
     {
-        Dialog = GameObject.Find("DialogManager").GetComponent<DialogManager>(); //сдюкхрэ
-        OffStrelka = GameObject.Find("Strelki").transform.Find("Strelka").gameObject; //сдюкхрэ
-        OnStrelka = GameObject.Find("Strelki").transform.Find("Strelka (1)").gameObject; //сдюкхрэ
-
         Player = GameObject.Find("Player");
         StartCoroutine(NotFalling());
     }
@@ -43,9 +36,6 @@ public class PickUpObject : MonoBehaviour
         {
             if (!falling && Clicked && !PickUp)
             {
-                Dialog.RunConditionSkip(CodeWord); //сдюкхрэ
-                OffStrelka.SetActive(false); //сдюкхрэ
-                OnStrelka.SetActive(true); //сдюкхрэ
 
                 GetComponent<MouseTrigger>().enabled = false;
                 PickUp = true;

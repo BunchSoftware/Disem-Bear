@@ -14,7 +14,6 @@ public class ThingsInTableMix : MonoBehaviour
     public bool MixTableOn = false;
     public GameObject currentPrinterObject;
 
-    [SerializeField] DialogManager Dialog; //”ƒ¿À»“‹
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ingredient>())
@@ -62,7 +61,6 @@ public class ThingsInTableMix : MonoBehaviour
                     
                     if (obj.GetComponent<PrinterObjectInfo>())
                     {
-                        Dialog.RunConditionSkip("CraftWithPigment");//”ƒ¿À»“‹
                         MixTableOn = false;
                         currentPrinterObject = obj;
                         obj.transform.rotation = Recipes[i].OutPut.transform.rotation;
