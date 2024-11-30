@@ -7,7 +7,6 @@ using UnityEngine;
 public class PickUpObject : MonoBehaviour
 {
     private GameObject Player;
-    public bool Clicked = false;
     public bool falling = true;
     private Vector3 lcScale = new();
     public bool PickUp = false;
@@ -18,10 +17,6 @@ public class PickUpObject : MonoBehaviour
         Player = GameObject.Find("Player");
         StartCoroutine(NotFalling());
     }
-    private void OnMouseDown()
-    {
-        Clicked = true;
-    }
     private void Update()
     {
         if (PickUp && timer < 1f)
@@ -30,13 +25,12 @@ public class PickUpObject : MonoBehaviour
             transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.tag == "Player")
+        if (other.transform.tag == "Player")
         {
-            if (!falling && Clicked && !PickUp)
+            if (!falling && !PickUp)
             {
-
                 GetComponent<MouseTrigger>().enabled = false;
                 PickUp = true;
                 GetComponent<BoxCollider>().enabled = false;

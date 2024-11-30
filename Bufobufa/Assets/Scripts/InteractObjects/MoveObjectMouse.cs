@@ -15,6 +15,7 @@ public class MoveObjectMouse : MonoBehaviour
 
 
 
+
     private Vector3 GetMousePos()
     {
         return Camera.main.WorldToScreenPoint(transform.position);
@@ -38,20 +39,29 @@ public class MoveObjectMouse : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Table")))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
             {
-                target = new Vector3(infoHit.point.x, transform.position.y, infoHit.point.z);
-
+                if (infoHit.transform == transform)
+                {
+                    if (Physics.Raycast(ray, out infoHit, Mathf.Infinity, LayerMask.GetMask("Table")))
+                    {
+                        offset = transform.position - new Vector3(infoHit.point.x, transform.position.y, infoHit.point.z);
+                        OnDrag = true;
+                    }
+                }
             }
-            offset = transform.position - target;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && OnDrag)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Table")))
             {
                 transform.position = new Vector3(infoHit.point.x, transform.position.y, infoHit.point.z) + offset;
             }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnDrag = false;
         }
     }
 }
