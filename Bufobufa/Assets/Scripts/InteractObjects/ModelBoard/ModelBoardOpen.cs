@@ -87,7 +87,7 @@ public class ModelBoardOpen : MonoBehaviour
             BoardIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             BoardAnim = true;
-            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
         }
         else if (!BoardAnim && BoardIsOpen && Input.GetMouseButtonDown(1))
@@ -98,8 +98,8 @@ public class ModelBoardOpen : MonoBehaviour
             BoardAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
-            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
-            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
+            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
 
             Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();

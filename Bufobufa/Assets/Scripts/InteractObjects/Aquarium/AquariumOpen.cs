@@ -107,7 +107,7 @@ public class AquariumOpen : MonoBehaviour
             AquariumSprite.GetComponent<MoveAnimation>().StartMove();
 
 
-            StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
             AquariumSprite.GetComponent<BoxCollider>().enabled = true;
             Temperature.GetComponent<BoxCollider>().enabled = true;
             GetComponent<BoxCollider>().enabled = false;
@@ -118,8 +118,8 @@ public class AquariumOpen : MonoBehaviour
             AquariumIsOpen = false;
             AquariumAnim = true;
             Vcam.GetComponent<MoveAnimation>().EndMove();
-            StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
-            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimAquarium(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
+            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
 
             Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();

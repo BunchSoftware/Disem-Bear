@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAnimation : MonoBehaviour
+public class MoveCameraAnimation : MonoBehaviour
 {
     [Header("Куда полетит объект")]
     public bool needPosition = false;
@@ -17,23 +17,30 @@ public class MoveAnimation : MonoBehaviour
     private bool MoveOn = false;
     private bool FinallyMove = false;
 
+    private GameObject MainCamera;
+
     public void StartMove()
     {
         endCoords = startCoords;
-        startCoords = transform.localPosition;
+        startCoords = MainCamera.transform.localPosition;
         endRotate = startRotate;
-        startRotate = transform.localRotation;
+        startRotate = MainCamera.transform.localRotation;
         timer = 0f;
         MoveOn = true;
     }
     public void EndMove()
     {
         endCoords = startCoords;
-        startCoords = transform.localPosition;
+        startCoords = MainCamera.transform.localPosition;
         endRotate = startRotate;
-        startRotate = transform.localRotation;
+        startRotate = MainCamera.transform.localRotation;
         timer = 0f;
         MoveOn = true;
+    }
+
+    private void Start()
+    {
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     private void Update()
@@ -46,7 +53,7 @@ public class MoveAnimation : MonoBehaviour
                 if (needPosition)
                     transform.localPosition = Vector3.Lerp(startCoords, endCoords, timer / TimeAnimation);
                 if (needRotate)
-                    transform.localRotation = Quaternion.Lerp(startRotate, endRotate, timer/ TimeAnimation);
+                    transform.localRotation = Quaternion.Lerp(startRotate, endRotate, timer / TimeAnimation);
                 timer += Time.deltaTime;
             }
             else if (FinallyMove)
