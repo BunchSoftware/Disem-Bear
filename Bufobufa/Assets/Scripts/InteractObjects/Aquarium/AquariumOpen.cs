@@ -10,6 +10,8 @@ public class AquariumOpen : MonoBehaviour
     private GameObject AquariumSprite;
     private GameObject Temperature;
 
+    private bool OneTap = true;
+
     [Header("Координаты куда должен уйти объект при открытии стола(Игрок, камера и сам аквариум)")]
     public Vector3 CoordAquarium = new();
     public Quaternion RotateAquarium = new();
@@ -24,8 +26,9 @@ public class AquariumOpen : MonoBehaviour
     }
     private void Update()
     {
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().InTrigger && !GetComponent<OpenObject>().ObjectIsOpen && GetComponent<OpenObject>().ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
+        if (GetComponent<OpenObject>().ObjectIsOpen && OneTap)
         {
+            OneTap = false;
             AquariumSprite.GetComponent<MoveAnimation>().startCoords = CoordAquarium;
             AquariumSprite.GetComponent<MoveAnimation>().needPosition = true;
             AquariumSprite.GetComponent<MoveAnimation>().startRotate = RotateAquarium;
@@ -36,12 +39,15 @@ public class AquariumOpen : MonoBehaviour
             AquariumSprite.GetComponent<BoxCollider>().enabled = true;
             Temperature.GetComponent<BoxCollider>().enabled = true;
         }
-        else if (!GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
+        else if (!GetComponent<OpenObject>().ObjectIsOpen && !OneTap)
         {
+            OneTap = true;
             AquariumSprite.GetComponent<MoveAnimation>().EndMove();
 
             AquariumSprite.GetComponent<BoxCollider>().enabled = false;
             Temperature.GetComponent<BoxCollider>().enabled = false;
+
+            
         }
     }
 }
