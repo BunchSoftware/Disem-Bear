@@ -3184,6 +3184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!65 &560113121
 BoxCollider:
@@ -5336,6 +5337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!65 &1009302868
 BoxCollider:
@@ -5374,7 +5376,7 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
   Vcam: {fileID: 0}
   TriggerObject: {fileID: 0}
   CoordPlayer: {x: 7.06, y: 2.4, z: -7}
@@ -6111,7 +6113,7 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
   Vcam: {fileID: 0}
   TriggerObject: {fileID: 0}
   CoordPlayer: {x: -0.18, y: 2.4, z: -3.517}
@@ -6132,6 +6134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!1 &1090677183
 GameObject:
@@ -8091,6 +8094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!1001 &1440093877
 PrefabInstance:
@@ -9138,8 +9142,8 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 1.4
+      minMaxState: 3
+      scalar: 1.6
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9191,7 +9195,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -9244,7 +9248,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -9722,7 +9726,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8.19
+      scalar: 1.98
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -13780,6 +13784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!4 &1682352884 stripped
 Transform:
@@ -15646,6 +15651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!114 &2131093815
 MonoBehaviour:
@@ -15675,7 +15681,7 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
   Vcam: {fileID: 0}
   TriggerObject: {fileID: 0}
   CoordPlayer: {x: 6.65, y: 2.4, z: -6.08}
