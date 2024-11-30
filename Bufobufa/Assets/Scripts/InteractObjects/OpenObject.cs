@@ -10,10 +10,11 @@ public class OpenObject : MonoBehaviour
     public bool ObjectAnim = false;
     public bool ClickedMouse = false;
 
+    public bool MoreBoolQuit = true;
+
     private GameObject Player;
-    private GameObject Vcam;
-    private BoxCollider ColliderVCRoom1;
-    private GameObject TriggerObject;
+    public GameObject Vcam;
+    public GameObject TriggerObject;
     private GameObject MainCamera;
 
 
@@ -24,13 +25,14 @@ public class OpenObject : MonoBehaviour
     public Quaternion RotateVcam = new();
     public float TimeAnimationVcam = 1f;
 
-    private Vector3 currentPosPlayer = new();
+    public Vector3 currentPosPlayer = new();
+    private Vector3 currentPosVcam = new();
+    private Quaternion currentRotVcam = new();
 
 
     private void Start()
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
-        ColliderVCRoom1 = GameObject.Find("ColliderVCRoom1").GetComponent<BoxCollider>();
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         Player = GameObject.FindGameObjectWithTag("Player");
         TriggerObject = transform.Find("TriggerObject").gameObject;
@@ -56,7 +58,7 @@ public class OpenObject : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
             {
-                if (infoHit.collider.gameObject == gameObject)
+                if (infoHit.collider.gameObject == gameObject && !ObjectIsOpen)
                 {
                     ClickedMouse = true;
                     TriggerObject.SetActive(true);
@@ -70,14 +72,15 @@ public class OpenObject : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !ObjectAnim && InTrigger && ClickedMouse && !ObjectIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !ObjectAnim && InTrigger && ClickedMouse && !ObjectIsOpen)
         {
-            ClickedMouse = false;
+            
 
-            Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
             var tmpPosCamera = MainCamera.transform.position;
-            Vcam.GetComponent<CinemachineConfiner>().m_BoundingVolume = null;
             Vcam.transform.position = tmpPosCamera;
+            currentPosVcam = tmpPosCamera;
+            currentRotVcam = Vcam.transform.rotation;
+
             Vcam.GetComponent<MoveCameraAnimation>().startCoords = CoordVcam;
             Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
             Vcam.GetComponent<MoveCameraAnimation>().startRotate = RotateVcam;
@@ -91,24 +94,30 @@ public class OpenObject : MonoBehaviour
             Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
 
 
-
+            ClickedMouse = false;
             ObjectIsOpen = true;
+            TriggerObject.SetActive(false);
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             ObjectAnim = true;
-            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
+            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (!ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
+        else if (MoreBoolQuit && !ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
             TriggerObject.SetActive(false);
             ObjectIsOpen = false;
             ObjectAnim = true;
             ClickedMouse = false;
 
-            Vcam.GetComponent<MoveCameraAnimation>().EndMove();
+            Vcam.GetComponent<MoveCameraAnimation>().startCoords = currentPosVcam;
+            Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
+            Vcam.GetComponent<MoveCameraAnimation>().startRotate = currentRotVcam;
+            Vcam.GetComponent<MoveCameraAnimation>().needRotate = true;
+            Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation = TimeAnimationVcam;
+            Vcam.GetComponent<MoveCameraAnimation>().StartMove();
 
-            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
-            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
+            StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
+            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
 
             Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPosPlayer);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
@@ -124,8 +133,6 @@ public class OpenObject : MonoBehaviour
     IEnumerator WaitAnimCamera(float f)
     {
         yield return new WaitForSeconds(f);
-        Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
-        Vcam.GetComponent<CinemachineConfiner>().m_BoundingVolume = ColliderVCRoom1;
         Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
     }
 }

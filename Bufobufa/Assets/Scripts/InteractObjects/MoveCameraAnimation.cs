@@ -6,7 +6,7 @@ public class MoveCameraAnimation : MonoBehaviour
 {
     [Header("Куда полетит объект")]
     public bool needPosition = false;
-    private Vector3 endCoords = new();
+    public Vector3 endCoords = new();
     public Vector3 startCoords = new();
     [Header("Как повернеться объект")]
     public bool needRotate = false;

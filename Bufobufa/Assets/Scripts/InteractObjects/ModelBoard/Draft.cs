@@ -10,12 +10,13 @@ public class Draft : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WhileAnimGo && !transform.parent.GetComponent<OpenObject>().ObjectIsOpen)
+        if (!WhileAnimGo && transform.parent.GetComponent<OpenObject>().ObjectIsOpen && !transform.parent.GetComponent<OrgansBoardOpen>().ModelOpen)
         {
-            transform.parent.GetComponent<OpenObject>().ObjectIsOpen = true;
+            transform.parent.GetComponent<OrgansBoardOpen>().ModelOpen = true;
+            transform.parent.GetComponent<OpenObject>().MoreBoolQuit = false;
 
             OrigXSizeColliser = GetComponent<BoxCollider>().size.x;
-            GetComponent<BoxCollider>().size = new Vector3(1f, GetComponent<BoxCollider>().size.y, GetComponent<BoxCollider>().size.z);
+            GetComponent<BoxCollider>().size = new Vector3(44.73f, GetComponent<BoxCollider>().size.y, GetComponent<BoxCollider>().size.z);
             GetComponent<MoveAnimation>().StartMove();
             InText = true;
             WhileAnimGo = true;
@@ -26,7 +27,8 @@ public class Draft : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && InText && !WhileAnimGo && transform.parent.GetComponent<OpenObject>().ObjectIsOpen)
         {
-            transform.parent.GetComponent<OpenObject>().ObjectIsOpen = false;
+            transform.parent.GetComponent<OrgansBoardOpen>().ModelOpen = false;
+            transform.parent.GetComponent<OpenObject>().MoreBoolQuit = false;
             GetComponent<BoxCollider>().size = new Vector3(OrigXSizeColliser, GetComponent<BoxCollider>().size.y, GetComponent<BoxCollider>().size.z);
             GetComponent<MoveAnimation>().EndMove();
             InText = false;
