@@ -15,6 +15,11 @@ public class Aquarium : MonoBehaviour
     private float timerCell = 0f;
     public int CountCells = 0;
 
+    [SerializeField] private Sprite NullFase;
+    [SerializeField] private Sprite FirstFase;
+    [SerializeField] private Sprite SecondFase;
+    [SerializeField] private Sprite ThirdFase;
+
     private void OnMouseDown()
     {
         DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
@@ -49,5 +54,22 @@ public class Aquarium : MonoBehaviour
         }
         if (NormalTemperature && NormalGround) TimeCell = NormalTimeCell;
         else if (NormalTemperature || NormalGround) TimeCell = NormalTimeCell * 2;
+
+        if (CountCells == 0)
+        {
+            GetComponent<SpriteRenderer>().sprite = NullFase;
+        }
+        else if (CountCells < 4)
+        {
+            GetComponent<SpriteRenderer>().sprite = FirstFase;
+        }
+        else if (CountCells < 9)
+        {
+            GetComponent<SpriteRenderer>().sprite = SecondFase;
+        }
+        else if (CountCells < 15)
+        {
+            GetComponent<SpriteRenderer>().sprite = ThirdFase;
+        }
     }
 }
