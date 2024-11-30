@@ -105,6 +105,7 @@ public class OpenObject : MonoBehaviour
         else if (ArgumentsNotQuit == 0 && !ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
             TriggerObject.SetActive(false);
+            InTrigger = false;
             ObjectIsOpen = false;
             ObjectAnim = true;
             ClickedMouse = false;

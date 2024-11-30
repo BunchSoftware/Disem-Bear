@@ -36,6 +36,7 @@ public class ThingsInTableMix : MonoBehaviour
     public void MixIngredients()
     {
         transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
+        bool NotExistReceip = true;
         ingredients.Clear();
         for (int i = 0; i < IngredientsIn.Count; i++)
         {
@@ -54,6 +55,7 @@ public class ThingsInTableMix : MonoBehaviour
             {
                 if (Recipes[i].OutPut != null)
                 {
+                    NotExistReceip = false;
                     GameObject tempObj = IngredientsIn[0];
                     for (int j = IngredientsIn.Count - 1; j >= 0; j--)
                     {
@@ -73,11 +75,8 @@ public class ThingsInTableMix : MonoBehaviour
                     break;
                 }
             }
-            else
-            {
-                transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
-            }
         }
+        if (NotExistReceip) transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
     }
     public void ClearIngredients()
     {
