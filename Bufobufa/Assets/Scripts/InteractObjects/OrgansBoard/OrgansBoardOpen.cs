@@ -25,11 +25,11 @@ public class OrgansBoardOpen : MonoBehaviour
         if (GetComponent<OpenObject>().ObjectIsOpen && Workbench.GetComponent<OpenObject>().ObjectIsOpen && OneTap)
         {
             OneTap = false;
-            Workbench.GetComponent<OpenObject>().MoreBoolQuit = false;
-            GetComponent<OpenObject>().MoreBoolQuit = false;
+            Workbench.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
+            GetComponent<OpenObject>().ArgumentsNotQuit += 1;
             InTableAndBoard = true;
         }
-        if (InTableAndBoard && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
+        if (GetComponent<OpenObject>().ArgumentsNotQuit != 2 && InTableAndBoard && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
             OneTap = true;
             GetComponent<OpenObject>().TriggerObject.SetActive(false);
@@ -43,7 +43,7 @@ public class OrgansBoardOpen : MonoBehaviour
             StartCoroutine(WaitAnimCamera(GetComponent<OpenObject>().Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
 
             GetComponent<BoxCollider>().enabled = true;
-            GetComponent<OpenObject>().MoreBoolQuit = true;
+            GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
             InTableAndBoard = false;
         }
 
@@ -73,7 +73,7 @@ public class OrgansBoardOpen : MonoBehaviour
     {
         yield return new WaitForSeconds(f);
         GetComponent<OpenObject>().ObjectAnim = false;
-        Workbench.GetComponent<OpenObject>().MoreBoolQuit = true;
+        Workbench.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
     }
     IEnumerator WaitAnimCamera(float f)
     {

@@ -139,6 +139,8 @@ GameObject:
   m_Component:
   - component: {fileID: 58684830}
   - component: {fileID: 58684829}
+  - component: {fileID: 58684832}
+  - component: {fileID: 58684831}
   m_Layer: 0
   m_Name: NextRoomStrelka
   m_TagString: Untagged
@@ -215,6 +217,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 180}
+--- !u!65 &58684831
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58684828}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13, y: 0.24, z: 0.05}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &58684832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58684828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3411db160b24474594cce67176bfa5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoordPlayer: {x: 14.43, y: 2.4, z: -12.35}
+  TimeAnimationPlayer: 1
+  CoordVcam: {x: 16.86, y: 5.48, z: -19.5}
+  TimeAnimationVcam: 2.2
+  RightRoomStrelka: {fileID: 1925220354}
 --- !u!1 &68691969 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8708292113214086128, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
@@ -1401,7 +1441,7 @@ GameObject:
   - component: {fileID: 236630424}
   - component: {fileID: 236630423}
   m_Layer: 0
-  m_Name: InvisibleWall (1)
+  m_Name: InvWallBetweenRooms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3188,6 +3228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!65 &560113121
 BoxCollider:
@@ -5340,6 +5381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!65 &1009302868
 BoxCollider:
@@ -5378,12 +5420,15 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
+  Vcam: {fileID: 0}
+  TriggerObject: {fileID: 0}
   CoordPlayer: {x: 7.06, y: 2.4, z: -7}
   TimeAnimationPlayer: 1
   CoordVcam: {x: 6.18, y: 5.15, z: -8.9}
   RotateVcam: {x: -0.27066815, y: -0.65284926, z: 0.27549472, w: -0.6516358}
   TimeAnimationVcam: 1
+  currentPosPlayer: {x: 0, y: 0, z: 0}
 --- !u!1 &1009688078
 GameObject:
   m_ObjectHideFlags: 0
@@ -6112,12 +6157,15 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
+  Vcam: {fileID: 0}
+  TriggerObject: {fileID: 0}
   CoordPlayer: {x: -0.18, y: 2.4, z: -3.517}
   TimeAnimationPlayer: 1
   CoordVcam: {x: 1.72, y: 2.647, z: -4.794}
   RotateVcam: {x: 0, y: 0, z: 0, w: 1}
   TimeAnimationVcam: 1
+  currentPosPlayer: {x: 0, y: 0, z: 0}
 --- !u!114 &1089473215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6130,6 +6178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!1 &1090677183
 GameObject:
@@ -7971,6 +8020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!114 &1424547106
 MonoBehaviour:
@@ -7988,12 +8038,15 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
+  Vcam: {fileID: 0}
+  TriggerObject: {fileID: 0}
   CoordPlayer: {x: 1.794, y: 2.4, z: -3.61}
   TimeAnimationPlayer: 1
   CoordVcam: {x: 4.49, y: 3.87, z: -5.83}
   RotateVcam: {x: 0, y: 0, z: 0, w: 1}
   TimeAnimationVcam: 1
+  currentPosPlayer: {x: 0, y: 0, z: 0}
 --- !u!1001 &1440093877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8101,7 +8154,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1443379806}
   - component: {fileID: 1443379805}
-  - component: {fileID: 1443379808}
   - component: {fileID: 1443379809}
   m_Layer: 0
   m_Name: Virtual Camera
@@ -8165,23 +8217,6 @@ Transform:
   - {fileID: 98747625}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 13.972, y: 0, z: 0}
---- !u!114 &1443379808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443379803}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  needPosition: 0
-  startCoords: {x: 6.18, y: 5.15, z: -8.9}
-  needRotate: 0
-  startRotate: {x: 0.2706656, y: 0.6528549, z: -0.2754971, w: 0.6516302}
-  TimeAnimation: 1
 --- !u!114 &1443379809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8788,7 +8823,7 @@ Transform:
   m_GameObject: {fileID: 1666216641}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.55, y: 1.765, z: -11.543}
+  m_LocalPosition: {x: 24.55, y: 1.765, z: -7.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8832,6 +8867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!4 &1682352884 stripped
 Transform:
@@ -9979,6 +10015,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1925220353}
   - component: {fileID: 1925220352}
+  - component: {fileID: 1925220355}
+  - component: {fileID: 1925220354}
   m_Layer: 0
   m_Name: NextRoomStrelka (1)
   m_TagString: Untagged
@@ -10049,12 +10087,50 @@ Transform:
   m_GameObject: {fileID: 1925220351}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 11.647407, y: 1.195, z: -12.56}
+  m_LocalPosition: {x: 12.37, y: 1.195, z: -12.56}
   m_LocalScale: {x: 6.6357894, y: 6.6357894, z: 6.6357894}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 180, z: 0}
+--- !u!65 &1925220354
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925220351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.13, y: 0.24, z: 0.05}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1925220355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925220351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3411db160b24474594cce67176bfa5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoordPlayer: {x: 5.36, y: 2.4, z: -12.35}
+  TimeAnimationPlayer: 1
+  CoordVcam: {x: 2.56, y: 5.48, z: -19.5}
+  TimeAnimationVcam: 2.2
+  RightRoomStrelka: {fileID: 58684831}
 --- !u!1 &1945639250
 GameObject:
   m_ObjectHideFlags: 0
@@ -10731,6 +10807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!114 &2131093815
 MonoBehaviour:
@@ -10760,12 +10837,15 @@ MonoBehaviour:
   ObjectIsOpen: 0
   ObjectAnim: 0
   ClickedMouse: 0
-  MoreBoolQuit: 1
+  ArgumentsNotQuit: 0
+  Vcam: {fileID: 0}
+  TriggerObject: {fileID: 0}
   CoordPlayer: {x: 6.65, y: 2.4, z: -6.08}
   TimeAnimationPlayer: 1
   CoordVcam: {x: 7.186, y: 3.254, z: -7.729}
   RotateVcam: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   TimeAnimationVcam: 1
+  currentPosPlayer: {x: 0, y: 0, z: 0}
 --- !u!1 &2141536573
 GameObject:
   m_ObjectHideFlags: 0
@@ -10892,7 +10972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2475027670571457751, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.18
+      value: 5.36
       objectReference: {fileID: 0}
     - target: {fileID: 2475027670571457751, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10900,7 +10980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2475027670571457751, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.5
+      value: -12.35
       objectReference: {fileID: 0}
     - target: {fileID: 2475027670571457751, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_LocalRotation.w

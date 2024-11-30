@@ -10,7 +10,7 @@ public class OpenObject : MonoBehaviour
     public bool ObjectAnim = false;
     public bool ClickedMouse = false;
 
-    public bool MoreBoolQuit = true;
+    public int ArgumentsNotQuit = 0;
 
     private GameObject Player;
     public GameObject Vcam;
@@ -102,7 +102,7 @@ public class OpenObject : MonoBehaviour
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (MoreBoolQuit && !ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
+        else if (ArgumentsNotQuit == 0 && !ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
             TriggerObject.SetActive(false);
             ObjectIsOpen = false;
