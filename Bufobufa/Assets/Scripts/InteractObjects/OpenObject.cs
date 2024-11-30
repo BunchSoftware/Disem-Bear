@@ -1,18 +1,21 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
-public class PrinterOpen : MonoBehaviour
+public class OpenObject : MonoBehaviour
 {
     public bool InTrigger = false;
-    public bool PrinterIsOpen = false;
-    private bool PrinterAnim = false;
-    private bool ClickedMouse = false;
+    public bool ObjectIsOpen = false;
+    public bool ObjectAnim = false;
+    public bool ClickedMouse = false;
 
     private GameObject Player;
     private GameObject Vcam;
-    private GameObject TriggerPrinter;
+    private BoxCollider ColliderVCRoom1;
+    private GameObject TriggerObject;
+    private GameObject MainCamera;
+
 
     [Header("Координаты куда должен уйти объект при открытии стола(Игрок и камера)")]
     public Vector3 CoordPlayer = new();
@@ -21,14 +24,16 @@ public class PrinterOpen : MonoBehaviour
     public Quaternion RotateVcam = new();
     public float TimeAnimationVcam = 1f;
 
-    private Vector3 currentPos = new();
+    private Vector3 currentPosPlayer = new();
 
 
     private void Start()
     {
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
+        ColliderVCRoom1 = GameObject.Find("ColliderVCRoom1").GetComponent<BoxCollider>();
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         Player = GameObject.FindGameObjectWithTag("Player");
-        TriggerPrinter = transform.Find("TriggerPrinter").gameObject;
+        TriggerObject = transform.Find("TriggerObject").gameObject;
     }
     public void OnTrigEnter(Collider other)
     {
@@ -54,56 +59,59 @@ public class PrinterOpen : MonoBehaviour
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
-                    TriggerPrinter.SetActive(true);
+                    TriggerObject.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
-                    TriggerPrinter.SetActive(false);
+                    TriggerObject.SetActive(false);
                 }
             }
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !PrinterAnim && InTrigger && ClickedMouse && !PrinterIsOpen)
+        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !ObjectAnim && InTrigger && ClickedMouse && !ObjectIsOpen && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
-
             ClickedMouse = false;
+
             Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
-            Vcam.GetComponent<MoveAnimation>().startCoords = CoordVcam;
-            Vcam.GetComponent<MoveAnimation>().needPosition = true;
-            Vcam.GetComponent<MoveAnimation>().startRotate = RotateVcam;
-            Vcam.GetComponent<MoveAnimation>().needRotate = true;
-            Vcam.GetComponent<MoveAnimation>().TimeAnimation = TimeAnimationVcam;
-            Vcam.GetComponent<MoveAnimation>().StartMove();
+            var tmpPosCamera = MainCamera.transform.position;
+            Vcam.GetComponent<CinemachineConfiner>().m_BoundingVolume = null;
+            Vcam.transform.position = tmpPosCamera;
+            Vcam.GetComponent<MoveCameraAnimation>().startCoords = CoordVcam;
+            Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
+            Vcam.GetComponent<MoveCameraAnimation>().startRotate = RotateVcam;
+            Vcam.GetComponent<MoveCameraAnimation>().needRotate = true;
+            Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation = TimeAnimationVcam;
+            Vcam.GetComponent<MoveCameraAnimation>().StartMove();
+            
 
-
-            currentPos = Player.transform.position;
+            currentPosPlayer = Player.transform.position;
             Player.GetComponent<PlayerMouseMove>().MovePlayer(CoordPlayer);
             Player.GetComponent<PlayerMouseMove>().StopPlayerMove();
 
 
 
-            PrinterIsOpen = true;
+            ObjectIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
-            PrinterAnim = true;
+            ObjectAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
         }
-        else if (!PrinterAnim && PrinterIsOpen && Input.GetMouseButtonDown(1))
+        else if (!ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
-            TriggerPrinter.SetActive(false);
-            PrinterIsOpen = false;
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
-            PrinterAnim = true;
+            TriggerObject.SetActive(false);
+            ObjectIsOpen = false;
+            ObjectAnim = true;
             ClickedMouse = false;
-            Vcam.GetComponent<MoveAnimation>().EndMove();
+
+            Vcam.GetComponent<MoveCameraAnimation>().EndMove();
+
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
             StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
 
-            Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
+            Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPosPlayer);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
-
 
             GetComponent<BoxCollider>().enabled = true;
         }
@@ -111,11 +119,13 @@ public class PrinterOpen : MonoBehaviour
     IEnumerator WaitAnimTable(float f)
     {
         yield return new WaitForSeconds(f);
-        PrinterAnim = false;
+        ObjectAnim = false;
     }
     IEnumerator WaitAnimCamera(float f)
     {
         yield return new WaitForSeconds(f);
         Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
+        Vcam.GetComponent<CinemachineConfiner>().m_BoundingVolume = ColliderVCRoom1;
+        Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
     }
 }

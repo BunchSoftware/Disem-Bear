@@ -85,7 +85,7 @@ public class TVOpen : MonoBehaviour
             TVIsOpen = true;
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             TVAnim = true;
-            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
         }
         else if (!TVAnim && TVIsOpen && Input.GetMouseButtonDown(1))
@@ -96,8 +96,8 @@ public class TVOpen : MonoBehaviour
             TVAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();
-            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
-            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation));
+            StartCoroutine(WaitAnimBoard(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
+            StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
 
             Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPos);
             Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();
