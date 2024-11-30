@@ -14,6 +14,8 @@ public class ThingsInTableMix : MonoBehaviour
     public bool MixTableOn = false;
     public GameObject currentPrinterObject;
 
+    private InfoInstObj currentCreatObj;
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ingredient>())
@@ -33,6 +35,7 @@ public class ThingsInTableMix : MonoBehaviour
 
     public void MixIngredients()
     {
+        transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
         ingredients.Clear();
         for (int i = 0; i < IngredientsIn.Count; i++)
         {
@@ -54,20 +57,25 @@ public class ThingsInTableMix : MonoBehaviour
                     GameObject tempObj = IngredientsIn[0];
                     for (int j = IngredientsIn.Count - 1; j >= 0; j--)
                     {
-                        Destroy(IngredientsIn[j]);
+                        IngredientsIn[j].GetComponent<AnimDeleteIngredients>().DeleteIngredient();
+                        //Destroy(IngredientsIn[j]);
                     }
                     IngredientsIn.Clear();
-                    GameObject obj = Instantiate(Recipes[i].OutPut, tempObj.transform.position, tempObj.transform.rotation, transform.parent);
-                    
-                    if (obj.GetComponent<PrinterObjectInfo>())
-                    {
-                        MixTableOn = false;
-                        currentPrinterObject = obj;
-                        obj.transform.rotation = Recipes[i].OutPut.transform.rotation;
-                        obj.transform.localScale = new Vector3(obj.transform.localScale.x / transform.parent.localScale.x, obj.transform.localScale.y / transform.parent.localScale.y, obj.transform.localScale.z / transform.parent.localScale.z);
-                    }
+
+                    currentCreatObj = new();
+                    currentCreatObj.obj = Recipes[i].OutPut;
+                    currentCreatObj.pos = transform.position;
+                    currentCreatObj.rot = tempObj.transform.rotation;
+                    currentCreatObj.par = transform.parent;
+
+                    StartCoroutine(WaitAnimDelete(1f));
+
                     break;
                 }
+            }
+            else
+            {
+                transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
             }
         }
     }
@@ -85,5 +93,35 @@ public class ThingsInTableMix : MonoBehaviour
     {
         public List<GameObject> IngredientsForRecipe;
         public GameObject OutPut;
+    }
+
+    IEnumerator WaitAnimDelete(float f)
+    {
+        yield return new WaitForSeconds(f);
+        GameObject obj = Instantiate(currentCreatObj.obj, currentCreatObj.pos, currentCreatObj.rot, currentCreatObj.par);
+        obj.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+        obj.GetComponent<AnimDeleteIngredients>().CreateIngredient();
+        WaitAnimCreate(1f, obj);
+
+    }
+    IEnumerator WaitAnimCreate(float f, GameObject obj)
+    {
+        yield return new WaitForSeconds(f);
+        if (obj.GetComponent<PrinterObjectInfo>())
+        {
+            MixTableOn = false;
+            currentPrinterObject = obj;
+            obj.transform.rotation = currentCreatObj.obj.transform.rotation;
+            obj.transform.localScale = new Vector3(obj.transform.localScale.x / transform.parent.localScale.x, obj.transform.localScale.y / transform.parent.localScale.y, obj.transform.localScale.z / transform.parent.localScale.z);
+        }
+        transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
+    }
+    private class InfoInstObj
+    {
+        public GameObject obj;
+        public Vector3 pos;
+        public Quaternion rot;
+        public Transform par;
     }
 }

@@ -58,8 +58,10 @@ public class MoveCameraAnimation : MonoBehaviour
             }
             else if (FinallyMove)
             {
-                transform.localPosition = endCoords;
-                transform.localRotation = endRotate;
+                if (needPosition)
+                    transform.localPosition = endCoords;
+                if (needRotate)
+                    transform.localRotation = endRotate;
                 FinallyMove = false;
             }
             else

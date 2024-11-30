@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7416796259608130418}
   - component: {fileID: 4384090794540443603}
   - component: {fileID: 6794435014750928419}
+  - component: {fileID: 3533640208678846503}
   - component: {fileID: 3220970814278903489}
   m_Layer: 7
   m_Name: InItem
@@ -122,6 +123,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1239f845ea855743b83c280962cff8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3533640208678846503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352654662971261209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnyCase: 1
+  TimeAnim: 0.2
 --- !u!114 &3220970814278903489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needPosition: 1
-  startCoords: {x: -4.9, y: 22.07, z: -0.5599993}
+  startCoords: {x: 0.01, y: 10.9, z: -0.12}
   needRotate: 1
-  startRotate: {x: 0.5489588, y: -0.44569522, z: 0.54895896, w: 0.445695}
+  startRotate: {x: -0.49987787, y: 0.5001221, z: -0.49987787, w: -0.5001221}
   TimeAnimation: 0.5

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MouseTrigger : MonoBehaviour
 {
+    public bool AnyCase = false;
     private Vector3 originalScale;
     private bool OnScaleChange = false;
     public float TimeAnim = 0.2f;
@@ -18,9 +19,23 @@ public class MouseTrigger : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
+        if (AnyCase)
         {
             OnScaleChange = true;
+        }
+        else if (GetComponent<OpenObject>())
+        {
+            if (!GetComponent<OpenObject>().ObjectIsOpen)
+            {
+                OnScaleChange = true;
+            }
+        }
+        else
+        {
+            if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
+            {
+                OnScaleChange = true;
+            }
         }
     }
 
