@@ -101,7 +101,7 @@ public class ThingsInTableMix : MonoBehaviour
         obj.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 
         obj.GetComponent<AnimDeleteIngredients>().CreateIngredient();
-        WaitAnimCreate(1f, obj);
+        StartCoroutine(WaitAnimCreate(1f, obj));
 
     }
     IEnumerator WaitAnimCreate(float f, GameObject obj)
