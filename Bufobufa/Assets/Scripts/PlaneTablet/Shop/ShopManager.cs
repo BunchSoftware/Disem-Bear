@@ -8,9 +8,8 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private FileProducts fileProducts;
-    [SerializeField] private int money;
     private List<ProductGUI> productsGUI = new List<ProductGUI>();
-
+    private PlayerShop playerShop;
     public Action<Product> OnBuyProduct;
 
     private void Update()
@@ -20,7 +19,7 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-
+        playerShop = FindFirstObjectByType<PlayerShop>();
         List<Product> products = new List<Product>();
 
         for (int i = 0; i < fileProducts.products.Count; i++)
@@ -92,9 +91,9 @@ public class ShopManager : MonoBehaviour
 
     private bool Buy(Product product)
     {
-        if (money - product.money >= 0)
+        if (playerShop.playerShopInfo.money - product.money >= 0)
         {
-            money -= product.money;
+            playerShop.playerShopInfo.money -= product.money;
             OnBuyProduct?.Invoke(product);
 
             return true;

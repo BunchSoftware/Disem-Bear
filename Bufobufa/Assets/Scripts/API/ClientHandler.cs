@@ -1,9 +1,14 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Networking;
 
 namespace API
 {
@@ -11,10 +16,7 @@ namespace API
     [Serializable]
     public class ResourcePlayer
     {
-        public int apple;
-        public int count;
-        public string name;
-        public ResourceChangedPlayer a;
+
     }
 
     [Serializable]
@@ -81,6 +83,7 @@ namespace API
     public class ClientHandler : MonoBehaviour
     {
         [SerializeField] private string UUID;
+        public UnityEvent OnNotInternet;
 
         private void Start()
         {
@@ -153,6 +156,8 @@ namespace API
 
         public async void RegistrationPlayer(string userName, ResourcePlayer resourcePlayer)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/\r\n";
@@ -193,6 +198,8 @@ namespace API
 
         public async Task<ResourcePlayer> GetResourcePlayer(string userName)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return null;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
@@ -219,6 +226,8 @@ namespace API
 
         public async Task<bool> HasPlayerInServer(string userName)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return false;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
@@ -241,6 +250,8 @@ namespace API
 
         public async void SetResourcePlayer(string userName, ResourcePlayer resourcePlayer)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
@@ -269,6 +280,8 @@ namespace API
 
         public async void DeletePlayer(string userName)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
@@ -292,6 +305,8 @@ namespace API
 
         public async Task<List<JSONPlayer>> GetListPlayers()
         {
+            if (CheckInternetConnection("google.com") == false)
+                return null;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/\r\n";
@@ -301,6 +316,7 @@ namespace API
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 string json = await response.Content.ReadAsStringAsync();
+                print(json);
                 List<JSONPlayer> listPlayers = JsonConvert.DeserializeObject<List<JSONPlayer>>(json);
 
                 for (int i = 0; i < listPlayers.Count; i++)
@@ -318,6 +334,8 @@ namespace API
         #region LogPlayer
         public async void CreateLogPlayer(string userName, string comment, ResourceChangedPlayer resourceChangedPlayer)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
@@ -349,6 +367,8 @@ namespace API
 
         public async Task<List<LogPlayer>> GetListLogsPlayer(string userName)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return null;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/logs/\r\n";
@@ -370,6 +390,8 @@ namespace API
         #region Shop
         public async void RegistrationShop(string userName, string nameShop, ResourceShop resourceShop)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
@@ -397,6 +419,8 @@ namespace API
 
         public async Task<ResourceShop> GetResourceShopPlayer(string userName, string nameShop)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return null;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
@@ -425,6 +449,8 @@ namespace API
 
         public async void SetResourceShopPlayer(string userName, string nameShop, ResourceShop resourceShop)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
@@ -453,6 +479,8 @@ namespace API
 
         public async Task<List<JSONShop>> GetListShopPlayer(string userName)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return null;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
@@ -479,6 +507,8 @@ namespace API
 
         public async void DeleteShop(string userName, string nameShop)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
@@ -504,6 +534,8 @@ namespace API
 
         public async void CreateLogShop(string userName, string shopName, string comment, ResourceChangedShop resourceChangedShop)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
@@ -535,6 +567,8 @@ namespace API
 
         public async void GetListLogsShop(string userName, string shopName)
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{shopName}/logs/\r\n";
@@ -551,6 +585,8 @@ namespace API
 
         public async void GetLogsGame()
         {
+            if (CheckInternetConnection("google.com") == false)
+                return;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
@@ -560,6 +596,25 @@ namespace API
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 Debug.Log(await response.Content.ReadAsStringAsync());
+            }
+
+        }
+
+        public bool CheckInternetConnection(string nameOrAddress)
+        {
+            try
+            {
+                using (System.Net.NetworkInformation.Ping pinger = new System.Net.NetworkInformation.Ping())
+                {
+                    PingReply reply = pinger.Send(nameOrAddress);
+                    return reply.Status == IPStatus.Success;
+                }
+            }
+            catch
+            {
+                Debug.LogWarning("Нет подключения к интернету !");
+                OnNotInternet?.Invoke();
+                return false;
             }
         }
     }
