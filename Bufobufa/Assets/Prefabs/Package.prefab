@@ -108,7 +108,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needPosition: 1
-  startCoords: {x: -5.519, y: 1.263, z: -9.009}
+  startCoords: {x: -3.757045, y: 1.263, z: -9.009}
   needRotate: 0
   startRotate: {x: 0, y: 0, z: 0, w: 0}
   TimeAnimation: 1
@@ -146,8 +146,6 @@ MonoBehaviour:
   Clicked: 1
   falling: 1
   PickUp: 0
-  Dialog: {fileID: 0}
-  CodeWord: Package
 --- !u!54 &4036968444998537156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -217,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnyCase: 0
   TimeAnim: 0.2
 --- !u!1 &5206140507328394289
 GameObject:

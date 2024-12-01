@@ -7,20 +7,16 @@ using UnityEngine;
 public class PickUpObject : MonoBehaviour
 {
     private GameObject Player;
-    public bool Clicked = false;
     public bool falling = true;
     private Vector3 lcScale = new();
     public bool PickUp = false;
     private float timer = 0f;
+    private bool InTrigger = false;
 
     private void Start()
     {
         Player = GameObject.Find("Player");
         StartCoroutine(NotFalling());
-    }
-    private void OnMouseDown()
-    {
-        Clicked = true;
     }
     private void Update()
     {
@@ -29,25 +25,34 @@ public class PickUpObject : MonoBehaviour
             timer += Time.deltaTime;
             transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
         }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Player")
+        if (!falling && !PickUp && InTrigger)
         {
-            if (!falling && Clicked && !PickUp)
-            {
-
-                GetComponent<MouseTrigger>().enabled = false;
-                PickUp = true;
-                GetComponent<BoxCollider>().enabled = false;
-                lcScale = transform.localScale;
-                transform.parent = Player.transform;
-                transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
-                Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-                Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
-            }
+            GetComponent<MouseTrigger>().enabled = false;
+            PickUp = true;
+            GetComponent<BoxCollider>().enabled = false;
+            lcScale = transform.localScale;
+            transform.parent = Player.transform;
+            transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
+            Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+            Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            InTrigger = false;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            InTrigger = true;
+        }
+    }
+
+    
     
     IEnumerator NotFalling()
     {
