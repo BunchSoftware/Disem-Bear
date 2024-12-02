@@ -15,14 +15,16 @@ namespace API
     [Serializable]
     public class ResourcePlayer
     {
-
+        public bool isPlayerRegistration = false;
+        public int money = 0;
     }
 
     [Serializable]
     // Лог с изменением данных у игрока
     public class ResourceChangedPlayer
     {
-        public int add_apple;
+        public bool changePlayerRegistration;
+        public int changeMoney;
     }
 
     [Serializable]

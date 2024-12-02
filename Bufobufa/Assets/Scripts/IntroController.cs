@@ -9,19 +9,23 @@ using UnityEngine.Video;
 public class IntroController : MonoBehaviour
 {
     [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private Fade fadePanel;
     [SerializeField] private List<VideoClip> videoClips;
-    [SerializeField] private string nameScene;
+    [SerializeField] private int indexScene;
     private int currentVideoClips;
-    private void Awake()
+
+    private void Start()
     {
         videoPlayer = GetComponent<VideoPlayer>();
+        fadePanel.FadeWhite();
         StartCoroutine(PlayVideo());
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            SceneManager.LoadScene(nameScene);
+            fadePanel.currentIndexScene = indexScene;   
+            fadePanel.FadeBlack();
         }
     }
     private void OnDestroy()
@@ -42,6 +46,7 @@ public class IntroController : MonoBehaviour
     }
     private void EndReached(VideoPlayer vp)
     {
-        SceneManager.LoadScene(nameScene);
+        fadePanel.currentIndexScene = indexScene;
+        fadePanel.FadeBlack();
     }
 }

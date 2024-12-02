@@ -5,10 +5,7 @@ public class SaveManagerIO : DataStream
 {
     public void SaveJSONPlayer(string pathSaveFile, JSONPlayer jsonPlayer)
     {
-        if (jsonPlayer != null)
-            base.Serialize(pathSaveFile, jsonPlayer);
-        else
-            throw new Exception("Сохранения пусты");
+        base.Serialize(pathSaveFile, jsonPlayer);
     }
     public JSONPlayer LoadJSONPlayer(string pathSaveFile)
     {
