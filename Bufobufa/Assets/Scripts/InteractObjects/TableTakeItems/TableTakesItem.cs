@@ -45,7 +45,7 @@ public class TableTakesItem : MonoBehaviour
                 }
             }
         }
-        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>() && !Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<NoStol>())
+        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse)
         {
             ClickedMouse = false;
             if (items.Count < points.Count)

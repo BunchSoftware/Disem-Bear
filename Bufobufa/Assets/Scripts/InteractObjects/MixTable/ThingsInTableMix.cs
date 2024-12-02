@@ -98,9 +98,10 @@ public class ThingsInTableMix : MonoBehaviour
     {
         yield return new WaitForSeconds(f);
         GameObject obj = Instantiate(currentCreatObj.obj, currentCreatObj.pos, currentCreatObj.rot, currentCreatObj.par);
+        var lcS = obj.transform.localScale;
         obj.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 
-        obj.GetComponent<AnimDeleteIngredients>().CreateIngredient();
+        obj.GetComponent<AnimDeleteIngredients>().CreateIngredient(lcS);
         StartCoroutine(WaitAnimCreate(1f, obj));
 
     }
@@ -111,8 +112,6 @@ public class ThingsInTableMix : MonoBehaviour
         {
             MixTableOn = false;
             currentPrinterObject = obj;
-            obj.transform.rotation = currentCreatObj.obj.transform.rotation;
-            obj.transform.localScale = new Vector3(obj.transform.localScale.x / transform.parent.localScale.x, obj.transform.localScale.y / transform.parent.localScale.y, obj.transform.localScale.z / transform.parent.localScale.z);
         }
         transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
     }
