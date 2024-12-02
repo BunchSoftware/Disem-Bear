@@ -31,7 +31,7 @@ public class AnimDeleteIngredients : MonoBehaviour
         timer = 0f;
     }
 
-    public void CreateIngredient()
+    public void CreateIngredient(Vector3 lcS)
     {
         CreateOn = true;
 
@@ -39,7 +39,7 @@ public class AnimDeleteIngredients : MonoBehaviour
         StartRotation = new Vector3(0, 0, 0);
         EndRotation = new Vector3(0, 0, 1440f);
         StartScale = transform.localScale;
-        EndScale = new Vector3(0.5f, 0.5f, 0.5f);
+        EndScale = lcS;
 
         timer = 0f;
     }
