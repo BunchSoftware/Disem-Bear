@@ -9,6 +9,8 @@ public class MoveObjectMouse : MonoBehaviour
 
     private Vector3 offset;
 
+    public GameObject wtf;
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -16,6 +18,7 @@ public class MoveObjectMouse : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
             {
+                wtf = infoHit.transform.gameObject;
                 if (infoHit.transform == transform)
                 {
                     if (Physics.Raycast(ray, out infoHit, Mathf.Infinity, LayerMask.GetMask("Table")))

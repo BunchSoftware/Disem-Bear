@@ -14,6 +14,8 @@ public class Aquarium : MonoBehaviour
     private float TimeCell = 666f;
     private float timerCell = 0f;
     public int CountCells = 0;
+    public float TimeWaterSpend = -1f;
+    private float timerWater = 0f;
 
     [SerializeField] private Sprite NullFase;
     [SerializeField] private Sprite FirstFase;
@@ -71,16 +73,32 @@ public class Aquarium : MonoBehaviour
     }
     private void Update()
     {
+        if (OnAquarium && TimeWaterSpend != -1f)
+        {
+            timerWater += Time.deltaTime;
+            if (timerWater >= TimeWaterSpend)
+            {
+
+            }
+        }
         if (NormalTemperature || NormalGround) OnAquarium = true;
         else OnAquarium = false;
-        if (OnAquarium) timerCell += Time.deltaTime;
+        if (OnAquarium && TimeCell != -1f) timerCell += Time.deltaTime;
         if (timerCell >= TimeCell)
         {
             CountCells++;
             timerCell = 0;
         }
-        if (NormalTemperature && NormalGround) TimeCell = NormalTimeCell;
-        else if (NormalTemperature || NormalGround) TimeCell = NormalTimeCell * 2;
+        if (NormalGround)
+        {
+            if (NormalTemperature) TimeCell = NormalTimeCell;
+            else TimeCell = NormalTimeCell * 2;
+        }
+        else
+        {
+            TimeCell = -1f;
+            timerCell = 0f;
+        }
 
         if (CountCells == 0)
         {
