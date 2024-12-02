@@ -6,10 +6,10 @@ using UnityEngine;
 public class Ingredient : MonoBehaviour
 {
     public string IngredientName = "None";
+    public float TimeInAquarium = 1f;
 
     public bool InTableMix = false;
 
-    public GameObject spawner;
 
     private void OnMouseUp()
     {
@@ -21,13 +21,6 @@ public class Ingredient : MonoBehaviour
     }
     public void ResetIngredient()
     {
-        if (spawner != null)
-        {
-            spawner.GetComponent<Spawner>().count++;
-        }
-        else
-        {
-            StoreManager.Instance.AddIngridient(IngredientName);
-        }
+        StoreManager.Instance.AddIngridient(IngredientName);
     }
 }
