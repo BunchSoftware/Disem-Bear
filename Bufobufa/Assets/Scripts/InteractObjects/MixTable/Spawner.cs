@@ -6,9 +6,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public string IngredientName = "None";
-
-    private Vector3 startPos;
+    private string IngredientName = "None";
 
     private Vector3 mousePosition;
     public int count = 0;
@@ -29,10 +27,6 @@ public class Spawner : MonoBehaviour
         {
             count--;
             IngredientObj = Instantiate(Ingredient, transform.position, transform.rotation, transform.parent.parent);
-            IngredientObj.GetComponent<Ingredient>().IngredientName = IngredientName;
-            IngredientObj.GetComponent<Ingredient>().spawner = gameObject;
-            IngredientObj.GetComponent<SpriteRenderer>().sprite = spriteIngredient.GetComponent<SpriteRenderer>().sprite;
-            IngredientObj.AddComponent<BoxCollider>();
             OnDrag = true;
             mousePosition = Input.mousePosition - GetMousePos();
         }
@@ -66,9 +60,9 @@ public class Spawner : MonoBehaviour
     }
     private void Start()
     {
+        IngredientName = Ingredient.GetComponent<Ingredient>().IngredientName;
         spriteIngredient = transform.Find("Sprite").gameObject;
         DisplayCount = transform.Find("DisplayCount").gameObject;
-        startPos = transform.position;
     }
     private void Update()
     {
