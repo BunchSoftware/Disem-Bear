@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1210340649243863391}
   - component: {fileID: 5188828811109701773}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2699481424296046412}
   - component: {fileID: 6508207699232709730}
   - component: {fileID: 735059859979149942}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559cb11a89d033947a8c143d8315ce85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IngredientName: None
   count: 0
   Ingredient: {fileID: 0}
 --- !u!65 &735059859979149942
@@ -213,6 +212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DisplayCount
       objectReference: {fileID: 0}
+    - target: {fileID: 1243597315398868459, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -224,6 +227,14 @@ PrefabInstance:
     - target: {fileID: 4588309091890943772, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062369710034626204, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481020337745429001, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3519669001316087962, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}

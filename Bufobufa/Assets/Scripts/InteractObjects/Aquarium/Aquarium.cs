@@ -20,7 +20,26 @@ public class Aquarium : MonoBehaviour
     [SerializeField] private Sprite SecondFase;
     [SerializeField] private Sprite ThirdFase;
 
+    [SerializeField] private List<GameObject> CellsList = new List<GameObject>();
+    private int NumCell = 0;
+    private SpriteRenderer ChoiceCellSprite;
+
+    public void ChangeCell(int ch)
+    {
+        GetAllCells();
+        NumCell = (NumCell + ch + CellsList.Count) % CellsList.Count;
+        NameIngredient = CellsList[NumCell].GetComponent<Ingredient>().IngredientName;
+        ChoiceCellSprite.sprite = CellsList[NumCell].GetComponent<SpriteRenderer>().sprite;
+        NormalTimeCell = CellsList[NumCell].GetComponent<Ingredient>().TimeInAquarium;
+        timerCell = 0f;
+    }
+
     private void OnMouseDown()
+    {
+        GetAllCells();
+    }
+
+    private void GetAllCells()
     {
         DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
         DisplayCount.GetComponent<Animator>().SetBool("On", true);
@@ -31,6 +50,7 @@ public class Aquarium : MonoBehaviour
         }
         CountCells = 0;
     }
+
     IEnumerator waitDisplayCount()
     {
         yield return new WaitForSeconds(2);
@@ -38,6 +58,13 @@ public class Aquarium : MonoBehaviour
     }
     private void Start()
     {
+        ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
+        if (CellsList.Count > 0)
+        {
+            NameIngredient = CellsList[NumCell].GetComponent<Ingredient>().IngredientName;
+        }
+        ChoiceCellSprite.sprite = CellsList[NumCell].GetComponent<SpriteRenderer>().sprite;
+        NormalTimeCell = CellsList[NumCell].GetComponent<Ingredient>().TimeInAquarium;
 
         TimeCell = NormalTimeCell;
         DisplayCount = transform.Find("DisplayCount").gameObject;
