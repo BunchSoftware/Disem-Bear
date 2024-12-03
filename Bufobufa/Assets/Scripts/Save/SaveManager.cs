@@ -14,7 +14,7 @@ public class SaveManager : MonoBehaviour
     private string pathToFileResourcePlayer;
     private string pathToFileResourceShop;
 
-    private void Start()
+    private void Awake()
     {
         clientHandler = GetComponent<ClientHandler>();
         saveManagerIO = new SaveManagerIO();
@@ -77,5 +77,10 @@ public class SaveManager : MonoBehaviour
         {
             clientHandler.DeletePlayer(jSONPlayers[i].name);
         }
+    }
+
+    public JSONPlayer GetJSONPlayer()
+    {
+        return JSONPlayer;
     }
 }
