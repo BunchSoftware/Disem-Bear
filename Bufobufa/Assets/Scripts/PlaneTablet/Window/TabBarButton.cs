@@ -18,8 +18,11 @@ public class TabBarButton : MonoBehaviour
     {
         image = GetComponent<Image>();
         image.color = colorDefaultButton;
+        isSelected = false;
 
         button = GetComponent<Button>();
+
+        button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
             actionSelectTab.Invoke(indexTab);
