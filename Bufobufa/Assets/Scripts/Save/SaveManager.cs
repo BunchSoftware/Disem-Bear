@@ -9,7 +9,8 @@ public class SaveManager : MonoBehaviour
     private ClientHandler clientHandler;
     private SaveManagerIO saveManagerIO;
 
-    private JSONPlayer JSONPlayer;
+    public FilePlayer filePlayer;
+    public FileShop fileShop;
 
     private string pathToFileResourcePlayer;
     private string pathToFileResourceShop;
@@ -22,41 +23,42 @@ public class SaveManager : MonoBehaviour
         pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
         pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
 
-        JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
+        if (filePlayer.name == "")
+            filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
 
-        if(JSONPlayer == null)
+        if(filePlayer.JSONPlayer == null)
         {
-            JSONPlayer = new JSONPlayer();
-            JSONPlayer.resources = new ResourcePlayer();
-            saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, JSONPlayer);
+            filePlayer.JSONPlayer = new JSONPlayer();
+            filePlayer.JSONPlayer.resources = new ResourcePlayer();
+            saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
         }
     }
 
 
     public void RegistrationPlayer(string name)
     {
-        JSONPlayer.name = name;
-        if(JSONPlayer.resources == null)
-            JSONPlayer.resources = new ResourcePlayer();
+        filePlayer.JSONPlayer.nameUser = name;
+        if(filePlayer.JSONPlayer.resources == null)
+            filePlayer.JSONPlayer.resources = new ResourcePlayer();
 
-        JSONPlayer.resources.isPlayerRegistration = true;
+        filePlayer.JSONPlayer.resources.isPlayerRegistration = true;
 
-        clientHandler.RegistrationPlayer(name, JSONPlayer.resources);
-        clientHandler.SetResourcePlayer(name, JSONPlayer.resources);
+        clientHandler.RegistrationPlayer(name, filePlayer.JSONPlayer.resources);
+        clientHandler.SetResourcePlayer(name, filePlayer.JSONPlayer.resources);
         ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
         resourceChangedPlayer.changePlayerRegistration = true;
         clientHandler.CreateLogPlayer(name, "Игрок зарегистрирован впервые, приветствуем нового игрока !", resourceChangedPlayer);
         PrintListPlayer();
         PrintListLogPlayer(name);
 
-        saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, JSONPlayer);
+        saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
     }
 
     public void Print()
     {
-        if (JSONPlayer != null)
-            print(JSONPlayer.name);
+        if (filePlayer.JSONPlayer != null)
+            print(filePlayer.JSONPlayer.nameUser);
 
         PrintListPlayer();
     }
@@ -75,12 +77,12 @@ public class SaveManager : MonoBehaviour
         List<JSONPlayer> jSONPlayers = await clientHandler.GetListPlayers();
         for (int i = 0; i < jSONPlayers.Count; i++)
         {
-            clientHandler.DeletePlayer(jSONPlayers[i].name);
+            clientHandler.DeletePlayer(jSONPlayers[i].nameUser);
         }
     }
 
     public JSONPlayer GetJSONPlayer()
     {
-        return JSONPlayer;
+        return filePlayer.JSONPlayer;
     }
 }

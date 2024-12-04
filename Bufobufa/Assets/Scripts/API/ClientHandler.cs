@@ -55,7 +55,7 @@ namespace API
     // Игрок с именем и ресурсами
     public class JSONPlayer
     {
-        public string name;
+        public string nameUser;
         public ResourcePlayer resources;
     }
 
@@ -214,7 +214,7 @@ namespace API
                     string json = await response.Content.ReadAsStringAsync();
                     JSONPlayer JSONPlayer = JsonConvert.DeserializeObject<JSONPlayer>(json);
                     if(JSONPlayer.resources == null)
-                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {JSONPlayer.name}, возможны ошибки в реализации");
+                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {JSONPlayer.nameUser}, возможны ошибки в реализации");
                     return JSONPlayer.resources;
                 }
                 catch (Exception exc)
@@ -323,7 +323,7 @@ namespace API
                 for (int i = 0; i < listPlayers.Count; i++)
                 {
                     if (listPlayers[i].resources == null)
-                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {listPlayers[i].name}, возможны ошибки в реализации");
+                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {listPlayers[i].nameUser}, возможны ошибки в реализации");
                 }
 
                 Debug.Log(await response.Content.ReadAsStringAsync());
