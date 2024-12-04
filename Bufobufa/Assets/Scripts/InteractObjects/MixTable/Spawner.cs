@@ -31,16 +31,9 @@ public class Spawner : MonoBehaviour
             mousePosition = Input.mousePosition - GetMousePos();
         }
     }
-    private void OnMouseDrag()
-    {
-        if (OnDrag)
-        {
-            IngredientObj.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).x, transform.position.y, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).z);
-        }
-    }
     private void OnMouseUp()
     {
-        if (OnDrag && !IngredientObj.GetComponent<Ingredient>().InTableMix)
+        if (OnDrag && !IngredientObj.GetComponent<MoveObjectMouse>().InTableMix)
         {
             count++;
             Destroy(IngredientObj);

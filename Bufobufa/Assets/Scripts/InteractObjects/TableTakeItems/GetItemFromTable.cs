@@ -52,13 +52,13 @@ public class GetItemFromTable : MonoBehaviour
         }
         if (InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerPickSometing && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
-            GameObject tmp = transform.parent.GetComponent<TableTakesItem>().points[transform.parent.GetComponent<TableTakesItem>().items.IndexOf(gameObject)];
-            transform.parent.GetComponent<TableTakesItem>().points.Remove(tmp);
-            transform.parent.GetComponent<TableTakesItem>().points.Add(tmp);
-            transform.parent.GetComponent<TableTakesItem>().items.Remove(gameObject);
-            Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-            Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
-            transform.parent = Player.transform;
+            //GameObject tmp = transform.parent.GetComponent<TableTakesItem>().points[transform.parent.GetComponent<TableTakesItem>().items.IndexOf(gameObject)];
+            //transform.parent.GetComponent<TableTakesItem>().points.Remove(tmp);
+            //transform.parent.GetComponent<TableTakesItem>().points.Add(tmp);
+            //transform.parent.GetComponent<TableTakesItem>().items.Remove(gameObject);
+            //Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+            //Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
+            //transform.parent = Player.transform;
 
         }
     }

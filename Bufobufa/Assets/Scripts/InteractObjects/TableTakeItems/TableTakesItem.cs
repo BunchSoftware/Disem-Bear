@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TableTakesItem : MonoBehaviour
 {
-    public List<GameObject> points = new List<GameObject>();
-    public List<GameObject> items = new List<GameObject>();
-    private bool InTrigger = false;
-    private bool ClickedMouse = false;
+    public List<pointInfo> points = new List<pointInfo>();
+    public bool InTrigger = false;
+    public bool ClickedMouse = false;
     private GameObject Player;
     public Vector3 ScaleVector;
     private void Start()
@@ -48,14 +48,26 @@ public class TableTakesItem : MonoBehaviour
         if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse)
         {
             ClickedMouse = false;
-            if (items.Count < points.Count)
+            for (int i = 0; i < points.Count; i++)
             {
-                items.Add(Player.GetComponent<PlayerInfo>().currentPickObject);
-                items[items.Count - 1].transform.parent = transform;
-                items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
-                Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
-                Player.GetComponent<PlayerInfo>().currentPickObject = null;
+                if (!points[i].GetItem)
+                {
+                    points[i].GetItem = true;
+                    points[i].obj = Player.GetComponent<PlayerInfo>().currentPickObject;
+                    points[i].obj.transform.parent = transform;
+                    Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                    Player.GetComponent<PlayerInfo>().currentPickObject = null;
+                    points[i].obj.transform.position = points[i].point.transform.position;
+                    break;
+                }
             }
         }
+    }
+    [System.Serializable]
+    public class pointInfo
+    {
+        public bool GetItem = false;
+        public GameObject obj;
+        public GameObject point;
     }
 }

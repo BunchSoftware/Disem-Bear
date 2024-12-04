@@ -9,7 +9,7 @@ public class MoveObjectMouse : MonoBehaviour
 
     private Vector3 offset;
 
-    public GameObject wtf;
+    public bool InTableMix = false;
 
     private void Update()
     {
@@ -18,7 +18,6 @@ public class MoveObjectMouse : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
             {
-                wtf = infoHit.transform.gameObject;
                 if (infoHit.transform == transform)
                 {
                     if (Physics.Raycast(ray, out infoHit, Mathf.Infinity, LayerMask.GetMask("Table")))
@@ -37,9 +36,19 @@ public class MoveObjectMouse : MonoBehaviour
                 transform.position = new Vector3(infoHit.point.x, transform.position.y, infoHit.point.z) + offset;
             }
         }
-        if (Input.GetMouseButtonUp(0))
+        if (OnDrag && Input.GetMouseButtonUp(0))
         {
             OnDrag = false;
+            if (!InTableMix)
+            {
+                ResetIngredient();
+                Destroy(gameObject);
+            }
         }
+    }
+
+    public void ResetIngredient()
+    {
+        StoreManager.Instance.AddIngridient(GetComponent<Ingredient>().IngredientName);
     }
 }

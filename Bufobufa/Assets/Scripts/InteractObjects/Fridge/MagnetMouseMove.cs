@@ -31,7 +31,7 @@ public class MagnetMouseMove : MonoBehaviour
         if (OnDrag)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("MagnetCollider")))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("MagnetCollider")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("DoorHandle")))
             {
                 if (infoHit.transform == FrontFridge)
                 {

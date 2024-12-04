@@ -21,7 +21,7 @@ public class ThingsInTableMix : MonoBehaviour
         if (collision.gameObject.GetComponent<Ingredient>())
         {
             IngredientsIn.Add(collision.gameObject);
-            collision.gameObject.GetComponent<Ingredient>().InTableMix = true;
+            collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = true;
         }
     }
     private void OnTriggerExit(Collider collision)
@@ -29,60 +29,63 @@ public class ThingsInTableMix : MonoBehaviour
         if (collision.gameObject.GetComponent<Ingredient>())
         {
             IngredientsIn.Remove(collision.gameObject);
-            collision.gameObject.GetComponent<Ingredient>().InTableMix = false;
+            collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = false;
         }
     }
 
     public void MixIngredients()
     {
-        transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
-        bool NotExistReceip = true;
-        ingredients.Clear();
-        for (int i = 0; i < IngredientsIn.Count; i++)
+        if (MixTableOn)
         {
-            ingredients.Add(IngredientsIn[i].GetComponent<Ingredient>().IngredientName);
-        }
-        ingredients.Sort();
-        for (int i = 0; i < Recipes.Count; i++)
-        {
-            List<string> IngredientStrings = new();
-            for (int k = 0; k < Recipes[i].IngredientsForRecipe.Count; k++)
+            transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
+            bool NotExistReceip = true;
+            ingredients.Clear();
+            for (int i = 0; i < IngredientsIn.Count; i++)
             {
-                IngredientStrings.Add(Recipes[i].IngredientsForRecipe[k].GetComponent<Ingredient>().IngredientName);
+                ingredients.Add(IngredientsIn[i].GetComponent<Ingredient>().IngredientName);
             }
-            IngredientStrings.Sort();
-            if (ingredients.SequenceEqual(IngredientStrings))
+            ingredients.Sort();
+            for (int i = 0; i < Recipes.Count; i++)
             {
-                if (Recipes[i].OutPut != null)
+                List<string> IngredientStrings = new();
+                for (int k = 0; k < Recipes[i].IngredientsForRecipe.Count; k++)
                 {
-                    NotExistReceip = false;
-                    GameObject tempObj = IngredientsIn[0];
-                    for (int j = IngredientsIn.Count - 1; j >= 0; j--)
+                    IngredientStrings.Add(Recipes[i].IngredientsForRecipe[k].GetComponent<Ingredient>().IngredientName);
+                }
+                IngredientStrings.Sort();
+                if (ingredients.SequenceEqual(IngredientStrings))
+                {
+                    if (Recipes[i].OutPut != null)
                     {
-                        IngredientsIn[j].GetComponent<AnimDeleteIngredients>().DeleteIngredient();
-                        //Destroy(IngredientsIn[j]);
+                        NotExistReceip = false;
+                        GameObject tempObj = IngredientsIn[0];
+                        for (int j = IngredientsIn.Count - 1; j >= 0; j--)
+                        {
+                            IngredientsIn[j].GetComponent<AnimDeleteIngredients>().DeleteIngredient();
+                            //Destroy(IngredientsIn[j]);
+                        }
+                        IngredientsIn.Clear();
+
+                        currentCreatObj = new();
+                        currentCreatObj.obj = Recipes[i].OutPut;
+                        currentCreatObj.pos = transform.position;
+                        currentCreatObj.rot = tempObj.transform.rotation;
+                        currentCreatObj.par = transform.parent;
+
+                        StartCoroutine(WaitAnimDelete(1f));
+
+                        break;
                     }
-                    IngredientsIn.Clear();
-
-                    currentCreatObj = new();
-                    currentCreatObj.obj = Recipes[i].OutPut;
-                    currentCreatObj.pos = transform.position;
-                    currentCreatObj.rot = tempObj.transform.rotation;
-                    currentCreatObj.par = transform.parent;
-
-                    StartCoroutine(WaitAnimDelete(1f));
-
-                    break;
                 }
             }
+            if (NotExistReceip) transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
         }
-        if (NotExistReceip) transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
     }
     public void ClearIngredients()
     {
         for (int j = IngredientsIn.Count - 1; j >= 0; j--)
         {
-            IngredientsIn[j].GetComponent<Ingredient>().ResetIngredient();
+            IngredientsIn[j].GetComponent<MoveObjectMouse>().ResetIngredient();
             Destroy(IngredientsIn[j]);
         }
         IngredientsIn = new();
