@@ -15,11 +15,13 @@ public class Fade : MonoBehaviour
 
     public void FadeBlack()
     {
+        Time.timeScale = 1;
         gameObject.SetActive(true);
         animator.SetInteger("Active", 1);
     }
     public void FadeWhite()
     {
+        Time.timeScale = 1;
         gameObject.SetActive(true);
         animator.SetInteger("Active", 2);
     }
