@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6294113840931859995}
   - component: {fileID: 4869078278499156633}
   - component: {fileID: 2958223677941991812}
+  - component: {fileID: 7645410680757278805}
+  - component: {fileID: 2083576065353341828}
   m_Layer: 0
   m_Name: PrinterObject
   m_TagString: Untagged
@@ -144,3 +146,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WhatThis: Heart
+--- !u!114 &7645410680757278805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5610431095258980298}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnyCase: 0
+  TimeAnim: 0.2
+--- !u!114 &2083576065353341828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5610431095258980298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60e0bc39c6944b4386b3b5855102b6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InTrigger: 0
+  ClickedMouse: 0
+  numPoint: 0
