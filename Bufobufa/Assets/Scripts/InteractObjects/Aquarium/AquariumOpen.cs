@@ -49,5 +49,19 @@ public class AquariumOpen : MonoBehaviour
 
             
         }
+        else if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && !GetComponent<OpenObject>().ObjectIsOpen)
+        {
+            GetComponent<OpenObject>().ClickedMouse = false;
+            if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>())
+            {
+                if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>().nameMaterial == AquariumSprite.GetComponent<Aquarium>().NameMaterial)
+                {
+                    AquariumSprite.GetComponent<Aquarium>().TimeWaterSpend = Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>().TimeMaterial;
+                    Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                    Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
+                    Player.GetComponent<PlayerInfo>().currentPickObject = null;
+                }
+            }
+        }
     }
 }

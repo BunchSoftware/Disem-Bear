@@ -10,6 +10,7 @@ public class MouseTrigger : MonoBehaviour
     public float TimeAnim = 0.2f;
     private float timer = 0f;
     private GameObject Player;
+    private bool FinallyMove = false;
 
     private void Start()
     {
@@ -21,20 +22,26 @@ public class MouseTrigger : MonoBehaviour
     {
         if (AnyCase)
         {
+            originalScale = transform.localScale;
             OnScaleChange = true;
+            FinallyMove = true;
         }
         else if (GetComponent<OpenObject>())
         {
             if (!GetComponent<OpenObject>().ObjectIsOpen)
             {
+                originalScale = transform.localScale;
                 OnScaleChange = true;
+                FinallyMove = true;
             }
         }
         else
         {
             if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
             {
+                originalScale = transform.localScale;
                 OnScaleChange = true;
+                FinallyMove = true;
             }
         }
     }
@@ -42,6 +49,7 @@ public class MouseTrigger : MonoBehaviour
     private void OnMouseExit()
     {
         OnScaleChange = false;
+        FinallyMove = true;
     }
     private void Update()
     {
@@ -49,16 +57,26 @@ public class MouseTrigger : MonoBehaviour
         {
             if (timer <= TimeAnim)
             {
-                timer += Time.deltaTime;
                 transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
+                timer += Time.deltaTime;
+            }
+            else if (FinallyMove)
+            {
+                transform.localScale = originalScale * 1.08f;
+                FinallyMove = false;
             }
         }
         else
         {
             if (timer >= 0f)
             {
-                timer -= Time.deltaTime;
                 transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
+                timer -= Time.deltaTime;
+            }
+            else if (FinallyMove)
+            {
+                transform.localScale = originalScale;
+                FinallyMove = false;
             }
         }
     }

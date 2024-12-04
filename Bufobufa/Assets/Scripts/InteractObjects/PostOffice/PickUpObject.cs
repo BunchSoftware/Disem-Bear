@@ -35,6 +35,7 @@ public class PickUpObject : MonoBehaviour
             transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
+            Destroy(this);
         }
     }
     private void OnTriggerExit(Collider other)

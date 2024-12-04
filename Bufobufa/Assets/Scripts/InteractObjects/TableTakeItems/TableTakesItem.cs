@@ -28,13 +28,15 @@ public class TableTakesItem : MonoBehaviour
             InTrigger = false;
         }
     }
+    public GameObject wtf;
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
             {
+                wtf = infoHit.collider.gameObject;
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
@@ -45,7 +47,7 @@ public class TableTakesItem : MonoBehaviour
                 }
             }
         }
-        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse)
+        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse && Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<GetItemFromTable>())
         {
             ClickedMouse = false;
             for (int i = 0; i < points.Count; i++)
@@ -58,6 +60,9 @@ public class TableTakesItem : MonoBehaviour
                     Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
                     points[i].obj.transform.position = points[i].point.transform.position;
+                    points[i].obj.GetComponent<GetItemFromTable>().numPoint = i;
+                    points[i].obj.GetComponent<MouseTrigger>().enabled = true;
+                    points[i].obj.GetComponent<BoxCollider>().enabled = true;
                     break;
                 }
             }

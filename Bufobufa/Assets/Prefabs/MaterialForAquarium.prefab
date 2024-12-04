@@ -15,11 +15,11 @@ GameObject:
   - component: {fileID: 1416277121592618411}
   - component: {fileID: 4001399094569568040}
   - component: {fileID: 4036968444998537156}
-  - component: {fileID: 8975040544648408492}
   - component: {fileID: 391935746798126346}
   - component: {fileID: 7871138960482414917}
+  - component: {fileID: 8688015039957210573}
   m_Layer: 7
-  m_Name: Package
+  m_Name: MaterialForAquarium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 285cc7a30c0e4fb489f63e74c38a3bea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,21 +171,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8975040544648408492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522447525192828825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aeea4201deae4544888c11a71fb97b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PackageName: Document
-  TriggerPackage: {fileID: 0}
-  ItemInPackage: {fileID: 7352654662971261209, guid: 1e075f24e38f78a41b710658a4af3a01, type: 3}
 --- !u!114 &391935746798126346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,3 +200,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnyCase: 0
   TimeAnim: 0.2
+--- !u!114 &8688015039957210573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522447525192828825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432ed7162cd4076419ccd56fa8feb695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameMaterial: Classic
