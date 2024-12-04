@@ -85,6 +85,7 @@ public class Printer : MonoBehaviour
             PrinterImage.GetComponent<MeshRenderer>().material = OrigPrinter;
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = Instantiate(currentObject);
+            Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MouseTrigger>().enabled = false;
             currentObject = null;
             ClickedMouse = false;
             PrinterWork = false;
