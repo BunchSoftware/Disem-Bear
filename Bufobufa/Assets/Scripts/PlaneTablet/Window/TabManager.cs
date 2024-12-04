@@ -12,7 +12,7 @@ public class TabManager : MonoBehaviour
     private List<TabBarButton> tabBarButtons = new List<TabBarButton>();
     private int currentIndexTab;
 
-    private void OnEnable()
+    private void Start()
     {
         tabBar.Init(this);
 

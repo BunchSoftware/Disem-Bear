@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OpenObject : MonoBehaviour
 {
+    public UnityEvent ApperanceAnimationTV;
+    public UnityEvent DisapperanceAnimationTV;
+
     public bool InTrigger = false;
     public bool ObjectIsOpen = false;
     public bool ObjectAnim = false;
@@ -128,8 +132,14 @@ public class OpenObject : MonoBehaviour
     }
     IEnumerator WaitAnimTable(float f)
     {
+        if (ObjectIsOpen == false)
+            DisapperanceAnimationTV?.Invoke();
+
         yield return new WaitForSeconds(f);
         ObjectAnim = false;
+
+        if (ObjectIsOpen)
+            ApperanceAnimationTV?.Invoke();
     }
     IEnumerator WaitAnimCamera(float f)
     {
