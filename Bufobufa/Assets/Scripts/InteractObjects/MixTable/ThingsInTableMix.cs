@@ -16,6 +16,13 @@ public class ThingsInTableMix : MonoBehaviour
 
     private InfoInstObj currentCreatObj;
 
+    private ParticleSystem ParticleSystem;
+
+    private void Start()
+    {
+        ParticleSystem = transform.GetChild(0).GetComponent<ParticleSystem>();
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.GetComponent<Ingredient>())
@@ -71,7 +78,7 @@ public class ThingsInTableMix : MonoBehaviour
                         currentCreatObj.pos = transform.position;
                         currentCreatObj.rot = tempObj.transform.rotation;
                         currentCreatObj.par = transform.parent;
-
+                        ParticleSystem.Play();
                         StartCoroutine(WaitAnimDelete(1f));
 
                         break;
@@ -111,6 +118,7 @@ public class ThingsInTableMix : MonoBehaviour
     IEnumerator WaitAnimCreate(float f, GameObject obj)
     {
         yield return new WaitForSeconds(f);
+        ParticleSystem.Stop();
         if (obj.GetComponent<PrinterObjectInfo>())
         {
             MixTableOn = false;

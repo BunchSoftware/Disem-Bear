@@ -10,7 +10,6 @@ public class PickUpObject : MonoBehaviour
     public bool falling = true;
     private Vector3 lcScale = new();
     public bool PickUp = false;
-    private float timer = 0f;
     private bool InTrigger = false;
 
     private void Start()
@@ -20,11 +19,6 @@ public class PickUpObject : MonoBehaviour
     }
     private void Update()
     {
-        if (PickUp && timer < 1f)
-        {
-            timer += Time.deltaTime;
-            transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
-        }
         if (!falling && !PickUp && InTrigger)
         {
             GetComponent<MouseTrigger>().enabled = false;
@@ -58,6 +52,7 @@ public class PickUpObject : MonoBehaviour
     IEnumerator NotFalling()
     {
         yield return new WaitForSeconds(1f);
+
         falling = false;
     }
 }
