@@ -22,4 +22,13 @@ public class UIGameControl : MonoBehaviour
         fade.currentIndexScene = buildIndex;
         fade.FadeBlack();
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;
+    }
 }
