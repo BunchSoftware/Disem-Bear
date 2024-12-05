@@ -5513,7 +5513,7 @@ MonoBehaviour:
   NormalTimeCell: 3
   CountCells: 0
   TimeWaterSpend: -1
-  OnAquarium: 0
+  OnAquarium: 1
   NullFase: {fileID: -1125639144, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
   FirstFase: {fileID: 138638830, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
   SecondFase: {fileID: 1989711107, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
@@ -17980,56 +17980,6 @@ Transform:
   - {fileID: 1008643163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1605449147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7637504109331753141, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
-  m_PrefabInstance: {fileID: 117523939470114519}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1605449157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605449147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a70d31485c25f4e4e85f9451c3196e67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets:
-  - TypeTarget: 2
-    Active: 1
-    StayActiveAfter: 0
-    DialogTag: Package
-    NewDialog: 0
-    NumDialog: 0
-    UniqId: 0
-    NeedActivate:
-    - obj: {fileID: 2131093807}
-      Ids: 01000000
---- !u!95 &1605449158
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605449147}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: aac1aab92507481449bb1f3cd6858ead, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1615270650
 GameObject:
   m_ObjectHideFlags: 0
@@ -26727,14 +26677,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2214200442696495984, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 72d37f7ec91332f45a11aeef8571f02a, type: 3}
-    - target: {fileID: 2214200442696495984, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2475027670571457751, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.25
@@ -26775,6 +26717,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4152707365304679793, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: targets.Array.data[0].NeedActivate.Array.data[0].obj
+      value: 
+      objectReference: {fileID: 2131093807}
     - target: {fileID: 7637504109331753141, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_Name
       value: Player
@@ -26782,13 +26728,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7637504109331753141, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1605449157}
-    - targetCorrespondingSourceObject: {fileID: 7637504109331753141, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1605449158}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
 --- !u!1001 &1896055064771567409
 PrefabInstance:

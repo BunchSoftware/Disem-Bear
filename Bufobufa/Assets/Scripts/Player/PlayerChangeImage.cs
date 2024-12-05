@@ -66,19 +66,22 @@ public class PlayerChangeImage : MonoBehaviour
         if (HorizontalChangePos >= 0.01f)
         {
             HorizontalSprite = Left;
+            //animator.Play("LeftAnimation");
         }
         else
         {
             HorizontalSprite = Right;
+            //animator.Play("RightAnimation");
         }
         if (VerticalChangePos < -0.01f)
         {
-            //VerticalSprite = Back;
-            animator.Play("BackAnimation");
+            VerticalSprite = Back;
+            //animator.Play("BackAnimation");
         }
         else
         {
             VerticalSprite = Forward;
+            //animator.Play("ForwardAnimation");
         }
         if (Mathf.Abs(HorizontalChangePos) > Mathf.Abs(VerticalChangePos))
         {
