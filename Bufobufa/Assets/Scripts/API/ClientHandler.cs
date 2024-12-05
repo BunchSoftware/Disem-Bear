@@ -192,7 +192,7 @@ namespace API
                 }
                 catch (Exception)
                 {
-                    Debug.Log($"Персонаж {userName} уже зарегистрирован");
+                    Debug.Log($"Персонаж {userName} уже зарегистрирован или непредвиденная ошибка");
                 }
             }
         }
