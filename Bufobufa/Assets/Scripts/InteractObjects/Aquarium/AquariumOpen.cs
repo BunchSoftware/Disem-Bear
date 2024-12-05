@@ -57,6 +57,7 @@ public class AquariumOpen : MonoBehaviour
                 if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>().nameMaterial == AquariumSprite.GetComponent<Aquarium>().NameMaterial)
                 {
                     AquariumSprite.GetComponent<Aquarium>().TimeWaterSpend = Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>().TimeMaterial;
+                    AquariumSprite.GetComponent<Aquarium>().OnAquarium = true;
                     Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                     Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
