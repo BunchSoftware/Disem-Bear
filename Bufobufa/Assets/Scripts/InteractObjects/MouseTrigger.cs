@@ -11,7 +11,7 @@ public class MouseTrigger : MonoBehaviour
     private float timer = 0f;
     private GameObject Player;
     private bool FinallyMove = false;
-    private bool InCollider = false;
+    private bool FullZero = true;
 
     private void Start()
     {
@@ -26,38 +26,36 @@ public class MouseTrigger : MonoBehaviour
         {
             if (infoHit.collider.gameObject == gameObject)
             {
-                if (!InCollider)
+                if (AnyCase)
                 {
-                    InCollider = true;
-                    if (AnyCase)
-                    {
+                    if (FullZero) 
                         originalScale = transform.localScale;
+                    OnScaleChange = true;
+                    FinallyMove = true;
+                }
+                else if (GetComponent<OpenObject>())
+                {
+                    if (!GetComponent<OpenObject>().ObjectIsOpen)
+                    {
+                        if (FullZero)
+                            originalScale = transform.localScale;
                         OnScaleChange = true;
                         FinallyMove = true;
                     }
-                    else if (GetComponent<OpenObject>())
+                }
+                else
+                {
+                    if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
                     {
-                        if (!GetComponent<OpenObject>().ObjectIsOpen)
-                        {
+                        if (FullZero)
                             originalScale = transform.localScale;
-                            OnScaleChange = true;
-                            FinallyMove = true;
-                        }
-                    }
-                    else
-                    {
-                        if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
-                        {
-                            originalScale = transform.localScale;
-                            OnScaleChange = true;
-                            FinallyMove = true;
-                        }
+                        OnScaleChange = true;
+                        FinallyMove = true;
                     }
                 }
             }
             else
             {
-                InCollider = false;
                 OnScaleChange = false;
                 FinallyMove = true;
             }
@@ -86,6 +84,7 @@ public class MouseTrigger : MonoBehaviour
             {
                 transform.localScale = originalScale;
                 FinallyMove = false;
+                FullZero = false;
             }
         }
     }
