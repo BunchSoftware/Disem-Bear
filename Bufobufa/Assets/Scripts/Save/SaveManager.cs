@@ -23,7 +23,7 @@ public class SaveManager : MonoBehaviour
         pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
         pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
 
-        if (filePlayer.name == "")
+        if (filePlayer.JSONPlayer.nameUser == "")
             filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
 
         if(filePlayer.JSONPlayer == null)
@@ -32,35 +32,87 @@ public class SaveManager : MonoBehaviour
             filePlayer.JSONPlayer.resources = new ResourcePlayer();
             saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
         }
+
+        if (fileShop.JSONShop.nameShop == "")
+            fileShop.JSONShop = saveManagerIO.LoadJSONShop(pathToFileResourceShop);
+
+        if (fileShop.JSONShop == null)
+        {
+            fileShop.JSONShop = new JSONShop();
+            fileShop.JSONShop.resources = new ResourceShop();
+            saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+        }
     }
 
-
-    public void RegistrationPlayer(string name)
+    public void RegistrationShop(string nameShop)
     {
-        filePlayer.JSONPlayer.nameUser = name;
+        if (filePlayer.JSONPlayer.nameUser != "")
+        {
+            fileShop.JSONShop.nameShop = nameShop;
+            if (fileShop.JSONShop.resources == null)
+                fileShop.JSONShop.resources = new ResourceShop();
+
+            clientHandler.RegistrationShop(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
+            clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
+            
+            ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
+            Dictionary<string, string> changedResources = new Dictionary<string, string>
+            {
+                { "changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString() }
+            };
+            resourceChangedShop.changedResources = changedResources;
+
+            clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "ћагазин был создан", resourceChangedShop);
+            PrintShopInfo();
+
+            saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+        }
+    }
+
+    public void RegistrationPlayer(string nameUser)
+    {
+        filePlayer.JSONPlayer.nameUser = nameUser;
         if(filePlayer.JSONPlayer.resources == null)
             filePlayer.JSONPlayer.resources = new ResourcePlayer();
 
         filePlayer.JSONPlayer.resources.isPlayerRegistration = true;
 
-        clientHandler.RegistrationPlayer(name, filePlayer.JSONPlayer.resources);
-        clientHandler.SetResourcePlayer(name, filePlayer.JSONPlayer.resources);
+
+        clientHandler.RegistrationPlayer(nameUser, filePlayer.JSONPlayer.resources);
+        clientHandler.SetResourcePlayer(nameUser, filePlayer.JSONPlayer.resources);
         ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
-        resourceChangedPlayer.changePlayerRegistration = true;
-        clientHandler.CreateLogPlayer(name, "»грок зарегистрирован впервые, приветствуем нового игрока !", resourceChangedPlayer);
+        Dictionary<string, string> changedResources = new Dictionary<string, string>
+        {
+            { "changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString() }
+        };
+        resourceChangedPlayer.changedResources = changedResources;
+
+        clientHandler.CreateLogPlayer(nameUser, "»грок зарегистрирован впервые, приветствуем нового игрока !", resourceChangedPlayer);
         PrintListPlayer();
-        PrintListLogPlayer(name);
+        PrintListLogPlayer(nameUser);
 
         saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
     }
 
-    public void Print()
+    public void PrintPlayerInfo()
     {
-        if (filePlayer.JSONPlayer != null)
-            print(filePlayer.JSONPlayer.nameUser);
-
         PrintListPlayer();
+    }
+    public void PrintShopInfo()
+    {
+        PrintListShop(filePlayer.JSONPlayer.nameUser);
+    }
+
+
+    private async void PrintListShop(string userName)
+    {
+        await clientHandler.GetListShopPlayer(userName);
+    }
+
+    private async void PrintListLogsShop(string userName, string shopName)
+    {
+        await clientHandler.GetListLogsShop(userName, shopName);
     }
 
     private async void PrintListPlayer()

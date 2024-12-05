@@ -9,6 +9,7 @@ public class DialogueWindow : MonoBehaviour
     [SerializeField] private Text textDialog;
     [SerializeField] private Image iconDialog;
     [SerializeField] private Button skipButton;
+    [SerializeField] private DialogInputField dialogInputField;
     [HideInInspector] public Animator animator;
 
     private Font standartFont;
@@ -21,10 +22,13 @@ public class DialogueWindow : MonoBehaviour
     public void Init(DialogManager dialogManager)
     {
         standartFont = textDialog.font;
+        skipButton.onClick.RemoveAllListeners();
         skipButton.onClick.AddListener(() =>
         {
             dialogManager.SkipDialog();
         });
+
+        dialogInputField.Init(dialogManager);
     }
 
     public void StartTypeLine(Dialog dialog)
@@ -42,6 +46,7 @@ public class DialogueWindow : MonoBehaviour
     {
         textDialog.text = "";
         SetParametres(dialog);
+        dialogInputField.SetParametres(dialog);
         for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
         {
             textDialog.text += dialog.textDialog[j];
@@ -52,6 +57,7 @@ public class DialogueWindow : MonoBehaviour
     public void DialogLast(Dialog dialog)
     {
         SetParametres(dialog);
+        dialogInputField.SetParametres(dialog);
         textDialog.text = dialog.textDialog;
     }
 
@@ -66,5 +72,7 @@ public class DialogueWindow : MonoBehaviour
         textDialog.color = dialog.colorText;
         iconDialog.sprite = dialog.avatar;
         iconDialog.preserveAspect = true;
+
+        dialogInputField.gameObject.SetActive(dialog.isActiveInputField);
     }
 }

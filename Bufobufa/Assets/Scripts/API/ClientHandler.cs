@@ -23,8 +23,7 @@ namespace API
     // Лог с изменением данных у игрока
     public class ResourceChangedPlayer
     {
-        public bool changePlayerRegistration;
-        public int changeMoney;
+        public Dictionary<string, string> changedResources;
     }
 
     [Serializable]
@@ -36,18 +35,27 @@ namespace API
         public ResourceChangedPlayer resources_changed;
     }
 
+    [Serializable]
+    // Лог магазина
+    public class LogShop
+    {
+        public string comment;
+        public string player_name;
+        public ResourceChangedShop resources_changed;
+    }
+
     // Данные магазина игрока для передачи на сервер
     [Serializable]
     public class ResourceShop
     {
-        public int apple;
+        
     }
 
     [Serializable]
     // Лог с изменением данных у магазина игрока
     public class ResourceChangedShop
     {
-        public int add_apple;
+        public Dictionary<string, string> changedResources;
     }
 
 
@@ -63,7 +71,7 @@ namespace API
     // Магазин у игрока с именем магазином и его ресурсами
     public class JSONShop
     {
-        public string name;
+        public string nameShop;
         public ResourceShop resources;
     }
 
@@ -192,7 +200,7 @@ namespace API
                 }
                 catch (Exception)
                 {
-                    Debug.Log($"Персонаж {userName} уже зарегистрирован");
+                    Debug.Log($"Персонаж {userName} уже зарегистрирован или непредвиденная ошибка");
                 }
             }
         }
@@ -317,7 +325,6 @@ namespace API
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 string json = await response.Content.ReadAsStringAsync();
-                print(json);
                 List<JSONPlayer> listPlayers = JsonConvert.DeserializeObject<List<JSONPlayer>>(json);
 
                 for (int i = 0; i < listPlayers.Count; i++)
@@ -380,7 +387,12 @@ namespace API
                 response.EnsureSuccessStatusCode();
 
                 string json = await response.Content.ReadAsStringAsync();
-                List<LogPlayer> listLogsPlayer = JsonConvert.DeserializeObject<List<LogPlayer>>(json);
+                List<LogPlayer> listLogsPlayer = null;
+                try
+                {
+                    listLogsPlayer = JsonConvert.DeserializeObject<List<LogPlayer>>(json);
+                }
+                catch { }
 
                 Debug.Log(await response.Content.ReadAsStringAsync());
                 return listLogsPlayer;
@@ -497,7 +509,7 @@ namespace API
                 for (int i = 0; i < listShop.Count; i++)
                 {
                     if (listShop[i].resources == null)
-                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов в магазине {listShop[i].name} у игрока {userName}, возможны ошибки в реализации");
+                        Debug.LogWarning($"Предупреждение об отсутствии ресурсов в магазине {listShop[i].nameShop} у игрока {userName}, возможны ошибки в реализации");
                 }
 
                 Debug.Log(await response.Content.ReadAsStringAsync());
@@ -562,14 +574,14 @@ namespace API
                     return;
                 }
 
-                Debug.Log(await response.Content.ReadAsStringAsync());
+                Debug.Log(await response.Content.ReadAsStringAsync()); 
             }
         }
 
-        public async void GetListLogsShop(string userName, string shopName)
+        public async Task<List<LogShop>> GetListLogsShop(string userName, string shopName)
         {
             if (CheckInternetConnection("google.com") == false)
-                return;
+                return null;
             if (UUID.Length != 0)
             {
                 string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{shopName}/logs/\r\n";
@@ -578,8 +590,19 @@ namespace API
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
+
+                string json = await response.Content.ReadAsStringAsync();
+                List<LogShop> listLogsShop = null;
+                try
+                {
+                    listLogsShop = JsonConvert.DeserializeObject<List<LogShop>>(json);
+                }
+                catch { }
+
                 Debug.Log(await response.Content.ReadAsStringAsync());
+                return listLogsShop;
             }
+            return null;
         }
 
         #endregion
