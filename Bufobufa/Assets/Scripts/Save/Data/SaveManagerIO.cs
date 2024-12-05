@@ -11,4 +11,13 @@ public class SaveManagerIO : DataStream
     {
         return base.Deserialize<JSONPlayer>(pathSaveFile);
     }
+
+    public void SaveJSONShop(string pathSaveFile, JSONShop JSONShop)
+    {
+        base.Serialize(pathSaveFile, JSONShop);
+    }
+    public JSONShop LoadJSONShop(string pathSaveFile)
+    {
+        return base.Deserialize<JSONShop>(pathSaveFile);
+    }
 }
