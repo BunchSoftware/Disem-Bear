@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class TargetOpenObject : MonoBehaviour
+public class TargetModelOpen : MonoBehaviour
 {
-    public List<DialogTarget> targets = new();
-
+    private ModelBoard board;
     private bool OneTap = true;
 
-    private OpenObject OpenObj;
+    public List<DialogTarget> targets = new();
+
     private DialogManager DialogManager;
 
     [System.Serializable]
@@ -31,13 +33,12 @@ public class TargetOpenObject : MonoBehaviour
 
     private void Start()
     {
-        OpenObj = GetComponent<OpenObject>();
+        board = GetComponent<ModelBoard>();
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
     }
-
     private void Update()
     {
-        if (OpenObj.ObjectIsOpen && OneTap)
+        if (board.ModelOpen && OneTap)
         {
             OneTap = false;
             for (int i = 0; i < targets.Count; i++)
@@ -60,7 +61,7 @@ public class TargetOpenObject : MonoBehaviour
                 }
             }
         }
-        else if (!OpenObj.ObjectIsOpen &&  OneTap == false)
+        else if (!board.ModelOpen && !OneTap)
         {
             OneTap = true;
         }

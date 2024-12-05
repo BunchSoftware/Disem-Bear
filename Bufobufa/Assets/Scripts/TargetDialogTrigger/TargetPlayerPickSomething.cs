@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetOpenObject : MonoBehaviour
+public class TargetPlayerPickSomething : MonoBehaviour
 {
     public List<DialogTarget> targets = new();
 
     private bool OneTap = true;
 
-    private OpenObject OpenObj;
+    private PlayerInfo Player_Info;
     private DialogManager DialogManager;
 
     [System.Serializable]
@@ -31,13 +31,13 @@ public class TargetOpenObject : MonoBehaviour
 
     private void Start()
     {
-        OpenObj = GetComponent<OpenObject>();
+        Player_Info = GetComponent<PlayerInfo>();
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
     }
 
     private void Update()
     {
-        if (OpenObj.ObjectIsOpen && OneTap)
+        if (Player_Info.PlayerPickSometing && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
         {
             OneTap = false;
             for (int i = 0; i < targets.Count; i++)
@@ -60,7 +60,7 @@ public class TargetOpenObject : MonoBehaviour
                 }
             }
         }
-        else if (!OpenObj.ObjectIsOpen &&  OneTap == false)
+        else if (!Player_Info.PlayerPickSometing && OneTap == false)
         {
             OneTap = true;
         }

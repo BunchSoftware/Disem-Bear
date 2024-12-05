@@ -9,9 +9,9 @@ public class Draft : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!WhileAnimGo && transform.parent.GetComponent<OpenObject>().ObjectIsOpen && !transform.parent.GetComponent<OrgansBoardOpen>().ModelOpen)
+        if (!WhileAnimGo && transform.parent.GetComponent<OpenObject>().ObjectIsOpen && !transform.parent.GetComponent<ModelBoard>().ModelOpen)
         {
-            transform.parent.GetComponent<OrgansBoardOpen>().ModelOpen = true;
+            transform.parent.GetComponent<ModelBoard>().ModelOpen = true;
             transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
 
             GetComponent<MouseTrigger>().AnyCase = false;
@@ -26,7 +26,7 @@ public class Draft : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && InText && !WhileAnimGo && transform.parent.GetComponent<OpenObject>().ObjectIsOpen)
         {
-            transform.parent.GetComponent<OrgansBoardOpen>().ModelOpen = false;
+            transform.parent.GetComponent<ModelBoard>().ModelOpen = false;
             transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
 
             GetComponent<MouseTrigger>().AnyCase = true;

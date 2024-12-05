@@ -12,6 +12,7 @@ public class PlayerChangeImage : MonoBehaviour
     [SerializeField] private Sprite Forward;
     [SerializeField] private Sprite Back;
 
+    private Animator animator;
     private GameObject PointItemLeft;
     private GameObject PointItemRight;
     private GameObject PointItemBack;
@@ -24,6 +25,7 @@ public class PlayerChangeImage : MonoBehaviour
     private Sprite VerticalSprite;
     private void Start()
     {
+        animator = GetComponent<Animator>();
         LastPos = transform.position;
         spriteRender = GetComponent<SpriteRenderer>();
         PointItemLeft = transform.Find("PointItemLeft").gameObject;
@@ -71,7 +73,8 @@ public class PlayerChangeImage : MonoBehaviour
         }
         if (VerticalChangePos < -0.01f)
         {
-            VerticalSprite = Back;
+            //VerticalSprite = Back;
+            animator.Play("BackAnimation");
         }
         else
         {

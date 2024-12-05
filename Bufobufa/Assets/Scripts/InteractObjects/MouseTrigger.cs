@@ -11,6 +11,7 @@ public class MouseTrigger : MonoBehaviour
     private float timer = 0f;
     private GameObject Player;
     private bool FinallyMove = false;
+    private bool InCollider = false;
 
     private void Start()
     {
@@ -18,41 +19,49 @@ public class MouseTrigger : MonoBehaviour
         Player = GameObject.Find("Player");
     }
 
-    private void OnMouseEnter()
-    {
-        if (AnyCase)
-        {
-            originalScale = transform.localScale;
-            OnScaleChange = true;
-            FinallyMove = true;
-        }
-        else if (GetComponent<OpenObject>())
-        {
-            if (!GetComponent<OpenObject>().ObjectIsOpen)
-            {
-                originalScale = transform.localScale;
-                OnScaleChange = true;
-                FinallyMove = true;
-            }
-        }
-        else
-        {
-            if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
-            {
-                originalScale = transform.localScale;
-                OnScaleChange = true;
-                FinallyMove = true;
-            }
-        }
-    }
-
-    private void OnMouseExit()
-    {
-        OnScaleChange = false;
-        FinallyMove = true;
-    }
     private void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+        {
+            if (infoHit.collider.gameObject == gameObject)
+            {
+                if (!InCollider)
+                {
+                    InCollider = true;
+                    if (AnyCase)
+                    {
+                        originalScale = transform.localScale;
+                        OnScaleChange = true;
+                        FinallyMove = true;
+                    }
+                    else if (GetComponent<OpenObject>())
+                    {
+                        if (!GetComponent<OpenObject>().ObjectIsOpen)
+                        {
+                            originalScale = transform.localScale;
+                            OnScaleChange = true;
+                            FinallyMove = true;
+                        }
+                    }
+                    else
+                    {
+                        if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
+                        {
+                            originalScale = transform.localScale;
+                            OnScaleChange = true;
+                            FinallyMove = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                InCollider = false;
+                OnScaleChange = false;
+                FinallyMove = true;
+            }
+        }
         if (OnScaleChange)
         {
             if (timer <= TimeAnim)
