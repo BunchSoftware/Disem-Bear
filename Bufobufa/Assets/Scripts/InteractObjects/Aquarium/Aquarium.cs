@@ -15,13 +15,17 @@ public class Aquarium : MonoBehaviour
     private float timerCell = 0f;
     public int CountCells = 0;
     public float TimeWaterSpend = -1f;
+    public bool OnAquarium = false;
+    private SpriteRenderer SpriteAquarium;
 
     [SerializeField] private Sprite NullFase;
     [SerializeField] private Sprite FirstFase;
     [SerializeField] private Sprite SecondFase;
     [SerializeField] private Sprite ThirdFase;
-
-    [SerializeField] private Sprite DirtyAquarium;
+    [SerializeField] private Sprite NullFaseDirty;
+    [SerializeField] private Sprite FirstFaseDirty;
+    [SerializeField] private Sprite SecondFaseDirty;
+    [SerializeField] private Sprite ThirdFaseDirty;
 
     [SerializeField] private List<GameObject> CellsList = new List<GameObject>();
     private int NumCell = 0;
@@ -60,6 +64,7 @@ public class Aquarium : MonoBehaviour
     }
     private void Start()
     {
+        SpriteAquarium = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
         if (CellsList.Count > 0)
         {
@@ -77,27 +82,48 @@ public class Aquarium : MonoBehaviour
         {
             TimeWaterSpend -= Time.deltaTime;
         }
-        if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
+        if (CountCells == 0 && OnAquarium)
         {
-            GetComponent<SpriteRenderer>().sprite = DirtyAquarium;
+            if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
+            {
+                SpriteAquarium.sprite = NullFaseDirty;
+            }
+            else
+            {
+                SpriteAquarium.sprite = NullFase;
+            }
         }
-        else
+        else if (CountCells < 4 && OnAquarium)
         {
-            if (CountCells == 0)
+            if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
             {
-                GetComponent<SpriteRenderer>().sprite = NullFase;
+                SpriteAquarium.sprite = FirstFaseDirty;
             }
-            else if (CountCells < 4)
+            else
             {
-                GetComponent<SpriteRenderer>().sprite = FirstFase;
+                SpriteAquarium.sprite = FirstFase;
             }
-            else if (CountCells < 9)
+        }
+        else if (CountCells < 9 && OnAquarium)
+        {
+            if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
             {
-                GetComponent<SpriteRenderer>().sprite = SecondFase;
+                SpriteAquarium.sprite = SecondFaseDirty;
             }
-            else if (CountCells < 15)
+            else
             {
-                GetComponent<SpriteRenderer>().sprite = ThirdFase;
+                SpriteAquarium.sprite = SecondFase;
+            }
+        }
+        else if (CountCells < 15 && OnAquarium)
+        {
+            if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
+            {
+                SpriteAquarium.sprite = ThirdFaseDirty;
+            }
+            else
+            {
+                SpriteAquarium.sprite = ThirdFase;
             }
         }
         if (NormalTemperature) TimeCell = NormalTimeCell;
