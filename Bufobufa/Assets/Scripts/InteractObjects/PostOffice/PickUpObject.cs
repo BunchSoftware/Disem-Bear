@@ -24,9 +24,9 @@ public class PickUpObject : MonoBehaviour
             GetComponent<MouseTrigger>().enabled = false;
             PickUp = true;
             GetComponent<BoxCollider>().enabled = false;
-            lcScale = transform.localScale;
-            transform.parent = Player.transform;
-            transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
+            //lcScale = transform.localScale;
+            //transform.parent = Player.transform;
+            //transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
             Destroy(this);

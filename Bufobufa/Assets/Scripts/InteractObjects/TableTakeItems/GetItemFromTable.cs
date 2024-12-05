@@ -9,6 +9,7 @@ public class GetItemFromTable : MonoBehaviour
     public bool InTrigger = false;
     public bool ClickedMouse = false;
     public int numPoint = 0;
+    private Transform table;
 
 
     public void OnTrigEnter(Collider other)
@@ -29,6 +30,7 @@ public class GetItemFromTable : MonoBehaviour
     private void Start()
     {
         Player = GameObject.Find("Player");
+        table = GameObject.Find("minitable").transform;
     }
 
     private void Update()
@@ -56,8 +58,8 @@ public class GetItemFromTable : MonoBehaviour
             //transform.parent.GetComponent<TableTakesItem>().points.Add(tmp);
             //transform.parent.GetComponent<TableTakesItem>().items.Remove(gameObject);
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-            Player.GetComponent<PlayerInfo>().currentPickObject = transform.parent.GetComponent<TableTakesItem>().points[numPoint].obj;
-            transform.parent.GetComponent<TableTakesItem>().points[numPoint].GetItem = false;
+            Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().points[numPoint].obj;
+            table.GetComponent<TableTakesItem>().points[numPoint].GetItem = false;
             //transform.parent = Player.transform;
 
         }
