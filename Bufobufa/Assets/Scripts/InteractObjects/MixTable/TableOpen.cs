@@ -27,6 +27,7 @@ public class TableOpen : MonoBehaviour
             if (MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject != null)
             {
                 Player.GetComponent<PlayerInfo>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
+                MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject.transform.parent = Player.transform;
                 MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject = null;
                 Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
             }

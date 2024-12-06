@@ -56,7 +56,7 @@ public class TableTakesItem : MonoBehaviour
                 {
                     points[i].GetItem = true;
                     points[i].obj = Player.GetComponent<PlayerInfo>().currentPickObject;
-                    //points[i].obj.transform.parent = transform;
+                    points[i].obj.transform.parent = null;
                     Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
                     points[i].obj.transform.position = points[i].point.transform.position;

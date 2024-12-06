@@ -25,6 +25,7 @@ public class PlayerChangeImage : MonoBehaviour
     private Sprite VerticalSprite;
     private string HorizontalAnimation;
     private string VerticalAnimation;
+    private string CurrentAnimation = "StateAnimation";
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -44,19 +45,19 @@ public class PlayerChangeImage : MonoBehaviour
     }
     private void ItemInHandsChange()
     {
-        if (spriteRender.sprite == Left)
+        if (CurrentAnimation == "LeftAnimation")
         {
             GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemLeft.transform.position;
         }
-        else if (spriteRender.sprite == Right)
+        else if (CurrentAnimation == "RightAnimation")
         {
             GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemRight.transform.position;
         }
-        else if (spriteRender.sprite == Back)
+        else if (CurrentAnimation == "BackAnimation")
         {
             GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemBack.transform.position;
         }
-        else if (spriteRender.sprite == Forward)
+        else if (CurrentAnimation == "ForwardAnimation" || CurrentAnimation == "StateAnimation")
         {
             GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemForward.transform.position;
         }
@@ -91,15 +92,16 @@ public class PlayerChangeImage : MonoBehaviour
         }
         if (Mathf.Abs(HorizontalChangePos) < 0.01f && Mathf.Abs(VerticalChangePos) < 0.01f)
         {
-            animator.Play("StateAnimation");
+            CurrentAnimation = "StateAnimation";
         }
         else if (Mathf.Abs(HorizontalChangePos) > Mathf.Abs(VerticalChangePos))
         {
-            animator.Play(HorizontalAnimation);
+            CurrentAnimation = HorizontalAnimation;
         }
         else
         {
-            animator.Play(VerticalAnimation);
+            CurrentAnimation = VerticalAnimation;
         }
+        animator.Play(CurrentAnimation);
     }
 }
