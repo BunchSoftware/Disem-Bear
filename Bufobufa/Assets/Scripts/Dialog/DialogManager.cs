@@ -14,6 +14,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private DialogueWindow dialogueWindow;
     [SerializeField] private FileDialog fileDialog;
     public UnityEvent<Dialog> EndDialog;
+    public UnityEvent<string> SendInputFieldText;
 
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
     private int currentIndexDialogPoint = 0;
@@ -23,6 +24,7 @@ public class DialogManager : MonoBehaviour
 
     private bool isCanSkipDialog = false;
     private bool isDialogLast = false;
+    private bool isActiveInputField = false;
 
     private void Start()
     {
@@ -183,5 +185,11 @@ public class DialogManager : MonoBehaviour
                 }
                 break;         
         }
+    }
+
+    public void SendInputText(string text)
+    {
+        if(text.Length >= 1)
+            SendInputFieldText?.Invoke(text);
     }
 }
