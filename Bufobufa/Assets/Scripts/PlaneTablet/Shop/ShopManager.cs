@@ -8,8 +8,8 @@ public class ShopManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private FileProducts fileProducts;
+    [SerializeField] private SaveManager saveManager;
     private List<ProductGUI> productsGUI = new List<ProductGUI>();
-    private PlayerShop playerShop;
     public Action<Product> OnBuyProduct;
 
     private void Update()
@@ -19,20 +19,39 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        playerShop = FindFirstObjectByType<PlayerShop>();
         List<Product> products = new List<Product>();
+
+
+        if (saveManager.fileShop.JSONShop != null)
+        {
+            if (saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
+            {
+                List<ProductSave> productSaves = new List<ProductSave>();
+                for (int i = 0; i < fileProducts.products.Count; i++)
+                {
+                    productSaves.Add(new ProductSave()
+                    {
+                        countProduct = fileProducts.products[i].countProduct,
+                        money = fileProducts.products[i].money,
+                    });
+                }
+                saveManager.fileShop.JSONShop.resources.productSaves = productSaves;
+            }
+        }
 
         for (int i = 0; i < fileProducts.products.Count; i++)
         {
             Product product = new Product()
             {
-               money = fileProducts.products[i].money,
-               countProduct = fileProducts.products[i].countProduct,
+               indexProduct = i,
+               money = saveManager.fileShop.JSONShop.resources.productSaves[i].money,
+               countProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].countProduct,
                rewardText = fileProducts.products[i].rewardText,
                header = fileProducts.products[i].header,
                avatar = fileProducts.products[i].avatar,
             };
-            products.Add(product);
+            if (saveManager.fileShop.JSONShop.resources.productSaves[i].countProduct != 0)
+                products.Add(product);
         }
 
         for (int i = 0; i < products.Count; i++)
@@ -53,6 +72,11 @@ public class ShopManager : MonoBehaviour
                     if (Buy(product) && product.countProduct - 1 >= 0)
                     {
                         product.countProduct--;
+
+                        saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].money = product.money;
+                        saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countProduct = product.countProduct;
+                        saveManager.UpdateShopFile();
+
                         productGUI.UpdateData(product);
                     }
                 }, 
@@ -91,9 +115,10 @@ public class ShopManager : MonoBehaviour
 
     private bool Buy(Product product)
     {
-        if (playerShop.playerShopInfo.money - product.money >= 0)
+        if (saveManager.filePlayer.JSONPlayer.resources.money - product.money >= 0)
         {
-            playerShop.playerShopInfo.money -= product.money;
+            saveManager.filePlayer.JSONPlayer.resources.money -= product.money;
+            saveManager.UpdatePlayerFile();
             OnBuyProduct?.Invoke(product);
 
             return true;

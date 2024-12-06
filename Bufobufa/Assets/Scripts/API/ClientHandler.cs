@@ -16,7 +16,7 @@ namespace API
     public class ResourcePlayer
     {
         public bool isPlayerRegistration = false;
-        public int money = 0;
+        public int money = 100;
     }
 
     [Serializable]
@@ -48,7 +48,8 @@ namespace API
     [Serializable]
     public class ResourceShop
     {
-        
+        public bool isShopRegistration = false;
+        public List<ProductSave> productSaves;
     }
 
     [Serializable]
@@ -414,7 +415,7 @@ namespace API
                 FormUrlEncodedContent content = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string, string>("name", nameShop),
-                    new KeyValuePair<string, string>("resources", JsonUtility.ToJson(resourceShop))
+                    new KeyValuePair<string, string>("resources", JsonConvert.SerializeObject(resourceShop))
                 });
                 request.Content = content;
                 var response = await client.SendAsync(request);
@@ -472,7 +473,7 @@ namespace API
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, URL);
                 FormUrlEncodedContent content = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("resources", JsonUtility.ToJson(resourceShop))
+                    new KeyValuePair<string, string>("resources", JsonConvert.SerializeObject(resourceShop))
                 });
                 request.Content = content;
                 var response = await client.SendAsync(request);
@@ -560,7 +561,7 @@ namespace API
                     new KeyValuePair<string, string>("player_name", userName),
                     new KeyValuePair<string, string>("shop_name", shopName),
                     new KeyValuePair<string, string>("comment", comment),
-                    new KeyValuePair<string, string>("resources_changed", JsonUtility.ToJson(resourceChangedShop))
+                    new KeyValuePair<string, string>("resources_changed", JsonConvert.SerializeObject(resourceChangedShop))
                 });
                 request.Content = content;
                 var response = await client.SendAsync(request);
