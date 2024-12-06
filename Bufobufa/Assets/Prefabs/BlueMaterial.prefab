@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 7871138960482414917}
   - component: {fileID: 8688015039957210573}
   m_Layer: 7
-  m_Name: MaterialForAquarium
+  m_Name: BlueMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 285cc7a30c0e4fb489f63e74c38a3bea, type: 2}
+  - {fileID: 2100000, guid: 659474b9aa99e264cba737e745584699, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,5 +212,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432ed7162cd4076419ccd56fa8feb695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameMaterial: Orange
-  TimeMaterial: 10
+  nameMaterial: Blue
+  TimeMaterial: 60

@@ -12,6 +12,7 @@ public class PostOfficeTube : MonoBehaviour
     private GameObject Player;
     private Vector3 PointObject;
     private ParticleSystem ParticleSystem;
+    public bool NotObjectDown = true;
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");
@@ -26,7 +27,14 @@ public class PostOfficeTube : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (ItemExist)
+        if (other.tag == "Player")
+        {
+            ObjectFall();
+        }
+    }
+    public void ObjectFall()
+    {
+        if (ItemExist && NotObjectDown)
         {
             if (currentObj)
             {
@@ -37,6 +45,7 @@ public class PostOfficeTube : MonoBehaviour
                 currentFallObj.GetComponent<MoveAnimation>().StartMove();
                 StartCoroutine(ParticleFall(currentFallObj.GetComponent<MoveAnimation>().TimeAnimation));
                 ItemExist = false;
+                NotObjectDown = false;
             }
         }
     }

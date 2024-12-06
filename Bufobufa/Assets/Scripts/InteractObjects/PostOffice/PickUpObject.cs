@@ -7,6 +7,7 @@ using UnityEngine;
 public class PickUpObject : MonoBehaviour
 {
     private GameObject Player;
+    private PostOfficeTube PostTube;
     public bool falling = true;
     private Vector3 lcScale = new();
     public bool PickUp = false;
@@ -14,6 +15,7 @@ public class PickUpObject : MonoBehaviour
 
     private void Start()
     {
+        PostTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
         Player = GameObject.Find("Player");
         StartCoroutine(NotFalling());
     }
@@ -21,6 +23,7 @@ public class PickUpObject : MonoBehaviour
     {
         if (!falling && !PickUp && InTrigger)
         {
+            PostTube.NotObjectDown = true;
             GetComponent<MouseTrigger>().enabled = false;
             PickUp = true;
             GetComponent<BoxCollider>().enabled = false;
