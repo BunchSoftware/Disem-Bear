@@ -52,17 +52,27 @@ public class SaveManager : MonoBehaviour
             if (fileShop.JSONShop.resources == null)
                 fileShop.JSONShop.resources = new ResourceShop();
 
+            fileShop.JSONShop.resources.isShopRegistration = true;
+
             clientHandler.RegistrationShop(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
             clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
             
             ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
-            Dictionary<string, string> changedResources = new Dictionary<string, string>
+            Dictionary<string, string> changedResources = new Dictionary<string, string>();
+            changedResources.Add("changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString());
+
+            if (fileShop.JSONShop.resources.productSaves != null)
             {
-                { "changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString() }
-            };
+                for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+                {
+                    changedResources.Add($"changedMoney_Product{i}", fileShop.JSONShop.resources.productSaves[i].money.ToString());
+                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
+                }
+            }
+
             resourceChangedShop.changedResources = changedResources;
 
-            clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был создан", resourceChangedShop);
+            clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
             PrintShopInfo();
 
             saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
@@ -83,16 +93,67 @@ public class SaveManager : MonoBehaviour
         ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
         Dictionary<string, string> changedResources = new Dictionary<string, string>
         {
-            { "changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString() }
+            { "changedRegistration", fileShop.JSONShop.resources.isShopRegistration.ToString() }
         };
         resourceChangedPlayer.changedResources = changedResources;
 
-        clientHandler.CreateLogPlayer(nameUser, "Игрок зарегистрирован впервые, приветствуем нового игрока !", resourceChangedPlayer);
+        clientHandler.CreateLogPlayer(nameUser, "Игрок был иницилизирован", resourceChangedPlayer);
         PrintListPlayer();
         PrintListLogPlayer(nameUser);
 
         saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
+    }
+
+    public void UpdateShopFile()
+    {
+        if (filePlayer.JSONPlayer.nameUser != "" && fileShop.JSONShop.nameShop != "")
+        {
+            clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, fileShop.JSONShop.resources);
+
+            ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
+            Dictionary<string, string> changedResources = new Dictionary<string, string>();
+
+            if (fileShop.JSONShop.resources.productSaves != null)
+            {
+                for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+                {
+                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
+                }
+            }
+
+            resourceChangedShop.changedResources = changedResources;
+
+            clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
+            PrintShopInfo();
+
+            saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+        }
+    }
+
+    public void UpdatePlayerFile()
+    {
+        if (filePlayer.JSONPlayer.nameUser != "")
+        {
+            clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+            ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
+            Dictionary<string, string> changedResources = new Dictionary<string, string>();
+
+            //if (fileShop.JSONShop.resources.productSaves != null)
+            //{
+            //    for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+            //    {
+            //        changedResources.Add($"changedMoney_Product{i}", fileShop.JSONShop.resources.productSaves[i].money.ToString());
+            //        changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
+            //    }
+            //}
+
+            clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
+            PrintListPlayer();
+            PrintListLogPlayer(filePlayer.JSONPlayer.nameUser);
+
+            saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+        }
     }
 
     public void PrintPlayerInfo()
