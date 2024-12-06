@@ -51,6 +51,7 @@ public class AquariumOpen : MonoBehaviour
         }
         else if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && !GetComponent<OpenObject>().ObjectIsOpen)
         {
+            GetComponent<OpenObject>().InTrigger = false;
             GetComponent<OpenObject>().ClickedMouse = false;
             if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>())
             {

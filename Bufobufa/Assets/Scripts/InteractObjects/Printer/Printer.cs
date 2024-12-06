@@ -13,17 +13,23 @@ public class Printer : MonoBehaviour
     public List<ObjectInfo> objectInfos = new();
 
     private GameObject Player;
-    private GameObject TriggerPrinter;
+    private SoundManager SoundManager;
+    private Animator animator;
+    private ParticleSystem particleSys;
 
     [SerializeField] Material OrigPrinter;
     [SerializeField] Material DonePrinter;
 
     [SerializeField] GameObject PrinterImage;
 
+    [SerializeField] private AudioClip VrVrVrVr;
+
     private void Start()
     {
+        particleSys = transform.Find("Particle System").GetComponent<ParticleSystem>();
+        animator = GetComponent<Animator>();
+        SoundManager = GameObject.Find("Sound").GetComponent<SoundManager>();
         Player = GameObject.FindGameObjectWithTag("Player");
-        TriggerPrinter = transform.Find("TriggerPrinter").gameObject;
     }
     public void OnTrigEnter(Collider other)
     {
@@ -49,19 +55,16 @@ public class Printer : MonoBehaviour
                 if (infoHit.collider.gameObject == gameObject)
                 {
                     ClickedMouse = true;
-                    TriggerPrinter.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
-                    TriggerPrinter.SetActive(false);
                 }
             }
         }
 
         if (!PrinterWork && ClickedMouse && InTrigger && Player.GetComponent<PlayerInfo>().PlayerPickSometing && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
-            InTrigger = false;
             if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PrinterObjectInfo>())
             {
                 for (int i = 0; i < objectInfos.Count; i++)
@@ -72,6 +75,9 @@ public class Printer : MonoBehaviour
                         PrinterWork = true;
                         Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                         Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
+                        SoundManager.OnPlayOneShot(VrVrVrVr);
+                        animator.Play("Printer");
+                        particleSys.Play();
                         StartCoroutine(WaitWhilePrintObject(objectInfos[i].TimePrint));
                         currentObject = objectInfos[i].ReturnItem;
                         break;
@@ -97,6 +103,7 @@ public class Printer : MonoBehaviour
         yield return new WaitForSeconds(t);
         ObjectDone = true;
         PrinterImage.GetComponent<MeshRenderer>().material = DonePrinter;
+        particleSys.Stop();
     }
     [System.Serializable]
     public class ObjectInfo
