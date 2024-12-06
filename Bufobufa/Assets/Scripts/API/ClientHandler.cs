@@ -16,7 +16,7 @@ namespace API
     public class ResourcePlayer
     {
         public bool isPlayerRegistration = false;
-        public int money = 100;
+        public List<SaveTypeProduct> products;
     }
 
     [Serializable]

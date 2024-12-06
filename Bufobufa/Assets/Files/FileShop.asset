@@ -17,7 +17,11 @@ MonoBehaviour:
     resources:
       isShopRegistration: 1
       productSaves:
-      - money: 10
-        countProduct: 0
-      - money: 10
-        countProduct: -1
+      - typeChangeProduct: reduction
+        countChangeProduct: -1
+        typePriceChangeProduct: regulation
+        countPriceChange: 2
+      - typeChangeProduct: filtering
+        countChangeProduct: -1
+        typePriceChangeProduct: digestion
+        countPriceChange: 3

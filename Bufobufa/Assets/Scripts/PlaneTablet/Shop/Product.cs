@@ -7,9 +7,13 @@ using UnityEngine;
 public class Product 
 {
     [HideInInspector] public int indexProduct;
-    public int money;
-    public int countProduct;
-    public string rewardText;
     public string header;
-    public Sprite avatar;
+    [Header("ChangeProduct")]
+    public string typeChangeProduct;
+    public int countChangeProduct;
+    public Sprite avatarChange;
+    [Header("PriceChangeProduct")]
+    public string typePriceChangeProduct;
+    public int countPriceChange;
+    public Sprite avatarPriceChange;
 }

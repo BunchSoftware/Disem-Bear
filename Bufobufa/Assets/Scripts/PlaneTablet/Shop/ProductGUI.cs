@@ -9,9 +9,10 @@ public class ProductGUI : MonoBehaviour
 {
     [SerializeField] private Button buyButton;
     [SerializeField] private Text headerText;
-    [SerializeField] private Text rewardText;
+    [SerializeField] private Text countPriceChangeText;
     [SerializeField] private Text countProductText;
-    [SerializeField] private Image avatar;
+    [SerializeField] private Image avatarChange;
+    [SerializeField] private Image avatarPriceChange;
     [SerializeField] private Image background;
     private Product product;
     private Action ActionRemove;
@@ -32,20 +33,22 @@ public class ProductGUI : MonoBehaviour
     {
         this.product = product;
         headerText.text = product.header;
-        rewardText.text = product.rewardText;
-        avatar.sprite = product.avatar;
-        if (product.countProduct == -1)
+        avatarChange.sprite = product.avatarChange;
+        avatarPriceChange.sprite = product.avatarPriceChange;
+        if (product.countChangeProduct == -1)
             countProductText.gameObject.SetActive(false);
         else
         {
-            if (product.countProduct == 0)
+            if (product.countChangeProduct == 0)
             {
                 ActionRemove?.Invoke();
                 return;
             }
-            countProductText.gameObject.SetActive(true);
-            countProductText.text = $"{product.countProduct}x";
         }
+
+        countProductText.text = $"{product.countChangeProduct}x";
+        countPriceChangeText.gameObject.SetActive(true);
+        countPriceChangeText.text = $"{product.countPriceChange}x";
     }
 
     public Product GetProduct()

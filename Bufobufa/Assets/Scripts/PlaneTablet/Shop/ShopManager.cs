@@ -24,15 +24,17 @@ public class ShopManager : MonoBehaviour
 
         if (saveManager.fileShop.JSONShop != null)
         {
-            if (saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
+            if (saveManager.fileShop.JSONShop.resources.productSaves == null || saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
             {
                 List<ProductSave> productSaves = new List<ProductSave>();
                 for (int i = 0; i < fileProducts.products.Count; i++)
                 {
                     productSaves.Add(new ProductSave()
                     {
-                        countProduct = fileProducts.products[i].countProduct,
-                        money = fileProducts.products[i].money,
+                        countChangeProduct = fileProducts.products[i].countChangeProduct,
+                        typeChangeProduct = fileProducts.products[i].typeChangeProduct,
+                        countPriceChange = fileProducts.products[i].countPriceChange,
+                        typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
                     });
                 }
                 saveManager.fileShop.JSONShop.resources.productSaves = productSaves;
@@ -43,14 +45,16 @@ public class ShopManager : MonoBehaviour
         {
             Product product = new Product()
             {
-               indexProduct = i,
-               money = saveManager.fileShop.JSONShop.resources.productSaves[i].money,
-               countProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].countProduct,
-               rewardText = fileProducts.products[i].rewardText,
-               header = fileProducts.products[i].header,
-               avatar = fileProducts.products[i].avatar,
+                indexProduct = i,
+                typePriceChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typePriceChangeProduct,
+                typeChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typeChangeProduct,
+                countChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].countChangeProduct,
+                countPriceChange = saveManager.fileShop.JSONShop.resources.productSaves[i].countPriceChange,
+                header = fileProducts.products[i].header,
+                avatarPriceChange = fileProducts.products[i].avatarPriceChange,
+                avatarChange = fileProducts.products[i].avatarChange,
             };
-            if (saveManager.fileShop.JSONShop.resources.productSaves[i].countProduct != 0)
+            if (saveManager.fileShop.JSONShop.resources.productSaves[i].countChangeProduct != 0)
                 products.Add(product);
         }
 
@@ -69,12 +73,12 @@ public class ShopManager : MonoBehaviour
                 productGUI.Init(
                 (product) =>
                 {
-                    if (Buy(product) && product.countProduct - 1 >= 0)
+                    if (Buy(product) && product.countChangeProduct - 1 >= 0)
                     {
-                        product.countProduct--;
+                        product.countChangeProduct--;
 
-                        saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].money = product.money;
-                        saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countProduct = product.countProduct;
+                        saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countChangeProduct = product.countChangeProduct;
+                        saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.countPriceChange;
                         saveManager.UpdateShopFile();
 
                         productGUI.UpdateData(product);
@@ -95,7 +99,7 @@ public class ShopManager : MonoBehaviour
     {
         for (int j = 0; j < productsGUI.Count; j++)
         {
-            if (productsGUI[j].GetProduct().countProduct == -1)
+            if (productsGUI[j].GetProduct().countChangeProduct == -1)
                 transform.GetChild(j).SetAsFirstSibling();
         }
 
@@ -103,7 +107,7 @@ public class ShopManager : MonoBehaviour
         {
             for (var j = 0; j < productsGUI.Count - i; j++)
             {
-                if (productsGUI[j].GetProduct().countProduct != -1)
+                if (productsGUI[j].GetProduct().countChangeProduct != -1)
                 {
                     var temp = productsGUI[j];
                     productsGUI[j] = productsGUI[j + 1];
@@ -115,13 +119,38 @@ public class ShopManager : MonoBehaviour
 
     private bool Buy(Product product)
     {
-        if (saveManager.filePlayer.JSONPlayer.resources.money - product.money >= 0)
+        if (saveManager.filePlayer.JSONPlayer.resources.products != null)
         {
-            saveManager.filePlayer.JSONPlayer.resources.money -= product.money;
-            saveManager.UpdatePlayerFile();
-            OnBuyProduct?.Invoke(product);
+            for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.products.Count; i++)
+            {
+                if (saveManager.filePlayer.JSONPlayer.resources.products[i].typeProduct == product.typePriceChangeProduct)
+                {
+                    if (saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct - product.countPriceChange >= 0)
+                    {
+                        saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct -= product.countPriceChange;
+                        for (int j = 0; j < saveManager.filePlayer.JSONPlayer.resources.products.Count; j++)
+                        {
+                            if (saveManager.filePlayer.JSONPlayer.resources.products[j].typeProduct == product.typeChangeProduct)
+                            {
+                                saveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
+                                saveManager.UpdatePlayerFile();
+                                OnBuyProduct?.Invoke(product);
 
-            return true;
+                                return true;
+                            }
+                        }
+
+                        saveManager.filePlayer.JSONPlayer.resources.products.Add(new SaveTypeProduct()
+                        {
+                            countProduct = 1,
+                            typeProduct = product.typeChangeProduct
+                        });
+
+                        saveManager.UpdatePlayerFile();
+                        OnBuyProduct?.Invoke(product);
+                    }   
+                }
+            }
         }
         return false;
     }
