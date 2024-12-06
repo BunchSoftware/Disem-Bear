@@ -1,6 +1,7 @@
 using API;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(ClientHandler))]
@@ -65,8 +66,7 @@ public class SaveManager : MonoBehaviour
             {
                 for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
-                    changedResources.Add($"changedMoney_Product{i}", fileShop.JSONShop.resources.productSaves[i].money.ToString());
-                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
+                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
                 }
             }
 
@@ -118,7 +118,7 @@ public class SaveManager : MonoBehaviour
             {
                 for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
-                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
+                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
                 }
             }
 
@@ -135,6 +135,48 @@ public class SaveManager : MonoBehaviour
     {
         if (filePlayer.JSONPlayer.nameUser != "")
         {
+            clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+            ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
+            Dictionary<string, string> changedResources = new Dictionary<string, string>();
+
+            //if (fileShop.JSONShop.resources.productSaves != null)
+            //{
+            //    for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+            //    {
+            //        changedResources.Add($"changedMoney_Product{i}", fileShop.JSONShop.resources.productSaves[i].money.ToString());
+            //        changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
+            //    }
+            //}
+
+            clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
+            PrintListPlayer();
+            PrintListLogPlayer(filePlayer.JSONPlayer.nameUser);
+
+            saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+        }
+    }
+
+    public void AddSaveTypeProduct(SaveTypeProduct saveTypeProduct)
+    {
+        if (filePlayer.JSONPlayer.nameUser != "")
+        {
+            for (int j = 0; j < filePlayer.JSONPlayer.resources.products.Count; j++)
+            {
+                if (filePlayer.JSONPlayer.resources.products[j].typeProduct == saveTypeProduct.typeProduct)
+                {
+                    saveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
+                    saveManager.UpdatePlayerFile();
+                    OnBuyProduct?.Invoke(product);
+
+                    break;
+                }
+            }
+
+            saveManager.filePlayer.JSONPlayer.resources.products.Add(new SaveTypeProduct()
+                        {
+                            countProduct = 1,
+                            typeProduct = product.typeChangeProduct
+                        });
             clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
             ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
             Dictionary<string, string> changedResources = new Dictionary<string, string>();

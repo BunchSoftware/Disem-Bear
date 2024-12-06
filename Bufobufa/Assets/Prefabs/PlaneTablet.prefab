@@ -2647,7 +2647,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0427\u0430\u0442\u044B"
+  m_Text: "\u0427\u0430\u0442"
 --- !u!1 &7653941400959736290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3400,7 +3400,6 @@ GameObject:
   - component: {fileID: 1342040822394794275}
   - component: {fileID: 5880465226112263856}
   - component: {fileID: 8727748450286925264}
-  - component: {fileID: 4031305061435167212}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -3481,20 +3480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4150276223853524837, guid: c02a71a83cd104d46b0cad3f58f787c5, type: 3}
   fileProducts: {fileID: 11400000, guid: a72c209596cec9d49ada835d2dc7dd4f, type: 2}
---- !u!114 &4031305061435167212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9011644848142693311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e08893a40e3b5f428ecb1589720b84f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerShopInfo:
-    money: 100
+  saveManager: {fileID: 0}
 --- !u!1 &9059082586127547319
 GameObject:
   m_ObjectHideFlags: 0

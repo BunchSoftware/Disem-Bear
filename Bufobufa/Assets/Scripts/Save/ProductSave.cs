@@ -6,6 +6,8 @@ using UnityEngine;
 [Serializable]
 public class ProductSave 
 {
-    public int money;
-    public int countProduct;
+    public string typeChangeProduct;
+    public int countChangeProduct;
+    public string typePriceChangeProduct;
+    public int countPriceChange;
 }

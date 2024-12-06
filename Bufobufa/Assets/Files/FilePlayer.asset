@@ -16,4 +16,12 @@ MonoBehaviour:
     nameUser: Denis
     resources:
       isPlayerRegistration: 1
-      money: 0
+      products:
+      - typeProduct: regulation
+        countProduct: 0
+      - typeProduct: digestion
+        countProduct: 0
+      - typeProduct: reduction
+        countProduct: 1
+      - typeProduct: filtering
+        countProduct: 1
