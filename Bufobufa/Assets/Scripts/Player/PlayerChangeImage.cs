@@ -23,6 +23,8 @@ public class PlayerChangeImage : MonoBehaviour
     private float VerticalChangePos;
     private Sprite HorizontalSprite;
     private Sprite VerticalSprite;
+    private string HorizontalAnimation;
+    private string VerticalAnimation;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -65,31 +67,39 @@ public class PlayerChangeImage : MonoBehaviour
         VerticalChangePos = LastPos.z - transform.position.z;
         if (HorizontalChangePos >= 0.01f)
         {
-            HorizontalSprite = Left;
+            //HorizontalSprite = Left;
             //animator.Play("LeftAnimation");
+            HorizontalAnimation = "LeftAnimation";
         }
         else
         {
-            HorizontalSprite = Right;
+            //HorizontalSprite = Right;
             //animator.Play("RightAnimation");
+            HorizontalAnimation = "RightAnimation";
         }
         if (VerticalChangePos < -0.01f)
         {
-            VerticalSprite = Back;
+            //VerticalSprite = Back;
             //animator.Play("BackAnimation");
+            VerticalAnimation = "BackAnimation";
         }
         else
         {
-            VerticalSprite = Forward;
+            //VerticalSprite = Forward;
             //animator.Play("ForwardAnimation");
+            VerticalAnimation = "ForwardAnimation";
         }
-        if (Mathf.Abs(HorizontalChangePos) > Mathf.Abs(VerticalChangePos))
+        if (Mathf.Abs(HorizontalChangePos) < 0.01f && Mathf.Abs(VerticalChangePos) < 0.01f)
         {
-            spriteRender.sprite = HorizontalSprite;
+            animator.Play("StateAnimation");
+        }
+        else if (Mathf.Abs(HorizontalChangePos) > Mathf.Abs(VerticalChangePos))
+        {
+            animator.Play(HorizontalAnimation);
         }
         else
         {
-            spriteRender.sprite = VerticalSprite;
+            animator.Play(VerticalAnimation);
         }
     }
 }
