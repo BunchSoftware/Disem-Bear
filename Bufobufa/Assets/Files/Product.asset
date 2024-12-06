@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: Product
   m_EditorClassIdentifier: 
   products:
-  - money: 10
-    countProduct: 10
-    rewardText: 10$
-    header: "\u0421\u043E\u0441\u0438\u0441\u043A\u0430"
-    avatar: {fileID: 21300000, guid: db7255a81c9c2c94780bedc5bdfb5d4e, type: 3}
-  - money: 10
-    countProduct: -1
-    rewardText: 20$
-    header: "\u041A\u043E\u043B\u0431\u0430\u0441\u043A\u0430"
-    avatar: {fileID: 21300000, guid: e81df001f2ea6df41839d80ee53540b3, type: 3}
+  - indexProduct: 0
+    money: 10
+    header: 
+    typeChangeProduct: reduction
+    countChangeProduct: -1
+    avatarChange: {fileID: 21300000, guid: af7a8aa3fd622fb4da54773f95a19429, type: 3}
+    typePriceChangeProduct: regulation
+    countPriceChange: 2
+    avatarPriceChange: {fileID: 21300000, guid: 8fe8e4569ae94bd4eb097f654ceff501, type: 3}
+  - indexProduct: 0
+    money: 10
+    header: 
+    typeChangeProduct: filtering
+    countChangeProduct: -1
+    avatarChange: {fileID: 21300000, guid: afae230c25cfe7e4f83f2e5a96fd08b1, type: 3}
+    typePriceChangeProduct: digestion
+    countPriceChange: 3
+    avatarPriceChange: {fileID: 21300000, guid: db7255a81c9c2c94780bedc5bdfb5d4e, type: 3}

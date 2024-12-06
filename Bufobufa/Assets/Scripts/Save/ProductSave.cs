@@ -4,16 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Product 
+public class ProductSave 
 {
-    [HideInInspector] public int indexProduct;
-    public string header;
-    [Header("ChangeProduct")]
     public string typeChangeProduct;
     public int countChangeProduct;
-    public Sprite avatarChange;
-    [Header("PriceChangeProduct")]
     public string typePriceChangeProduct;
     public int countPriceChange;
-    public Sprite avatarPriceChange;
 }

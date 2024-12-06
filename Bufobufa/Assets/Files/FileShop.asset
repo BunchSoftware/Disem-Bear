@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: FileShop
   m_EditorClassIdentifier: 
   JSONShop:
-    name: 
+    nameShop: Shop
     resources:
-      apple: 0
+      isShopRegistration: 1
+      productSaves:
+      - typeChangeProduct: reduction
+        countChangeProduct: -1
+        typePriceChangeProduct: regulation
+        countPriceChange: 2
+      - typeChangeProduct: filtering
+        countChangeProduct: -1
+        typePriceChangeProduct: digestion
+        countPriceChange: 3
