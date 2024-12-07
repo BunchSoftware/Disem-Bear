@@ -5250,6 +5250,17 @@ Transform:
   - {fileID: 542936562}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639215244 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4040504540571249054, guid: ab80d28c31d085148981db2e0c094479, type: 3}
+  m_PrefabInstance: {fileID: 5674710489951753280}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b93353cbd681c43ac13494b59a6e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &670384328
 GameObject:
   m_ObjectHideFlags: 0
@@ -25635,7 +25646,7 @@ PrefabInstance:
       objectReference: {fileID: 210739506}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.data[0].typeGiveProduct
@@ -25646,7 +25657,15 @@ PrefabInstance:
       value: postOfficeTube
       objectReference: {fileID: 0}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].typeMachineDispensingProduct
+      value: fridge
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.data[0].OnGetProduct.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].OnGetProduct.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -25654,7 +25673,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 299738798}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 639215244}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.data[0].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -25662,11 +25689,23 @@ PrefabInstance:
       value: GetMaterial
       objectReference: {fileID: 0}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CreateMagnet
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.data[0].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GetPostOfficeTubeMaterial, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FridgeOpen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.data[0].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428241594007119980, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typeGiveProducts.Array.data[1].OnGetProduct.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4138446228216772773, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}

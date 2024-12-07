@@ -20,13 +20,29 @@ public class FridgeOpen : MonoBehaviour
     {
         FrontFridge = transform.Find("FrontFridge").gameObject;
 
-        //for (int i = 0; i < fileMagnets.magnets.Count; i++)
-        //{
-        //    prefabMagnet.name = $"Magnet {i}";
-        //    MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
-        //    magnetGUI.Init(fileMagnets.magnets[i]);
-        //    magnetsGUI.Add(magnetGUI);
-        //}
+        for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
+        {
+            prefabMagnet.name = $"Magnet {i}";
+            MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
+
+            for (int j = 0; j < fileMagnets.magnets.Count; j++)
+            {
+                if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
+                {
+                    Magnet magnet = new Magnet()
+                    {
+                        x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
+                        y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
+                        z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
+                        typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
+                        iconMagnet = fileMagnets.magnets[j].iconMagnet,
+                    };
+                    magnetGUI.Init(magnet);
+                    break;
+                }
+            }
+            magnetsGUI.Add(magnetGUI);
+        }
     }
 
     private void Update()
@@ -73,8 +89,15 @@ public class FridgeOpen : MonoBehaviour
         for (int i = 0; i < magnetsGUI.Count; i++)
         {
             magnetsGUI[i].GetComponent<MouseTrigger>().enabled = true;
+
+            MagnetSave magnetSave = new MagnetSave();
+            magnetSave.typeMagnet = magnetsGUI[i].GetMagnet().typeMagnet;
+            magnetSave.x = magnetsGUI[i].transform.localPosition.x;
+            magnetSave.y = magnetsGUI[i].transform.localPosition.y;
+            magnetSave.z = magnetsGUI[i].transform.localPosition.z;
+
+            saveManager.ChangeMagnetSave(magnetSave);
         }
-        saveManager.UpdatePlayerFile();
     }
 
     public void CreateMagnet(string typeMagnet)
@@ -90,11 +113,9 @@ public class FridgeOpen : MonoBehaviour
 
                 MagnetSave magnetSave = new MagnetSave();
                 magnetSave.typeMagnet = magnetGUI.GetMagnet().typeMagnet;
-                magnetSave.x = magnetGUI.transform.position.x;
-                magnetSave.y = magnetGUI.transform.position.y;
-                magnetSave.z = magnetGUI.transform.position.z;
-
-                print("1");
+                magnetSave.x = magnetGUI.transform.localPosition.x;
+                magnetSave.y = magnetGUI.transform.localPosition.y;
+                magnetSave.z = magnetGUI.transform.localPosition.z;
 
                 saveManager.ChangeMagnetSave(magnetSave);
 
