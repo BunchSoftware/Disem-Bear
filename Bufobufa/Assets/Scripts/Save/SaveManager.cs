@@ -43,6 +43,12 @@ public class SaveManager : MonoBehaviour
             fileShop.JSONShop.resources = new ResourceShop();
             saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
         }
+
+        //ChangeSaveTypeProduct(new SaveTypeProduct()
+        //{ 
+        //    typeProduct = "regulation",
+        //    countProduct = 2,
+        //});
     }
 
     public void RegistrationShop(string nameShop)
@@ -156,7 +162,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void AddSaveTypeProduct(SaveTypeProduct saveTypeProduct)
+    public void ChangeSaveTypeProduct(SaveTypeProduct saveTypeProduct)
     {
         if (filePlayer.JSONPlayer.nameUser != "")
         {
@@ -164,39 +170,83 @@ public class SaveManager : MonoBehaviour
             {
                 if (filePlayer.JSONPlayer.resources.products[j].typeProduct == saveTypeProduct.typeProduct)
                 {
-                    filePlayer.JSONPlayer.resources.products[j].countProduct += 1;//saveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
-                    UpdatePlayerFile();//saveManager.UpdatePlayerFile();
-                    //OnBuyProduct?.Invoke(product);
+                    filePlayer.JSONPlayer.resources.products[j].countProduct += saveTypeProduct.countProduct;
+                    UpdatePlayerFile();
 
-                    break;
+                    clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+                    ResourceChangedPlayer resourceChangedPlayer1 = new ResourceChangedPlayer();
+                    Dictionary<string, string> changedResources1 = new Dictionary<string, string>();
+
+                    clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer1);
+                    PrintListPlayer();
+                    PrintListLogPlayer(filePlayer.JSONPlayer.nameUser);
+
+                    saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+
+                    return;
                 }
             }
 
-            filePlayer.JSONPlayer.resources.products.Add(new SaveTypeProduct()//saveManager.filePlayer.JSONPlayer.resources.products.Add(new SaveTypeProduct()
-            {
-                            countProduct = 1,
-                            //typeProduct = product.typeChangeProduct
-                        });
+            SaveTypeProduct saveType = new SaveTypeProduct();
+            saveType.typeProduct = saveTypeProduct.typeProduct;
+            saveType.countProduct += saveTypeProduct.countProduct;
+
+            filePlayer.JSONPlayer.resources.products.Add(saveType);
             clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
             ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
             Dictionary<string, string> changedResources = new Dictionary<string, string>();
 
-            //if (fileShop.JSONShop.resources.productSaves != null)
-            //{
-            //    for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
-            //    {
-            //        changedResources.Add($"changedMoney_Product{i}", fileShop.JSONShop.resources.productSaves[i].money.ToString());
-            //        changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countProduct.ToString());
-            //    }
-            //}
+            if (fileShop.JSONShop.resources.productSaves != null)
+            {
+                for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+                {
+                    changedResources.Add($"changedCountChangeProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
+                }
+            }
 
-            clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
+            clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о покупках были изменены", resourceChangedPlayer);
             PrintListPlayer();
             PrintListLogPlayer(filePlayer.JSONPlayer.nameUser);
 
             saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
         }
     }
+
+    public void ChangeMagnetSave(MagnetSave magnetSave)
+    {
+        if (filePlayer.JSONPlayer.nameUser != "")
+        {
+            for (int j = 0; j < filePlayer.JSONPlayer.resources.magnetSaves.Count; j++)
+            {
+                if (filePlayer.JSONPlayer.resources.magnetSaves[j].typeMagnet != magnetSave.typeMagnet)
+                {
+                    filePlayer.JSONPlayer.resources.magnetSaves.Add(magnetSave);
+                    clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+
+                    ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
+                    Dictionary<string, string> changedResources = new Dictionary<string, string>();
+
+                    if (fileShop.JSONShop.resources.productSaves != null)
+                    {
+                        for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+                        {
+                            changedResources.Add($"changedCountChangeProduct_Product{i}", filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet);
+                        }
+                    }
+
+                    clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о магнитах на холодильнике были изменены", resourceChangedPlayer);
+                    PrintListPlayer();
+                    PrintListLogPlayer(filePlayer.JSONPlayer.nameUser);
+
+                    saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+
+                    return;
+                }
+            }
+            saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+        }
+    }
+
 
     public void PrintPlayerInfo()
     {

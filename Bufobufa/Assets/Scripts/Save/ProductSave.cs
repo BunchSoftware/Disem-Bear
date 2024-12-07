@@ -10,4 +10,5 @@ public class ProductSave
     public int countChangeProduct;
     public string typePriceChangeProduct;
     public int countPriceChange;
+    public string typeMachineDispensingProduct;
 }

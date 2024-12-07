@@ -2,12 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
+[Serializable]
+public class TypeMachineDispensingProduct
+{
+    public string typeMachineDispensingProduct;
+    public UnityEvent<string> OnGetProduct;
+}
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private FileProducts fileProducts;
+    [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
     [SerializeField] private SaveManager saveManager;
     private List<ProductGUI> productsGUI = new List<ProductGUI>();
     public Action<Product> OnBuyProduct;
@@ -33,6 +41,7 @@ public class ShopManager : MonoBehaviour
                     {
                         countChangeProduct = fileProducts.products[i].countChangeProduct,
                         typeChangeProduct = fileProducts.products[i].typeChangeProduct,
+                        typeMachineDispensingProduct = fileProducts.products[i].typeMachineDispensingProduct,
                         countPriceChange = fileProducts.products[i].countPriceChange,
                         typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
                     });
@@ -48,6 +57,7 @@ public class ShopManager : MonoBehaviour
                 indexProduct = i,
                 typePriceChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typePriceChangeProduct,
                 typeChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typeChangeProduct,
+                typeMachineDispensingProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typeMachineDispensingProduct,
                 countChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].countChangeProduct,
                 countPriceChange = saveManager.fileShop.JSONShop.resources.productSaves[i].countPriceChange,
                 header = fileProducts.products[i].header,
@@ -134,6 +144,7 @@ public class ShopManager : MonoBehaviour
                             {
                                 saveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
                                 saveManager.UpdatePlayerFile();
+                                GiveProduct(product);
                                 OnBuyProduct?.Invoke(product);
 
                                 return true;
@@ -146,6 +157,8 @@ public class ShopManager : MonoBehaviour
                             typeProduct = product.typeChangeProduct
                         });
 
+                        GiveProduct(product);
+
                         saveManager.UpdatePlayerFile();
                         OnBuyProduct?.Invoke(product);
                     }   
@@ -153,6 +166,20 @@ public class ShopManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void GiveProduct(Product product)
+    {
+        if (typeGiveProducts != null)
+        {
+            for (int i = 0; i < typeGiveProducts.Count; i++)
+            {
+                if (typeGiveProducts[i].typeMachineDispensingProduct == product.typeMachineDispensingProduct)
+                {
+                    typeGiveProducts[i].OnGetProduct.Invoke(product.typeChangeProduct);
+                }
+            }
+        }
     }
 
     private void Remove(ProductGUI productGUI)

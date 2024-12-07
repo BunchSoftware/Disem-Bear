@@ -8,6 +8,7 @@ public class Product
 {
     [HideInInspector] public int indexProduct;
     public string header;
+    public string typeMachineDispensingProduct;
     [Header("ChangeProduct")]
     public string typeChangeProduct;
     public int countChangeProduct;

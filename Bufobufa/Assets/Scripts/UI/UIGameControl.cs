@@ -40,15 +40,25 @@ public class UIGameControl : MonoBehaviour
         fade.FadeBlack();
     }
 
+    public void ChangeRenderMode()
+    {
+        if (gameObject.GetComponent<Canvas>().renderMode == RenderMode.ScreenSpaceCamera)
+            gameObject.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+        else if(gameObject.GetComponent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay)
+            gameObject.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        ChangeRenderMode();
         pausePanel.SetActive(true);
         isActivePause = true;
     }
     public void ContinueGame()
     {
         Time.timeScale = 1f;
+        ChangeRenderMode();
         pausePanel.SetActive(false);
         isActivePause = false;
     }
