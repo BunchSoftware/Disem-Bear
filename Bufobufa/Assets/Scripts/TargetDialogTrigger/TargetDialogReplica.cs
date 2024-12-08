@@ -14,12 +14,12 @@ public class TargetDialogReplica : MonoBehaviour
     {
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
-
+        DialogManager.OnStartDialog.AddListener(TargetReplica);
     }
 
-    public void TargetReplica(string text)
+    public void TargetReplica(Dialog dialog)
     {
-        if (text == TextReplica && NumPointer != -1)
+        if (dialog.textDialog == TextReplica && NumPointer != -1)
         {
             AllPointerManager.SetPointer(NumPointer);
         }
