@@ -11,6 +11,7 @@ public class ModelBoard : MonoBehaviour
 
     private GameObject Player;
     private GameObject Workbench;
+    private StoreManager storeManager;
 
     public bool ModelOpen = false;
     private bool InTableAndBoard = false;
@@ -20,6 +21,7 @@ public class ModelBoard : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Workbench = GameObject.Find("Workbench");
+        storeManager = GameObject.Find("StoreManager").GetComponent<StoreManager>();
 
         if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
         {
@@ -75,6 +77,15 @@ public class ModelBoard : MonoBehaviour
                 {
                     if (items.Count < points.Count)
                     {
+                        if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().HaveIngredients)
+                        {
+                            for (int i = 0; i < Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().amount; i++)
+                            {
+                                storeManager.AddIngridient(Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().NameIngredient);
+                            }
+                        }
+
+
                         GameObject item = Instantiate(Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>().ItemInPackage);
                         items.Add(item);
                         items[items.Count - 1].transform.parent = transform;
