@@ -491,7 +491,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c425fc9d86c567b44afc40ef83e0b544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  saveManager: {fileID: 0}
+  getItemFromTables:
+  - {fileID: 391935746798126346, guid: 32d67d30c00dff441927372d04180542, type: 3}
+  - {fileID: 391935746798126346, guid: db66ddf982eeeff4e98f6e5526f763d5, type: 3}
+  - {fileID: 391935746798126346, guid: 9bcab09242b340c48ab03eaa12c882d7, type: 3}
+  - {fileID: 391935746798126346, guid: d5099b405a8a40a48a9de7991710106f, type: 3}
+  pointsInfo:
   - GetItem: 0
     obj: {fileID: 0}
     point: {fileID: 7419531613728148791}

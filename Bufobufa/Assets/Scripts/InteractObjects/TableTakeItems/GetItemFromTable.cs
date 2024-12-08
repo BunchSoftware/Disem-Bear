@@ -61,6 +61,7 @@ public class GetItemFromTable : MonoBehaviour
                 typeItemFromTable = typeItemFromTable,
                 indexPoint = indexPoint,
             });
+            print(1);
             table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj = null;
         }
     }
