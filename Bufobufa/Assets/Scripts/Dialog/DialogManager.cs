@@ -14,7 +14,8 @@ public class DialogManager : MonoBehaviour
 {
     [SerializeField] private DialogueWindow dialogueWindow;
     [SerializeField] private FileDialog fileDialog;
-    public UnityEvent<Dialog> EndDialog;
+    public UnityEvent<Dialog> OnStartDialog;
+    public UnityEvent<Dialog> OnEndDialog;
     public UnityEvent<string> SendInputFieldText;
 
     private List<DialogPoint> dialogPoints = new List<DialogPoint>();
@@ -96,6 +97,7 @@ public class DialogManager : MonoBehaviour
         currentIndexDialog = indexDialog;
         for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)
         {
+            OnStartDialog?.Invoke(dialogPoint.dialog[i]);
             currentIndexDialog = i;
             if (dialogPoint.dialog[i].isActiveInputField == false)
                 isCanSkipDialog = true;
@@ -107,7 +109,7 @@ public class DialogManager : MonoBehaviour
             dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
             yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
 
-            EndDialog?.Invoke(dialogPoint.dialog[i]);
+            OnEndDialog?.Invoke(dialogPoint.dialog[i]);
 
             if (dialogPoint.dialog[i].stopTheEndDialog == true)
             {
