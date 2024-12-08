@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8568163846690920906}
   - component: {fileID: 7270591246766187067}
   - component: {fileID: 7485596547475820756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Materials
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,9 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60e0bc39c6944b4386b3b5855102b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeItemFromTable: 
   InTrigger: 0
   ClickedMouse: 0
-  numPoint: 0
+  isTube: 0
+  indexPoint: 0
 --- !u!114 &7485596547475820756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,4 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
