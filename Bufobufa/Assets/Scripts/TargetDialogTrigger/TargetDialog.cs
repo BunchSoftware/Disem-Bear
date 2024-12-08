@@ -16,7 +16,8 @@ public class TargetDialog : MonoBehaviour
         CraftSomething,
         NextRoom,
         TalantAcadem,
-        CraftPrinter
+        CraftPrinter,
+        PrinterCreate
     }
 
     private NextRoom nextRoom;
@@ -30,6 +31,7 @@ public class TargetDialog : MonoBehaviour
     private PlayerInfo Player_Info;
     private AllPointerManager AllPointerManager;
     private ThingsInTableMix ThingsInTableMix;
+    private Printer printer;
 
     private bool OneTap = true;
 
@@ -103,6 +105,10 @@ public class TargetDialog : MonoBehaviour
             {
                 ThingsInTableMix = GetComponent<ThingsInTableMix>();
             }
+            else if (targets[i].TypeTarget == TargetType.PrinterCreate)
+            {
+                printer = GetComponent<Printer>();
+            }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
     }
@@ -149,6 +155,10 @@ public class TargetDialog : MonoBehaviour
             else if (targets[i].TypeTarget == TargetType.CraftPrinter)
             {
                 PrinterCraft(i);
+            }
+            else if (targets[i].TypeTarget == TargetType.PrinterCreate)
+            {
+                PrinterCreatee(i);
             }
         }
     }
@@ -483,6 +493,39 @@ public class TargetDialog : MonoBehaviour
             }
         }
         else if (!OneTap && !ThingsInTableMix.IsPrinterObject)
+        {
+            OneTap = true;
+        }
+    }
+    private void PrinterCreatee(int i)
+    {
+        if (OneTap && printer.PlayerGet)
+        {
+            OneTap = false;
+            if (targets[i].Active)
+            {
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                }
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+                {
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
+        }
+        else if (!OneTap && !printer.PlayerGet)
         {
             OneTap = true;
         }

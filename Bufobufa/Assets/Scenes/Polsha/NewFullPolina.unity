@@ -14955,7 +14955,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70d31485c25f4e4e85f9451c3196e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
+  targets:
+  - TypeTarget: 10
+    Active: 1
+    StayActiveAfter: 0
+    DialogTag: CraftPrinter
+    NewDialog: 0
+    NumDialog: 0
+    UniqId: 0
+    NeedActivate: []
 --- !u!1 &565671591
 GameObject:
   m_ObjectHideFlags: 0
@@ -31055,7 +31063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1394676131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39028,9 +39036,9 @@ MonoBehaviour:
   - TypeTarget: 9
     Active: 1
     StayActiveAfter: 0
-    DialogTag: 
-    NewDialog: 1
-    NumDialog: 1
+    DialogTag: CreateMaterial
+    NewDialog: 0
+    NumDialog: 0
     UniqId: 90
     NeedActivate: []
 --- !u!1 &1818540785

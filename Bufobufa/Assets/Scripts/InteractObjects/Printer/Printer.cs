@@ -9,6 +9,7 @@ public class Printer : MonoBehaviour
     private bool ClickedMouse = false;
     public bool PrinterWork = false;
     public bool ObjectDone = false;
+    public bool PlayerGet = false;
     public GameObject currentObject;
     public List<ObjectInfo> objectInfos = new();
 
@@ -96,6 +97,7 @@ public class Printer : MonoBehaviour
             ClickedMouse = false;
             PrinterWork = false;
             ObjectDone = false;
+            PlayerGet = true;
         }
     }
     IEnumerator WaitWhilePrintObject(float t)

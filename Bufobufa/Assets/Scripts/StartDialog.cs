@@ -12,6 +12,6 @@ public class StartDialog : MonoBehaviour
     IEnumerator WaitWhat()
     {
         yield return new WaitForSeconds(0.5f);
-        Dialog.StartDialog(0);
+        Dialog.StartDialog(1);
     }
 }
