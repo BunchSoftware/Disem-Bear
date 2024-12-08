@@ -33,9 +33,6 @@ public class TableTakesItem : MonoBehaviour
                     pointsInfo[getItemFromTable.indexPoint].obj.transform.position = pointsInfo[getItemFromTable.indexPoint].point.transform.position;
                     pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<MouseTrigger>().enabled = true;
                     pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<BoxCollider>().enabled = true;
-
-
-                    print(1);
                 }
             }
         }

@@ -55,7 +55,7 @@ public class GetItemFromTable : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit))
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
             {
                 if (infoHit.collider.gameObject == gameObject)
                 {
@@ -81,7 +81,6 @@ public class GetItemFromTable : MonoBehaviour
                 indexPoint = indexPoint,
             });
 
-            print(isReturn);
 
             if (isReturn)
                 return;
