@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: "\u0414\u0435\u043D\u0438\u0441"
+    nameUser: 
     resources:
-      isPlayerRegistration: 1
+      isPlayerRegistration: 0
       currentIndexDialogPoint: 0
-      currentIndexDialog: 1
+      currentIndexDialog: 0
       exerciseSaves: []
       ingradientSaves:
       - typeIngradient: cell
@@ -39,12 +39,11 @@ MonoBehaviour:
       - typeIngradient: reduction
         countIngradient: 0
       - typeIngradient: Blue
-        countIngradient: 0
+        countIngradient: 1
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
-      modelBoardSaves:
-      - typeModelBoard: DocumentPackage
+      modelBoardSaves: []
       itemFromTableSaves: []
       magnetSaves: []
       products: []
