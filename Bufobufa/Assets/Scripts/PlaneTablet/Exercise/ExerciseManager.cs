@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class ExerciseManager : MonoBehaviour
 {
+    [SerializeField] private SaveManager saveManager;
     [SerializeField] private GameObject prefab;
     [SerializeField] private FileExercise fileExercise;
     [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
@@ -25,8 +26,25 @@ public class ExerciseManager : MonoBehaviour
 
     private void Start()
     {
-
         List<Exercise> exercises = fileExercise.exercises;
+
+
+        if (saveManager.filePlayer.JSONPlayer.resources.exerciseSaves != null || saveManager.filePlayer.JSONPlayer.resources.exerciseSaves.Count == 0)
+        {
+            saveManager.filePlayer.JSONPlayer.resources.exerciseSaves = new List<ExerciseSave>();
+
+            for (int j = 0; j < exercises.Count; j++)
+            {
+                saveManager.filePlayer.JSONPlayer.resources.exerciseSaves.Add(new ExerciseSave()
+                {
+                    indexExercise = j,
+                    isGetPackage = false,
+                    typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone,
+                });
+            }
+
+            saveManager.UpdatePlayerFile();
+        }
 
         for (int i = 0; i < exercises.Count; i++)
         {
@@ -55,7 +73,7 @@ public class ExerciseManager : MonoBehaviour
                     }
                     else
                         Sort(exercise);
-                }, exercises[i]);
+                }, exercises[i], i, saveManager);
                 exercise.ExpandExercise(false);
 
                 exercisesGUI.Add(exercise);

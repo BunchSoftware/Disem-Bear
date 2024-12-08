@@ -5690,7 +5690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -6504,7 +6504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -12476,6 +12476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ae9ad905bb1d342bcc22ffd8394c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveManager: {fileID: 210739506}
   TypesIngredients:
   - name: cell
     Spawner: {fileID: 3781131}
@@ -21814,7 +21815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -22018,7 +22019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -22478,7 +22479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -23515,7 +23516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -24670,7 +24671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -25052,7 +25053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -49423,7 +49424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -49736,7 +49737,7 @@ PrefabInstance:
       objectReference: {fileID: 6723535441750546639, guid: 90397ba15906ac74ca48ed739d39e33a, type: 2}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: count
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508207699232709730, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: Ingredient
@@ -55641,6 +55642,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: orangeMaterial
       objectReference: {fileID: 0}
+    - target: {fileID: 2839929451296425077, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: saveManager
+      value: 
+      objectReference: {fileID: 210739506}
     - target: {fileID: 2839929451296425077, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typeGiveProducts.Array.size
       value: 1

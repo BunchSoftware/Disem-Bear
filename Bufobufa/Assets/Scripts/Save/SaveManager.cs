@@ -73,7 +73,7 @@ public class SaveManager : MonoBehaviour
             resourceChangedShop.changedResources = changedResources;
 
             clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
-            saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+            UpdateShopFile();         
         }
     }
 
@@ -98,6 +98,7 @@ public class SaveManager : MonoBehaviour
         clientHandler.CreateLogPlayer(nameUser, "Игрок был иницилизирован", resourceChangedPlayer);
         saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
+        UpdatePlayerFile();
     }
 
     public void UpdateShopFile()
