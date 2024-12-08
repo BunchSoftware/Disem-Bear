@@ -12,6 +12,7 @@ public class Exercise
     public ExerciseReward exerciseReward;
     public string rewardText;
     public string header;
+    [TextArea(10, 100)]
     public string description;
     public Sprite avatar;
 
