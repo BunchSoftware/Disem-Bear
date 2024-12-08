@@ -9,8 +9,10 @@ public class Exercise
 {
     private bool isCompletedExercise = false;
 
+    public string typePackage;
+    public string typeMachineDispensingPackage;
+
     public ExerciseReward exerciseReward;
-    public string rewardText;
     public string header;
     [TextArea(10, 100)]
     public string description;

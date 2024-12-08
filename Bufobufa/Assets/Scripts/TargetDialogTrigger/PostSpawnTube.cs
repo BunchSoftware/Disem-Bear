@@ -23,6 +23,7 @@ public class PostSpawnTube : MonoBehaviour
         if (OneTap)
         {
             OneTap = false;
+            PostOfficeTube.ItemExist = true;
             PostOfficeTube.ObjectFall();
             StartCoroutine(WaitBoxFall(1f));
         }

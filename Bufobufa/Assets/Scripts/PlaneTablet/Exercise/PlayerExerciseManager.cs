@@ -17,7 +17,7 @@ public class PlayerExerciseManager : MonoBehaviour
 
         exerciseManager.GetExerciseReward += (reward) =>
         {
-            print($"Награда {reward.money} монет");
+
         };
     }
 }

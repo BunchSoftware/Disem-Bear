@@ -55,6 +55,6 @@ public class PostOfficeTube : MonoBehaviour
         yield return new WaitForSeconds(t);
         ParticleSystem.Play();
         yield return new WaitForSeconds(0.2f);
-        ParticleSystem.Stop();
+        ParticleSystem.Stop();    
     }
 }

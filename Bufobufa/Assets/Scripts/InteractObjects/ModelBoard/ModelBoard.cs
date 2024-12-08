@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ModelBoard : MonoBehaviour
 {
+    [SerializeField] private SaveManager saveManager;
     public List<GameObject> points = new List<GameObject>();
     public List<GameObject> items = new List<GameObject>();
 
@@ -63,6 +64,8 @@ public class ModelBoard : MonoBehaviour
                         Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                         Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
                         Player.GetComponent<PlayerInfo>().currentPickObject = null;
+                        saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = null;
+                        saveManager.UpdatePlayerFile();
                     }
                 }
             }

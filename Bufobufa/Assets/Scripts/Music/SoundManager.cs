@@ -105,7 +105,6 @@ public class SoundManager : MonoBehaviour
         audio.loop = false;
         if (indexSound >= 0 && indexSound <= soundClips.Count)
         {
-            audio.Stop();
             audio.PlayOneShot(soundClips[indexSound].audioClip);
         }
         else
@@ -124,7 +123,6 @@ public class SoundManager : MonoBehaviour
     {
         if (indexSound >= 0 && indexSound <= soundClips.Count)
         {
-            audio.Stop();
             audio.loop = true;
             audio.clip = soundClips[indexSound].audioClip;
             audio.Play();
@@ -143,7 +141,6 @@ public class SoundManager : MonoBehaviour
     {
         if (indexSound >= 0 && indexSound <= soundClips.Count)
         {
-            audio.Stop();
             audio.clip = soundClips[indexSound].audioClip;
             audio.loop = soundClips[indexSound].isLoop;
             audio.Play();
