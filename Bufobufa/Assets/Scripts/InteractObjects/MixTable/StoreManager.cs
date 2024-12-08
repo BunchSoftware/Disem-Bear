@@ -5,16 +5,43 @@ using UnityEngine;
 
 public class StoreManager : MonoBehaviour
 {
+    public SaveManager saveManager;
     public List<Ingredient> TypesIngredients = new();
 
     public static StoreManager Instance;
 
 
-    private void Awake()
+    private void Start()
     {
         if (Instance == null)
         {
             Instance = this;
+        }
+
+        if (saveManager.filePlayer.JSONPlayer.resources.ingradientSaves == null || saveManager.filePlayer.JSONPlayer.resources.ingradientSaves.Count == 0)
+        {
+            saveManager.filePlayer.JSONPlayer.resources.ingradientSaves = new List<IngradientSave> { };
+
+            for (int i = 0; i < TypesIngredients.Count; i++)
+            {
+                saveManager.filePlayer.JSONPlayer.resources.ingradientSaves.Add(new IngradientSave()
+                {
+                    typeIngradient = TypesIngredients[i].name,
+                    countIngradient = TypesIngredients[i].Spawner.GetComponent<Spawner>().count
+                });
+                saveManager.UpdatePlayerFile();
+            }
+        }
+
+        for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.ingradientSaves.Count; i++)
+        {
+            for (int j = 0; j < TypesIngredients.Count; j++)
+            {
+                if (saveManager.filePlayer.JSONPlayer.resources.ingradientSaves[i].typeIngradient == TypesIngredients[i].name)
+                {
+                    TypesIngredients[i].Spawner.GetComponent<Spawner>().count = saveManager.filePlayer.JSONPlayer.resources.ingradientSaves[i].countIngradient;
+                }
+            }
         }
     }
     
@@ -25,6 +52,16 @@ public class StoreManager : MonoBehaviour
             if (TypesIngredients[i].name == nameIngridient)
             {
                 TypesIngredients[i].Spawner.GetComponent<Spawner>().count++;
+
+                for (int j = 0; j < TypesIngredients.Count; j++)
+                {
+                    if (saveManager.filePlayer.JSONPlayer.resources.ingradientSaves[i].typeIngradient == TypesIngredients[i].name)
+                    {
+                        saveManager.filePlayer.JSONPlayer.resources.ingradientSaves[i].countIngradient = TypesIngredients[i].Spawner.GetComponent<Spawner>().count;
+                    }
+                }
+
+                saveManager.UpdatePlayerFile();
             }
         }
     }
