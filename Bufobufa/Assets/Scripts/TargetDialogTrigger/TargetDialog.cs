@@ -10,10 +10,13 @@ public class TargetDialog : MonoBehaviour
         OpenObject,
         ModelBoardGetItem,
         PlayerPickPackage,
-        ModelOpen
+        ModelOpen,
+        ClickOnTermometr
     } 
 
     private ModelBoard board;
+    private Temperature termometr;
+    private int numStateTermometr = 0;
     private OpenObject OpenObj;
     private int CountItems = 0;
     private PlayerInfo Player_Info;
@@ -65,6 +68,11 @@ public class TargetDialog : MonoBehaviour
             {
                 board = GetComponent<ModelBoard>();
             }
+            else if (targets[i].TypeTarget == TargetType.ClickOnTermometr)
+            {
+                termometr = GetComponent<Temperature>();
+                numStateTermometr = termometr.numState;
+            }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
@@ -88,6 +96,10 @@ public class TargetDialog : MonoBehaviour
             else if (targets[i].TypeTarget == TargetType.ModelOpen)
             {
                 ModelOpenFunc(i);
+            }
+            else if (targets[i].TypeTarget == TargetType.ClickOnTermometr)
+            {
+                TermometrClick(i);
             }
         }
     }
@@ -237,6 +249,39 @@ public class TargetDialog : MonoBehaviour
         else if (!board.ModelOpen && !OneTap)
         {
             OneTap = true;
+        }
+    }
+    private void TermometrClick(int i)
+    {
+        if (termometr.numState <= numStateTermometr)
+        {
+            numStateTermometr = termometr.numState;
+        }
+        else
+        {
+            numStateTermometr = termometr.numState;
+            if (targets[i].Active)
+            {
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                }
+                if (!targets[i].StayActiveAfter)
+                {
+                    targets[i].Active = false;
+                }
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+                {
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
         }
     }
 }
