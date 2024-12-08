@@ -14,7 +14,9 @@ public class TargetDialog : MonoBehaviour
         ClickOnTermometr,
         GetCells,
         CraftSomething,
-        NextRoom
+        NextRoom,
+        TalantAcadem,
+        CraftPrinter
     }
 
     private NextRoom nextRoom;
@@ -26,6 +28,8 @@ public class TargetDialog : MonoBehaviour
     private OpenObject OpenObj;
     private int CountItems = 0;
     private PlayerInfo Player_Info;
+    private AllPointerManager AllPointerManager;
+    private ThingsInTableMix ThingsInTableMix;
 
     private bool OneTap = true;
 
@@ -90,6 +94,15 @@ public class TargetDialog : MonoBehaviour
             {
                 nextRoom = GetComponent<NextRoom>();
             }
+            else if (targets[i].TypeTarget == TargetType.TalantAcadem)
+            {
+                OpenObj = GetComponent<OpenObject>();
+                AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
+            }
+            else if (targets[i].TypeTarget == TargetType.CraftPrinter)
+            {
+                ThingsInTableMix = GetComponent<ThingsInTableMix>();
+            }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
     }
@@ -128,6 +141,14 @@ public class TargetDialog : MonoBehaviour
             else if (targets[i].TypeTarget == TargetType.NextRoom)
             {
                 RoomNext(i);
+            }
+            else if (targets[i].TypeTarget == TargetType.TalantAcadem)
+            {
+                Academ(i);
+            }
+            else if (targets[i].TypeTarget == TargetType.CraftPrinter)
+            {
+                PrinterCraft(i);
             }
         }
     }
@@ -395,6 +416,73 @@ public class TargetDialog : MonoBehaviour
             }
         }
         else if (!OneTap && nextRoom.GetComponent<BoxCollider>().enabled == true)
+        {
+            OneTap = true;
+        }
+    }
+    private void Academ(int i)
+    {
+        if (OpenObj.ObjectIsOpen && OneTap)
+        {
+            OneTap = false;
+            if (targets[i].Active)
+            {
+                AllPointerManager.SetPointer(7);
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                }
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+                {
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
+        }
+        else if (!OpenObj.ObjectIsOpen && OneTap == false)
+        {
+            OneTap = true;
+        }
+    }
+    private void PrinterCraft(int i)
+    {
+        if (OneTap && ThingsInTableMix.IsPrinterObject)
+        {
+            OneTap = false;
+            if (targets[i].Active)
+            {
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                }
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+                {
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
+        }
+        else if (!OneTap && !ThingsInTableMix.IsPrinterObject)
         {
             OneTap = true;
         }

@@ -43,9 +43,11 @@ public class OpenObject : MonoBehaviour
     }
     public void OnTrigEnter(Collider other)
     {
+        
         if (other.tag == "Player")
         {
             InTrigger = true;
+            //Debug.Log(InTrigger);
         }
     }
     public void OnTrigExit(Collider other)
