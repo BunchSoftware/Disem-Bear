@@ -12,9 +12,11 @@ public class TargetDialog : MonoBehaviour
         PlayerPickPackage,
         ModelOpen,
         ClickOnTermometr,
-        GetCells
+        GetCells,
+        CraftSomething
     }
 
+    private ThingsInTableMix MixTable;
     private Aquarium Aquarium;
     private ModelBoard board;
     private Temperature termometr;
@@ -79,6 +81,10 @@ public class TargetDialog : MonoBehaviour
             {
                 Aquarium = GetComponent<Aquarium>();
             }
+            else if (targets[i].TypeTarget == TargetType.CraftSomething)
+            {
+                MixTable = GetComponent<ThingsInTableMix>();
+            }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
@@ -111,6 +117,10 @@ public class TargetDialog : MonoBehaviour
             {
                 CellsGet(i);
             }
+            else if (targets[i].TypeTarget == TargetType.CraftSomething)
+            {
+                Craft(i);
+            }
         }
     }
 
@@ -140,14 +150,14 @@ public class TargetDialog : MonoBehaviour
                 if (targets[i].NewDialog)
                 {
                     DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
                 }
                 else
                 {
                     DialogManager.RunConditionSkip(targets[i].DialogTag);
-                }
-                if (!targets[i].StayActiveAfter)
-                {
-                    targets[i].Active = false;
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -174,14 +184,14 @@ public class TargetDialog : MonoBehaviour
                 if (targets[i].NewDialog)
                 {
                     DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
                 }
                 else
                 {
                     DialogManager.RunConditionSkip(targets[i].DialogTag);
-                }
-                if (!targets[i].StayActiveAfter)
-                {
-                    targets[i].Active = false;
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -204,14 +214,14 @@ public class TargetDialog : MonoBehaviour
                 if (targets[i].NewDialog)
                 {
                     DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
                 }
                 else
                 {
                     DialogManager.RunConditionSkip(targets[i].DialogTag);
-                }
-                if (!targets[i].StayActiveAfter)
-                {
-                    targets[i].Active = false;
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -238,14 +248,14 @@ public class TargetDialog : MonoBehaviour
                 if (targets[i].NewDialog)
                 {
                     DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
                 }
                 else
                 {
                     DialogManager.RunConditionSkip(targets[i].DialogTag);
-                }
-                if (!targets[i].StayActiveAfter)
-                {
-                    targets[i].Active = false;
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -298,6 +308,35 @@ public class TargetDialog : MonoBehaviour
     {
         if (Aquarium.CountCells == 0)
         {
+            if (targets[i].Active)
+            {
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                }
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+                {
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
+        }
+    }
+    private void Craft(int i)
+    {
+        if (MixTable.CreateObject && OneTap)
+        {
+            OneTap = false;
             if (targets[i].Active)
             {
                 if (targets[i].NewDialog)

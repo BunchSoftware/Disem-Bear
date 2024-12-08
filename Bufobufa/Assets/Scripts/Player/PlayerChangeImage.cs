@@ -17,17 +17,18 @@ public class PlayerChangeImage : MonoBehaviour
     private GameObject PointItemRight;
     private GameObject PointItemBack;
     private GameObject PointItemForward;
+    private GameObject ParticleSystem;
 
 
     private float HorizontalChangePos;
     private float VerticalChangePos;
-    private Sprite HorizontalSprite;
-    private Sprite VerticalSprite;
     private string HorizontalAnimation;
     private string VerticalAnimation;
     private string CurrentAnimation = "StateAnimation";
+    private string CurrentAnimationParticle = "StateAnimation";
     private void Start()
     {
+        ParticleSystem = transform.Find("Particle System").gameObject;
         animator = GetComponent<Animator>();
         LastPos = transform.position;
         spriteRender = GetComponent<SpriteRenderer>();
@@ -39,12 +40,46 @@ public class PlayerChangeImage : MonoBehaviour
     private void Update()
     {
         ImageChange();
+        ParticleSystemChange();
         if (GetComponent<PlayerInfo>().PlayerPickSometing)
             ItemInHandsChange();
         LastPos = transform.position;
     }
+    private void ParticleSystemChange()
+    {
+        if (CurrentAnimation == "LeftAnimation" && CurrentAnimationParticle != "LeftAnimation")
+        {
+            CurrentAnimationParticle = "LeftAnimation";
+            ParticleSystem.GetComponent<ParticleSystem>().Play();
+            ParticleSystem.transform.eulerAngles = new Vector3(15.9691277f, 87.8853149f, 352.904419f);
+        }
+        else if (CurrentAnimation == "RightAnimation" && CurrentAnimationParticle != "RightAnimation")
+        {
+            CurrentAnimationParticle = "RightAnimation";
+            ParticleSystem.GetComponent<ParticleSystem>().Play();
+            ParticleSystem.transform.eulerAngles = new Vector3(15.9689913f, 272.11499f, 352.903992f);
+        }
+        else if (CurrentAnimation == "BackAnimation" && CurrentAnimationParticle != "BackAnimation")
+        {
+            CurrentAnimationParticle = "BackAnimation";
+            ParticleSystem.GetComponent<ParticleSystem>().Play();
+            ParticleSystem.transform.eulerAngles = new Vector3(15.9689932f, 0, 352.903992f);
+        }
+        else if (CurrentAnimation == "ForwardAnimation" && CurrentAnimationParticle != "ForwardAnimation")
+        {
+            CurrentAnimationParticle = "ForwardAnimation";
+            ParticleSystem.GetComponent<ParticleSystem>().Play();
+            ParticleSystem.transform.eulerAngles = new Vector3(15.9689932f, 180f, 352.903992f);
+        }
+        else if (CurrentAnimation == "StateAnimation" && CurrentAnimationParticle != "StateAnimation")
+        {
+            CurrentAnimationParticle = "StateAnimation";
+            ParticleSystem.GetComponent<ParticleSystem>().Stop();
+        }
+    }
     private void ItemInHandsChange()
     {
+        GetComponent<PlayerInfo>().currentPickObject.transform.localEulerAngles = Vector3.zero;
         if (CurrentAnimation == "LeftAnimation")
         {
             GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemLeft.transform.position;
