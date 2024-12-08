@@ -239,17 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dcdc9a1aa69d2646802578396a7381f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &431939908 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8101402575713697867, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
-  m_PrefabInstance: {fileID: 6050155868340380522}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &619747885
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,7 +421,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -930,8 +919,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3839994755202700373, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
-      propertyPath: m_Name
-      value: ' imageClickButtonForSkip'
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4446314455137688753, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.y
@@ -961,10 +950,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5740246345338974827, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
-      propertyPath: imageClickButtonForSkip
-      value: 
-      objectReference: {fileID: 431939908}
     - target: {fileID: 7778388345301009511, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -975,6 +960,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7778388345301009511, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8101402575713697867, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
+      propertyPath: m_PreserveAspect
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8998071387388862139, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
