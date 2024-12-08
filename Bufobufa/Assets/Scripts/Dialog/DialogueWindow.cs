@@ -26,7 +26,7 @@ public class DialogueWindow : MonoBehaviour
         skipButton.onClick.RemoveAllListeners();
         skipButton.onClick.AddListener(() =>
         {
-            dialogManager.SkipDialog();
+            dialogManager.RunConditionSkip("");
         });
 
         dialogInputField.Init(dialogManager);
