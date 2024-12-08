@@ -141,7 +141,8 @@ GameObject:
   - component: {fileID: 58684829}
   - component: {fileID: 58684832}
   - component: {fileID: 58684831}
-  m_Layer: 0
+  - component: {fileID: 58684833}
+  m_Layer: 7
   m_Name: NextRoomStrelka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,6 +256,22 @@ MonoBehaviour:
   CoordVcam: {x: 16.86, y: 5.48, z: -19.5}
   TimeAnimationVcam: 2.2
   RightRoomStrelka: {fileID: 1925220354}
+--- !u!114 &58684833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58684828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnyCase: 0
+  OnScaleChange: 0
+  TimeAnim: 0.2
+  FullZero: 1
 --- !u!1 &59109072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3075019929822471777, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -14057,7 +14074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1171592312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23826,7 +23843,8 @@ GameObject:
   - component: {fileID: 1925220352}
   - component: {fileID: 1925220355}
   - component: {fileID: 1925220354}
-  m_Layer: 0
+  - component: {fileID: 1925220356}
+  m_Layer: 7
   m_Name: NextRoomStrelka (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23940,6 +23958,22 @@ MonoBehaviour:
   CoordVcam: {x: 2.56, y: 5.48, z: -19.5}
   TimeAnimationVcam: 2.2
   RightRoomStrelka: {fileID: 58684831}
+--- !u!114 &1925220356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925220351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnyCase: 0
+  OnScaleChange: 0
+  TimeAnim: 0.2
+  FullZero: 1
 --- !u!1 &1926928321
 GameObject:
   m_ObjectHideFlags: 0
