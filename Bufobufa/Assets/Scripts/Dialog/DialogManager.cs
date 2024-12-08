@@ -199,6 +199,7 @@ public class DialogManager : MonoBehaviour
         {
             SendInputFieldText?.Invoke(text);
             isActiveInputField = false;
+            isCanSkipDialog = true;
             SkipDialog();
         }
     }

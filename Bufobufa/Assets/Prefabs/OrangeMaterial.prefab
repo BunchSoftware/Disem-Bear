@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60e0bc39c6944b4386b3b5855102b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeItemFromTable: orangeMaterial
   InTrigger: 0
   ClickedMouse: 0
   numPoint: 0
@@ -200,7 +201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &8688015039957210573
 MonoBehaviour:
   m_ObjectHideFlags: 0
