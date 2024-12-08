@@ -17,6 +17,7 @@ public class TargetDialog : MonoBehaviour
     private OpenObject OpenObj;
     private int CountItems = 0;
     private PlayerInfo Player_Info;
+    private AllPointerManager AllPointerManager;
 
     private bool OneTap = true;
 
@@ -66,6 +67,7 @@ public class TargetDialog : MonoBehaviour
             }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
+        AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
     }
     private void Update()
     {
@@ -172,6 +174,7 @@ public class TargetDialog : MonoBehaviour
     {
         if (Player_Info.PlayerPickSometing && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
         {
+            AllPointerManager.SetPointer(1);
             OneTap = false;
             if (targets[i].Active)
             {

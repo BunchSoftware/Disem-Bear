@@ -12,12 +12,12 @@ public class PostSpawnTube : MonoBehaviour
     {
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         PostOfficeTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
-        AllPointerManager = GameObject.Find("AllPointer").GetComponent<AllPointerManager>();
+        AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
         DialogManager.EndDialog.AddListener(DropBox);
     }
     public void DropBox(Dialog dialog)
     {
-        if (dialog.textDialog == "Я Руми!")
+        if (dialog.textDialog == "О, а вот и посылка. Эта почтовая труба действительно быстрая. Бери, бери, это для тебя.")
         {
             PostOfficeTube.ObjectFall();
         }
