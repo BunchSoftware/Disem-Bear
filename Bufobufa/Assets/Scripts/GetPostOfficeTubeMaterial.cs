@@ -43,7 +43,6 @@ public class GetPostOfficeTubeMaterial : MonoBehaviour
                     PostTube.prefabObject = typePostOfficeTubeMaterials[i].material;
                     PostTube.ItemExist = true;
                     ExistPackage = true;
-
                     OnGetPostOfficeTubeMaterial?.Invoke(typePostOfficeTubeMaterials[i]);
 
                     return;
