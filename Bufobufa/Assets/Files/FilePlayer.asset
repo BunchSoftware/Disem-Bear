@@ -15,7 +15,7 @@ MonoBehaviour:
   JSONPlayer:
     nameUser: 
     resources:
-      isPlayerRegistration: 0
+      isPlayerRegistration: 1
       currentIndexDialogPoint: 0
       currentIndexDialog: 0
       exerciseSaves: []
@@ -39,11 +39,19 @@ MonoBehaviour:
       - typeIngradient: reduction
         countIngradient: 0
       - typeIngradient: Blue
-        countIngradient: 1
+        countIngradient: 0
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
       modelBoardSaves: []
       itemFromTableSaves: []
       magnetSaves: []
-      products: []
+      products:
+      - typeProduct: sigmaCell
+        countProduct: 280
+      - typeProduct: gas
+        countProduct: 4
+      - typeProduct: digestion
+        countProduct: 2
+      - typeProduct: regulation
+        countProduct: 8

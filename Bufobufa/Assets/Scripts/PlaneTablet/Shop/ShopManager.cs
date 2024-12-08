@@ -34,19 +34,19 @@ public class ShopManager : MonoBehaviour
         {
             if (saveManager.fileShop.JSONShop.resources.productSaves == null || saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
             {
-                List<ProductSave> productSaves = new List<ProductSave>();
-                for (int i = 0; i < fileProducts.products.Count; i++)
-                {
-                    productSaves.Add(new ProductSave()
+                    List<ProductSave> productSaves = new List<ProductSave>();
+                    for (int i = 0; i < fileProducts.products.Count; i++)
                     {
-                        countChangeProduct = fileProducts.products[i].countChangeProduct,
-                        typeChangeProduct = fileProducts.products[i].typeChangeProduct,
-                        typeMachineDispensingProduct = fileProducts.products[i].typeMachineDispensingProduct,
-                        countPriceChange = fileProducts.products[i].countPriceChange,
-                        typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
-                    });
-                }
-                saveManager.fileShop.JSONShop.resources.productSaves = productSaves;
+                        productSaves.Add(new ProductSave()
+                        {
+                            countChangeProduct = fileProducts.products[i].countChangeProduct,
+                            typeChangeProduct = fileProducts.products[i].typeChangeProduct,
+                            typeMachineDispensingProduct = fileProducts.products[i].typeMachineDispensingProduct,
+                            countPriceChange = fileProducts.products[i].countPriceChange,
+                            typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
+                        });
+                    }
+                    saveManager.fileShop.JSONShop.resources.productSaves = productSaves;    
             }
         }
 
@@ -85,7 +85,6 @@ public class ShopManager : MonoBehaviour
                 {
                     if (Buy(product) && product.countChangeProduct - 1 >= 0)
                     {
-                        print(2);
                         product.countChangeProduct--;
                         saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countChangeProduct = product.countChangeProduct;
                         saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.countPriceChange;
@@ -163,8 +162,6 @@ public class ShopManager : MonoBehaviour
 
                         saveManager.UpdatePlayerFile();
                         OnBuyProduct?.Invoke(product);
-
-                        print(1);
 
                         return true;
                     }   

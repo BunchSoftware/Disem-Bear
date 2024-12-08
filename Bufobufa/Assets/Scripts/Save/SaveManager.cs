@@ -25,7 +25,7 @@ public class SaveManager : MonoBehaviour
         pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
         pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
 
-        if (filePlayer.JSONPlayer.nameUser == "")
+        if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
             filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
 
         if(filePlayer.JSONPlayer == null)
@@ -152,7 +152,7 @@ public class SaveManager : MonoBehaviour
                         changedResources.Add($"changedExerciseSaves", filePlayer.JSONPlayer.resources.exerciseSaves.Count.ToString());
                     if (filePlayer.JSONPlayer.resources.ingradientSaves != null) 
                         changedResources.Add($"changedIngradientSaves", filePlayer.JSONPlayer.resources.ingradientSaves.Count.ToString());
-                    if (filePlayer.JSONPlayer.resources.currentItemFromTableSave != null) 
+                    if (filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != null) 
                         changedResources.Add($"changedCurrentItem", filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable.ToString());
                     changedResources.Add($"changedCurrentIndexDialog", filePlayer.JSONPlayer.resources.currentIndexDialog.ToString());
                     changedResources.Add($"changedCurrentIndexDialogPoint", filePlayer.JSONPlayer.resources.currentIndexDialogPoint.ToString());
