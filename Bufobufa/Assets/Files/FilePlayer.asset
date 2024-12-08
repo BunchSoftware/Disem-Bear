@@ -13,17 +13,41 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: 
+    nameUser: "\u041D\u0438\u043A\u0438\u0442\u0430"
     resources:
-      isPlayerRegistration: 0
+      isPlayerRegistration: 1
       currentIndexDialogPoint: 0
-      currentIndexDialog: 0
-      exerciseSaves: []
-      ingradientSaves: []
+      currentIndexDialog: 6
+      exerciseSaves:
+      - indexExercise: 0
+        typeOfExerciseCompletion: 2
+        isGetPackage: 0
+      ingradientSaves:
+      - typeIngradient: cell
+        countIngradient: 2
+      - typeIngradient: detoxification
+        countIngradient: 1
+      - typeIngradient: digestion
+        countIngradient: 1
+      - typeIngradient: adaptation
+        countIngradient: 1
+      - typeIngradient: metabolism
+        countIngradient: 1
+      - typeIngradient: filtering
+        countIngradient: 1
+      - typeIngradient: gas
+        countIngradient: 1
+      - typeIngradient: regulation
+        countIngradient: 1
+      - typeIngradient: reduction
+        countIngradient: 1
+      - typeIngradient: Blue
+        countIngradient: 1
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
-      modelBoardSaves: []
+      modelBoardSaves:
+      - typeModelBoard: DocumentPackage
       itemFromTableSaves: []
       magnetSaves: []
       products: []
