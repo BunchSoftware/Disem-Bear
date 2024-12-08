@@ -29,6 +29,7 @@ public class Dialog
     public string textDialog = "";
     public List<DialogChoice> dialogChoices;
     [Header("Setting Input Field")]
+
     public bool isActiveInputField = false;
 
     public Color colorTextInputField = Color.black;
@@ -41,4 +42,6 @@ public class Dialog
     public Font fontPlaceHolderText;
     public int fontSizePlaceHolderText = 40;
     public string textPlaceHolderText = "";
+    [Header("Image Click Button For Skip")]
+    public Sprite imageClickButtonForSkip;
 }

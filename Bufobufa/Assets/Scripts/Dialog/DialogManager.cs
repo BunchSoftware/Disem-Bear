@@ -45,7 +45,7 @@ public class DialogManager : MonoBehaviour
     }
     public void SkipDialog()
     {
-        if(isCanSkipDialog || isDialogLast)
+        if(isCanSkipDialog || isDialogLast && isActiveInputField == false)
         {
             Dialog dialog = null;
 
@@ -97,8 +97,11 @@ public class DialogManager : MonoBehaviour
         for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)
         {
             currentIndexDialog = i;
-            isCanSkipDialog = true;
+            if (dialogPoint.dialog[i].isActiveInputField == false)
+                isCanSkipDialog = true;
+
             isDialogLast = false;
+            isActiveInputField = dialogPoint.dialog[i].isActiveInputField;
 
             EnterDrop(dialogPoint.dialog[i]);
             dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
@@ -123,6 +126,7 @@ public class DialogManager : MonoBehaviour
             ExitDrop(dialogPoint.dialog[i]);
 
             isCanSkipDialog = false;
+            isActiveInputField = false;
         }
     }
 
@@ -131,6 +135,7 @@ public class DialogManager : MonoBehaviour
         StopAllCoroutines();
         dialogueWindow.StopTypeLine();
         isCanSkipDialog = false;
+        isActiveInputField = false;
     }
 
     private void EnterDrop(Dialog dialog)
@@ -191,6 +196,10 @@ public class DialogManager : MonoBehaviour
     public void SendInputText(string text)
     {
         if(text.Length >= 1)
+        {
             SendInputFieldText?.Invoke(text);
+            isActiveInputField = false;
+            SkipDialog();
+        }
     }
 }
