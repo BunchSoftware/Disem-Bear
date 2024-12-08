@@ -15,13 +15,9 @@ public class DialogueWindow : MonoBehaviour
 
     private Font standartFont;
 
-    private void Start()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
-
     public void Init(DialogManager dialogManager)
     {
+        animator = GetComponentInChildren<Animator>();
         standartFont = textDialog.font;
         skipButton.onClick.RemoveAllListeners();
         skipButton.onClick.AddListener(() =>

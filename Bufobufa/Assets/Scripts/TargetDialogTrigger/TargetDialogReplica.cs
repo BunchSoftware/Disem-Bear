@@ -10,7 +10,7 @@ public class TargetDialogReplica : MonoBehaviour
     private DialogManager DialogManager;
     private AllPointerManager AllPointerManager;
 
-    private void Start()
+    private void Awake()
     {
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();

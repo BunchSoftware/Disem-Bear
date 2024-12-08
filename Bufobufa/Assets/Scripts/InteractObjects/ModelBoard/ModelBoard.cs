@@ -5,6 +5,7 @@ using UnityEngine;
 public class ModelBoard : MonoBehaviour
 {
     [SerializeField] private SaveManager saveManager;
+    [SerializeField] private List<GetItemFromTable> getItemFromTables;
     public List<GameObject> points = new List<GameObject>();
     public List<GameObject> items = new List<GameObject>();
 
@@ -19,6 +20,24 @@ public class ModelBoard : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Workbench = GameObject.Find("Workbench");
+
+        if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
+        {
+            for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Count; i++)
+            {
+                for (int j = 0; j < getItemFromTables.Count; j++)
+                {
+                    if (getItemFromTables[j].typeItemFromTable == saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves[i].typeModelBoard)
+                    {
+                        GameObject item = Instantiate(getItemFromTables[j].gameObject.GetComponent<PackageInfo>().ItemInPackage);
+                        items.Add(item);
+                        items[items.Count - 1].transform.parent = transform;
+                        items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
+                        items[items.Count - 1].SetActive(true);
+                    }
+                }
+            }
+        }
     }
     private void Update()
     {
@@ -63,7 +82,17 @@ public class ModelBoard : MonoBehaviour
                         items[items.Count - 1].SetActive(true);
                         Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                         Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
+
+                        if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves == null)
+                            saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves = new List<ModelBoardSave>();
+
+                        saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Add(new ModelBoardSave()
+                        {
+                            typeModelBoard = Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<GetItemFromTable>().typeItemFromTable,
+                        });
+
                         Player.GetComponent<PlayerInfo>().currentPickObject = null;
+
                         saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = null;
                         saveManager.UpdatePlayerFile();
                     }

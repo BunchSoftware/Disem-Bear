@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: Denis
+    nameUser: 123
     resources:
       isPlayerRegistration: 1
+      currentIndexDialogPoint: 0
+      currentIndexDialog: 7
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
+      modelBoardSaves:
+      - typeModelBoard: DocumentPackage
+      - typeModelBoard: DocumentPackage
       itemFromTableSaves: []
       magnetSaves: []
       products: []
