@@ -13,18 +13,58 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: 
+    nameUser: Denis
     resources:
-      isPlayerRegistration: 0
+      isPlayerRegistration: 1
       currentIndexDialogPoint: 0
       currentIndexDialog: 0
-      exerciseSaves: []
-      ingradientSaves: []
+      exerciseSaves:
+      - indexExercise: 0
+        typeOfExerciseCompletion: 2
+        isGetPackage: 0
+      ingradientSaves:
+      - typeIngradient: cell
+        countIngradient: 0
+      - typeIngradient: detoxification
+        countIngradient: 0
+      - typeIngradient: digestion
+        countIngradient: 0
+      - typeIngradient: adaptation
+        countIngradient: 0
+      - typeIngradient: metabolism
+        countIngradient: 0
+      - typeIngradient: filtering
+        countIngradient: 0
+      - typeIngradient: gas
+        countIngradient: 0
+      - typeIngradient: regulation
+        countIngradient: 0
+      - typeIngradient: reduction
+        countIngradient: 0
+      - typeIngradient: Blue
+        countIngradient: 0
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
-      modelBoardSaves:
-      - typeModelBoard: DocumentPackage
+      modelBoardSaves: []
       itemFromTableSaves: []
-      magnetSaves: []
-      products: []
+      magnetSaves:
+      - typeMagnet: sigmaBear
+        x: -0.011137816
+        y: 0.006039647
+        z: 0.00704266
+      - typeMagnet: marsell
+        x: -0.011137809
+        y: 0.0053371387
+        z: 0.004348262
+      - typeMagnet: slonyra
+        x: -0.011137812
+        y: -0.0018331415
+        z: 0.0056127985
+      products:
+      - typeProduct: sigmaBear
+        countProduct: 1
+      - typeProduct: marsell
+        countProduct: 1
+      - typeProduct: slonyra
+        countProduct: 1
