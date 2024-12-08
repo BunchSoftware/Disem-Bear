@@ -13,42 +13,37 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: vcvs
+    nameUser: 
     resources:
-      isPlayerRegistration: 1
+      isPlayerRegistration: 0
       currentIndexDialogPoint: 0
       currentIndexDialog: 0
-      exerciseSaves:
-      - indexExercise: 0
-        typeOfExerciseCompletion: 2
-        isGetPackage: 0
+      exerciseSaves: []
       ingradientSaves:
       - typeIngradient: cell
-        countIngradient: 2
+        countIngradient: 0
       - typeIngradient: detoxification
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: digestion
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: adaptation
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: metabolism
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: filtering
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: gas
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: regulation
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: reduction
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: Blue
-        countIngradient: 11
+        countIngradient: 1
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
       modelBoardSaves: []
-      itemFromTableSaves:
-      - typeItemFromTable: blueMaterial
-        indexPoint: 0
+      itemFromTableSaves: []
       magnetSaves: []
       products: []
