@@ -16,6 +16,7 @@ namespace API
     public class ResourcePlayer
     {
         public bool isPlayerRegistration = false;
+        public ItemFromTableSave currentItemFromTableSave;
         public List<ItemFromTableSave> itemFromTableSaves;
         public List<MagnetSave> magnetSaves;
         public List<SaveTypeProduct> products;
