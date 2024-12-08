@@ -9,6 +9,7 @@ public class GetItemFromTable : MonoBehaviour
     public string typeItemFromTable;
     public bool InTrigger = false;
     public bool ClickedMouse = false;
+    public bool isTube = false;
     public int indexPoint = 0;
     private Transform table;
 
@@ -21,6 +22,21 @@ public class GetItemFromTable : MonoBehaviour
         }
     }
     public void OnTrigExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            InTrigger = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            InTrigger = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -56,13 +72,29 @@ public class GetItemFromTable : MonoBehaviour
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj;
             table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].GetItem = false;
-            table.GetComponent<TableTakesItem>().TakeObject(new ItemFromTableSave()
+            table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj = null;
+
+
+            bool isReturn = table.GetComponent<TableTakesItem>().TakeObject(new ItemFromTableSave()
             {
                 typeItemFromTable = typeItemFromTable,
                 indexPoint = indexPoint,
             });
-            print(1);
-            table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj = null;
+
+            print(isReturn);
+
+            if (isReturn)
+                return;
+        }
+        else if (isTube && InTrigger)
+        {
+            table.GetComponent<TableTakesItem>().saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = new ItemFromTableSave()
+            {
+                typeItemFromTable = typeItemFromTable,
+                indexPoint = indexPoint,
+            };
+            table.GetComponent<TableTakesItem>().saveManager.UpdatePlayerFile();
+            isTube = false;
         }
     }
 }

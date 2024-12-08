@@ -33,6 +33,9 @@ public class TableTakesItem : MonoBehaviour
                     pointsInfo[getItemFromTable.indexPoint].obj.transform.position = pointsInfo[getItemFromTable.indexPoint].point.transform.position;
                     pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<MouseTrigger>().enabled = true;
                     pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<BoxCollider>().enabled = true;
+
+
+                    print(1);
                 }
             }
         }
@@ -44,7 +47,7 @@ public class TableTakesItem : MonoBehaviour
                 if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
                 {
                     GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-                    getItemFromTable.indexPoint = 0;
+                    getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.indexPoint;
                     Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
                     Player.GetComponent<PlayerInfo>().currentPickObject = getItemFromTable.gameObject;
                 }
@@ -89,7 +92,7 @@ public class TableTakesItem : MonoBehaviour
             ClickedMouse = false;
             for (int i = 0; i < pointsInfo.Count; i++)
             {
-                if (!pointsInfo[i].GetItem)
+                if (pointsInfo[i].GetItem == false)
                 {
                     pointsInfo[i].GetItem = true;
                     pointsInfo[i].obj = Player.GetComponent<PlayerInfo>().currentPickObject;
@@ -107,14 +110,15 @@ public class TableTakesItem : MonoBehaviour
                         indexPoint = i
                     });
 
+                    saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = null;
+                    saveManager.UpdatePlayerFile();
                     break;
                 }
             }
-            saveManager.UpdatePlayerFile();
         }
     }
 
-    public void TakeObject(ItemFromTableSave itemFromTableSave)
+    public bool TakeObject(ItemFromTableSave itemFromTableSave)
     {
         for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
         {
@@ -126,11 +130,11 @@ public class TableTakesItem : MonoBehaviour
                     typeItemFromTable = itemFromTableSave.typeItemFromTable,
                     indexPoint = itemFromTableSave.indexPoint,
                 };
-                print(itemFromTableSave.typeItemFromTable);
                 saveManager.UpdatePlayerFile();
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     [System.Serializable]

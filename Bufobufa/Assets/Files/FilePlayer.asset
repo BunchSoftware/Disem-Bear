@@ -16,9 +16,12 @@ MonoBehaviour:
     nameUser: Denis
     resources:
       isPlayerRegistration: 1
-      itemFromTableSaves:
-      - typeItemFromTable: orangeMaterial
+      currentItemFromTableSave:
+        typeItemFromTable: 
         indexPoint: 0
+      itemFromTableSaves:
+      - typeItemFromTable: DocumentPackage
+        indexPoint: 1
       magnetSaves: []
       products:
       - typeProduct: sigmaCell
