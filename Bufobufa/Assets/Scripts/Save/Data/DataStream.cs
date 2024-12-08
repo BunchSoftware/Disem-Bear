@@ -97,7 +97,7 @@ public class DataStream : IDisposable
         return plaintext;
     }
 
-    public void Serialize(string path, object data)
+    public async void Serialize(string path, object data)
     {
         if (data == null)
             return;
