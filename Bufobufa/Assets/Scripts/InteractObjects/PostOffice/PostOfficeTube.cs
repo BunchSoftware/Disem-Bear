@@ -5,7 +5,7 @@ using UnityEngine;
 public class PostOfficeTube : MonoBehaviour
 {
     public bool ItemExist = false;
-    public GameObject currentObj;
+    public GameObject prefabObject;
     public static PostOfficeTube Instance;
     public Vector3 TubePosition;
     private GameObject currentFallObj;
@@ -36,9 +36,10 @@ public class PostOfficeTube : MonoBehaviour
     {
         if (ItemExist && NotObjectDown)
         {
-            if (currentObj)
+            if (prefabObject)
             {
-                currentFallObj = Instantiate(currentObj, TubePosition, currentObj.transform.rotation);
+                currentFallObj = Instantiate(prefabObject, TubePosition, prefabObject.transform.rotation);
+                currentFallObj.GetComponent<GetItemFromTable>().isTube = true;
                 currentFallObj.GetComponent<MoveAnimation>().needPosition = true;
                 currentFallObj.GetComponent<MoveAnimation>().TimeAnimation = 1f;
                 currentFallObj.GetComponent<MoveAnimation>().startCoords = PointObject;

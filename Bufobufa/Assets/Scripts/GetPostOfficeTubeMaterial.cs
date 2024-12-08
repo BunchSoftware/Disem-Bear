@@ -40,7 +40,7 @@ public class GetPostOfficeTubeMaterial : MonoBehaviour
             {
                 if (typePostOfficeTubeMaterials[i].typeMaterial == typeMaterial)
                 {
-                    PostTube.currentObj = typePostOfficeTubeMaterials[i].material;
+                    PostTube.prefabObject = typePostOfficeTubeMaterials[i].material;
                     PostTube.ItemExist = true;
                     ExistPackage = true;
 
