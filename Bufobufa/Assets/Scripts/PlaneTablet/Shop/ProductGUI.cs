@@ -41,6 +41,7 @@ public class ProductGUI : MonoBehaviour
         {
             if (product.countChangeProduct == 0)
             {
+                print(2);
                 ActionRemove?.Invoke();
                 return;
             }

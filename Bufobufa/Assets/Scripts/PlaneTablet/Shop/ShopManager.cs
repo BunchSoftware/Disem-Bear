@@ -85,8 +85,6 @@ public class ShopManager : MonoBehaviour
                 {
                     if (Buy(product) && product.countChangeProduct - 1 >= 0)
                     {
-                        product.countChangeProduct--;
-
                         saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countChangeProduct = product.countChangeProduct;
                         saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.countPriceChange;
                         saveManager.UpdateShopFile();
@@ -161,6 +159,8 @@ public class ShopManager : MonoBehaviour
 
                         saveManager.UpdatePlayerFile();
                         OnBuyProduct?.Invoke(product);
+
+                        return true;
                     }   
                 }
             }
