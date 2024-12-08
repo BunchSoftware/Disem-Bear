@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Exercise
   m_EditorClassIdentifier: 
   exercises:
-  - exerciseReward:
-      money: 10
-    rewardText: 10
+  - typePackage: DocumentPackage
+    typeMachineDispensingPackage: postOfficeTube
+    exerciseReward:
+      typeReward: blueMaterial
+      countReward: 1
+      typeMachineDispensingReward: postOfficeTube
+      avatarReward: {fileID: 21300000, guid: bd65b8cdf0c01854d9694bf6a1e9a97a, type: 3}
     header: "\u0421\u0432\u0435\u0442\u043B\u0430\u043D\u0430"
     description: "\u041F\u0440\u043E\u0449\u0443 \u043F\u043E\u043C\u043E\u0447\u044C
       \u043C\u043D\u0435! \u041C\u043E\u044F \u0434\u043E\u0440\u043E\u0433\u0430\u044F

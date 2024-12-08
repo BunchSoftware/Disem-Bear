@@ -6,5 +6,8 @@ using UnityEngine;
 [Serializable]
 public class ExerciseReward
 {
-    public int money;  
+    public string typeReward;
+    public int countReward;
+    public string typeMachineDispensingReward;
+    public Sprite avatarReward;
 }

@@ -10,6 +10,7 @@ public class ExerciseManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private FileExercise fileExercise;
+    [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
     private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
 
     public Action<Exercise> GetCurrentExercise;
@@ -39,7 +40,7 @@ public class ExerciseManager : MonoBehaviour
 
             if (gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exercise))
             {
-                exercise.Init((exercise, isExpandExercise) =>
+                exercise.Init(this, (exercise, isExpandExercise) =>
                 {
                     currentExerciseGUI = exercise;
                     GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
@@ -64,8 +65,38 @@ public class ExerciseManager : MonoBehaviour
 
     public void DoneCurrentExercise(string messageExercise)
     {
-        GetExerciseReward?.Invoke(currentExerciseGUI.DoneExercise(messageExercise));
+        ExerciseReward exerciseReward = currentExerciseGUI.DoneExercise(messageExercise);
+        GetExerciseReward?.Invoke(exerciseReward);
+        GiveReward(exerciseReward);
         Sort(currentExerciseGUI);
+    }
+
+    private void GiveReward(ExerciseReward exerciseReward)
+    {
+        if (typeGiveProducts != null)
+        {
+            for (int i = 0; i < typeGiveProducts.Count; i++)
+            {
+                if (typeGiveProducts[i].typeMachineDispensingProduct == exerciseReward.typeMachineDispensingReward)
+                {
+                    typeGiveProducts[i].OnGetProduct.Invoke(exerciseReward.typeReward);
+                }
+            }
+        }
+    }
+
+    public void GivePackage(Exercise exercise)
+    {
+        if (typeGiveProducts != null)
+        {
+            for (int i = 0; i < typeGiveProducts.Count; i++)
+            {
+                if (typeGiveProducts[i].typeMachineDispensingProduct == exercise.typeMachineDispensingPackage)
+                {
+                    typeGiveProducts[i].OnGetProduct.Invoke(exercise.typePackage);
+                }
+            }
+        }
     }
 
     private void Sort(ExerciseGUI exercise)

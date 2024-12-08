@@ -16,6 +16,9 @@ public class ExerciseGUI : MonoBehaviour
     [SerializeField] private Button exerciseButton;
     [SerializeField] private Image checkMark;
 
+    [Header("Кнопка посылки")]
+    [SerializeField] private Button givePackage;
+
     [Header("Кнопки выполнения задания")]
     [SerializeField] private Button runButton;
     [SerializeField] private Button executionButton;
@@ -23,7 +26,8 @@ public class ExerciseGUI : MonoBehaviour
 
     [Header("Основные элементы заданий")]
     [SerializeField] private Text headerText;
-    [SerializeField] private Text rewardText;
+    [SerializeField] private Image avatarReward;
+    [SerializeField] private Text countRewardText;
     [SerializeField] private Text descriptionText;
     [SerializeField] private Image avatar;
 
@@ -37,7 +41,7 @@ public class ExerciseGUI : MonoBehaviour
     private bool isExpandExercise = false;
     private Exercise exercise;
 
-    public void Init(Action<ExerciseGUI, bool> ActionExercise, Exercise exercise)
+    public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise)
     {
         executionButton.onClick.RemoveAllListeners();
 
@@ -59,12 +63,22 @@ public class ExerciseGUI : MonoBehaviour
             ActionExercise.Invoke(this, false);
         });
 
+        givePackage.onClick.RemoveAllListeners();
+        givePackage.onClick.AddListener(() =>
+        {
+            exerciseManager.GivePackage(exercise);
+            givePackage.interactable = false;
+        });
+
         this.exercise = exercise;   
 
         headerText.text = exercise.header;
-        rewardText.text = exercise.rewardText;
+        countRewardText.text = $"{exercise.exerciseReward.countReward}x";
         descriptionText.text = exercise.description;
         avatar.sprite = exercise.avatar;
+        avatar.preserveAspect = true;
+        avatarReward.sprite = exercise.exerciseReward.avatarReward;
+        avatar.preserveAspect = true;
     }
 
     public void ExpandExercise(bool isExpandExercise)
