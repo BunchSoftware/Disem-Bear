@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PostSpawnTube : MonoBehaviour
@@ -8,18 +9,22 @@ public class PostSpawnTube : MonoBehaviour
     private PostOfficeTube PostOfficeTube;
     private AllPointerManager AllPointerManager;
 
+    private bool OneTap = true;
+
     private void Start()
     {
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         PostOfficeTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
-        DialogManager.EndDialog.AddListener(DropBox);
+        DialogManager.SendInputFieldText.AddListener(DropBox);
     }
-    public void DropBox(Dialog dialog)
+    public void DropBox(string s)
     {
-        if (dialog.textDialog == "ќ, а вот и посылка. Ёта почтова€ труба действительно быстра€. Ѕери, бери, это дл€ теб€.")
+        if (OneTap)
         {
+            OneTap = false;
             PostOfficeTube.ObjectFall();
+            StartCoroutine(WaitBoxFall(1f));
         }
     }
     IEnumerator WaitBoxFall(float f)

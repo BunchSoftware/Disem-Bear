@@ -145,6 +145,7 @@ public class TargetDialog : MonoBehaviour
     {
         if (board.items.Count > CountItems)
         {
+            AllPointerManager.SetPointer(2);
             CountItems = board.items.Count;
             if (targets[i].Active)
             {
@@ -208,6 +209,7 @@ public class TargetDialog : MonoBehaviour
     {
         if (board.ModelOpen && OneTap)
         {
+            AllPointerManager.SetPointer(3);
             OneTap = false;
             if (targets[i].Active)
             {

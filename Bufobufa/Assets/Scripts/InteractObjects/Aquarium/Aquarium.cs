@@ -30,6 +30,7 @@ public class Aquarium : MonoBehaviour
     [SerializeField] private List<GameObject> CellsList = new List<GameObject>();
     private int NumCell = 0;
     private SpriteRenderer ChoiceCellSprite;
+    private ParticleSystem ParticleSystemm;
 
     public void ChangeCell(int ch)
     {
@@ -47,6 +48,11 @@ public class Aquarium : MonoBehaviour
 
     private void GetAllCells()
     {
+        if (CountCells != 0)
+        {
+            ParticleSystemm.Play();
+            StartCoroutine(WaitParticleSystem(0.3f));
+        }
         DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
         DisplayCount.GetComponent<Animator>().SetBool("On", true);
         StartCoroutine(waitDisplayCount());
@@ -64,6 +70,7 @@ public class Aquarium : MonoBehaviour
     }
     private void Start()
     {
+        ParticleSystemm = transform.Find("Particle System").GetComponent<ParticleSystem>();
         SpriteAquarium = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
         if (CellsList.Count > 0)
@@ -134,7 +141,10 @@ public class Aquarium : MonoBehaviour
             CountCells++;
             timerCell = 0;
         }
-
-        
+    }
+    IEnumerator WaitParticleSystem(float f)
+    {
+        yield return new WaitForSeconds(f);
+        ParticleSystemm.Stop();
     }
 }
