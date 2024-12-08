@@ -207,7 +207,7 @@ namespace API
                     response.EnsureSuccessStatusCode();
                     Debug.Log(await response.Content.ReadAsStringAsync());
                 }
-                catch (Exception)
+                catch
                 {
                     Debug.Log($"Персонаж {userName} уже зарегистрирован или непредвиденная ошибка");
                 }
@@ -234,9 +234,9 @@ namespace API
                         Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {JSONPlayer.nameUser}, возможны ошибки в реализации");
                     return JSONPlayer.resources;
                 }
-                catch (Exception exc)
+                catch
                 {
-                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: {exc.Message}");
+                    Debug.Log($"Игрок {userName} отсутсвует на сервере. Ошибка");
                 }
             }
             return null;
@@ -258,7 +258,7 @@ namespace API
                     response.EnsureSuccessStatusCode();
                     return true;
                 }
-                catch (Exception exc)
+                catch
                 {
                     return false;
                 }
@@ -293,7 +293,7 @@ namespace API
 
                 if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
                 {
-                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
+                    Debug.Log($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
                     return;
                 }
 
@@ -323,7 +323,7 @@ namespace API
 
                 if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
                 {
-                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
+                    Debug.Log($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
                     return;
                 }
 
@@ -388,7 +388,7 @@ namespace API
 
                 if (jsonError != null && jsonError.Error == "Not existing Player")
                 {
-                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: Not existing Player");
+                    Debug.Log($"Игрок {userName} отсутсвует на сервере. Ошибка: Not existing Player");
                     return;
                 }
 
@@ -447,9 +447,9 @@ namespace API
                     response.EnsureSuccessStatusCode();
                     Debug.Log(await response.Content.ReadAsStringAsync());
                 }
-                catch (Exception exc)
+                catch
                 {
-                    Debug.Log($"Магазин {nameShop} уже зарегистрирован " + exc.Message);
+                    Debug.Log($"Магазин {nameShop} уже зарегистрирован ");
                 }
             }
         }
@@ -476,9 +476,9 @@ namespace API
 
                     return JSONShop.resources;
                 }
-                catch (Exception exc)
+                catch
                 {
-                    Debug.LogError($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: {exc.Message}");
+                    Debug.Log($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка");
                 }
             }
             return null;
@@ -511,7 +511,7 @@ namespace API
 
                 if (jsonError != null && jsonError.Detail == "No Shop matches the given query.")
                 {
-                    Debug.LogError($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: No Shop matches the given query.");
+                    Debug.Log($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: No Shop matches the given query.");
                     return;
                 }
 
@@ -569,7 +569,7 @@ namespace API
 
                 if (jsonError != null && jsonError.Detail == "No Shop matches the given query.")
                 {
-                    Debug.LogError($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: No Shop matches the given query.");
+                    Debug.Log($"Магазин {nameShop} у игрока {userName} отсутсвует на сервере. Ошибка: No Shop matches the given query.");
                     return;
                 }
 
@@ -609,7 +609,7 @@ namespace API
 
                 if (jsonError != null && jsonError.Error == "Not existing Shop")
                 {
-                    Debug.LogError($"Игрок {userName} отсутсвует на сервере. Ошибка: Not existing Shop");
+                    Debug.Log($"Игрок {userName} отсутсвует на сервере. Ошибка: Not existing Shop");
                     return;
                 }
 
