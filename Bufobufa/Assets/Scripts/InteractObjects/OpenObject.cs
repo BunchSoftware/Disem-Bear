@@ -65,12 +65,12 @@ public class OpenObject : MonoBehaviour
                 if (infoHit.collider.gameObject == gameObject && !ObjectIsOpen)
                 {
                     ClickedMouse = true;
-                    TriggerObject.SetActive(true);
+                    //TriggerObject.SetActive(true);
                 }
                 else
                 {
                     ClickedMouse = false;
-                    TriggerObject.SetActive(false);
+                    //TriggerObject.SetActive(false);
                 }
             }
         }
@@ -100,7 +100,7 @@ public class OpenObject : MonoBehaviour
 
             ClickedMouse = false;
             ObjectIsOpen = true;
-            TriggerObject.SetActive(false);
+            //TriggerObject.SetActive(false);
             Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
             ObjectAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
@@ -108,8 +108,8 @@ public class OpenObject : MonoBehaviour
         }
         else if (ArgumentsNotQuit == 0 && !ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
-            TriggerObject.SetActive(false);
-            InTrigger = false;
+            //TriggerObject.SetActive(false);
+            //InTrigger = false;
             ObjectIsOpen = false;
             ObjectAnim = true;
             ClickedMouse = false;
