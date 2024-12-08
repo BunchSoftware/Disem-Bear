@@ -46,36 +46,39 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void RegistrationShop(string nameShop)
+    public async void RegistrationShop(string nameShop)
     {
-        if (filePlayer.JSONPlayer.nameUser != "")
+        await Task.Run(() => 
         {
-            fileShop.JSONShop.nameShop = nameShop;
-            if (fileShop.JSONShop.resources == null)
-                fileShop.JSONShop.resources = new ResourceShop();
-
-            fileShop.JSONShop.resources.isShopRegistration = true;
-
-            clientHandler.RegistrationShop(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
-            clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
-            
-            ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
-            Dictionary<string, string> changedResources = new Dictionary<string, string>();
-            changedResources.Add("changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString());
-
-            if (fileShop.JSONShop.resources.productSaves != null)
+            if (filePlayer.JSONPlayer.nameUser != "")
             {
-                for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+                fileShop.JSONShop.nameShop = nameShop;
+                if (fileShop.JSONShop.resources == null)
+                    fileShop.JSONShop.resources = new ResourceShop();
+
+                fileShop.JSONShop.resources.isShopRegistration = true;
+
+                clientHandler.RegistrationShop(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
+                clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
+
+                ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
+                Dictionary<string, string> changedResources = new Dictionary<string, string>();
+                changedResources.Add("changedRegistration", filePlayer.JSONPlayer.resources.isPlayerRegistration.ToString());
+
+                if (fileShop.JSONShop.resources.productSaves != null)
                 {
-                    changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
+                    for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
+                    {
+                        changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
+                    }
                 }
+
+                resourceChangedShop.changedResources = changedResources;
+
+                clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
+                UpdateShopFile();
             }
-
-            resourceChangedShop.changedResources = changedResources;
-
-            clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
-            UpdateShopFile();         
-        }
+        });
     }
 
     public async void RegistrationPlayer(string nameUser)

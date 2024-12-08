@@ -50,7 +50,7 @@ public class ExerciseGUI : MonoBehaviour
         this.indexExercise = indexExercise;
         this.saveManager = saveManager;
 
-        currentExerciseCompletion = this.saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[this.indexExercise].typeOfExerciseCompletion;
+        SetExerciseCompletion(this.saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[this.indexExercise].typeOfExerciseCompletion);
         isGetPackage = this.saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[this.indexExercise].isGetPackage;
 
         if (isGetPackage)
