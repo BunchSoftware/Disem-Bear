@@ -13,6 +13,7 @@ public class ThingsInTableMix : MonoBehaviour
     public List<Recipe> Recipes = new();
     public bool MixTableOn = false;
     public GameObject currentPrinterObject;
+    public bool CreateObject = false;
 
     private InfoInstObj currentCreatObj;
 
@@ -64,6 +65,7 @@ public class ThingsInTableMix : MonoBehaviour
                 {
                     if (Recipes[i].OutPut != null)
                     {
+                        CreateObject = true;
                         NotExistReceip = false;
                         GameObject tempObj = IngredientsIn[0];
                         for (int j = IngredientsIn.Count - 1; j >= 0; j--)
@@ -108,8 +110,9 @@ public class ThingsInTableMix : MonoBehaviour
     {
         yield return new WaitForSeconds(f);
         GameObject obj = Instantiate(currentCreatObj.obj, currentCreatObj.pos, currentCreatObj.rot, currentCreatObj.par);
+        obj.transform.localRotation = currentCreatObj.rot;
         var lcS = obj.transform.localScale;
-        obj.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        obj.transform.localScale = new Vector3(0.0001f, 0.0001f, 0.0001f);
 
         obj.GetComponent<AnimDeleteIngredients>().CreateIngredient(lcS);
         StartCoroutine(WaitAnimCreate(1f, obj));
@@ -124,6 +127,7 @@ public class ThingsInTableMix : MonoBehaviour
             MixTableOn = false;
             currentPrinterObject = obj;
         }
+        CreateObject = false;
         transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
     }
     private class InfoInstObj
