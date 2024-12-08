@@ -13,35 +13,42 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: 
+    nameUser: vcvs
     resources:
-      isPlayerRegistration: 0
+      isPlayerRegistration: 1
       currentIndexDialogPoint: 0
       currentIndexDialog: 0
-      exerciseSaves: []
-      ingradientSaves: []
+      exerciseSaves:
+      - indexExercise: 0
+        typeOfExerciseCompletion: 2
+        isGetPackage: 0
+      ingradientSaves:
+      - typeIngradient: cell
+        countIngradient: 2
+      - typeIngradient: detoxification
+        countIngradient: 1
+      - typeIngradient: digestion
+        countIngradient: 1
+      - typeIngradient: adaptation
+        countIngradient: 1
+      - typeIngradient: metabolism
+        countIngradient: 1
+      - typeIngradient: filtering
+        countIngradient: 1
+      - typeIngradient: gas
+        countIngradient: 1
+      - typeIngradient: regulation
+        countIngradient: 1
+      - typeIngradient: reduction
+        countIngradient: 1
+      - typeIngradient: Blue
+        countIngradient: 11
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
       modelBoardSaves: []
-      itemFromTableSaves: []
-      magnetSaves:
-      - typeMagnet: sigmaBear
-        x: -0.011137816
-        y: 0.006039647
-        z: 0.00704266
-      - typeMagnet: marsell
-        x: -0.011137808
-        y: 0.00470313
-        z: 0.004885249
-      - typeMagnet: slonyra
-        x: -0.011137813
-        y: 0.0011422005
-        z: 0.0013990457
-      products:
-      - typeProduct: sigmaBear
-        countProduct: 1
-      - typeProduct: marsell
-        countProduct: 1
-      - typeProduct: slonyra
-        countProduct: 1
+      itemFromTableSaves:
+      - typeItemFromTable: blueMaterial
+        indexPoint: 0
+      magnetSaves: []
+      products: []

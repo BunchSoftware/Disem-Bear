@@ -8,8 +8,8 @@ public class AllPointerManager : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
         }
-        transform.GetChild(NumPointer).gameObject.SetActive(true);
+        transform.GetChild(NumPointer).GetChild(0).gameObject.SetActive(true);
     }
 }

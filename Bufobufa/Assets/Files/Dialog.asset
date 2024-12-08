@@ -154,7 +154,7 @@ MonoBehaviour:
       exitDrop: 4
       speedText: 0.05
       skipDialog: 1
-      conditionSkipDialog: AquariumOpen
+      conditionSkipDialog: NextRoom
       stopTheEndDialog: 1
       waitSecond: 0
       colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
@@ -165,6 +165,31 @@ MonoBehaviour:
       textDialog: "\u0422\u0435\u0431\u0435 \u043D\u0443\u0436\u043D\u043E \u0441\u043E\u0431\u0440\u0430\u0442\u044C
         \u043A\u043B\u0435\u0442\u043A\u0438. \u041A\u0430\u0436\u0435\u0442\u0441\u044F
         \u043E\u043D\u0438 \u0432 \u0434\u0440\u0443\u0433\u043E\u0439 \u043A\u043E\u043C\u043D\u0430\u0442\u0435."
+      dialogChoices: []
+      isActiveInputField: 0
+      colorTextInputField: {r: 0, g: 0, b: 0, a: 1}
+      fontStyleTextInputField: 0
+      fontTextInputField: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizeTextInputField: 30
+      colorPlaceHolderText: {r: 0, g: 0, b: 0, a: 1}
+      fontStylePlaceHolderText: 0
+      fontPlaceHolderText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizePlaceHolderText: 30
+      textPlaceHolderText: 
+      imageClickButtonForSkip: {fileID: 21300000, guid: 984bc379b3c53704fb3f3870364cf6ba, type: 3}
+    - enterDrop: 3
+      exitDrop: 4
+      speedText: 0.05
+      skipDialog: 1
+      conditionSkipDialog: OpenAquarium
+      stopTheEndDialog: 1
+      waitSecond: 0
+      colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
+      fontStyleText: 0
+      fontText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizeText: 40
+      avatar: {fileID: -595896275, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+      textDialog: "\u041F\u043E\u0434\u0445\u043E\u0434\u0438 \u043A \u0430\u043A\u0432\u0430\u0440\u0438\u0443\u043C\u0443."
       dialogChoices: []
       isActiveInputField: 0
       colorTextInputField: {r: 0, g: 0, b: 0, a: 1}

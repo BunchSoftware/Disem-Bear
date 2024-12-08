@@ -13,7 +13,7 @@ public class FridgeOpen : MonoBehaviour
 
     private bool OneTap = true;
     private GameObject FrontFridge;
-    private List<MagnetGUI> magnetsGUI = new List<MagnetGUI>();
+    public List<MagnetGUI> magnetsGUI = new List<MagnetGUI>();
 
     private void Start()
     {
