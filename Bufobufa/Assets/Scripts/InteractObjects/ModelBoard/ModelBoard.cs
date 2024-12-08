@@ -53,7 +53,7 @@ public class ModelBoard : MonoBehaviour
         if (GetComponent<OpenObject>().ArgumentsNotQuit != 2 && InTableAndBoard && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
         {
             OneTap = true;
-            GetComponent<OpenObject>().TriggerObject.SetActive(false);
+            //GetComponent<OpenObject>().TriggerObject.SetActive(false);
             GetComponent<OpenObject>().ObjectIsOpen = false;
             GetComponent<OpenObject>().ObjectAnim = true;
             GetComponent<OpenObject>().ClickedMouse = false;
