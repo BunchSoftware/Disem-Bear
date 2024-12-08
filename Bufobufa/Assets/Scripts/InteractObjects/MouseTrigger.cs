@@ -6,12 +6,12 @@ public class MouseTrigger : MonoBehaviour
 {
     public bool AnyCase = false;
     private Vector3 originalScale;
-    private bool OnScaleChange = false;
+    public bool OnScaleChange = false;
     public float TimeAnim = 0.2f;
     private float timer = 0f;
     private GameObject Player;
     private bool FinallyMove = false;
-    private bool FullZero = true;
+    public bool FullZero = true;
 
     private void Start()
     {
@@ -28,8 +28,11 @@ public class MouseTrigger : MonoBehaviour
             {
                 if (AnyCase)
                 {
-                    if (FullZero) 
+                    if (FullZero)
+                    {
+                        FullZero = false;
                         originalScale = transform.localScale;
+                    }
                     OnScaleChange = true;
                     FinallyMove = true;
                 }
@@ -38,7 +41,10 @@ public class MouseTrigger : MonoBehaviour
                     if (!GetComponent<OpenObject>().ObjectIsOpen)
                     {
                         if (FullZero)
+                        {
+                            FullZero = false;
                             originalScale = transform.localScale;
+                        }
                         OnScaleChange = true;
                         FinallyMove = true;
                     }
@@ -48,7 +54,10 @@ public class MouseTrigger : MonoBehaviour
                     if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
                     {
                         if (FullZero)
+                        {
+                            FullZero = false;
                             originalScale = transform.localScale;
+                        }
                         OnScaleChange = true;
                         FinallyMove = true;
                     }
@@ -84,7 +93,7 @@ public class MouseTrigger : MonoBehaviour
             {
                 transform.localScale = originalScale;
                 FinallyMove = false;
-                FullZero = false;
+                FullZero = true;
             }
         }
     }
