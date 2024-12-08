@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEditor;
@@ -20,7 +21,7 @@ public class DialogManager : MonoBehaviour
     private int currentIndexDialogPoint = 0;
     private int currentIndexDialog = 0;
 
-    private string currentConditionSkip;
+    private string currentConditionSkip = "";
 
     private bool isCanSkipDialog = false;
     private bool isDialogLast = false;
