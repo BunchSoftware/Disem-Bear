@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: fdfdfdf
+    nameUser: vcvs
     resources:
       isPlayerRegistration: 1
       currentIndexDialogPoint: 0
-      currentIndexDialog: 4
+      currentIndexDialog: 0
       exerciseSaves:
       - indexExercise: 0
         typeOfExerciseCompletion: 2
@@ -44,9 +44,11 @@ MonoBehaviour:
       - typeIngradient: Blue
         countIngradient: 11
       currentItemFromTableSave:
-        typeItemFromTable: blueMaterial
+        typeItemFromTable: 
         indexPoint: 0
       modelBoardSaves: []
-      itemFromTableSaves: []
+      itemFromTableSaves:
+      - typeItemFromTable: blueMaterial
+        indexPoint: 0
       magnetSaves: []
       products: []

@@ -13,9 +13,11 @@ public class TargetDialog : MonoBehaviour
         ModelOpen,
         ClickOnTermometr,
         GetCells,
-        CraftSomething
+        CraftSomething,
+        NextRoom
     }
 
+    private NextRoom nextRoom;
     private ThingsInTableMix MixTable;
     private Aquarium Aquarium;
     private ModelBoard board;
@@ -24,7 +26,6 @@ public class TargetDialog : MonoBehaviour
     private OpenObject OpenObj;
     private int CountItems = 0;
     private PlayerInfo Player_Info;
-    private AllPointerManager AllPointerManager;
 
     private bool OneTap = true;
 
@@ -85,9 +86,12 @@ public class TargetDialog : MonoBehaviour
             {
                 MixTable = GetComponent<ThingsInTableMix>();
             }
+            else if (targets[i].TypeTarget == TargetType.NextRoom)
+            {
+                nextRoom = GetComponent<NextRoom>();
+            }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
-        AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
     }
     private void Update()
     {
@@ -120,6 +124,10 @@ public class TargetDialog : MonoBehaviour
             else if (targets[i].TypeTarget == TargetType.CraftSomething)
             {
                 Craft(i);
+            }
+            else if (targets[i].TypeTarget == TargetType.NextRoom)
+            {
+                RoomNext(i);
             }
         }
     }
@@ -356,6 +364,39 @@ public class TargetDialog : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+    private void RoomNext(int i)
+    {
+        if (OneTap && nextRoom.GetComponent<BoxCollider>().enabled == false)
+        {
+            OneTap = false;
+            if (targets[i].Active)
+            {
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                }
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+                {
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
+        }
+        else if (!OneTap && nextRoom.GetComponent<BoxCollider>().enabled == true)
+        {
+            OneTap = true;
         }
     }
 }
