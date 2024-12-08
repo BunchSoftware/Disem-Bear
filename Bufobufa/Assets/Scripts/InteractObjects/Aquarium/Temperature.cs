@@ -11,7 +11,6 @@ public class Temperature : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         numState = Mathf.Min(numState + 1, States.Count - 1);
         GetComponent<SpriteRenderer>().sprite = States[numState];
         if (numState > 3)

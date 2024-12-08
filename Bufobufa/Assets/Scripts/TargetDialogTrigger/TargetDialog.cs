@@ -11,9 +11,11 @@ public class TargetDialog : MonoBehaviour
         ModelBoardGetItem,
         PlayerPickPackage,
         ModelOpen,
-        ClickOnTermometr
-    } 
+        ClickOnTermometr,
+        GetCells
+    }
 
+    private Aquarium Aquarium;
     private ModelBoard board;
     private Temperature termometr;
     private int numStateTermometr = 0;
@@ -73,6 +75,10 @@ public class TargetDialog : MonoBehaviour
                 termometr = GetComponent<Temperature>();
                 numStateTermometr = termometr.numState;
             }
+            else if (targets[i].TypeTarget == TargetType.GetCells)
+            {
+                Aquarium = GetComponent<Aquarium>();
+            }
         }
         DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
@@ -100,6 +106,10 @@ public class TargetDialog : MonoBehaviour
             else if (targets[i].TypeTarget == TargetType.ClickOnTermometr)
             {
                 TermometrClick(i);
+            }
+            else if (targets[i].TypeTarget == TargetType.GetCells)
+            {
+                CellsGet(i);
             }
         }
     }
@@ -265,14 +275,42 @@ public class TargetDialog : MonoBehaviour
                 if (targets[i].NewDialog)
                 {
                     DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
                 }
                 else
                 {
                     DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
-                if (!targets[i].StayActiveAfter)
+                for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
-                    targets[i].Active = false;
+                    for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+                    {
+                        ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+                    }
+                }
+            }
+        }
+    }
+    private void CellsGet(int i)
+    {
+        if (Aquarium.CountCells == 0)
+        {
+            if (targets[i].Active)
+            {
+                if (targets[i].NewDialog)
+                {
+                    DialogManager.StartDialog(targets[i].NumDialog);
+                    if (!targets[i].StayActiveAfter)
+                    {
+                        targets[i].Active = false;
+                    }
+                }
+                else
+                {
+                    DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
