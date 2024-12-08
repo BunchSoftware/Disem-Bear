@@ -5451,6 +5451,14 @@ PrefabInstance:
       propertyPath: saveManager
       value: 
       objectReference: {fileID: 210739506}
+    - target: {fileID: 1303727747545456956, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
+      propertyPath: getItemFromTables.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303727747545456956, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
+      propertyPath: 'getItemFromTables.Array.data[4]'
+      value: 
+      objectReference: {fileID: 391935746798126346, guid: d555039c9c12d494494219e4a2f3d1fb, type: 3}
     - target: {fileID: 2717801891848199396, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.17
@@ -56786,7 +56794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5172950504016950880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typePostOfficeTubeMaterials.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5172950504016950880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typePostOfficeTubeMaterials.Array.data[0].material
@@ -56805,6 +56813,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4522447525192828825, guid: 32d67d30c00dff441927372d04180542, type: 3}
     - target: {fileID: 5172950504016950880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typePostOfficeTubeMaterials.Array.data[4].material
+      value: 
+      objectReference: {fileID: 4522447525192828825, guid: d555039c9c12d494494219e4a2f3d1fb, type: 3}
+    - target: {fileID: 5172950504016950880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typePostOfficeTubeMaterials.Array.data[0].typeMaterial
       value: blueMaterial
       objectReference: {fileID: 0}
@@ -56819,6 +56831,10 @@ PrefabInstance:
     - target: {fileID: 5172950504016950880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: typePostOfficeTubeMaterials.Array.data[3].typeMaterial
       value: DocumentPackage
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172950504016950880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: typePostOfficeTubeMaterials.Array.data[4].typeMaterial
+      value: DocumentBluePackage
       objectReference: {fileID: 0}
     - target: {fileID: 5983243132478860536, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_AnchorMax.y
