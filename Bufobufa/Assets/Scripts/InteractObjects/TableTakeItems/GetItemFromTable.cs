@@ -9,7 +9,7 @@ public class GetItemFromTable : MonoBehaviour
     public string typeItemFromTable;
     public bool InTrigger = false;
     public bool ClickedMouse = false;
-    public int numPoint = 0;
+    public int indexPoint = 0;
     private Transform table;
 
 
@@ -53,16 +53,15 @@ public class GetItemFromTable : MonoBehaviour
         }
         if (InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerPickSometing && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
         {
-
-            //GameObject tmp = transform.parent.GetComponent<TableTakesItem>().points[transform.parent.GetComponent<TableTakesItem>().items.IndexOf(gameObject)];
-            //transform.parent.GetComponent<TableTakesItem>().points.Remove(tmp);
-            //transform.parent.GetComponent<TableTakesItem>().points.Add(tmp);
-            //transform.parent.GetComponent<TableTakesItem>().items.Remove(gameObject);
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-            Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().pointsInfo[numPoint].obj;
-            table.GetComponent<TableTakesItem>().pointsInfo[numPoint].GetItem = false;
-            //transform.parent = Player.transform;
-
+            Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj;
+            table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].GetItem = false;
+            table.GetComponent<TableTakesItem>().TakeObject(new ItemFromTableSave()
+            {
+                typeItemFromTable = typeItemFromTable,
+                indexPoint = indexPoint,
+            });
+            table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj = null;
         }
     }
 }

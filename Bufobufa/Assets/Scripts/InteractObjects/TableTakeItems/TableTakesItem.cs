@@ -24,7 +24,14 @@ public class TableTakesItem : MonoBehaviour
                 if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
                 {
                     GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-                    getItemFromTable.numPoint = saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
+                    getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
+
+                    pointsInfo[getItemFromTable.indexPoint].GetItem = true;
+                    pointsInfo[getItemFromTable.indexPoint].obj = getItemFromTable.gameObject;
+                    pointsInfo[getItemFromTable.indexPoint].obj.transform.parent = null;
+                    pointsInfo[getItemFromTable.indexPoint].obj.transform.position = pointsInfo[getItemFromTable.indexPoint].point.transform.position;
+                    pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<MouseTrigger>().enabled = true;
+                    pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<BoxCollider>().enabled = true;
                 }
             }
         }
@@ -75,14 +82,36 @@ public class TableTakesItem : MonoBehaviour
                     Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
                     pointsInfo[i].obj.transform.position = pointsInfo[i].point.transform.position;
-                    pointsInfo[i].obj.GetComponent<GetItemFromTable>().numPoint = i;
+                    pointsInfo[i].obj.GetComponent<GetItemFromTable>().indexPoint = i;
                     pointsInfo[i].obj.GetComponent<MouseTrigger>().enabled = true;
                     pointsInfo[i].obj.GetComponent<BoxCollider>().enabled = true;
+
+                    saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Add(new ItemFromTableSave()
+                    {
+                        typeItemFromTable = pointsInfo[i].obj.GetComponent<GetItemFromTable>().typeItemFromTable,
+                        indexPoint = i
+                    });
+
                     break;
                 }
             }
+            saveManager.UpdatePlayerFile();
         }
     }
+
+    public void TakeObject(ItemFromTableSave itemFromTableSave)
+    {
+        for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
+        {
+            if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint == itemFromTableSave.indexPoint)
+            {
+                saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.RemoveAt(i);
+                saveManager.UpdatePlayerFile();
+                return;
+            }
+        }
+    }
+
     [System.Serializable]
     public class PointInfo
     {
