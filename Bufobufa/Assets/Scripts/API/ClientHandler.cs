@@ -16,7 +16,10 @@ namespace API
     public class ResourcePlayer
     {
         public bool isPlayerRegistration = false;
+        public int currentIndexDialogPoint = 0;
+        public int currentIndexDialog = 0;
         public ItemFromTableSave currentItemFromTableSave;
+        public List<ModelBoardSave> modelBoardSaves;
         public List<ItemFromTableSave> itemFromTableSaves;
         public List<MagnetSave> magnetSaves;
         public List<SaveTypeProduct> products;
@@ -279,7 +282,12 @@ namespace API
                 var response = await client.SendAsync(request);
 
                 string json = await response.Content.ReadAsStringAsync();
-                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                JSONError jsonError = null;
+                try
+                {
+                    jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                }
+                catch { }
 
                 if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
                 {
@@ -304,7 +312,12 @@ namespace API
                 var response = await client.SendAsync(request);
 
                 string json = await response.Content.ReadAsStringAsync();
-                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                JSONError jsonError = null;
+                try
+                {
+                    jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                }
+                catch { }
 
                 if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
                 {
@@ -364,7 +377,12 @@ namespace API
                 HttpResponseMessage response = await client.SendAsync(request);
 
                 string json = await response.Content.ReadAsStringAsync();
-                JSONErrorLog jsonError = JsonConvert.DeserializeObject<JSONErrorLog>(json);
+                JSONErrorLog jsonError = null;
+                try
+                {
+                    jsonError = JsonConvert.DeserializeObject<JSONErrorLog>(json);
+                }
+                catch { }
 
                 if (jsonError != null && jsonError.Error == "Not existing Player")
                 {
@@ -482,7 +500,12 @@ namespace API
                 var response = await client.SendAsync(request);
 
                 string json = await response.Content.ReadAsStringAsync();
-                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                JSONError jsonError = null;
+                try
+                {
+                    jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                }
+                catch { }
 
                 if (jsonError != null && jsonError.Detail == "No Shop matches the given query.")
                 {
@@ -535,7 +558,12 @@ namespace API
                 var response = await client.SendAsync(request);
 
                 string json = await response.Content.ReadAsStringAsync();
-                JSONError jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                JSONError jsonError = null;
+                try
+                {
+                    jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                }
+                catch { }
 
                 if (jsonError != null && jsonError.Detail == "No Shop matches the given query.")
                 {
@@ -570,7 +598,12 @@ namespace API
                 var response = await client.SendAsync(request);
 
                 string json = await response.Content.ReadAsStringAsync();
-                JSONErrorLog jsonError = JsonConvert.DeserializeObject<JSONErrorLog>(json);
+                JSONErrorLog jsonError = null;
+                try
+                {
+                    jsonError = JsonConvert.DeserializeObject<JSONErrorLog>(json);
+                }
+                catch { }
 
                 if (jsonError != null && jsonError.Error == "Not existing Shop")
                 {

@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour
 {
+    [SerializeField] private SaveManager saveManager;
     [SerializeField] private DialogueWindow dialogueWindow;
     [SerializeField] private FileDialog fileDialog;
     public UnityEvent<Dialog> OnStartDialog;
@@ -32,6 +33,17 @@ public class DialogManager : MonoBehaviour
     {
         dialogPoints = fileDialog.dialogPoints;
         dialogueWindow.Init(this);
+
+        if (saveManager.filePlayer.JSONPlayer.nameUser != null)
+        {
+            currentIndexDialogPoint = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
+            int count = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog;
+            for (int i = 0; i < count; i++)
+            {
+                OnStartDialog?.Invoke(dialogPoints[currentIndexDialogPoint].dialog[i]);
+            }
+            TypeLine(dialogPoints[currentIndexDialogPoint], saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
+        }
     }
 
     private void Update()
@@ -41,8 +53,13 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialog(int indexDialogPoint)
     {
-        currentIndexDialogPoint = indexDialogPoint;
-        TypeLine(dialogPoints[indexDialogPoint], 0);
+        if (indexDialogPoint >= currentIndexDialogPoint)
+        {
+            currentIndexDialogPoint = indexDialogPoint;
+            saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+            saveManager.UpdatePlayerFile();
+            TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
+        }
     }
     public void SkipDialog()
     {
@@ -72,6 +89,8 @@ public class DialogManager : MonoBehaviour
                 else
                 {
                     currentIndexDialog++;
+                    saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                    saveManager.UpdatePlayerFile();
                     TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
                 }
 
@@ -98,7 +117,11 @@ public class DialogManager : MonoBehaviour
         for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)
         {
             OnStartDialog?.Invoke(dialogPoint.dialog[i]);
+
             currentIndexDialog = i;
+            saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+            saveManager.UpdatePlayerFile();
+
             if (dialogPoint.dialog[i].isActiveInputField == false)
                 isCanSkipDialog = true;
 
