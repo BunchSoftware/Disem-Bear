@@ -10,6 +10,7 @@ public class DialogueWindow : MonoBehaviour
     [SerializeField] private Image iconDialog;
     [SerializeField] private Button skipButton;
     [SerializeField] private DialogInputField dialogInputField;
+    [SerializeField] private Image imageClickButtonForSkip;
     [HideInInspector] public Animator animator;
 
     private Font standartFont;
@@ -72,6 +73,15 @@ public class DialogueWindow : MonoBehaviour
         textDialog.color = dialog.colorText;
         iconDialog.sprite = dialog.avatar;
         iconDialog.preserveAspect = true;
+
+        if (dialog.imageClickButtonForSkip != null)
+        {
+            imageClickButtonForSkip.sprite = dialog.imageClickButtonForSkip;
+            imageClickButtonForSkip.preserveAspect = true;
+            imageClickButtonForSkip.gameObject.SetActive(true);
+        }
+        else
+            imageClickButtonForSkip.gameObject.SetActive(false);
 
         dialogInputField.gameObject.SetActive(dialog.isActiveInputField);
     }

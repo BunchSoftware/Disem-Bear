@@ -239,6 +239,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dcdc9a1aa69d2646802578396a7381f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &431939908 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8101402575713697867, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
+  m_PrefabInstance: {fileID: 6050155868340380522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619747885
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,27 +803,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1650788101212263887, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650788101212263887, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650788101212263887, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 710
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650788101212263887, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650788101212263887, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 355
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1650788101212263887, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2610017692574590365, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_Pivot.x
@@ -896,27 +907,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3520536140473375826, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520536140473375826, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520536140473375826, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520536140473375826, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520536140473375826, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 740
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3520536140473375826, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -30
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3839994755202700373, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
+      propertyPath: m_Name
+      value: ' imageClickButtonForSkip'
       objectReference: {fileID: 0}
     - target: {fileID: 4446314455137688753, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_SizeDelta.y
@@ -946,6 +961,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 5740246345338974827, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
+      propertyPath: imageClickButtonForSkip
+      value: 
+      objectReference: {fileID: 431939908}
     - target: {fileID: 7778388345301009511, guid: e4e1330a89770c741bb023de9f8968c5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
