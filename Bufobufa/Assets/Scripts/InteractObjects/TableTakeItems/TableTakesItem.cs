@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class TableTakesItem : MonoBehaviour
 {
-    [SerializeField] private SaveManager saveManager;
+    public SaveManager saveManager;
     [SerializeField] private List<GetItemFromTable> getItemFromTables;
     public List<PointInfo> pointsInfo = new List<PointInfo>();
     public bool InTrigger = false;
@@ -32,6 +33,20 @@ public class TableTakesItem : MonoBehaviour
                     pointsInfo[getItemFromTable.indexPoint].obj.transform.position = pointsInfo[getItemFromTable.indexPoint].point.transform.position;
                     pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<MouseTrigger>().enabled = true;
                     pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<BoxCollider>().enabled = true;
+                }
+            }
+        }
+        if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave != null 
+            && saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != "")
+        {
+            for (int j = 0; j < getItemFromTables.Count; j++)
+            {
+                if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
+                {
+                    GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
+                    getItemFromTable.indexPoint = 0;
+                    Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+                    Player.GetComponent<PlayerInfo>().currentPickObject = getItemFromTable.gameObject;
                 }
             }
         }
@@ -106,6 +121,12 @@ public class TableTakesItem : MonoBehaviour
             if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint == itemFromTableSave.indexPoint)
             {
                 saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.RemoveAt(i);
+                saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = new ItemFromTableSave() 
+                { 
+                    typeItemFromTable = itemFromTableSave.typeItemFromTable,
+                    indexPoint = itemFromTableSave.indexPoint,
+                };
+                print(itemFromTableSave.typeItemFromTable);
                 saveManager.UpdatePlayerFile();
                 return;
             }
