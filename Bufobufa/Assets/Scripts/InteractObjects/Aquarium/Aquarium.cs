@@ -138,7 +138,8 @@ public class Aquarium : MonoBehaviour
         if (TimeWaterSpend > 0f || NameMaterial == "Classic") timerCell += Time.deltaTime;
         if (timerCell >= TimeCell)
         {
-            CountCells++;
+            if (CountCells < 15)
+                CountCells++;
             timerCell = 0;
         }
     }
