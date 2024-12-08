@@ -14,6 +14,7 @@ public class ThingsInTableMix : MonoBehaviour
     public bool MixTableOn = false;
     public GameObject currentPrinterObject;
     public bool CreateObject = false;
+    public bool IsPrinterObject = false;
 
     private InfoInstObj currentCreatObj;
 
@@ -68,6 +69,7 @@ public class ThingsInTableMix : MonoBehaviour
                         CreateObject = true;
                         NotExistReceip = false;
                         GameObject tempObj = IngredientsIn[0];
+                        var temp = IngredientsIn[0].transform.position;
                         for (int j = IngredientsIn.Count - 1; j >= 0; j--)
                         {
                             IngredientsIn[j].GetComponent<AnimDeleteIngredients>().DeleteIngredient();
@@ -126,6 +128,11 @@ public class ThingsInTableMix : MonoBehaviour
         {
             MixTableOn = false;
             currentPrinterObject = obj;
+            IsPrinterObject = true;
+        }
+        else
+        {
+            IsPrinterObject = false;
         }
         CreateObject = false;
         transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
