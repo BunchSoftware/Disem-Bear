@@ -25,12 +25,6 @@ public class PostSpawnTube : MonoBehaviour
             OneTap = false;
             PostOfficeTube.ItemExist = true;
             PostOfficeTube.ObjectFall();
-            StartCoroutine(WaitBoxFall(1f));
         }
-    }
-    IEnumerator WaitBoxFall(float f)
-    {
-        yield return new WaitForSeconds(f);
-        AllPointerManager.SetPointer(0);
     }
 }

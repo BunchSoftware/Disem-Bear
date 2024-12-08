@@ -185,6 +185,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PackageName: Document
   ItemInPackage: {fileID: 7352654662971261209, guid: 1e075f24e38f78a41b710658a4af3a01, type: 3}
+  HaveIngredients: 0
+  NameIngredient: 
+  amount: 0
 --- !u!114 &391935746798126346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +203,8 @@ MonoBehaviour:
   typeItemFromTable: DocumentPackage
   InTrigger: 0
   ClickedMouse: 0
-  numPoint: 0
+  isTube: 0
+  indexPoint: 0
 --- !u!114 &7871138960482414917
 MonoBehaviour:
   m_ObjectHideFlags: 0
