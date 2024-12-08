@@ -5,14 +5,29 @@ using UnityEngine;
 
 public class TableTakesItem : MonoBehaviour
 {
-    public List<pointInfo> points = new List<pointInfo>();
+    [SerializeField] private SaveManager saveManager;
+    [SerializeField] private List<GetItemFromTable> getItemFromTables;
+    public List<PointInfo> pointsInfo = new List<PointInfo>();
     public bool InTrigger = false;
     public bool ClickedMouse = false;
     private GameObject Player;
     public Vector3 ScaleVector;
+
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+
+        for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
+        {
+            for (int j = 0; j < getItemFromTables.Count; j++)
+            {
+                if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
+                {
+                    GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
+                    getItemFromTable.numPoint = saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
+                }
+            }
+        }
     }
     public void OnTrigEnter(Collider other)
     {
@@ -50,26 +65,26 @@ public class TableTakesItem : MonoBehaviour
         if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse && Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<GetItemFromTable>())
         {
             ClickedMouse = false;
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < pointsInfo.Count; i++)
             {
-                if (!points[i].GetItem)
+                if (!pointsInfo[i].GetItem)
                 {
-                    points[i].GetItem = true;
-                    points[i].obj = Player.GetComponent<PlayerInfo>().currentPickObject;
-                    points[i].obj.transform.parent = null;
+                    pointsInfo[i].GetItem = true;
+                    pointsInfo[i].obj = Player.GetComponent<PlayerInfo>().currentPickObject;
+                    pointsInfo[i].obj.transform.parent = null;
                     Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
-                    points[i].obj.transform.position = points[i].point.transform.position;
-                    points[i].obj.GetComponent<GetItemFromTable>().numPoint = i;
-                    points[i].obj.GetComponent<MouseTrigger>().enabled = true;
-                    points[i].obj.GetComponent<BoxCollider>().enabled = true;
+                    pointsInfo[i].obj.transform.position = pointsInfo[i].point.transform.position;
+                    pointsInfo[i].obj.GetComponent<GetItemFromTable>().numPoint = i;
+                    pointsInfo[i].obj.GetComponent<MouseTrigger>().enabled = true;
+                    pointsInfo[i].obj.GetComponent<BoxCollider>().enabled = true;
                     break;
                 }
             }
         }
     }
     [System.Serializable]
-    public class pointInfo
+    public class PointInfo
     {
         public bool GetItem = false;
         public GameObject obj;

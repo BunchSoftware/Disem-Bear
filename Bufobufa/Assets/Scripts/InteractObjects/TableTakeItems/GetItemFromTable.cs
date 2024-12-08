@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 public class GetItemFromTable : MonoBehaviour
 {
     private GameObject Player;
+    public string typeItemFromTable;
     public bool InTrigger = false;
     public bool ClickedMouse = false;
     public int numPoint = 0;
@@ -58,8 +59,8 @@ public class GetItemFromTable : MonoBehaviour
             //transform.parent.GetComponent<TableTakesItem>().points.Add(tmp);
             //transform.parent.GetComponent<TableTakesItem>().items.Remove(gameObject);
             Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-            Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().points[numPoint].obj;
-            table.GetComponent<TableTakesItem>().points[numPoint].GetItem = false;
+            Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().pointsInfo[numPoint].obj;
+            table.GetComponent<TableTakesItem>().pointsInfo[numPoint].GetItem = false;
             //transform.parent = Player.transform;
 
         }
