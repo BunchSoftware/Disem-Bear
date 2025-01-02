@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UscaledTimeWrapper : MonoBehaviour
+public class UnscaledTimeWrapper : MonoBehaviour
 {
     [SerializeField] private CustomRenderTexture CustomRenderTexture;
 

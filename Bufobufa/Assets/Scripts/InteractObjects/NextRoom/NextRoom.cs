@@ -23,7 +23,7 @@ public class NextRoom : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Vcam = GameObject.FindGameObjectWithTag("Vcam");
-        InvWallBetweenRooms = GameObject.Find("InvWallBetweenRooms");
+        InvWallBetweenRooms = GameObject.Find("InvisibleWallBetweenRooms");
     }
 
     private void OnTriggerEnter(Collider other)
