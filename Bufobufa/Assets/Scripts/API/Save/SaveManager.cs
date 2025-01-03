@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(ClientHandler))]
-public class SaveManager : MonoBehaviour
+public class SaveManager 
 {
-    private ClientHandler clientHandler;
+    private APIManager apiManager;
     private SaveManagerIO saveManagerIO;
 
     public FilePlayer filePlayer;
@@ -17,9 +16,12 @@ public class SaveManager : MonoBehaviour
     private string pathToFileResourcePlayer;
     private string pathToFileResourceShop;
 
-    private void Awake()
+    public void Init(APIManager apiManager, FilePlayer filePlayer, FileShop fileShop)
     {
-        clientHandler = GetComponent<ClientHandler>();
+        this.filePlayer = filePlayer;
+        this.fileShop = fileShop;
+        this.apiManager = apiManager;
+
         saveManagerIO = new SaveManagerIO();
 
         pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
@@ -58,8 +60,8 @@ public class SaveManager : MonoBehaviour
 
                 fileShop.JSONShop.resources.isShopRegistration = true;
 
-                clientHandler.RegistrationShop(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
-                clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
+                apiManager.RegistrationShop(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
+                apiManager.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, nameShop, fileShop.JSONShop.resources);
 
                 ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
                 Dictionary<string, string> changedResources = new Dictionary<string, string>();
@@ -75,7 +77,7 @@ public class SaveManager : MonoBehaviour
 
                 resourceChangedShop.changedResources = changedResources;
 
-                clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
+                apiManager.CreateLogShop(filePlayer.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
                 UpdateShopFile();
             }
         });
@@ -92,8 +94,8 @@ public class SaveManager : MonoBehaviour
             filePlayer.JSONPlayer.resources.isPlayerRegistration = true;
 
 
-            clientHandler.RegistrationPlayer(nameUser, filePlayer.JSONPlayer.resources);
-            clientHandler.SetResourcePlayer(nameUser, filePlayer.JSONPlayer.resources);
+            apiManager.RegistrationPlayer(nameUser, filePlayer.JSONPlayer.resources);
+            apiManager.SetResourcePlayer(nameUser, filePlayer.JSONPlayer.resources);
             ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
             Dictionary<string, string> changedResources = new Dictionary<string, string>
         {
@@ -101,7 +103,7 @@ public class SaveManager : MonoBehaviour
         };
             resourceChangedPlayer.changedResources = changedResources;
 
-            clientHandler.CreateLogPlayer(nameUser, "Игрок был иницилизирован", resourceChangedPlayer);
+            apiManager.CreateLogPlayer(nameUser, "Игрок был иницилизирован", resourceChangedPlayer);
             UpdatePlayerFile();
         });
     }
@@ -112,7 +114,7 @@ public class SaveManager : MonoBehaviour
         {
             if (filePlayer.JSONPlayer.nameUser != "" && fileShop.JSONShop.nameShop != "")
             {
-                clientHandler.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, fileShop.JSONShop.resources);
+                apiManager.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, fileShop.JSONShop.resources);
 
                 ResourceChangedShop resourceChangedShop = new ResourceChangedShop();
                 Dictionary<string, string> changedResources = new Dictionary<string, string>();
@@ -124,7 +126,7 @@ public class SaveManager : MonoBehaviour
 
                 resourceChangedShop.changedResources = changedResources;
 
-                clientHandler.CreateLogShop(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
+                apiManager.CreateLogShop(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
                 saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
             }
         });       
@@ -136,7 +138,7 @@ public class SaveManager : MonoBehaviour
         {
             if (filePlayer.JSONPlayer.nameUser != "")
             {
-                clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+                apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
                 ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
                 Dictionary<string, string> changedResources = new Dictionary<string, string>();
 
@@ -158,7 +160,7 @@ public class SaveManager : MonoBehaviour
                     changedResources.Add($"changedCurrentIndexDialogPoint", filePlayer.JSONPlayer.resources.currentIndexDialogPoint.ToString());
                 }
 
-                clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
+                apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
                 saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
             }
         });
@@ -177,11 +179,11 @@ public class SaveManager : MonoBehaviour
                         filePlayer.JSONPlayer.resources.products[j].countProduct += saveTypeProduct.countProduct;
                         UpdatePlayerFile();
 
-                        clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+                        apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
                         ResourceChangedPlayer resourceChangedPlayer1 = new ResourceChangedPlayer();
                         Dictionary<string, string> changedResources1 = new Dictionary<string, string>();
 
-                        clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer1);
+                        apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer1);
                         saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
                         return;
@@ -193,7 +195,7 @@ public class SaveManager : MonoBehaviour
                 saveType.countProduct += saveTypeProduct.countProduct;
 
                 filePlayer.JSONPlayer.resources.products.Add(saveType);
-                clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+                apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
                 ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
                 Dictionary<string, string> changedResources = new Dictionary<string, string>();
 
@@ -205,7 +207,7 @@ public class SaveManager : MonoBehaviour
                     }
                 }
 
-                clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о покупках были изменены", resourceChangedPlayer);
+                apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о покупках были изменены", resourceChangedPlayer);
                 saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
             }
         });
@@ -222,7 +224,7 @@ public class SaveManager : MonoBehaviour
                     if (filePlayer.JSONPlayer.resources.magnetSaves[j].typeMagnet == magnetSave.typeMagnet)
                     {
                         filePlayer.JSONPlayer.resources.magnetSaves[j] = magnetSave;
-                        clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+                        apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
 
                         ResourceChangedPlayer resourceChangedPlayer1 = new ResourceChangedPlayer();
                         Dictionary<string, string> changedResources1 = new Dictionary<string, string>();
@@ -235,7 +237,7 @@ public class SaveManager : MonoBehaviour
                             }
                         }
 
-                        clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о магнитах на холодильнике были изменены", resourceChangedPlayer1);
+                        apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о магнитах на холодильнике были изменены", resourceChangedPlayer1);
                         saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
                         return;
@@ -243,7 +245,7 @@ public class SaveManager : MonoBehaviour
                 }
 
                 filePlayer.JSONPlayer.resources.magnetSaves.Add(magnetSave);
-                clientHandler.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
+                apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
 
                 ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
                 Dictionary<string, string> changedResources = new Dictionary<string, string>();
@@ -256,7 +258,7 @@ public class SaveManager : MonoBehaviour
                     }
                 }
 
-                clientHandler.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о магнитах на холодильнике были изменены", resourceChangedPlayer);
+                apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о магнитах на холодильнике были изменены", resourceChangedPlayer);
                 saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
             }
         });
@@ -275,29 +277,29 @@ public class SaveManager : MonoBehaviour
 
     private async void PrintListShop(string userName)
     {
-        await clientHandler.GetListShopPlayer(userName);
+        await apiManager.GetListShopPlayer(userName);
     }
 
     private async void PrintListLogsShop(string userName, string shopName)
     {
-        await clientHandler.GetListLogsShop(userName, shopName);
+        await apiManager.GetListLogsShop(userName, shopName);
     }
 
     private async void PrintListPlayer()
     {
-        await clientHandler.GetListPlayers();
+        await apiManager.GetListPlayers();
     }
     private async void PrintListLogPlayer(string userName)
     {
-        await clientHandler.GetListLogsPlayer(userName);
+        await apiManager.GetListLogsPlayer(userName);
     }
 
     public async void DeleteListPlayer()
     {
-        List<JSONPlayer> jSONPlayers = await clientHandler.GetListPlayers();
+        List<JSONPlayer> jSONPlayers = await apiManager.GetListPlayers();
         for (int i = 0; i < jSONPlayers.Count; i++)
         {
-            clientHandler.DeletePlayer(jSONPlayers[i].nameUser);
+            apiManager.DeletePlayer(jSONPlayers[i].nameUser);
         }
     }
 

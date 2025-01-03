@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using System;
 
-// Скрипт для управления музыкой, эффектами и звуками через AudioMixer
-[RequireComponent(typeof(AudioSource))]
-public class SoundManager : MonoBehaviour
+[Serializable]
+public class SoundManager
 {
-    private AudioSource audio;
+    [SerializeField] private AudioSource audio;
     [SerializeField] private AudioMixerGroup mixer;
     // Ключ, название которого совпадает с названием AudioMixer и названием переменной в реестре
     [SerializeField] private string nameKey;
@@ -22,9 +21,12 @@ public class SoundManager : MonoBehaviour
     [Range(-100f, 20f)]
     [SerializeField] private float MaxDB = 10;
 
-    public void Start()
+    private MonoBehaviour context;
+
+    public void Init(MonoBehaviour context)
     {
-        audio = GetComponent<AudioSource>();
+        this.context = context;
+
         audio.mute = false;
         audio.loop = false;
         audio.playOnAwake = false;
@@ -193,10 +195,10 @@ public class SoundManager : MonoBehaviour
 
     public void SoundDecay(float time)
     {
-        StartCoroutine(DecayIEnumarator(time));
+        context.StartCoroutine(DecayIEnumarator(time));
     }
     public void SoundResurrection(float time)
     {
-        StartCoroutine(ResurrectionIEnumarator(time));
+        context.StartCoroutine(ResurrectionIEnumarator(time));
     }
 }

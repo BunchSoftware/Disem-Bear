@@ -12,9 +12,9 @@ public class TargetReplica : MonoBehaviour
 
     private void Awake()
     {
-        DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
+        //DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
-        DialogManager.OnStartDialog.AddListener(TargetReplic);
+        //DialogManager.OnStartDialog.AddListener(TargetReplic);
     }
 
     public void TargetReplic(Dialog dialog)

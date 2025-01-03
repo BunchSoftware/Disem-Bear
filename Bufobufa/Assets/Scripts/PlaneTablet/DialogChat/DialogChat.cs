@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class DialogChat : MonoBehaviour
+[Serializable]
+public class DialogChat : IUpdateListener
 {
     [SerializeField] private GameObject contentMessage;
     [SerializeField] private GameObject prefabMessage;
@@ -25,13 +27,17 @@ public class DialogChat : MonoBehaviour
 
     private bool isCanSkipDialog = false;
 
-    private void OnEnable()
+    private MonoBehaviour context;
+
+    public void Init(MonoBehaviour context)
     {
+        this.context = context;
         dialogPoints = fileDialog.dialogPoints;
         contentPanelChoices.SetActive(false);
     }
 
-    private void Update()
+
+    public void OnUpdate(float deltaTime)
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentMessage.GetComponent<RectTransform>());
     }
@@ -70,8 +76,8 @@ public class DialogChat : MonoBehaviour
 
     public void TypeLine(DialogPoint dialogPoint, int indexDialog)
     {
-        StopAllCoroutines();
-        StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
+        context.StopAllCoroutines();
+        context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
     }
 
     IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
@@ -85,7 +91,7 @@ public class DialogChat : MonoBehaviour
 
             foreach (Transform child in contentPanelChoices.transform)
             {
-                Destroy(child.gameObject);
+                 GameObject.Destroy(child.gameObject);
             }
 
             if (dialogPoint.dialog[i].dialogChoices.Count >= 1)
@@ -94,7 +100,7 @@ public class DialogChat : MonoBehaviour
                 for (int j = 0; j < dialogPoint.dialog[i].dialogChoices.Count; j++)
                 {
                     prefabButtonChoice.name = $"Button Choice {j}";
-                    GameObject button = Instantiate(prefabButtonChoice, contentPanelChoices.transform);
+                    GameObject button = GameObject.Instantiate(prefabButtonChoice, contentPanelChoices.transform);
                     DialogChoiceButton dialogChoiceButton = button.GetComponent<DialogChoiceButton>();
                     dialogChoiceButton.Init((indexDialogPoint) =>
                     {
@@ -108,7 +114,7 @@ public class DialogChat : MonoBehaviour
             else
             {
                 prefabMessage.name = $"Message {dialogMessageGroups.Count}";
-                GameObject message = Instantiate(prefabMessage, contentMessage.transform);
+                GameObject message = GameObject.Instantiate(prefabMessage, contentMessage.transform);
                 currentDialogMessageGroup = message.GetComponent<DialogMessageGroup>();
 
                 if (dialogPoint.dialog[i].enterDrop == DropEnum.DropLeft)
@@ -147,7 +153,7 @@ public class DialogChat : MonoBehaviour
 
     private void StopTypeLine()
     {
-        StopAllCoroutines();
+        context.StopAllCoroutines();
         currentDialogMessageGroup.StopTypeLine();
         isCanSkipDialog = false;
     }

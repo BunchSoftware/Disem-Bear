@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: 
+    nameUser: Denis
     resources:
-      isPlayerRegistration: 0
+      isPlayerRegistration: 1
       currentIndexDialogPoint: 0
-      currentIndexDialog: 0
-      exerciseSaves: []
+      currentIndexDialog: 2
+      exerciseSaves:
+      - indexExercise: 0
+        typeOfExerciseCompletion: 2
+        isGetPackage: 0
       ingradientSaves:
       - typeIngradient: cell
-        countIngradient: 0
+        countIngradient: 6
       - typeIngradient: detoxification
         countIngradient: 0
       - typeIngradient: digestion
@@ -43,15 +46,16 @@ MonoBehaviour:
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
-      modelBoardSaves: []
+      modelBoardSaves:
+      - typeModelBoard: DocumentPackage
       itemFromTableSaves: []
-      magnetSaves: []
+      magnetSaves:
+      - typeMagnet: sota
+        x: -0.01113781
+        y: -0.00297
+        z: 0.00316
       products:
       - typeProduct: sigmaCell
-        countProduct: 280
-      - typeProduct: gas
-        countProduct: 4
-      - typeProduct: digestion
-        countProduct: 2
-      - typeProduct: regulation
-        countProduct: 8
+        countProduct: 0
+      - typeProduct: sota
+        countProduct: 1

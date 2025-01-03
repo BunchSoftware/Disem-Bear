@@ -10,7 +10,7 @@ public class PlayerInfo : MonoBehaviour
 
     private void Awake()
     {
-        saveManager = FindFirstObjectByType<SaveManager>();
+        //saveManager = FindFirstObjectByType<SaveManager>();
     }
 
     public GameObject currentPickObject;

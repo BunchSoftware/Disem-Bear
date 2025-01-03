@@ -6,10 +6,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExerciseManager : MonoBehaviour
+[Serializable]
+public class ExerciseManager : IUpdateListener
 {
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject content;
     [SerializeField] private FileExercise fileExercise;
     [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
     private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
@@ -19,13 +21,9 @@ public class ExerciseManager : MonoBehaviour
 
     private ExerciseGUI currentExerciseGUI;
 
-    private void Update()
+    public void Init(SaveManager saveManager)
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
-    }
-
-    private void Start()
-    {
+        this.saveManager = saveManager;
         List<Exercise> exercises = fileExercise.exercises;
 
 
@@ -52,14 +50,14 @@ public class ExerciseManager : MonoBehaviour
         for (int i = 0; i < exercises.Count; i++)
         {
             prefab.name = $"Exercise {i}";
-            Instantiate(prefab, transform);
+            GameObject.Instantiate(prefab, content.transform);
         }
 
         for (int i = 0; i < exercises.Count; i++)
         {
             ExerciseGUI exercise;
 
-            if (gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exercise))
+            if (content.gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exercise))
             {
                 exercise.Init(this, (exercise, isExpandExercise) =>
                 {
@@ -82,6 +80,11 @@ public class ExerciseManager : MonoBehaviour
                 exercisesGUI.Add(exercise);
             };
         }
+    }
+
+    public void OnUpdate(float deltaTime)
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content.gameObject.GetComponent<RectTransform>());
     }
 
     public void DoneCurrentExercise(string messageExercise)
@@ -127,9 +130,9 @@ public class ExerciseManager : MonoBehaviour
             if (exercisesGUI[j] != exercise && exercisesGUI[j].GetExerciseCompletion() != TypeOfExerciseCompletion.Done)
                 exercisesGUI[j].SetExerciseCompletion(TypeOfExerciseCompletion.NotDone);
             else if (exercisesGUI[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Run)
-                transform.GetChild(j).SetAsFirstSibling();
+                content.transform.GetChild(j).SetAsFirstSibling();
             else if (exercisesGUI[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Done)
-                transform.GetChild(j).SetAsLastSibling();
+                content.transform.GetChild(j).SetAsLastSibling();
         }
 
         for (var i = 1; i < exercisesGUI.Count; i++)

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +11,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class DialogManager : MonoBehaviour
+[Serializable]
+public class DialogManager : IUpdateListener
 {
-    [SerializeField] private SaveManager saveManager;
     [SerializeField] private DialogueWindow dialogueWindow;
     [SerializeField] private FileDialog fileDialog;
     public UnityEvent<Dialog> OnStartDialog;
@@ -29,8 +30,14 @@ public class DialogManager : MonoBehaviour
     private bool isDialogLast = false;
     private bool isActiveInputField = false;
 
-    private void Start()
+    private SaveManager saveManager;
+    private MonoBehaviour context;
+
+    public void Init(SaveManager saveManager, MonoBehaviour context)
     {
+        this.context = context;
+        this.saveManager = saveManager;
+
         dialogPoints = fileDialog.dialogPoints;
         dialogueWindow.Init(this);
 
@@ -46,9 +53,10 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private void Update()
+
+    public void OnUpdate(float deltaTime)
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueWindow.gameObject.GetComponent<RectTransform>());
     }
 
     public void StartDialog(int indexDialogPoint)
@@ -107,8 +115,8 @@ public class DialogManager : MonoBehaviour
 
     public void TypeLine(DialogPoint dialogPoint, int indexDialog)
     {
-        StopAllCoroutines();
-        StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
+        context.StopAllCoroutines();
+        context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
     }
 
     IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
@@ -157,7 +165,7 @@ public class DialogManager : MonoBehaviour
 
     private void StopTypeLine() 
     {
-        StopAllCoroutines();
+        context.StopAllCoroutines();
         dialogueWindow.StopTypeLine();
         isCanSkipDialog = false;
         isActiveInputField = false;

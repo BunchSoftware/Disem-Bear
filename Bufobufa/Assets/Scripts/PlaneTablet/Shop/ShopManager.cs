@@ -11,22 +11,21 @@ public class TypeMachineDispensingProduct
     public string typeMachineDispensingProduct;
     public UnityEvent<string> OnGetProduct;
 }
-public class ShopManager : MonoBehaviour
+
+[Serializable]
+public class ShopManager : IUpdateListener
 {
     [SerializeField] private GameObject prefab;
+    [SerializeField] private GameObject content;
     [SerializeField] private FileProducts fileProducts;
     [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
     [SerializeField] private SaveManager saveManager;
     private List<ProductGUI> productsGUI = new List<ProductGUI>();
     public Action<Product> OnBuyProduct;
 
-    private void Update()
+    public void Init(SaveManager saveManager)
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
-    }
-
-    private void Start()
-    {
+        this.saveManager = saveManager;
         List<Product> products = new List<Product>();
 
 
@@ -34,19 +33,19 @@ public class ShopManager : MonoBehaviour
         {
             if (saveManager.fileShop.JSONShop.resources.productSaves == null || saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
             {
-                    List<ProductSave> productSaves = new List<ProductSave>();
-                    for (int i = 0; i < fileProducts.products.Count; i++)
+                List<ProductSave> productSaves = new List<ProductSave>();
+                for (int i = 0; i < fileProducts.products.Count; i++)
+                {
+                    productSaves.Add(new ProductSave()
                     {
-                        productSaves.Add(new ProductSave()
-                        {
-                            countChangeProduct = fileProducts.products[i].countChangeProduct,
-                            typeChangeProduct = fileProducts.products[i].typeChangeProduct,
-                            typeMachineDispensingProduct = fileProducts.products[i].typeMachineDispensingProduct,
-                            countPriceChange = fileProducts.products[i].countPriceChange,
-                            typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
-                        });
-                    }
-                    saveManager.fileShop.JSONShop.resources.productSaves = productSaves;    
+                        countChangeProduct = fileProducts.products[i].countChangeProduct,
+                        typeChangeProduct = fileProducts.products[i].typeChangeProduct,
+                        typeMachineDispensingProduct = fileProducts.products[i].typeMachineDispensingProduct,
+                        countPriceChange = fileProducts.products[i].countPriceChange,
+                        typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
+                    });
+                }
+                saveManager.fileShop.JSONShop.resources.productSaves = productSaves;
             }
         }
 
@@ -71,14 +70,14 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < products.Count; i++)
         {
             prefab.name = $"Product {i}";
-            Instantiate(prefab, transform);
+            GameObject.Instantiate(prefab, content.transform);
         }
 
         for (int i = 0; i < products.Count; i++)
         {
             ProductGUI productGUI;
 
-            if (gameObject.transform.GetChild(i).TryGetComponent<ProductGUI>(out productGUI))
+            if (content.transform.GetChild(i).TryGetComponent<ProductGUI>(out productGUI))
             {
                 productGUI.Init(
                 (product) =>
@@ -92,7 +91,7 @@ public class ShopManager : MonoBehaviour
 
                         productGUI.UpdateData(product);
                     }
-                }, 
+                },
                 () =>
                 {
                     Remove(productGUI);
@@ -104,12 +103,17 @@ public class ShopManager : MonoBehaviour
         Sort();
     }
 
+    public void OnUpdate(float deltaTime)
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
+    }
+
     private void Sort()
     {
         for (int j = 0; j < productsGUI.Count; j++)
         {
             if (productsGUI[j].GetProduct().countChangeProduct == -1)
-                transform.GetChild(j).SetAsFirstSibling();
+                content.transform.GetChild(j).SetAsFirstSibling();
         }
 
         for (var i = 1; i < productsGUI.Count; i++)
@@ -145,8 +149,6 @@ public class ShopManager : MonoBehaviour
                                 saveManager.UpdatePlayerFile();
                                 GiveProduct(product);
                                 OnBuyProduct?.Invoke(product);
-
-                                print(1);
 
                                 return true;
                             }
@@ -188,7 +190,7 @@ public class ShopManager : MonoBehaviour
     private void Remove(ProductGUI productGUI)
     {
         productsGUI.Remove(productGUI);
-        Destroy(productGUI.gameObject);
+        GameObject.Destroy(productGUI.gameObject);
         Sort();
     }
 }
