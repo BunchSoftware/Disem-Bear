@@ -4938,9 +4938,6 @@ GameObject:
   - component: {fileID: 2214200442696495984}
   - component: {fileID: 3051292687227364656}
   - component: {fileID: 1892693423988651759}
-  - component: {fileID: 6361797599987062814}
-  - component: {fileID: 7775523155591822077}
-  - component: {fileID: 6898449816234771521}
   - component: {fileID: 5417974227223118406}
   - component: {fileID: 1360009761462390633}
   - component: {fileID: 4152707365304679793}
@@ -5074,52 +5071,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &6361797599987062814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7637504109331753141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  needPosition: 0
-  startCoords: {x: 0, y: 0, z: 0}
-  needRotate: 0
-  startRotate: {x: 0, y: 0, z: 0, w: 0}
-  TimeAnimation: 1
---- !u!114 &7775523155591822077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7637504109331753141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f39095c25252944419a1749380a1206c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Left: {fileID: 21300000, guid: 2434bd2120ddc0543867d4398c1aaee5, type: 3}
-  Right: {fileID: 21300000, guid: 2d97a62191e55004ea1546bf4b34b009, type: 3}
-  Forward: {fileID: 21300000, guid: 72d37f7ec91332f45a11aeef8571f02a, type: 3}
-  Back: {fileID: 21300000, guid: e6574dc576f6d6744894f3fbbc099bf6, type: 3}
---- !u!114 &6898449816234771521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7637504109331753141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a97ec3782698efd4d8152b7c6980b3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveOn: 1
 --- !u!195 &5417974227223118406
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5154,9 +5105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3709b8bafb850b458b2b9e9111ade80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerInSomething: 0
-  PlayerPickSometing: 0
+  playerInSomething: 0
+  playerPickSometing: 0
   currentPickObject: {fileID: 0}
+  playerParticleSystem: {fileID: 0}
+  pointItemLeft: {fileID: 0}
+  pointItemRight: {fileID: 0}
+  pointItemBack: {fileID: 0}
+  pointItemForward: {fileID: 0}
 --- !u!114 &4152707365304679793
 MonoBehaviour:
   m_ObjectHideFlags: 0

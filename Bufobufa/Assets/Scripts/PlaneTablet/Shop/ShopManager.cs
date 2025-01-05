@@ -13,7 +13,7 @@ public class TypeMachineDispensingProduct
 }
 
 [Serializable]
-public class ShopManager : IUpdateListener
+public class ShopManager
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject content;
@@ -103,11 +103,6 @@ public class ShopManager : IUpdateListener
         Sort();
     }
 
-    public void OnUpdate(float deltaTime)
-    {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
-    }
-
     private void Sort()
     {
         for (int j = 0; j < productsGUI.Count; j++)
@@ -128,6 +123,8 @@ public class ShopManager : IUpdateListener
                 }
             }
         }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
 
     private bool Buy(Product product)

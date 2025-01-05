@@ -19,6 +19,8 @@ public class GameBootstrap : MonoBehaviour
     [SerializeField] private PlayerInfo player;
     [SerializeField] private PlayerChangeImage playerChangeImage = new();
     [SerializeField] private PlayerMouseMove playerMouseMove;
+    [Header("Environment")]
+    [SerializeField] private EnvironmentRoot environmentRoot;
     [Header("Sound")]
     [SerializeField] private SoundManager soundManager;
     [SerializeField] private SoundManager musicManager;
@@ -43,6 +45,9 @@ public class GameBootstrap : MonoBehaviour
 
         updateListeners.Add(uiGameRoot);
         uiGameRoot.Init(saveManager);
+
+        updateListeners.Add(environmentRoot);
+        environmentRoot.Init(playerMouseMove);
 
         playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
         playerMouseMove.OnMove += playerChangeImage.Update;

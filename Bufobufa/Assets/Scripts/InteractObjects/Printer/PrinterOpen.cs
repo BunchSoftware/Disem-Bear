@@ -1,4 +1,3 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,7 +68,6 @@ public class PrinterOpen : MonoBehaviour
         {
 
             ClickedMouse = false;
-            Vcam.GetComponent<CinemachineVirtualCamera>().Follow = null;
             Vcam.GetComponent<MoveAnimation>().startCoords = CoordVcam;
             Vcam.GetComponent<MoveAnimation>().needPosition = true;
             Vcam.GetComponent<MoveAnimation>().startRotate = RotateVcam;
@@ -116,6 +114,5 @@ public class PrinterOpen : MonoBehaviour
     IEnumerator WaitAnimCamera(float f)
     {
         yield return new WaitForSeconds(f);
-        Vcam.GetComponent<CinemachineVirtualCamera>().Follow = Player.transform;
     }
 }

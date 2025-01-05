@@ -1,4 +1,3 @@
-using Cinemachine;
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;

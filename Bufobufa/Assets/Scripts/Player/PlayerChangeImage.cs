@@ -20,8 +20,6 @@ public class PlayerChangeImage
 
     public void Update(Move move)
     {
-        playerInfo.currentPickObject.transform.localEulerAngles = Vector3.zero;
-
         switch (move.directionMove)
         {
             case DirectionMove.State:
@@ -78,6 +76,9 @@ public class PlayerChangeImage
     private void FlipPickItem(Vector3 position)
     {
         if(playerInfo.currentPickObject != null)
+        {
+            playerInfo.currentPickObject.transform.localEulerAngles = Vector3.zero;
             playerInfo.currentPickObject.transform.position = position;
+        }
     }
 }

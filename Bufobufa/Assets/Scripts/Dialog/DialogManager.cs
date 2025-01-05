@@ -12,8 +12,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 [Serializable]
-public class DialogManager : IUpdateListener
-{
+public class DialogManager
+{ 
     [SerializeField] private DialogueWindow dialogueWindow;
     [SerializeField] private FileDialog fileDialog;
     public UnityEvent<Dialog> OnStartDialog;
@@ -51,12 +51,6 @@ public class DialogManager : IUpdateListener
             }
             TypeLine(dialogPoints[currentIndexDialogPoint], saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
         }
-    }
-
-
-    public void OnUpdate(float deltaTime)
-    {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueWindow.gameObject.GetComponent<RectTransform>());
     }
 
     public void StartDialog(int indexDialogPoint)
@@ -138,6 +132,7 @@ public class DialogManager : IUpdateListener
 
             EnterDrop(dialogPoint.dialog[i]);
             dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueWindow.gameObject.GetComponent<RectTransform>());
             yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
 
             OnEndDialog?.Invoke(dialogPoint.dialog[i]);

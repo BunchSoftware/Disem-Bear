@@ -9,7 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 [Serializable]
-public class DialogChat : IUpdateListener
+public class DialogChat 
 {
     [SerializeField] private GameObject contentMessage;
     [SerializeField] private GameObject prefabMessage;
@@ -28,18 +28,13 @@ public class DialogChat : IUpdateListener
     private bool isCanSkipDialog = false;
 
     private MonoBehaviour context;
+    private Coroutine currentTypeLineCoroutine;
 
     public void Init(MonoBehaviour context)
     {
         this.context = context;
         dialogPoints = fileDialog.dialogPoints;
         contentPanelChoices.SetActive(false);
-    }
-
-
-    public void OnUpdate(float deltaTime)
-    {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(contentMessage.GetComponent<RectTransform>());
     }
 
     public void StartDialog(int indexDialogPoint)
@@ -76,8 +71,8 @@ public class DialogChat : IUpdateListener
 
     public void TypeLine(DialogPoint dialogPoint, int indexDialog)
     {
-        context.StopAllCoroutines();
-        context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
+        if (currentTypeLineCoroutine == null)
+            currentTypeLineCoroutine = context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
     }
 
     IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
@@ -128,6 +123,7 @@ public class DialogChat : IUpdateListener
 
                 EnterDrop(dialogPoint.dialog[i]);
                 currentDialogMessageGroup.StartTypeLine(dialogPoint.dialog[i]);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(contentMessage.GetComponent<RectTransform>());
                 yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
 
                 EndDialog?.Invoke(dialogPoint.dialog[i]);
@@ -153,7 +149,8 @@ public class DialogChat : IUpdateListener
 
     private void StopTypeLine()
     {
-        context.StopAllCoroutines();
+        if(currentTypeLineCoroutine != null)
+            context.StopCoroutine(currentTypeLineCoroutine);
         currentDialogMessageGroup.StopTypeLine();
         isCanSkipDialog = false;
     }

@@ -31,10 +31,6 @@ public class UIGameRoot : MonoBehaviour, IUpdateListener
 
     public void OnUpdate(float deltaTime)
     {
-        dialogManager.OnUpdate(deltaTime);
-        dialogChat.OnUpdate(deltaTime);
-        shopManager.OnUpdate(deltaTime);
-
         if (Input.GetKeyDown(KeyCode.Escape) && isActivePause == false)
         {
             isActivePause = true;
