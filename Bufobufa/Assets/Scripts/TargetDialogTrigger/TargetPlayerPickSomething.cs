@@ -37,7 +37,7 @@ public class TargetPlayerPickSomething : MonoBehaviour
 
     private void Update()
     {
-        if (Player_Info.PlayerPickSometing && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
+        if (Player_Info.playerPickSometing && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
         {
             OneTap = false;
             for (int i = 0; i < targets.Count; i++)
@@ -60,7 +60,7 @@ public class TargetPlayerPickSomething : MonoBehaviour
                 }
             }
         }
-        else if (!Player_Info.PlayerPickSometing && OneTap == false)
+        else if (!Player_Info.playerPickSometing && OneTap == false)
         {
             OneTap = true;
         }

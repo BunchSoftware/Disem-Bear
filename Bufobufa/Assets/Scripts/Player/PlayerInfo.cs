@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    private SaveManager saveManager;    
-    public bool PlayerInSomething = false;
-    public bool PlayerPickSometing = false;
+    [HideInInspector] public bool playerInSomething = false;
+    [HideInInspector] public bool playerPickSometing = false;
+    [HideInInspector] public GameObject currentPickObject;
 
-    private void Awake()
-    {
-        //saveManager = FindFirstObjectByType<SaveManager>();
-    }
+    [SerializeField] private ParticleSystem playerParticleSystem;
+    public ParticleSystem PlayerParticleSystem => playerParticleSystem;
 
-    public GameObject currentPickObject;
+    [SerializeField] private GameObject pointItemLeft;
+    public GameObject PointItemLeft => pointItemLeft;
+
+    [SerializeField] private GameObject pointItemRight;
+    public GameObject PointItemRight => pointItemRight;
+
+    [SerializeField] private GameObject pointItemBack;
+    public GameObject PointItemBack => pointItemBack;
+
+    [SerializeField] private GameObject pointItemForward;
+    public GameObject PointItemForward => pointItemForward;
 }

@@ -78,7 +78,7 @@ public class OpenObject : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !ObjectAnim && InTrigger && ClickedMouse && !ObjectIsOpen)
+        if (!Player.GetComponent<PlayerInfo>().playerPickSometing && !ObjectAnim && InTrigger && ClickedMouse && !ObjectIsOpen)
         {
             
 
@@ -103,7 +103,7 @@ public class OpenObject : MonoBehaviour
             ClickedMouse = false;
             ObjectIsOpen = true;
             //TriggerObject.SetActive(false);
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
+            Player.GetComponent<PlayerInfo>().playerInSomething = true;
             ObjectAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
@@ -146,6 +146,6 @@ public class OpenObject : MonoBehaviour
     IEnumerator WaitAnimCamera(float f)
     {
         yield return new WaitForSeconds(f);
-        Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
+        Player.GetComponent<PlayerInfo>().playerInSomething = false;
     }
 }

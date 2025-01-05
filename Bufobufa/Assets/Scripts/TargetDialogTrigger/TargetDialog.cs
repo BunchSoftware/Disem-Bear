@@ -104,7 +104,7 @@ public class TargetDialog : MonoBehaviour
                 ThingsInTableMix = GetComponent<ThingsInTableMix>();
             }
         }
-        DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
+        //DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
     }
     private void Update()
     {
@@ -178,7 +178,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -186,7 +186,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -211,7 +211,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -219,7 +219,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -233,14 +233,14 @@ public class TargetDialog : MonoBehaviour
     }
     private void PlayerPickPackageFunc(int i)
     {
-        if (Player_Info.PlayerPickSometing && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
+        if (Player_Info.playerPickSometing && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
         {
             OneTap = false;
             if (targets[i].Active)
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -248,7 +248,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -259,7 +259,7 @@ public class TargetDialog : MonoBehaviour
                 }
             }
         }
-        else if (!Player_Info.PlayerPickSometing && OneTap == false)
+        else if (!Player_Info.playerPickSometing && OneTap == false)
         {
             OneTap = true;
         }
@@ -273,7 +273,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -281,7 +281,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -310,7 +310,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -318,7 +318,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -338,7 +338,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -346,7 +346,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -367,7 +367,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -375,7 +375,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -396,7 +396,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -404,7 +404,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -430,7 +430,7 @@ public class TargetDialog : MonoBehaviour
                 AllPointerManager.SetPointer(7);
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -438,7 +438,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {
@@ -463,7 +463,7 @@ public class TargetDialog : MonoBehaviour
             {
                 if (targets[i].NewDialog)
                 {
-                    DialogManager.StartDialog(targets[i].NumDialog);
+                    //DialogManager.StartDialog(targets[i].NumDialog);
                     if (!targets[i].StayActiveAfter)
                     {
                         targets[i].Active = false;
@@ -471,7 +471,7 @@ public class TargetDialog : MonoBehaviour
                 }
                 else
                 {
-                    DialogManager.RunConditionSkip(targets[i].DialogTag);
+                    //DialogManager.RunConditionSkip(targets[i].DialogTag);
                 }
                 for (int j = 0; j < targets[i].NeedActivate.Count; j++)
                 {

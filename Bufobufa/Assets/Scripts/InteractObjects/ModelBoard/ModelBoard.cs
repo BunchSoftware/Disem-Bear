@@ -23,23 +23,23 @@ public class ModelBoard : MonoBehaviour
         Workbench = GameObject.Find("Workbench");
         storeManager = GameObject.Find("StoreManager").GetComponent<StoreManager>();
 
-        if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
-        {
-            for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Count; i++)
-            {
-                for (int j = 0; j < getItemFromTables.Count; j++)
-                {
-                    if (getItemFromTables[j].typeItemFromTable == saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves[i].typeModelBoard)
-                    {
-                        GameObject item = Instantiate(getItemFromTables[j].gameObject.GetComponent<PackageInfo>().ItemInPackage);
-                        items.Add(item);
-                        items[items.Count - 1].transform.parent = transform;
-                        items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
-                        items[items.Count - 1].SetActive(true);
-                    }
-                }
-            }
-        }
+        //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
+        //{
+        //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Count; i++)
+        //    {
+        //        for (int j = 0; j < getItemFromTables.Count; j++)
+        //        {
+        //            if (getItemFromTables[j].typeItemFromTable == saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves[i].typeModelBoard)
+        //            {
+        //                GameObject item = Instantiate(getItemFromTables[j].gameObject.GetComponent<PackageInfo>().ItemInPackage);
+        //                items.Add(item);
+        //                items[items.Count - 1].transform.parent = transform;
+        //                items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
+        //                items[items.Count - 1].SetActive(true);
+        //            }
+        //        }
+        //    }
+        //}
     }
     private void Update()
     {
@@ -68,7 +68,7 @@ public class ModelBoard : MonoBehaviour
             InTableAndBoard = false;
         }
 
-        if (!GetComponent<OpenObject>().ObjectIsOpen && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && Player.GetComponent<PlayerInfo>().PlayerPickSometing)
+        if (!GetComponent<OpenObject>().ObjectIsOpen && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && Player.GetComponent<PlayerInfo>().playerPickSometing)
         {
             GetComponent<OpenObject>().ClickedMouse = false;
             if (Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<PackageInfo>())
@@ -91,7 +91,7 @@ public class ModelBoard : MonoBehaviour
                         items[items.Count - 1].transform.parent = transform;
                         items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
                         items[items.Count - 1].SetActive(true);
-                        Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                        Player.GetComponent<PlayerInfo>().playerPickSometing = false;
                         Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
 
                         if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves == null)
@@ -120,6 +120,6 @@ public class ModelBoard : MonoBehaviour
     IEnumerator WaitAnimCamera(float f)
     {
         yield return new WaitForSeconds(f);
-        Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
+        Player.GetComponent<PlayerInfo>().playerInSomething = false;
     }
 }

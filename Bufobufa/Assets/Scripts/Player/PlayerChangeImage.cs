@@ -1,142 +1,83 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerChangeImage : MonoBehaviour
+public class PlayerChangeImage 
 {
-    private Vector3 LastPos;
-    private SpriteRenderer spriteRender;
-    [SerializeField] private Sprite Left;
-    [SerializeField] private Sprite Right;
-    [SerializeField] private Sprite Forward;
-    [SerializeField] private Sprite Back;
-
     private Animator animator;
-    private GameObject PointItemLeft;
-    private GameObject PointItemRight;
-    private GameObject PointItemBack;
-    private GameObject PointItemForward;
-    private GameObject ParticleSystem;
+    private ParticleSystem playerParticleSystem;
+    private PlayerInfo playerInfo;
+
+    public void Init(Animator animator, PlayerInfo playerInfo)
+    {
+        this.animator = animator;
+        this.playerInfo = playerInfo;
+        playerParticleSystem = playerInfo.PlayerParticleSystem;
+    }
 
 
-    private float HorizontalChangePos;
-    private float VerticalChangePos;
-    private string HorizontalAnimation;
-    private string VerticalAnimation;
-    private string CurrentAnimation = "StateAnimation";
-    private string CurrentAnimationParticle = "StateAnimation";
-    private void Start()
+    public void Update(Move move)
     {
-        ParticleSystem = transform.Find("Particle System").gameObject;
-        animator = GetComponent<Animator>();
-        LastPos = transform.position;
-        spriteRender = GetComponent<SpriteRenderer>();
-        PointItemLeft = transform.Find("PointItemLeft").gameObject;
-        PointItemRight = transform.Find("PointItemRight").gameObject;
-        PointItemBack = transform.Find("PointItemBack").gameObject;
-        PointItemForward = transform.Find("PointItemForward").gameObject;
-    }
-    private void Update()
-    {
-        ImageChange();
-        ParticleSystemChange();
-        if (GetComponent<PlayerInfo>().PlayerPickSometing)
-            ItemInHandsChange();
-        LastPos = transform.position;
-    }
-    private void ParticleSystemChange()
-    {
-        if (CurrentAnimation == "LeftAnimation" && CurrentAnimationParticle != "LeftAnimation")
+        playerInfo.currentPickObject.transform.localEulerAngles = Vector3.zero;
+
+        switch (move.directionMove)
         {
-            CurrentAnimationParticle = "LeftAnimation";
-            ParticleSystem.GetComponent<ParticleSystem>().Play();
-            ParticleSystem.transform.eulerAngles = new Vector3(15.9691277f, 87.8853149f, 352.904419f);
-        }
-        else if (CurrentAnimation == "RightAnimation" && CurrentAnimationParticle != "RightAnimation")
-        {
-            CurrentAnimationParticle = "RightAnimation";
-            ParticleSystem.GetComponent<ParticleSystem>().Play();
-            ParticleSystem.transform.eulerAngles = new Vector3(15.9689913f, 272.11499f, 352.903992f);
-        }
-        else if (CurrentAnimation == "BackAnimation" && CurrentAnimationParticle != "BackAnimation")
-        {
-            CurrentAnimationParticle = "BackAnimation";
-            ParticleSystem.GetComponent<ParticleSystem>().Play();
-            ParticleSystem.transform.eulerAngles = new Vector3(15.9689932f, 0, 352.903992f);
-        }
-        else if (CurrentAnimation == "ForwardAnimation" && CurrentAnimationParticle != "ForwardAnimation")
-        {
-            CurrentAnimationParticle = "ForwardAnimation";
-            ParticleSystem.GetComponent<ParticleSystem>().Play();
-            ParticleSystem.transform.eulerAngles = new Vector3(15.9689932f, 180f, 352.903992f);
-        }
-        else if (CurrentAnimation == "StateAnimation" && CurrentAnimationParticle != "StateAnimation")
-        {
-            CurrentAnimationParticle = "StateAnimation";
-            ParticleSystem.GetComponent<ParticleSystem>().Stop();
-        }
-    }
-    private void ItemInHandsChange()
-    {
-        GetComponent<PlayerInfo>().currentPickObject.transform.localEulerAngles = Vector3.zero;
-        if (CurrentAnimation == "LeftAnimation")
-        {
-            GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemLeft.transform.position;
-        }
-        else if (CurrentAnimation == "RightAnimation")
-        {
-            GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemRight.transform.position;
-        }
-        else if (CurrentAnimation == "BackAnimation")
-        {
-            GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemBack.transform.position;
-        }
-        else if (CurrentAnimation == "ForwardAnimation" || CurrentAnimation == "StateAnimation")
-        {
-            GetComponent<PlayerInfo>().currentPickObject.transform.position = PointItemForward.transform.position;
+            case DirectionMove.State:
+                animator.SetInteger("State", 0);
+                if (playerParticleSystem.isPlaying)
+                    playerParticleSystem.Stop();
+
+                FlipPickItem(playerInfo.PointItemForward.transform.position);
+
+                break;
+            case DirectionMove.Right:
+                animator.SetInteger("State", 1);
+
+                if (!playerParticleSystem.isPlaying)
+                    playerParticleSystem.Play();
+                playerParticleSystem.transform.eulerAngles = new Vector3(15, 270, 0);
+
+                FlipPickItem(playerInfo.PointItemRight.transform.position);
+
+                break;
+            case DirectionMove.Left:
+                animator.SetInteger("State", 2);
+
+                if (!playerParticleSystem.isPlaying)
+                    playerParticleSystem.Play();
+                playerParticleSystem.transform.eulerAngles = new Vector3(15, 90, 0);
+
+                FlipPickItem(playerInfo.PointItemLeft.transform.position);
+
+                break;
+            case DirectionMove.Forward:
+                animator.SetInteger("State", 3);
+
+                if (!playerParticleSystem.isPlaying)
+                    playerParticleSystem.Play();
+                playerParticleSystem.transform.eulerAngles = new Vector3(15, 180, 0);
+
+                FlipPickItem(playerInfo.PointItemForward.transform.position);
+
+                break;
+            case DirectionMove.Back:
+                animator.SetInteger("State", 4);
+
+                if (!playerParticleSystem.isPlaying)
+                    playerParticleSystem.Play();
+                playerParticleSystem.transform.eulerAngles = new Vector3(15, 0, 0);
+
+                FlipPickItem(playerInfo.PointItemBack.transform.position);
+
+                break;
         }
     }
-    private void ImageChange()
+
+    private void FlipPickItem(Vector3 position)
     {
-        HorizontalChangePos = LastPos.x - transform.position.x;
-        VerticalChangePos = LastPos.z - transform.position.z;
-        if (HorizontalChangePos >= 0.01f)
-        {
-            //HorizontalSprite = Left;
-            //animator.Play("LeftAnimation");
-            HorizontalAnimation = "LeftAnimation";
-        }
-        else
-        {
-            //HorizontalSprite = Right;
-            //animator.Play("RightAnimation");
-            HorizontalAnimation = "RightAnimation";
-        }
-        if (VerticalChangePos < -0.01f)
-        {
-            //VerticalSprite = Back;
-            //animator.Play("BackAnimation");
-            VerticalAnimation = "BackAnimation";
-        }
-        else
-        {
-            //VerticalSprite = Forward;
-            //animator.Play("ForwardAnimation");
-            VerticalAnimation = "ForwardAnimation";
-        }
-        if (Mathf.Abs(HorizontalChangePos) < 0.01f && Mathf.Abs(VerticalChangePos) < 0.01f)
-        {
-            CurrentAnimation = "StateAnimation";
-        }
-        else if (Mathf.Abs(HorizontalChangePos) > Mathf.Abs(VerticalChangePos))
-        {
-            CurrentAnimation = HorizontalAnimation;
-        }
-        else
-        {
-            CurrentAnimation = VerticalAnimation;
-        }
-        animator.Play(CurrentAnimation);
+        if(playerInfo.currentPickObject != null)
+            playerInfo.currentPickObject.transform.position = position;
     }
 }

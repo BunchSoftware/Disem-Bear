@@ -19,32 +19,32 @@ public class FridgeOpen : MonoBehaviour
     {
         FrontFridge = transform.Find("FrontFridge").gameObject;
 
-        if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)
-        {
-            for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
-            {
-                prefabMagnet.name = $"Magnet {i}";
-                MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
+        //if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)
+        //{
+        //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
+        //    {
+        //        prefabMagnet.name = $"Magnet {i}";
+        //        MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
 
-                for (int j = 0; j < fileMagnets.magnets.Count; j++)
-                {
-                    if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
-                    {
-                        Magnet magnet = new Magnet()
-                        {
-                            x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
-                            y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
-                            z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
-                            typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
-                            iconMagnet = fileMagnets.magnets[j].iconMagnet,
-                        };
-                        magnetGUI.Init(magnet);
-                        break;
-                    }
-                }
-                magnetsGUI.Add(magnetGUI);
-            }
-        }      
+        //        for (int j = 0; j < fileMagnets.magnets.Count; j++)
+        //        {
+        //            if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
+        //            {
+        //                Magnet magnet = new Magnet()
+        //                {
+        //                    x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
+        //                    y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
+        //                    z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
+        //                    typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
+        //                    iconMagnet = fileMagnets.magnets[j].iconMagnet,
+        //                };
+        //                magnetGUI.Init(magnet);
+        //                break;
+        //            }
+        //        }
+        //        magnetsGUI.Add(magnetGUI);
+        //    }
+        //}      
     }
 
     private void Update()

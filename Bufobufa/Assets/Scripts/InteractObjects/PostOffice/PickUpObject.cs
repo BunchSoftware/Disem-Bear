@@ -30,7 +30,7 @@ public class PickUpObject : MonoBehaviour
             //lcScale = transform.localScale;
             //transform.parent = Player.transform;
             //transform.localScale = new Vector3(lcScale.x / Player.transform.localScale.x, lcScale.y / Player.transform.localScale.y, lcScale.z / Player.transform.localScale.z);
-            Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+            Player.GetComponent<PlayerInfo>().playerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = gameObject;
             Destroy(this);
         }

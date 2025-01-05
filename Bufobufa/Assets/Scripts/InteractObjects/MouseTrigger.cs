@@ -51,7 +51,7 @@ public class MouseTrigger : MonoBehaviour
                 }
                 else
                 {
-                    if (!Player.GetComponent<PlayerInfo>().PlayerInSomething)
+                    if (!Player.GetComponent<PlayerInfo>().playerInSomething)
                     {
                         if (FullZero)
                         {

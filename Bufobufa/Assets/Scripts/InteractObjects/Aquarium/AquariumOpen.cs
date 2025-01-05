@@ -49,7 +49,7 @@ public class AquariumOpen : MonoBehaviour
 
             
         }
-        else if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && !GetComponent<OpenObject>().ObjectIsOpen)
+        else if (Player.GetComponent<PlayerInfo>().playerPickSometing && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && !GetComponent<OpenObject>().ObjectIsOpen)
         {
             //GetComponent<OpenObject>().InTrigger = false;
             GetComponent<OpenObject>().ClickedMouse = false;
@@ -59,7 +59,7 @@ public class AquariumOpen : MonoBehaviour
                 {
                     AquariumSprite.GetComponent<Aquarium>().TimeWaterSpend = Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<MaterialForAquarium>().TimeMaterial;
                     AquariumSprite.GetComponent<Aquarium>().OnAquarium = true;
-                    Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                    Player.GetComponent<PlayerInfo>().playerPickSometing = false;
                     Destroy(Player.GetComponent<PlayerInfo>().currentPickObject);
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
                 }

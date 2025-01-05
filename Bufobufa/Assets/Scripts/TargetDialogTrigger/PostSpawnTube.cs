@@ -13,10 +13,10 @@ public class PostSpawnTube : MonoBehaviour
 
     private void Start()
     {
-        DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
+        //DialogManager = GameObject.Find("DialogManager").GetComponent<DialogManager>();
         PostOfficeTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
         AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<AllPointerManager>();
-        DialogManager.SendInputFieldText.AddListener(DropBox);
+        //DialogManager.SendInputFieldText.AddListener(DropBox);
     }
     public void DropBox(string s)
     {

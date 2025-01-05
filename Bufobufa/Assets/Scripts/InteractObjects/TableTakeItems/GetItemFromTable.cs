@@ -67,9 +67,9 @@ public class GetItemFromTable : MonoBehaviour
                 }
             }
         }
-        if (InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().PlayerPickSometing && !Player.GetComponent<PlayerInfo>().PlayerInSomething)
+        if (InTrigger && ClickedMouse && !Player.GetComponent<PlayerInfo>().playerPickSometing && !Player.GetComponent<PlayerInfo>().playerInSomething)
         {
-            Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+            Player.GetComponent<PlayerInfo>().playerPickSometing = true;
             Player.GetComponent<PlayerInfo>().currentPickObject = table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj;
             table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].GetItem = false;
             table.GetComponent<TableTakesItem>().pointsInfo[indexPoint].obj = null;

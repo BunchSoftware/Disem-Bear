@@ -65,7 +65,7 @@ public class PrinterOpen : MonoBehaviour
         }
 
 
-        if (!Player.GetComponent<PlayerInfo>().PlayerPickSometing && !PrinterAnim && InTrigger && ClickedMouse && !PrinterIsOpen)
+        if (!Player.GetComponent<PlayerInfo>().playerPickSometing && !PrinterAnim && InTrigger && ClickedMouse && !PrinterIsOpen)
         {
 
             ClickedMouse = false;
@@ -85,7 +85,7 @@ public class PrinterOpen : MonoBehaviour
 
 
             PrinterIsOpen = true;
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = true;
+            Player.GetComponent<PlayerInfo>().playerInSomething = true;
             PrinterAnim = true;
             StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveAnimation>().TimeAnimation + 0.1f));
             GetComponent<BoxCollider>().enabled = false;
@@ -94,7 +94,7 @@ public class PrinterOpen : MonoBehaviour
         {
             TriggerPrinter.SetActive(false);
             PrinterIsOpen = false;
-            Player.GetComponent<PlayerInfo>().PlayerInSomething = false;
+            Player.GetComponent<PlayerInfo>().playerInSomething = false;
             PrinterAnim = true;
             ClickedMouse = false;
             Vcam.GetComponent<MoveAnimation>().EndMove();

@@ -18,41 +18,41 @@ public class TableTakesItem : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
 
-        if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves != null)
-        {
-            for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
-            {
-                for (int j = 0; j < getItemFromTables.Count; j++)
-                {
-                    if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
-                    {
-                        GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-                        getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
+        //if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves != null)
+        //{
+        //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
+        //    {
+        //        for (int j = 0; j < getItemFromTables.Count; j++)
+        //        {
+        //            if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
+        //            {
+        //                GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
+        //                getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
 
-                        pointsInfo[getItemFromTable.indexPoint].GetItem = true;
-                        pointsInfo[getItemFromTable.indexPoint].obj = getItemFromTable.gameObject;
-                        pointsInfo[getItemFromTable.indexPoint].obj.transform.parent = null;
-                        pointsInfo[getItemFromTable.indexPoint].obj.transform.position = pointsInfo[getItemFromTable.indexPoint].point.transform.position;
-                        pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<MouseTrigger>().enabled = true;
-                        pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<BoxCollider>().enabled = true;
-                    }
-                }
-            }
-            if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave != null
-                && saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != "")
-            {
-                for (int j = 0; j < getItemFromTables.Count; j++)
-                {
-                    if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
-                    {
-                        GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-                        getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.indexPoint;
-                        Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
-                        Player.GetComponent<PlayerInfo>().currentPickObject = getItemFromTable.gameObject;
-                    }
-                }
-            }
-        }
+        //                pointsInfo[getItemFromTable.indexPoint].GetItem = true;
+        //                pointsInfo[getItemFromTable.indexPoint].obj = getItemFromTable.gameObject;
+        //                pointsInfo[getItemFromTable.indexPoint].obj.transform.parent = null;
+        //                pointsInfo[getItemFromTable.indexPoint].obj.transform.position = pointsInfo[getItemFromTable.indexPoint].point.transform.position;
+        //                pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<MouseTrigger>().enabled = true;
+        //                pointsInfo[getItemFromTable.indexPoint].obj.GetComponent<BoxCollider>().enabled = true;
+        //            }
+        //        }
+        //    }
+        //    if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave != null
+        //        && saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != "")
+        //    {
+        //        for (int j = 0; j < getItemFromTables.Count; j++)
+        //        {
+        //            if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
+        //            {
+        //                GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
+        //                getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.indexPoint;
+        //                Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+        //                Player.GetComponent<PlayerInfo>().currentPickObject = getItemFromTable.gameObject;
+        //            }
+        //        }
+        //    }
+        //}
     }
     public void OnTrigEnter(Collider other)
     {
@@ -87,7 +87,7 @@ public class TableTakesItem : MonoBehaviour
                 }
             }
         }
-        if (Player.GetComponent<PlayerInfo>().PlayerPickSometing && InTrigger && ClickedMouse && Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<GetItemFromTable>())
+        if (Player.GetComponent<PlayerInfo>().playerPickSometing && InTrigger && ClickedMouse && Player.GetComponent<PlayerInfo>().currentPickObject.GetComponent<GetItemFromTable>())
         {
             ClickedMouse = false;
             for (int i = 0; i < pointsInfo.Count; i++)
@@ -97,7 +97,7 @@ public class TableTakesItem : MonoBehaviour
                     pointsInfo[i].GetItem = true;
                     pointsInfo[i].obj = Player.GetComponent<PlayerInfo>().currentPickObject;
                     pointsInfo[i].obj.transform.parent = null;
-                    Player.GetComponent<PlayerInfo>().PlayerPickSometing = false;
+                    Player.GetComponent<PlayerInfo>().playerPickSometing = false;
                     Player.GetComponent<PlayerInfo>().currentPickObject = null;
                     pointsInfo[i].obj.transform.position = pointsInfo[i].point.transform.position;
                     pointsInfo[i].obj.GetComponent<GetItemFromTable>().indexPoint = i;

@@ -29,7 +29,7 @@ public class TableOpen : MonoBehaviour
                 Player.GetComponent<PlayerInfo>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
                 MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject.transform.parent = Player.transform;
                 MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject = null;
-                Player.GetComponent<PlayerInfo>().PlayerPickSometing = true;
+                Player.GetComponent<PlayerInfo>().playerPickSometing = true;
             }
         }
     }

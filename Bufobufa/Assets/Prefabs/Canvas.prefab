@@ -120,8 +120,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fade: {fileID: 64001836258055952}
-  saveManager: {fileID: 0}
   pausePanel: {fileID: 4038592099934161908}
+  dialogManager:
+    dialogueWindow: {fileID: 0}
+    fileDialog: {fileID: 0}
+    OnStartDialog:
+      m_PersistentCalls:
+        m_Calls: []
+    OnEndDialog:
+      m_PersistentCalls:
+        m_Calls: []
+    SendInputFieldText:
+      m_PersistentCalls:
+        m_Calls: []
+  dialogChat:
+    contentMessage: {fileID: 0}
+    prefabMessage: {fileID: 0}
+    contentPanelChoices: {fileID: 0}
+    prefabButtonChoice: {fileID: 0}
+    fileDialog: {fileID: 0}
+    EndDialog:
+      m_PersistentCalls:
+        m_Calls: []
+  shopManager:
+    prefab: {fileID: 0}
+    content: {fileID: 0}
+    fileProducts: {fileID: 0}
+    typeGiveProducts: []
+  exerciseManager:
+    prefab: {fileID: 0}
+    content: {fileID: 0}
+    fileExercise: {fileID: 0}
+    typeGiveProducts: []
 --- !u!1 &8321698825504576337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,7 +1274,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8207189799726193097, guid: f29183e0db2e1e8419bcdde17549e941, type: 3}
+    - {fileID: 8727748450286925264, guid: f29183e0db2e1e8419bcdde17549e941, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2370739377830701433, guid: f29183e0db2e1e8419bcdde17549e941, type: 3}

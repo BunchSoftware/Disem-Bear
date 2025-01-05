@@ -1,6 +1,7 @@
 using API;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public interface IUpdateListener
 {
@@ -14,6 +15,10 @@ public interface IFixedUpdateListener
 
 public class GameBootstrap : MonoBehaviour
 {
+    [Header("Player")]
+    [SerializeField] private PlayerInfo player;
+    [SerializeField] private PlayerChangeImage playerChangeImage = new();
+    [SerializeField] private PlayerMouseMove playerMouseMove;
     [Header("Sound")]
     [SerializeField] private SoundManager soundManager;
     [SerializeField] private SoundManager musicManager;
@@ -38,6 +43,12 @@ public class GameBootstrap : MonoBehaviour
 
         updateListeners.Add(uiGameRoot);
         uiGameRoot.Init(saveManager);
+
+        playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
+        playerMouseMove.OnMove += playerChangeImage.Update;
+
+        updateListeners.Add(playerMouseMove);
+        playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
     }
 
     private void Update()
