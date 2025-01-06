@@ -1,6 +1,12 @@
+using External.DI;
+using External.Storage;
+using Game.Dialog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet.DialogChat;
+using UI.PlaneTablet.Exercise;
+using UI.PlaneTablet.Shop;
 using UnityEngine;
 
 namespace UI

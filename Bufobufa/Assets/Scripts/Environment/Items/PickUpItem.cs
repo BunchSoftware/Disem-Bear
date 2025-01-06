@@ -1,3 +1,4 @@
+using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -26,8 +27,8 @@ namespace Game.Environment.Item
                 GetComponent<MouseTrigger>().enabled = false;
                 PickUp = true;
                 GetComponent<BoxCollider>().enabled = false;
-                Player.GetComponent<Player>().PickSomething();
-                Player.GetComponent<Player>().currentPickObject = gameObject;
+                //Player.GetComponent<Player>().PickSomething();
+                //Player.GetComponent<Player>().currentPickObject = gameObject;
                 Destroy(this);
             }
         }

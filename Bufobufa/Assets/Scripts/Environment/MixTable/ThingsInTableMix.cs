@@ -1,3 +1,4 @@
+using Game.Environment.Printer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     public class ThingsInTableMix : MonoBehaviour
     {

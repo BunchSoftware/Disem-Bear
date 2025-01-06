@@ -1,10 +1,11 @@
+using External.Storage;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     public class MixTable : MonoBehaviour
     {

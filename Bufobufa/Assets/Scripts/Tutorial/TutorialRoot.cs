@@ -1,3 +1,7 @@
+using External.Storage;
+using Game.Dialog;
+using Game.Environment.LPostTube;
+using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +11,7 @@ namespace Game.Tutorial
     public class TutorialRoot : MonoBehaviour
     {
         [SerializeField] private PointerTutorialManager pointerTutorialManager;
-        [SerializeField] private PostOfficeTube postOfficeTube;
+        [SerializeField] private PostTube postTube;
 
         private DialogManager dialogManager;
         private Player player;

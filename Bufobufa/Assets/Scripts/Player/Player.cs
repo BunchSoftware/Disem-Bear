@@ -1,7 +1,9 @@
+using Game.Environment.Item;
+using Game.Environment.LTableWithItems;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game.Player
+namespace Game.LPlayer
 {
     public class Player : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     [Serializable]
     public class IngradientSave

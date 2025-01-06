@@ -1,10 +1,11 @@
+using Game.LPlayer;
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     public class TableOpen : MonoBehaviour
     {

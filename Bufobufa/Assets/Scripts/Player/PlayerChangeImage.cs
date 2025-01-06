@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Game.Player
+namespace Game.LPlayer
 {
     public class PlayerChangeImage
     {

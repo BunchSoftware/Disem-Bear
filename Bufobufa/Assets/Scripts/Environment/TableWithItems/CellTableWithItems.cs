@@ -1,9 +1,10 @@
+using Game.Environment.Item;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game.Environment.TableWithItems
+namespace Game.Environment.LTableWithItems
 {
     public class CellTableWithItems : MonoBehaviour
     {

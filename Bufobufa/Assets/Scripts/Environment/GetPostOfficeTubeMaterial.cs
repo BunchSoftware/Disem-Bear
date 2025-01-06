@@ -1,3 +1,4 @@
+using Game.Environment.LPostTube;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Game.Environment
 
     public class GetPostOfficeTubeMaterial : MonoBehaviour
     {
-        private PostOfficeTube PostTube;
+        private PostTube PostTube;
         [SerializeField] private List<TypePostOfficeTubeMaterial> typePostOfficeTubeMaterials;
         public UnityEvent<TypePostOfficeTubeMaterial> OnGetPostOfficeTubeMaterial;
 
@@ -23,7 +24,7 @@ namespace Game.Environment
 
         private void Start()
         {
-            PostTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
+            PostTube = GameObject.Find("PostOfficeTube").GetComponent<PostTube>();
         }
 
         private void Update()

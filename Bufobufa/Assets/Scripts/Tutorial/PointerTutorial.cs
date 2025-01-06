@@ -1,3 +1,4 @@
+using Game.Dialog;
 using UnityEngine;
 using UnityEngine.Events;
 

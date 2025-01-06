@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     public class Spawner : MonoBehaviour
     {

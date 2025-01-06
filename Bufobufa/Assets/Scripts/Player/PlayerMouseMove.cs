@@ -1,3 +1,4 @@
+using External.DI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-namespace Game.Player
+namespace Game.LPlayer
 {
     public enum DirectionMove
     {

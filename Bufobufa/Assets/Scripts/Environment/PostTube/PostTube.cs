@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Environment.PostTube
+namespace Game.Environment.LPostTube
 {
     public class PostTube : MonoBehaviour
     {

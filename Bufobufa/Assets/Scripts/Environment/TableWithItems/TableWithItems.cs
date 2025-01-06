@@ -1,10 +1,12 @@
+using External.Storage;
+using Game.Environment.Item;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game.Environment.TableWithItems
+namespace Game.Environment.LTableWithItems
 {
     public class TableWithItems : MonoBehaviour, IPickUpItem, IPutItem
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     public class ClearButton : MonoBehaviour
     {

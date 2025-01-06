@@ -1,3 +1,4 @@
+using Game.Dialog;
 using System;
 using System.Collections;
 using System.Collections.Generic;

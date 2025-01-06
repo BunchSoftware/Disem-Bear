@@ -1,3 +1,4 @@
+using Game.Dialog;
 using Newtonsoft.Json;
 using System;
 using System.Collections;

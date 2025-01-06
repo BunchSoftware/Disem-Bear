@@ -1,5 +1,8 @@
 using DG.Tweening.Core.Easing;
-using DI;
+using External.DI;
+using External.Storage;
+using Game.Environment.LTableWithItems;
+using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

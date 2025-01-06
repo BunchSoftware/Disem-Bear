@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace Game.Environment.MixTable
+namespace Game.Environment.LMixTable
 {
     public class Ingredient : MonoBehaviour
     {

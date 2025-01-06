@@ -1,3 +1,8 @@
+using External.Storage;
+using Game.Environment.Item;
+using Game.Environment.LMixTable;
+using Game.Environment.LPostTube;
+using Game.LPlayer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
