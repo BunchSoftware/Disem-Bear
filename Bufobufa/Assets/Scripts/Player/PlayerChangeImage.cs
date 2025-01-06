@@ -8,13 +8,13 @@ public class PlayerChangeImage
 {
     private Animator animator;
     private ParticleSystem playerParticleSystem;
-    private PlayerInfo playerInfo;
+    private Player player;
 
-    public void Init(Animator animator, PlayerInfo playerInfo)
+    public void Init(Animator animator, Player player)
     {
         this.animator = animator;
-        this.playerInfo = playerInfo;
-        playerParticleSystem = playerInfo.PlayerParticleSystem;
+        this.player = player;
+        playerParticleSystem = player.PlayerParticleSystem;
     }
 
 
@@ -27,7 +27,7 @@ public class PlayerChangeImage
                 if (playerParticleSystem.isPlaying)
                     playerParticleSystem.Stop();
 
-                FlipPickItem(playerInfo.PointItemForward.transform.position);
+                FlipPickItem(player.PointItemForward.transform.position);
 
                 break;
             case DirectionMove.Right:
@@ -37,7 +37,7 @@ public class PlayerChangeImage
                     playerParticleSystem.Play();
                 playerParticleSystem.transform.eulerAngles = new Vector3(15, 270, 0);
 
-                FlipPickItem(playerInfo.PointItemRight.transform.position);
+                FlipPickItem(player.PointItemRight.transform.position);
 
                 break;
             case DirectionMove.Left:
@@ -47,7 +47,7 @@ public class PlayerChangeImage
                     playerParticleSystem.Play();
                 playerParticleSystem.transform.eulerAngles = new Vector3(15, 90, 0);
 
-                FlipPickItem(playerInfo.PointItemLeft.transform.position);
+                FlipPickItem(player.PointItemLeft.transform.position);
 
                 break;
             case DirectionMove.Forward:
@@ -57,7 +57,7 @@ public class PlayerChangeImage
                     playerParticleSystem.Play();
                 playerParticleSystem.transform.eulerAngles = new Vector3(15, 180, 0);
 
-                FlipPickItem(playerInfo.PointItemForward.transform.position);
+                FlipPickItem(player.PointItemForward.transform.position);
 
                 break;
             case DirectionMove.Back:
@@ -67,7 +67,7 @@ public class PlayerChangeImage
                     playerParticleSystem.Play();
                 playerParticleSystem.transform.eulerAngles = new Vector3(15, 0, 0);
 
-                FlipPickItem(playerInfo.PointItemBack.transform.position);
+                FlipPickItem(player.PointItemBack.transform.position);
 
                 break;
         }
@@ -75,10 +75,10 @@ public class PlayerChangeImage
 
     private void FlipPickItem(Vector3 position)
     {
-        if(playerInfo.currentPickObject != null)
+        if(player.currentPickObject != null)
         {
-            playerInfo.currentPickObject.transform.localEulerAngles = Vector3.zero;
-            playerInfo.currentPickObject.transform.position = position;
+            player.currentPickObject.transform.localEulerAngles = Vector3.zero;
+            player.currentPickObject.transform.position = position;
         }
     }
 }

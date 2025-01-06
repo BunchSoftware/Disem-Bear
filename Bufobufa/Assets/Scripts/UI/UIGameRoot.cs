@@ -26,7 +26,6 @@ public class UIGameRoot : MonoBehaviour, IUpdateListener
         exerciseManager.Init(saveManager);
         dialogChat.Init(this);
         dialogManager.Init(saveManager, this);
-        dialogManager.StartDialog(0);
     }
 
     public void OnUpdate(float deltaTime)
@@ -75,5 +74,10 @@ public class UIGameRoot : MonoBehaviour, IUpdateListener
         ChangeRenderMode();
         pausePanel.SetActive(false);
         isActivePause = false;
+    }
+
+    public DialogManager GetDialogManager()
+    {
+        return dialogManager;
     }
 }

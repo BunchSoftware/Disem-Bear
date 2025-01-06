@@ -21,7 +21,7 @@ If you're upgrading your project from a version of DOTween older than 1.2.000 (o
 
 DOTween website (documentation, examples, etc): http://dotween.demigiant.com
 DOTween license: http://dotween.demigiant.com/license.php
-DOTween repository (Google Code): https://code.google.com/p/dotween/
+DOTween repository (Google Code): https://code.https://2025.nti-gamedev.ru//p/dotween/
 Demigiant website (documentation, examples, etc): http://www.demigiant.com
 
 // NOTES //////////////////////////////////////////////////////

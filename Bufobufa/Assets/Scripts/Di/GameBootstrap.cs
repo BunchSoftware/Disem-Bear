@@ -1,5 +1,6 @@
 using API;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,9 +17,11 @@ public interface IFixedUpdateListener
 public class GameBootstrap : MonoBehaviour
 {
     [Header("Player")]
-    [SerializeField] private PlayerInfo player;
+    [SerializeField] private Player player;
     [SerializeField] private PlayerChangeImage playerChangeImage = new();
     [SerializeField] private PlayerMouseMove playerMouseMove;
+    [Header("Tutorial")]
+    [SerializeField] private TutorialRoot tutorialRoot;
     [Header("Environment")]
     [SerializeField] private EnvironmentRoot environmentRoot;
     [Header("Sound")]
@@ -43,11 +46,13 @@ public class GameBootstrap : MonoBehaviour
         musicManager.Init(this);
         soundManager.Init(this);
 
-        updateListeners.Add(uiGameRoot);
-        uiGameRoot.Init(saveManager);
-
         updateListeners.Add(environmentRoot);
         environmentRoot.Init(playerMouseMove);
+
+        tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);
+
+        updateListeners.Add(uiGameRoot);
+        uiGameRoot.Init(saveManager);
 
         playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
         playerMouseMove.OnMove += playerChangeImage.Update;

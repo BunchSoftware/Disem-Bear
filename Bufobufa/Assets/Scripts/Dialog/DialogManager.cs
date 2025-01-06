@@ -44,11 +44,6 @@ public class DialogManager
         if (saveManager.filePlayer.JSONPlayer.nameUser != null)
         {
             currentIndexDialogPoint = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
-            int count = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog;
-            for (int i = 0; i < count; i++)
-            {
-                OnStartDialog?.Invoke(dialogPoints[currentIndexDialogPoint].dialog[i]);
-            }
             TypeLine(dialogPoints[currentIndexDialogPoint], saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
         }
     }
@@ -230,5 +225,15 @@ public class DialogManager
             isCanSkipDialog = true;
             SkipDialog();
         }
+    }
+
+    public int GetCurrentIndexDialog()
+    {
+        return currentIndexDialog;
+    }
+
+    public int GetCurrentIndexDialogPoint()
+    {
+        return currentIndexDialogPoint;
     }
 }

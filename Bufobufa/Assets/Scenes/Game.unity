@@ -4968,7 +4968,6 @@ GameObject:
   - component: {fileID: 58684829}
   - component: {fileID: 58684832}
   - component: {fileID: 58684831}
-  - component: {fileID: 58684833}
   - component: {fileID: 58684834}
   m_Layer: 7
   m_Name: NextRoomArrow
@@ -5079,26 +5078,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3411db160b24474594cce67176bfa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionPlayer: {x: 0, y: 0, z: 0}
-  positionCamera: {x: 0, y: 0, z: 0}
-  timeAnimationCamera: 1
-  RightRoomStrelka: {fileID: 1925220354}
---- !u!114 &58684833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58684828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnyCase: 0
-  OnScaleChange: 0
-  TimeAnim: 0.2
-  FullZero: 1
+  positionPlayer: {x: 14.43, y: 2.4, z: -12.35}
+  positionCamera: {x: 16.86, y: 5.48, z: -19.5}
+  timeAnimationCamera: 2.2
+  oppositeArrow: {fileID: 1925220354}
 --- !u!114 &58684834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5207,7 +5190,7 @@ GameObject:
   - component: {fileID: 111730260}
   - component: {fileID: 111730261}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11192,7 +11175,7 @@ GameObject:
   - component: {fileID: 240096800}
   - component: {fileID: 240096801}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11335,12 +11318,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C
-    \u0441\u043E\u0437\u0434\u0430\u0442\u044C, \u043F\u0440\u043E\u0441\u0442\u043E
-    \u043F\u043E\u043B\u043E\u0436\u0438 \u043D\u0443\u0436\u043D\u044B\u0435 \u043A\u043B\u0435\u0442\u043A\u0438
-    \u0432 \u0441\u0435\u0440\u0435\u0434\u0438\u043D\u0443 \u0441\u0442\u043E\u043B\u0430
-    \u0438 \u043D\u0430\u0436\u043C\u0438 \u043A\u043D\u043E\u043F\u043A\u0443 \u0441\u043C\u0435\u0448\u0430\u0442\u044C!"
-  NumPointer: 7
+  indexDialogPoint: 0
+  indexDialog: 9
+  indexPointer: 7
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &244494540
 GameObject:
   m_ObjectHideFlags: 0
@@ -11352,7 +11337,7 @@ GameObject:
   - component: {fileID: 244494541}
   - component: {fileID: 244494542}
   m_Layer: 7
-  m_Name: AllPointerManager
+  m_Name: PointerTutorialManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11393,7 +11378,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 244494540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2bcdb4c15a57be44b97330c93c10eeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 624eebbdbab229643aaeb1ebd79690ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &244559022
@@ -12289,7 +12274,7 @@ GameObject:
   - component: {fileID: 414636113}
   - component: {fileID: 414636114}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12534,10 +12519,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u041E\u0442\u043B\u0438\u0447\u043D\u043E! \u0422\u0435\u043F\u0435\u0440\u044C
-    \u043E\u0442\u043D\u0435\u0441\u0438 \u044D\u0442\u043E\u0442 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B
-    \u0432 3D \u043F\u0440\u0438\u043D\u0442\u0435\u0440."
-  NumPointer: 10
+  indexDialogPoint: 0
+  indexDialog: 12
+  indexPointer: 10
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &435099661
 Animator:
   serializedVersion: 7
@@ -13311,7 +13300,7 @@ GameObject:
   - component: {fileID: 518793033}
   - component: {fileID: 518793034}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14062,8 +14051,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u0418\u0437\u0443\u0447\u0438\u043B?"
-  NumPointer: 2
+  indexDialogPoint: 0
+  indexDialog: 4
+  indexPointer: 2
+  conditionSkipDialog: Package
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &628739307
 GameObject:
   m_ObjectHideFlags: 0
@@ -14132,9 +14127,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u0439\u0441\u044F
-    \u043A \u0441\u0442\u043E\u043B\u0443."
-  NumPointer: 6
+  indexDialogPoint: 0
+  indexDialog: 8
+  indexPointer: 6
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &633663267
 GameObject:
   m_ObjectHideFlags: 0
@@ -14197,7 +14197,7 @@ GameObject:
   - component: {fileID: 667337437}
   - component: {fileID: 667337438}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14361,7 +14361,7 @@ GameObject:
   - component: {fileID: 695893714}
   - component: {fileID: 695893715}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15323,11 +15323,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u042D\u0442\u043E \u0441\u0445\u0435\u043C\u0430 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430.
-    \u041C\u043E\u0436\u0435\u0448\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F
-    \u0435\u0439 \u0432\u043E \u0432\u0440\u0435\u043C\u044F \u0440\u0430\u0431\u043E\u0442\u044B.
-    \u041F\u043E\u0432\u0435\u0441\u044C \u043F\u0435\u0440\u0435\u0434 \u0433\u043B\u0430\u0437\u0430\u043C\u0438."
-  NumPointer: 1
+  indexDialogPoint: 0
+  indexDialog: 3
+  indexPointer: 1
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &785888066
 GameObject:
   m_ObjectHideFlags: 0
@@ -15446,6 +15449,7 @@ MonoBehaviour:
   player: {fileID: 1712871982}
   playerMouseMove:
     navMeshAgent: {fileID: 1712871983}
+  tutorialRoot: {fileID: 1451648181}
   environmentRoot: {fileID: 1526206802}
   soundManager:
     audio: {fileID: 1677811272}
@@ -17464,8 +17468,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u041F\u043E\u0434\u0445\u043E\u0434\u0438 \u043A \u0430\u043A\u0432\u0430\u0440\u0438\u0443\u043C\u0443."
-  NumPointer: 3
+  indexDialogPoint: 0
+  indexDialog: 5
+  indexPointer: 3
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1277170452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4137254076713093880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -17638,12 +17648,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u041E, \u0430 \u0432\u043E\u0442 \u0438 \u043F\u043E\u0441\u044B\u043B\u043A\u0430.
-    \u042D\u0442\u0430 \u043F\u043E\u0447\u0442\u043E\u0432\u0430\u044F \u0442\u0440\u0443\u0431\u0430
-    \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E
-    \u0431\u044B\u0441\u0442\u0440\u0430\u044F. \u0411\u0435\u0440\u0438, \u0431\u0435\u0440\u0438,
-    \u044D\u0442\u043E \u0434\u043B\u044F \u0442\u0435\u0431\u044F."
-  NumPointer: 0
+  indexDialogPoint: 0
+  indexDialog: 2
+  indexPointer: 0
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1402415644}
+        m_TargetAssemblyTypeName: PostOfficeTube, Assembly-CSharp
+        m_MethodName: ObjectFall
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1416277121592618411, guid: 32d67d30c00dff441927372d04180542, type: 3}
+          m_ObjectArgumentAssemblyTypeName: MoveAnimation, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1334303778
 GameObject:
   m_ObjectHideFlags: 0
@@ -17712,12 +17736,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E
-    \u0441\u043B\u0435\u0434\u0438 \u0437\u0430 \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u043E\u0439.
-    \u0427\u0435\u043C \u043E\u043D\u0430 \u0432\u044B\u0448\u0435 - \u0442\u0435\u043C
-    \u0431\u044B\u0441\u0442\u0440\u0435\u0435 \u043A\u043B\u043E\u043D\u0438\u0440\u0443\u044E\u0442\u0441\u044F
-    \u043A\u043B\u0435\u0442\u043A\u0438."
-  NumPointer: 4
+  indexDialogPoint: 0
+  indexDialog: 6
+  indexPointer: 4
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1356396023 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8103729021762573607, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -17848,7 +17874,6 @@ GameObject:
   - component: {fileID: 1402415646}
   - component: {fileID: 1402415645}
   - component: {fileID: 1402415644}
-  - component: {fileID: 1402415647}
   m_Layer: 0
   m_Name: PostOfficeTube
   m_TagString: Untagged
@@ -17868,10 +17893,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925c14d0ca0879d4cb41494a44983c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemExist: 0
-  prefabObject: {fileID: 4522447525192828825, guid: 32d67d30c00dff441927372d04180542, type: 3}
-  TubePosition: {x: -3.757045, y: 5.6, z: -9.009}
-  NotObjectDown: 1
+  ejectionPosition: {x: -3.76, y: 5.6, z: -9.009}
+  exitPoint: {fileID: 1082095740}
+  particleSystem: {fileID: 1890261793}
 --- !u!65 &1402415645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17910,18 +17934,6 @@ Transform:
   - {fileID: 1082095741}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1402415647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402415643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e58f7ce47c796444b98fc2430f3f1235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1424547099
 GameObject:
   m_ObjectHideFlags: 0
@@ -23303,6 +23315,52 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1451648180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1451648182}
+  - component: {fileID: 1451648181}
+  m_Layer: 0
+  m_Name: Tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1451648181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451648180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a63fb4c8b71df409765e70679d0ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerTutorialManager: {fileID: 244494542}
+  postOfficeTube: {fileID: 1402415644}
+--- !u!4 &1451648182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451648180}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.29008192, y: 2.6799216, z: -8.223424}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1475647138
 GameObject:
   m_ObjectHideFlags: 0
@@ -24017,7 +24075,7 @@ MonoBehaviour:
   nextRooms:
   - {fileID: 58684832}
   - {fileID: 1925220355}
-  invisibleWallBetweenRooms: {fileID: 0}
+  invisibleWallBetweenRooms: {fileID: 236630422}
 --- !u!4 &1526206803
 Transform:
   m_ObjectHideFlags: 0
@@ -24503,7 +24561,7 @@ GameObject:
   - component: {fileID: 1672061964}
   - component: {fileID: 1672061965}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25459,10 +25517,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u0422\u0435\u0431\u0435 \u043D\u0443\u0436\u043D\u043E \u0441\u043E\u0431\u0440\u0430\u0442\u044C
-    \u043A\u043B\u0435\u0442\u043A\u0438. \u041A\u0430\u0436\u0435\u0442\u0441\u044F
-    \u043E\u043D\u0438 \u0432 \u0434\u0440\u0443\u0433\u043E\u0439 \u043A\u043E\u043C\u043D\u0430\u0442\u0435."
-  NumPointer: 9
+  indexDialogPoint: 0
+  indexDialog: 11
+  indexPointer: 9
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &1787988001
 Animator:
   serializedVersion: 7
@@ -26069,8 +26131,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u0412\u0441\u0435 \u0441\u043E\u0431\u0440\u0430\u043B?"
-  NumPointer: 5
+  indexDialogPoint: 0
+  indexDialog: 7
+  indexPointer: 5
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1866366529
 GameObject:
   m_ObjectHideFlags: 0
@@ -36028,7 +36096,6 @@ GameObject:
   - component: {fileID: 1925220352}
   - component: {fileID: 1925220355}
   - component: {fileID: 1925220354}
-  - component: {fileID: 1925220356}
   m_Layer: 7
   m_Name: NextRoomArrow
   m_TagString: Untagged
@@ -36122,7 +36189,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.13, y: 0.24, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
@@ -36138,26 +36205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3411db160b24474594cce67176bfa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionPlayer: {x: 0, y: 0, z: 0}
-  positionCamera: {x: 0, y: 0, z: 0}
-  timeAnimationCamera: 1
-  RightRoomStrelka: {fileID: 58684831}
---- !u!114 &1925220356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925220351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnyCase: 0
-  OnScaleChange: 0
-  TimeAnim: 0.2
-  FullZero: 1
+  positionPlayer: {x: 5.36, y: 2.4, z: -12.35}
+  positionCamera: {x: 2.56, y: 5.48, z: -19.5}
+  timeAnimationCamera: 2.2
+  oppositeArrow: {fileID: 58684831}
 --- !u!1 &1926928321
 GameObject:
   m_ObjectHideFlags: 0
@@ -36662,11 +36713,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1882d13e92588d4bb5db97b928aebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextReplica: "\u041E\u0442\u043B\u0438\u0447\u043D\u043E! \u0422\u0435\u043F\u0435\u0440\u044C
-    \u0442\u044B \u0433\u043E\u0442\u043E\u0432 \u043A \u0440\u0430\u0431\u043E\u0442\u0435,
-    \u0437\u0430\u0445\u043E\u0434\u0438 \u0432 \"\u0422\u0430\u043B\u0430\u043D\u0442
-    \u0410\u043A\u0430\u0434\u0435\u043C\u0438\u044F\"!"
-  NumPointer: 8
+  indexDialogPoint: 0
+  indexDialog: 10
+  indexPointer: 8
+  conditionSkipDialog: 
+  playerPickSomething: 0
+  SendInputFieldText:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &2022060278
 Animator:
   serializedVersion: 7
@@ -36710,7 +36764,7 @@ GameObject:
   - component: {fileID: 2032250467}
   - component: {fileID: 2032250468}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41676,7 +41730,7 @@ GameObject:
   - component: {fileID: 2094930912}
   - component: {fileID: 2094930913}
   m_Layer: 7
-  m_Name: Strelka
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41892,6 +41946,34 @@ PrefabInstance:
       propertyPath: playerParticleSystem
       value: 
       objectReference: {fileID: 337210943}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 620410636}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RunConditionSkip
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PointerTutorial, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1360009761462390633, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: OnPickSomething.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2475027670571457751, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.109
@@ -41946,6 +42028,10 @@ PrefabInstance:
       objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 3441424965228410801, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152707365304679793, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4152707365304679793, guid: 6c9807714bd746f4389696f3a3666d07, type: 3}
@@ -43470,6 +43556,10 @@ PrefabInstance:
     - target: {fileID: 4899132208007916572, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
       propertyPath: m_Name
       value: ModelBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899132208007916572, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4899132208007916572, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -48745,5 +48835,6 @@ SceneRoots:
   - {fileID: 1598914636}
   - {fileID: 1615270652}
   - {fileID: 1526206803}
+  - {fileID: 1451648182}
   - {fileID: 787923206}
   - {fileID: 1595963984}
