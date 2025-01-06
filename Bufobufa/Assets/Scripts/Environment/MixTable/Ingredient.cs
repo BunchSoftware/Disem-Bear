@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Ingredient : MonoBehaviour
+
+namespace Game.Environment.MixTable
 {
-    public string IngredientName = "None";
-    public float TimeInAquarium = 1f;
-    
+    public class Ingredient : MonoBehaviour
+    {
+        public string IngredientName = "None";
+        public float TimeInAquarium = 1f;
+
+    }
 }

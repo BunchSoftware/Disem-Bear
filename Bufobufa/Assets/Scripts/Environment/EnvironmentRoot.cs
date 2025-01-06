@@ -1,22 +1,38 @@
+using DG.Tweening.Core.Easing;
+using DI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentRoot : MonoBehaviour, IUpdateListener
+namespace Game.Environment
 {
-    [Header("Transition Between Rooms")]
-    [SerializeField] private List<NextRoom> nextRooms;
-    [SerializeField] private GameObject invisibleWallBetweenRooms;
+    public class EnvironmentRoot : MonoBehaviour, IUpdateListener
+    {
+        [Header("Transition Between Rooms")]
+        [SerializeField] private List<NextRoom> nextRooms;
+        [SerializeField] private GameObject invisibleWallBetweenRooms;
+        [Header("Table")]
+        [SerializeField] private TableWithItems tableWithItems;
+        [Header("Board")]
+        [SerializeField] private ModelBoard modelBoard;
 
-    public void Init(PlayerMouseMove playerMouseMove)
-    {
-        for (int i = 0; i < nextRooms.Count; i++)
+        private SaveManager saveManager;
+
+        public void Init(PlayerMouseMove playerMouseMove, SaveManager saveManager)
         {
-            nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
+            this.saveManager = saveManager;
+
+            for (int i = 0; i < nextRooms.Count; i++)
+            {
+                nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
+            }
+
+            tableWithItems.Init(saveManager);
+            modelBoard.Init(saveManager);
         }
-    }
-    public void OnUpdate(float deltaTime)
-    {
-        
+        public void OnUpdate(float deltaTime)
+        {
+
+        }
     }
 }

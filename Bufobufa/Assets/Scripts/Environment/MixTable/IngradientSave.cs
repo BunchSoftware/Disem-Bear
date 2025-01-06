@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class IngradientSave
+
+namespace Game.Environment.MixTable
 {
-    public string typeIngradient;
-    public int countIngradient;
+    [Serializable]
+    public class IngradientSave
+    {
+        public string typeIngradient;
+        public int countIngradient;
+    }
 }

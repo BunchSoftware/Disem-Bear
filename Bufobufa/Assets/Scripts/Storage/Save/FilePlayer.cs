@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New FilePlayer", menuName = "FilePlayer")]
-public class FilePlayer : ScriptableObject
+namespace External.Storage
 {
-    public JSONPlayer JSONPlayer;
+    [CreateAssetMenu(fileName = "New FilePlayer", menuName = "FilePlayer")]
+    public class FilePlayer : ScriptableObject
+    {
+        public JSONPlayer JSONPlayer;
+    }
 }

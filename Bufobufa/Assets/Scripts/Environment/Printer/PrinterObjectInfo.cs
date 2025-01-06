@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrinterObjectInfo : MonoBehaviour
+namespace Game.Environment.Printer
 {
-    public string WhatThis = "";
+    public class PrinterObjectInfo : MonoBehaviour
+    {
+        public string WhatThis = "";
+    }
 }

@@ -1,15 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class TriggerObject : MonoBehaviour
+namespace Game.Environment
 {
-    private void OnTriggerEnter(Collider other)
+    [RequireComponent(typeof(Collider))]
+    public class TriggerObject : MonoBehaviour
     {
-        transform.parent.gameObject.GetComponent<OpenObject>().OnTrigEnter(other);
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        transform.parent.gameObject.GetComponent<OpenObject>().OnTrigExit(other);
+        [SerializeField] private string tagObject;
+        public UnityEvent<Collider> OnTriggerEnterEvent;
+        public UnityEvent<Collider> OnTriggerExitEvent;
+
+        private Collider triggerObject;
+
+        private void Awake()
+        {
+            triggerObject = GetComponent<Collider>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == tagObject)
+                OnTriggerEnterEvent?.Invoke(other);
+
+            triggerObject.enabled = false;
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag == tagObject)
+                OnTriggerExitEvent?.Invoke(other);
+
+            triggerObject.enabled = true;
+        }
     }
 }

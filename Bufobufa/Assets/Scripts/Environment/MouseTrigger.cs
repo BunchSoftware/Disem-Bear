@@ -3,43 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class MouseTrigger : MonoBehaviour
+namespace Game.Environment
 {
-    public bool AnyCase = false;
-    private Vector3 originalScale;
-    public bool OnScaleChange = false;
-    public float TimeAnim = 0.2f;
-    private float timer = 0f;
-    private GameObject Player;
-    private bool FinallyMove = false;
-    public bool FullZero = true;
-
-    private void Start()
+    public class MouseTrigger : MonoBehaviour
     {
-        originalScale = transform.localScale;
-        Player = GameObject.Find("Player");
-    }
+        public bool AnyCase = false;
+        private Vector3 originalScale;
+        public bool OnScaleChange = false;
+        public float TimeAnim = 0.2f;
+        private float timer = 0f;
+        private GameObject Player;
+        private bool FinallyMove = false;
+        public bool FullZero = true;
 
-    private void Update()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+        private void Start()
         {
-            if (infoHit.collider.gameObject == gameObject)
+            originalScale = transform.localScale;
+            Player = GameObject.Find("Player");
+        }
+
+        private void Update()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
             {
-                if (AnyCase)
+                if (infoHit.collider.gameObject == gameObject)
                 {
-                    if (FullZero)
-                    {
-                        FullZero = false;
-                        originalScale = transform.localScale;
-                    }
-                    OnScaleChange = true;
-                    FinallyMove = true;
-                }
-                else if (GetComponent<OpenObject>())
-                {
-                    if (!GetComponent<OpenObject>().ObjectIsOpen)
+                    if (AnyCase)
                     {
                         if (FullZero)
                         {
@@ -48,53 +38,66 @@ public class MouseTrigger : MonoBehaviour
                         }
                         OnScaleChange = true;
                         FinallyMove = true;
+                    }
+                    else if (GetComponent<OpenObject>())
+                    {
+                        if (!GetComponent<OpenObject>().ObjectIsOpen)
+                        {
+                            if (FullZero)
+                            {
+                                FullZero = false;
+                                originalScale = transform.localScale;
+                            }
+                            OnScaleChange = true;
+                            FinallyMove = true;
+                        }
+                    }
+                    else
+                    {
+                        if (!Player.GetComponent<Player>().PlayerInSomething)
+                        {
+                            if (FullZero)
+                            {
+                                FullZero = false;
+                                originalScale = transform.localScale;
+                            }
+                            OnScaleChange = true;
+                            FinallyMove = true;
+                        }
                     }
                 }
                 else
                 {
-                    if (!Player.GetComponent<Player>().PlayerInSomething)
-                    {
-                        if (FullZero)
-                        {
-                            FullZero = false;
-                            originalScale = transform.localScale;
-                        }
-                        OnScaleChange = true;
-                        FinallyMove = true;
-                    }
+                    OnScaleChange = false;
+                    FinallyMove = true;
+                }
+            }
+            if (OnScaleChange)
+            {
+                if (timer <= TimeAnim)
+                {
+                    transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
+                    timer += Time.deltaTime;
+                }
+                else if (FinallyMove)
+                {
+                    transform.localScale = originalScale * 1.08f;
+                    FinallyMove = false;
                 }
             }
             else
             {
-                OnScaleChange = false;
-                FinallyMove = true;
-            }
-        }
-        if (OnScaleChange)
-        {
-            if (timer <= TimeAnim)
-            {
-                transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
-                timer += Time.deltaTime;
-            }
-            else if (FinallyMove)
-            {
-                transform.localScale = originalScale * 1.08f;
-                FinallyMove = false;
-            }
-        }
-        else
-        {
-            if (timer >= 0f)
-            {
-                transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
-                timer -= Time.deltaTime;
-            }
-            else if (FinallyMove)
-            {
-                transform.localScale = originalScale;
-                FinallyMove = false;
-                FullZero = true;
+                if (timer >= 0f)
+                {
+                    transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
+                    timer -= Time.deltaTime;
+                }
+                else if (FinallyMove)
+                {
+                    transform.localScale = originalScale;
+                    FinallyMove = false;
+                    FullZero = true;
+                }
             }
         }
     }

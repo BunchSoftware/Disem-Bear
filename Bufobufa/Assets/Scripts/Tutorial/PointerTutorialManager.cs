@@ -2,35 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointerTutorialManager : MonoBehaviour
+namespace Game.Tutorial
 {
-    private DialogManager dialogManager;
-    private Player player;
-    private List<PointerTutorial> pointerTutorial = new List<PointerTutorial>();
-
-    public void Init(DialogManager dialogManager, Player player)
+    public class PointerTutorialManager : MonoBehaviour
     {
-        this.dialogManager = dialogManager;
-        this.player = player;
+        private DialogManager dialogManager;
+        private Player player;
+        private List<PointerTutorial> pointerTutorial = new List<PointerTutorial>();
 
-        for (int i = 0; i < transform.childCount; i++)
+        public void Init(DialogManager dialogManager, Player player)
         {
-            PointerTutorial pointerTutorial;
+            this.dialogManager = dialogManager;
+            this.player = player;
 
-            if (transform.GetChild(i).TryGetComponent<PointerTutorial>(out pointerTutorial)) 
+            for (int i = 0; i < transform.childCount; i++)
             {
-                pointerTutorial.Init(dialogManager, this);
-                this.pointerTutorial.Add(pointerTutorial);  
+                PointerTutorial pointerTutorial;
+
+                if (transform.GetChild(i).TryGetComponent<PointerTutorial>(out pointerTutorial))
+                {
+                    pointerTutorial.Init(dialogManager, this);
+                    this.pointerTutorial.Add(pointerTutorial);
+                }
             }
         }
-    }
-    public void SetPointer(int indexPointer)
-    {
-        for (int i = 0; i < pointerTutorial.Count; i++)
+        public void SetPointer(int indexPointer)
         {
-            pointerTutorial[i].transform.GetChild(0).gameObject.SetActive(false);
-        }
+            for (int i = 0; i < pointerTutorial.Count; i++)
+            {
+                pointerTutorial[i].transform.GetChild(0).gameObject.SetActive(false);
+            }
 
-        pointerTutorial[indexPointer].transform.GetChild(0).gameObject.SetActive(true);
+            pointerTutorial[indexPointer].transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 }

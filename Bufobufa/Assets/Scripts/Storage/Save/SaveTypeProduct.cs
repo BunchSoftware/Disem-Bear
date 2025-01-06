@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class SaveTypeProduct
+namespace External.Storage
 {
-    public string typeProduct;
-    public int countProduct;
+    [Serializable]
+    public class SaveTypeProduct
+    {
+        public string typeProduct;
+        public int countProduct;
+    }
 }

@@ -4,52 +4,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class TypePostOfficeTubeMaterial
+namespace Game.Environment
 {
-    public string typeMaterial;
-    public GameObject material;
-}
-
-public class GetPostOfficeTubeMaterial : MonoBehaviour
-{
-    private PostOfficeTube PostTube;
-    [SerializeField] private List<TypePostOfficeTubeMaterial> typePostOfficeTubeMaterials;
-    public UnityEvent<TypePostOfficeTubeMaterial> OnGetPostOfficeTubeMaterial;
-
-    private GameObject getMaterial;
-
-    private void Start()
+    [Serializable]
+    public class TypePostOfficeTubeMaterial
     {
-        PostTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
+        public string typeMaterial;
+        public GameObject material;
     }
 
-    private void Update()
+    public class GetPostOfficeTubeMaterial : MonoBehaviour
     {
-        if (Input.GetMouseButtonDown(1) && getMaterial != null)
+        private PostOfficeTube PostTube;
+        [SerializeField] private List<TypePostOfficeTubeMaterial> typePostOfficeTubeMaterials;
+        public UnityEvent<TypePostOfficeTubeMaterial> OnGetPostOfficeTubeMaterial;
+
+        private GameObject getMaterial;
+
+        private void Start()
         {
-            StartCoroutine(WaitExitUI(0.5f));
+            PostTube = GameObject.Find("PostOfficeTube").GetComponent<PostOfficeTube>();
         }
-    }
 
-    public void GetMaterial(string typeMaterial)
-    {
-        for (int i = 0; i < typePostOfficeTubeMaterials.Count; i++)
+        private void Update()
         {
-            if (typePostOfficeTubeMaterials[i].typeMaterial == typeMaterial)
+            if (Input.GetMouseButtonDown(1) && getMaterial != null)
             {
-                getMaterial = typePostOfficeTubeMaterials[i].material;
-                OnGetPostOfficeTubeMaterial?.Invoke(typePostOfficeTubeMaterials[i]);
-
-                return;
+                StartCoroutine(WaitExitUI(0.5f));
             }
         }
-    }
 
-    IEnumerator WaitExitUI(float f)
-    {
-        yield return new WaitForSeconds(f);
-        PostTube.ObjectFall(getMaterial.GetComponent<MoveAnimation>());
-        getMaterial = null;
+        public void GetMaterial(string typeMaterial)
+        {
+            for (int i = 0; i < typePostOfficeTubeMaterials.Count; i++)
+            {
+                if (typePostOfficeTubeMaterials[i].typeMaterial == typeMaterial)
+                {
+                    getMaterial = typePostOfficeTubeMaterials[i].material;
+                    OnGetPostOfficeTubeMaterial?.Invoke(typePostOfficeTubeMaterials[i]);
+
+                    return;
+                }
+            }
+        }
+
+        IEnumerator WaitExitUI(float f)
+        {
+            yield return new WaitForSeconds(f);
+            PostTube.ObjectFall(getMaterial.GetComponent<MoveAnimation>());
+            getMaterial = null;
+        }
     }
 }

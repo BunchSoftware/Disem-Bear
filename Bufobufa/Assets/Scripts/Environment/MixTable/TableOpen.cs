@@ -3,32 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableOpen : MonoBehaviour
+
+namespace Game.Environment.MixTable
 {
-    private GameObject Player;
-    private GameObject MixTable;
+    public class TableOpen : MonoBehaviour
+    {
+        private GameObject Player;
+        private GameObject MixTable;
 
 
-    private void Start()
-    {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        MixTable = transform.Find("MixTable").gameObject;
-    }
-    private void Update()
-    {
-        if (GetComponent<OpenObject>().ObjectIsOpen && !MixTable.GetComponent<ThingsInTableMix>().MixTableOn)
+        private void Start()
         {
-            MixTable.GetComponent<ThingsInTableMix>().MixTableOn = true;
+            Player = GameObject.FindGameObjectWithTag("Player");
+            MixTable = transform.Find("MixTable").gameObject;
         }
-        else if (!GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
+        private void Update()
         {
-            MixTable.GetComponent<ThingsInTableMix>().MixTableOn = false;
-            if (MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject != null)
+            if (GetComponent<OpenObject>().ObjectIsOpen && !MixTable.GetComponent<ThingsInTableMix>().MixTableOn)
             {
-                Player.GetComponent<Player>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
-                MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject.transform.parent = Player.transform;
-                MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject = null;
-                Player.GetComponent<Player>().PickSomething();
+                MixTable.GetComponent<ThingsInTableMix>().MixTableOn = true;
+            }
+            else if (!GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
+            {
+                MixTable.GetComponent<ThingsInTableMix>().MixTableOn = false;
+                if (MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject != null)
+                {
+                    Player.GetComponent<Player>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
+                    MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject.transform.parent = Player.transform;
+                    MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject = null;
+                    Player.GetComponent<Player>().PickSomething();
+                }
             }
         }
     }

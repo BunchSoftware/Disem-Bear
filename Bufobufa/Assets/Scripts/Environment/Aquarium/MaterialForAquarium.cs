@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaterialForAquarium : MonoBehaviour
+
+namespace Game.Environment.Aquarium
 {
-    public string nameMaterial = "none";
-    public float TimeMaterial = 10f;
+    public class MaterialForAquarium : MonoBehaviour
+    {
+        public string nameMaterial = "none";
+        public float TimeMaterial = 10f;
+    }
 }

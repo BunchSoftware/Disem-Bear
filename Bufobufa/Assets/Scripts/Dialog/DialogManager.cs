@@ -11,229 +11,232 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[Serializable]
-public class DialogManager
-{ 
-    [SerializeField] private DialogueWindow dialogueWindow;
-    [SerializeField] private FileDialog fileDialog;
-    public UnityEvent<Dialog> OnStartDialog;
-    public UnityEvent<Dialog> OnEndDialog;
-    public UnityEvent<string> SendInputFieldText;
-
-    private List<DialogPoint> dialogPoints = new List<DialogPoint>();
-    private int currentIndexDialogPoint = 0;
-    private int currentIndexDialog = 0;
-
-    private string currentConditionSkip = "";
-
-    private bool isCanSkipDialog = false;
-    private bool isDialogLast = false;
-    private bool isActiveInputField = false;
-
-    private SaveManager saveManager;
-    private MonoBehaviour context;
-
-    public void Init(SaveManager saveManager, MonoBehaviour context)
+namespace Game.Dialog
+{
+    [Serializable]
+    public class DialogManager
     {
-        this.context = context;
-        this.saveManager = saveManager;
+        [SerializeField] private DialogueWindow dialogueWindow;
+        [SerializeField] private FileDialog fileDialog;
+        public UnityEvent<Dialog> OnStartDialog;
+        public UnityEvent<Dialog> OnEndDialog;
+        public UnityEvent<string> SendInputFieldText;
 
-        dialogPoints = fileDialog.dialogPoints;
-        dialogueWindow.Init(this);
+        private List<DialogPoint> dialogPoints = new List<DialogPoint>();
+        private int currentIndexDialogPoint = 0;
+        private int currentIndexDialog = 0;
 
-        if (saveManager.filePlayer.JSONPlayer.nameUser != null)
+        private string currentConditionSkip = "";
+
+        private bool isCanSkipDialog = false;
+        private bool isDialogLast = false;
+        private bool isActiveInputField = false;
+
+        private SaveManager saveManager;
+        private MonoBehaviour context;
+
+        public void Init(SaveManager saveManager, MonoBehaviour context)
         {
-            currentIndexDialogPoint = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
-            TypeLine(dialogPoints[currentIndexDialogPoint], saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
-        }
-    }
+            this.context = context;
+            this.saveManager = saveManager;
 
-    public void StartDialog(int indexDialogPoint)
-    {
-        if (indexDialogPoint >= currentIndexDialogPoint)
-        {
-            currentIndexDialogPoint = indexDialogPoint;
-            saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
-            saveManager.UpdatePlayerFile();
-            TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
-        }
-    }
-    public void SkipDialog()
-    {
-        if(isCanSkipDialog || isDialogLast && isActiveInputField == false)
-        {
-            Dialog dialog = null;
+            dialogPoints = fileDialog.dialogPoints;
+            dialogueWindow.Init(this);
 
-            if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
-                dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
-
-            if (dialog != null 
-                && dialog.skipDialog == true 
-                && currentConditionSkip == dialog.conditionSkipDialog)
+            if (saveManager.filePlayer.JSONPlayer.nameUser != null)
             {
-                StopTypeLine();
+                currentIndexDialogPoint = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
+                TypeLine(dialogPoints[currentIndexDialogPoint], saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
+            }
+        }
 
-                if (isDialogLast == true)
+        public void StartDialog(int indexDialogPoint)
+        {
+            if (indexDialogPoint >= currentIndexDialogPoint)
+            {
+                currentIndexDialogPoint = indexDialogPoint;
+                saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+                saveManager.UpdatePlayerFile();
+                TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
+            }
+        }
+        public void SkipDialog()
+        {
+            if (isCanSkipDialog || isDialogLast && isActiveInputField == false)
+            {
+                Dialog dialog = null;
+
+                if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
+                    dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
+
+                if (dialog != null
+                    && dialog.skipDialog == true
+                    && currentConditionSkip == dialog.conditionSkipDialog)
                 {
-                    isDialogLast = false;
-                    ExitDrop(dialog);
+                    StopTypeLine();
+
+                    if (isDialogLast == true)
+                    {
+                        isDialogLast = false;
+                        ExitDrop(dialog);
+                    }
+                    else if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
+                    {
+                        dialogueWindow.DialogLast(dialog);
+                        isDialogLast = true;
+                    }
+                    else
+                    {
+                        currentIndexDialog++;
+                        saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                        saveManager.UpdatePlayerFile();
+                        TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
+                    }
+
+                    currentConditionSkip = "";
                 }
-                else if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
+            }
+        }
+
+        public void RunConditionSkip(string conditionSkip)
+        {
+            currentConditionSkip = conditionSkip;
+            SkipDialog();
+        }
+
+        public void TypeLine(DialogPoint dialogPoint, int indexDialog)
+        {
+            context.StopAllCoroutines();
+            context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
+        }
+
+        IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
+        {
+            currentIndexDialog = indexDialog;
+            for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)
+            {
+                OnStartDialog?.Invoke(dialogPoint.dialog[i]);
+
+                currentIndexDialog = i;
+                saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                saveManager.UpdatePlayerFile();
+
+                if (dialogPoint.dialog[i].isActiveInputField == false)
+                    isCanSkipDialog = true;
+
+                isDialogLast = false;
+                isActiveInputField = dialogPoint.dialog[i].isActiveInputField;
+
+                EnterDrop(dialogPoint.dialog[i]);
+                dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueWindow.gameObject.GetComponent<RectTransform>());
+                yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
+
+                OnEndDialog?.Invoke(dialogPoint.dialog[i]);
+
+                if (dialogPoint.dialog[i].stopTheEndDialog == true)
                 {
-                    dialogueWindow.DialogLast(dialog);
-                    isDialogLast = true;
+                    if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
+                        isDialogLast = true;
+                    if (dialogPoint.dialog[i].skipDialog == false)
+                    {
+                        yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
+                        ExitDrop(dialogPoint.dialog[i]);
+                    }
+                    break;
                 }
                 else
-                {
-                    currentIndexDialog++;
-                    saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
-                    saveManager.UpdatePlayerFile();
-                    TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
-                }
+                    yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
 
-                currentConditionSkip = "";
+                ExitDrop(dialogPoint.dialog[i]);
+
+                isCanSkipDialog = false;
+                isActiveInputField = false;
             }
         }
-    }
 
-    public void RunConditionSkip(string conditionSkip)
-    {
-        currentConditionSkip = conditionSkip;
-        SkipDialog();
-    }
-
-    public void TypeLine(DialogPoint dialogPoint, int indexDialog)
-    {
-        context.StopAllCoroutines();
-        context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
-    }
-
-    IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
-    {
-        currentIndexDialog = indexDialog;
-        for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)
+        private void StopTypeLine()
         {
-            OnStartDialog?.Invoke(dialogPoint.dialog[i]);
-
-            currentIndexDialog = i;
-            saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
-            saveManager.UpdatePlayerFile();
-
-            if (dialogPoint.dialog[i].isActiveInputField == false)
-                isCanSkipDialog = true;
-
-            isDialogLast = false;
-            isActiveInputField = dialogPoint.dialog[i].isActiveInputField;
-
-            EnterDrop(dialogPoint.dialog[i]);
-            dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueWindow.gameObject.GetComponent<RectTransform>());
-            yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
-
-            OnEndDialog?.Invoke(dialogPoint.dialog[i]);
-
-            if (dialogPoint.dialog[i].stopTheEndDialog == true)
-            {
-                if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
-                    isDialogLast = true;
-                if(dialogPoint.dialog[i].skipDialog == false)
-                {
-                    yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
-                    ExitDrop(dialogPoint.dialog[i]);
-                }
-                break;
-            }
-            else
-                yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
-
-            ExitDrop(dialogPoint.dialog[i]);
-
+            context.StopAllCoroutines();
+            dialogueWindow.StopTypeLine();
             isCanSkipDialog = false;
             isActiveInputField = false;
         }
-    }
 
-    private void StopTypeLine() 
-    {
-        context.StopAllCoroutines();
-        dialogueWindow.StopTypeLine();
-        isCanSkipDialog = false;
-        isActiveInputField = false;
-    }
-
-    private void EnterDrop(Dialog dialog)
-    {
-        switch (dialog.enterDrop)
+        private void EnterDrop(Dialog dialog)
         {
-            case DropEnum.DropRight:
-                {
-                    dialogueWindow.animator.SetInteger("State", 1);
-                }
-                break;
-            case DropEnum.DropLeft:
-                {
-                    dialogueWindow.animator.SetInteger("State", 2);
-                }
-                break;
-            case DropEnum.DropDown:
-                {
-                    dialogueWindow.animator.SetInteger("State", 3);
-                }
-                break;
+            switch (dialog.enterDrop)
+            {
+                case DropEnum.DropRight:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 1);
+                    }
+                    break;
+                case DropEnum.DropLeft:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 2);
+                    }
+                    break;
+                case DropEnum.DropDown:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 3);
+                    }
+                    break;
 
-            case DropEnum.DropUp:
-                {
-                    dialogueWindow.animator.SetInteger("State", 4);
-                }
-                break;
+                case DropEnum.DropUp:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 4);
+                    }
+                    break;
+            }
         }
-    }
-    private void ExitDrop(Dialog dialog)
-    {
-        switch (dialog.exitDrop)
+        private void ExitDrop(Dialog dialog)
         {
-            case DropEnum.DropRight:
-                {
-                    dialogueWindow.animator.SetInteger("State", 1);
-                }
-                break;
-            case DropEnum.DropLeft:
-                {
-                    dialogueWindow.animator.SetInteger("State", 2);
-                }
-                break;
-            case DropEnum.DropDown:
-                {
-                    dialogueWindow.animator.SetInteger("State", 3);
-                }
-                break;
+            switch (dialog.exitDrop)
+            {
+                case DropEnum.DropRight:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 1);
+                    }
+                    break;
+                case DropEnum.DropLeft:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 2);
+                    }
+                    break;
+                case DropEnum.DropDown:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 3);
+                    }
+                    break;
 
-            case DropEnum.DropUp:
-                {
-                    dialogueWindow.animator.SetInteger("State", 4);
-                }
-                break;         
+                case DropEnum.DropUp:
+                    {
+                        dialogueWindow.animator.SetInteger("State", 4);
+                    }
+                    break;
+            }
         }
-    }
 
-    public void SendInputText(string text)
-    {
-        if(text.Length >= 1)
+        public void SendInputText(string text)
         {
-            SendInputFieldText?.Invoke(text);
-            isActiveInputField = false;
-            isCanSkipDialog = true;
-            SkipDialog();
+            if (text.Length >= 1)
+            {
+                SendInputFieldText?.Invoke(text);
+                isActiveInputField = false;
+                isCanSkipDialog = true;
+                SkipDialog();
+            }
         }
-    }
 
-    public int GetCurrentIndexDialog()
-    {
-        return currentIndexDialog;
-    }
+        public int GetCurrentIndexDialog()
+        {
+            return currentIndexDialog;
+        }
 
-    public int GetCurrentIndexDialogPoint()
-    {
-        return currentIndexDialogPoint;
+        public int GetCurrentIndexDialogPoint()
+        {
+            return currentIndexDialogPoint;
+        }
     }
 }

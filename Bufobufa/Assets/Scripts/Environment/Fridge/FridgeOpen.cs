@@ -4,124 +4,127 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FridgeOpen : MonoBehaviour
+namespace Game.Environment.Fridge
 {
-    [SerializeField] private GameObject prefabMagnet;
-    [SerializeField] private FileMagnets fileMagnets;
-    [SerializeField] private SaveManager saveManager;
-    public UnityEvent<Magnet> OnCreateMagnet;
-
-    private bool OneTap = true;
-    private GameObject FrontFridge;
-    public List<MagnetGUI> magnetsGUI = new List<MagnetGUI>();
-
-    private void Start()
+    public class FridgeOpen : MonoBehaviour
     {
-        FrontFridge = transform.Find("FrontFridge").gameObject;
+        [SerializeField] private GameObject prefabMagnet;
+        [SerializeField] private FileMagnets fileMagnets;
+        [SerializeField] private SaveManager saveManager;
+        public UnityEvent<Magnet> OnCreateMagnet;
 
-        //if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)
-        //{
-        //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
-        //    {
-        //        prefabMagnet.name = $"Magnet {i}";
-        //        MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
+        private bool OneTap = true;
+        private GameObject FrontFridge;
+        public List<MagnetGUI> magnetsGUI = new List<MagnetGUI>();
 
-        //        for (int j = 0; j < fileMagnets.magnets.Count; j++)
-        //        {
-        //            if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
-        //            {
-        //                Magnet magnet = new Magnet()
-        //                {
-        //                    x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
-        //                    y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
-        //                    z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
-        //                    typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
-        //                    iconMagnet = fileMagnets.magnets[j].iconMagnet,
-        //                };
-        //                magnetGUI.Init(magnet);
-        //                break;
-        //            }
-        //        }
-        //        magnetsGUI.Add(magnetGUI);
-        //    }
-        //}      
-    }
-
-    private void Update()
-    {
-        if (GetComponent<OpenObject>().ObjectIsOpen && OneTap)
+        private void Start()
         {
-            OneTap = false;
-            FrontFridge.SetActive(true);
-            for (int i = 0; i < magnetsGUI.Count; i++)
+            FrontFridge = transform.Find("FrontFridge").gameObject;
+
+            //if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)
+            //{
+            //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
+            //    {
+            //        prefabMagnet.name = $"Magnet {i}";
+            //        MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
+
+            //        for (int j = 0; j < fileMagnets.magnets.Count; j++)
+            //        {
+            //            if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
+            //            {
+            //                Magnet magnet = new Magnet()
+            //                {
+            //                    x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
+            //                    y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
+            //                    z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
+            //                    typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
+            //                    iconMagnet = fileMagnets.magnets[j].iconMagnet,
+            //                };
+            //                magnetGUI.Init(magnet);
+            //                break;
+            //            }
+            //        }
+            //        magnetsGUI.Add(magnetGUI);
+            //    }
+            //}      
+        }
+
+        private void Update()
+        {
+            if (GetComponent<OpenObject>().ObjectIsOpen && OneTap)
             {
-                magnetsGUI[i].GetComponent<BoxCollider>().enabled = true;
-                magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(true);
+                OneTap = false;
+                FrontFridge.SetActive(true);
+                for (int i = 0; i < magnetsGUI.Count; i++)
+                {
+                    magnetsGUI[i].GetComponent<BoxCollider>().enabled = true;
+                    magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(true);
+                }
+            }
+            else if (!GetComponent<OpenObject>().ObjectIsOpen && !OneTap)
+            {
+                OneTap = true;
+                FrontFridge.SetActive(false);
+                for (int i = 0; i < magnetsGUI.Count; i++)
+                {
+                    magnetsGUI[i].GetComponent<BoxCollider>().enabled = false;
+                    magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(false);
+                }
             }
         }
-        else if (!GetComponent<OpenObject>().ObjectIsOpen && !OneTap)
+
+        public void ChangeMouseTrigger()
         {
-            OneTap = true;
-            FrontFridge.SetActive(false);
             for (int i = 0; i < magnetsGUI.Count; i++)
             {
-                magnetsGUI[i].GetComponent<BoxCollider>().enabled = false;
-                magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(false);
+                if (magnetsGUI[i].GetComponent<MagnetMouseMove>().OnDrag)
+                {
+                    magnetsGUI[i].GetComponent<MouseTrigger>().enabled = true;
+                }
+                else
+                {
+                    magnetsGUI[i].GetComponent<MouseTrigger>().enabled = false;
+                }
             }
         }
-    }
 
-    public void ChangeMouseTrigger()
-    {
-        for (int i = 0; i < magnetsGUI.Count; i++)
+        public void OnMouseTrigger()
         {
-            if (magnetsGUI[i].GetComponent<MagnetMouseMove>().OnDrag)
+            for (int i = 0; i < magnetsGUI.Count; i++)
             {
                 magnetsGUI[i].GetComponent<MouseTrigger>().enabled = true;
-            }
-            else
-            {
-                magnetsGUI[i].GetComponent<MouseTrigger>().enabled = false;
-            }
-        }
-    }
-
-    public void OnMouseTrigger()
-    {
-        for (int i = 0; i < magnetsGUI.Count; i++)
-        {
-            magnetsGUI[i].GetComponent<MouseTrigger>().enabled = true;
-
-            MagnetSave magnetSave = new MagnetSave();
-            magnetSave.typeMagnet = magnetsGUI[i].GetMagnet().typeMagnet;
-            magnetSave.x = magnetsGUI[i].transform.localPosition.x;
-            magnetSave.y = magnetsGUI[i].transform.localPosition.y;
-            magnetSave.z = magnetsGUI[i].transform.localPosition.z;
-
-            saveManager.ChangeMagnetSave(magnetSave);
-        }
-    }
-
-    public void CreateMagnet(string typeMagnet)
-    {
-        for (int i = 0; i < fileMagnets.magnets.Count; i++)
-        {
-            if (fileMagnets.magnets[i].typeMagnet == typeMagnet)
-            {
-                MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
-                magnetGUI.Init(fileMagnets.magnets[i]);
-                magnetsGUI.Add(magnetGUI);
-                OnCreateMagnet?.Invoke(magnetGUI.GetMagnet());
 
                 MagnetSave magnetSave = new MagnetSave();
-                magnetSave.typeMagnet = magnetGUI.GetMagnet().typeMagnet;
-                magnetSave.x = magnetGUI.transform.localPosition.x;
-                magnetSave.y = magnetGUI.transform.localPosition.y;
-                magnetSave.z = magnetGUI.transform.localPosition.z;
+                magnetSave.typeMagnet = magnetsGUI[i].GetMagnet().typeMagnet;
+                magnetSave.x = magnetsGUI[i].transform.localPosition.x;
+                magnetSave.y = magnetsGUI[i].transform.localPosition.y;
+                magnetSave.z = magnetsGUI[i].transform.localPosition.z;
 
                 saveManager.ChangeMagnetSave(magnetSave);
+            }
+        }
 
-                return;
+        public void CreateMagnet(string typeMagnet)
+        {
+            for (int i = 0; i < fileMagnets.magnets.Count; i++)
+            {
+                if (fileMagnets.magnets[i].typeMagnet == typeMagnet)
+                {
+                    MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
+                    magnetGUI.Init(fileMagnets.magnets[i]);
+                    magnetsGUI.Add(magnetGUI);
+                    OnCreateMagnet?.Invoke(magnetGUI.GetMagnet());
+
+                    MagnetSave magnetSave = new MagnetSave();
+                    magnetSave.typeMagnet = magnetGUI.GetMagnet().typeMagnet;
+                    magnetSave.x = magnetGUI.transform.localPosition.x;
+                    magnetSave.y = magnetGUI.transform.localPosition.y;
+                    magnetSave.z = magnetGUI.transform.localPosition.z;
+
+                    saveManager.ChangeMagnetSave(magnetSave);
+
+                    return;
+                }
             }
         }
     }

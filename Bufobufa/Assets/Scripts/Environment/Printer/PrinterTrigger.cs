@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrinterTrigger : MonoBehaviour
+namespace Game.Environment.Printer
 {
-    private void OnTriggerEnter(Collider other)
+    public class PrinterTrigger : MonoBehaviour
     {
-        transform.parent.gameObject.GetComponent<Printer>().OnTrigEnter(other);
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        transform.parent.gameObject.GetComponent<Printer>().OnTrigExit(other);
+        private void OnTriggerEnter(Collider other)
+        {
+            transform.parent.gameObject.GetComponent<Printer>().OnTrigEnter(other);
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            transform.parent.gameObject.GetComponent<Printer>().OnTrigExit(other);
+        }
     }
 }

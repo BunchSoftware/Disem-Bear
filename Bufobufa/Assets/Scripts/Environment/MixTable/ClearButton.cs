@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearButton : MonoBehaviour
+
+namespace Game.Environment.MixTable
 {
-    private GameObject MixTable;
-
-    private void Start()
+    public class ClearButton : MonoBehaviour
     {
-        MixTable = GameObject.Find("MixTable");
-    }
+        private GameObject MixTable;
 
-    private void OnMouseDown()
-    {
-        MixTable.GetComponent<ThingsInTableMix>().ClearIngredients();
-        transform.parent.gameObject.GetComponent<Animator>().Play("PressButtonClear");
+        private void Start()
+        {
+            MixTable = GameObject.Find("MixTable");
+        }
+
+        private void OnMouseDown()
+        {
+            MixTable.GetComponent<ThingsInTableMix>().ClearIngredients();
+            transform.parent.gameObject.GetComponent<Animator>().Play("PressButtonClear");
+        }
     }
 }

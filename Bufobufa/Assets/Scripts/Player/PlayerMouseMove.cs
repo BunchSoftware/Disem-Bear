@@ -5,94 +5,97 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public enum DirectionMove
+namespace Game.Player
 {
-    State = 0, Right = 1, Left = 2, Forward = 3, Back = 4,
-}
-
-public class Move
-{
-    public Transform transform;
-    public DirectionMove directionMove = DirectionMove.State;
-}
-
-[Serializable]
-public class PlayerMouseMove : IUpdateListener
-{
-    [HideInInspector] public Action<Move> OnMove;
-    [SerializeField] private NavMeshAgent navMeshAgent;
-    private bool moveOn = true;
-    private Move move = new Move();
-
-    private Vector3 preveiusPosition;
-
-    public void Init(NavMeshAgent navMeshAgent)
+    public enum DirectionMove
     {
-        this.navMeshAgent = navMeshAgent;
-        move.transform = navMeshAgent.transform;
-        preveiusPosition = move.transform.position;
+        State = 0, Right = 1, Left = 2, Forward = 3, Back = 4,
     }
 
-    public void OnUpdate(float deltaTime)
+    public class Move
     {
-        if (moveOn && Input.GetMouseButtonDown(0))
+        public Transform transform;
+        public DirectionMove directionMove = DirectionMove.State;
+    }
+
+    [Serializable]
+    public class PlayerMouseMove : IUpdateListener
+    {
+        [HideInInspector] public Action<Move> OnMove;
+        [SerializeField] private NavMeshAgent navMeshAgent;
+        private bool moveOn = true;
+        private Move move = new Move();
+
+        private Vector3 preveiusPosition;
+
+        public void Init(NavMeshAgent navMeshAgent)
         {
-            Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+            this.navMeshAgent = navMeshAgent;
+            move.transform = navMeshAgent.transform;
+            preveiusPosition = move.transform.position;
+        }
+
+        public void OnUpdate(float deltaTime)
+        {
+            if (moveOn && Input.GetMouseButtonDown(0))
             {
-                if (EventSystem.current.IsPointerOverGameObject())
-                    return;
-                MovePlayer(hitInfo.point);
+                Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+                {
+                    if (EventSystem.current.IsPointerOverGameObject())
+                        return;
+                    MovePlayer(hitInfo.point);
+                }
             }
+
+            Vector3 currentPosition = navMeshAgent.transform.position;
+
+            float horizontalPosition = Mathf.Abs(preveiusPosition.x - currentPosition.x);
+            float verticalPosition = Mathf.Abs(preveiusPosition.z - currentPosition.z);
+
+            move.transform = navMeshAgent.transform;
+
+            if (preveiusPosition.x < currentPosition.x
+                && horizontalPosition > verticalPosition)
+            {
+                move.directionMove = DirectionMove.Right;
+            }
+            else if (preveiusPosition.x > currentPosition.x
+                 && horizontalPosition > verticalPosition)
+            {
+                move.directionMove = DirectionMove.Left;
+            }
+            else if (preveiusPosition.z > currentPosition.z
+                 && horizontalPosition < verticalPosition)
+            {
+                move.directionMove = DirectionMove.Forward;
+            }
+            else if (preveiusPosition.z < currentPosition.z
+                 && horizontalPosition < verticalPosition)
+            {
+                move.directionMove = DirectionMove.Back;
+            }
+            else
+            {
+                move.directionMove = DirectionMove.State;
+            }
+
+            OnMove(move);
+
+            preveiusPosition = navMeshAgent.transform.position;
         }
 
-        Vector3 currentPosition = navMeshAgent.transform.position;
-
-        float horizontalPosition = Mathf.Abs(preveiusPosition.x - currentPosition.x);
-        float verticalPosition = Mathf.Abs(preveiusPosition.z - currentPosition.z);
-
-        move.transform = navMeshAgent.transform;
-
-        if (preveiusPosition.x < currentPosition.x
-            && horizontalPosition > verticalPosition)
+        public void MovePlayer(Vector3 position)
         {
-            move.directionMove = DirectionMove.Right;
+            navMeshAgent.SetDestination(position);
         }
-        else if (preveiusPosition.x > currentPosition.x
-             && horizontalPosition > verticalPosition)
+        public void StopPlayerMove()
         {
-            move.directionMove = DirectionMove.Left;
+            moveOn = false;
         }
-        else if (preveiusPosition.z > currentPosition.z
-             && horizontalPosition < verticalPosition)
+        public void ReturnPlayerMove()
         {
-            move.directionMove = DirectionMove.Forward;
+            moveOn = true;
         }
-        else if (preveiusPosition.z < currentPosition.z
-             && horizontalPosition < verticalPosition)
-        {
-            move.directionMove = DirectionMove.Back;
-        }
-        else
-        {
-            move.directionMove = DirectionMove.State;
-        }
-
-        OnMove(move);
-
-        preveiusPosition = navMeshAgent.transform.position;
-    }
-
-    public void MovePlayer(Vector3 position)
-    {
-        navMeshAgent.SetDestination(position);
-    }
-    public void StopPlayerMove()
-    {
-        moveOn = false;
-    }
-    public void ReturnPlayerMove()
-    {
-        moveOn = true;
     }
 }

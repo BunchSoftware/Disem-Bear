@@ -3,45 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogInputField : MonoBehaviour
+namespace Game.Dialog
 {
-    [SerializeField] private InputField inputField;
-    [SerializeField] private Text inputText;
-    [SerializeField] private Text placeHolderText;
-    [SerializeField] private Button sendButton;
-
-    private Font standartInputFont;
-    private Font standartPlaceholderFont;
-
-    public void Init(DialogManager dialogManager)
+    public class DialogInputField : MonoBehaviour
     {
-        standartInputFont = inputText.font;
-        sendButton.onClick.RemoveAllListeners();
-        sendButton.onClick.AddListener(() =>
+        [SerializeField] private InputField inputField;
+        [SerializeField] private Text inputText;
+        [SerializeField] private Text placeHolderText;
+        [SerializeField] private Button sendButton;
+
+        private Font standartInputFont;
+        private Font standartPlaceholderFont;
+
+        public void Init(DialogManager dialogManager)
         {
-            dialogManager.SendInputText(inputField.text);
-        });
-    }
+            standartInputFont = inputText.font;
+            sendButton.onClick.RemoveAllListeners();
+            sendButton.onClick.AddListener(() =>
+            {
+                dialogManager.SendInputText(inputField.text);
+            });
+        }
 
-    public void SetParametres(Dialog dialog)
-    {
-        if (dialog.fontText != null)
-            inputText.font = dialog.fontText;
-        else
-            inputText.font = standartInputFont;
+        public void SetParametres(Dialog dialog)
+        {
+            if (dialog.fontText != null)
+                inputText.font = dialog.fontText;
+            else
+                inputText.font = standartInputFont;
 
-        if (dialog.fontText != null)
-            placeHolderText.font = dialog.fontText;
-        else
-            placeHolderText.font = standartPlaceholderFont;
+            if (dialog.fontText != null)
+                placeHolderText.font = dialog.fontText;
+            else
+                placeHolderText.font = standartPlaceholderFont;
 
-        inputText.color = dialog.colorTextInputField;
-        inputText.fontStyle = dialog.fontStyleTextInputField;
-        inputText.fontSize = dialog.fontSizeTextInputField;
+            inputText.color = dialog.colorTextInputField;
+            inputText.fontStyle = dialog.fontStyleTextInputField;
+            inputText.fontSize = dialog.fontSizeTextInputField;
 
-        placeHolderText.color = dialog.colorPlaceHolderText;
-        placeHolderText.fontStyle = dialog.fontStylePlaceHolderText;
-        placeHolderText.fontSize = dialog.fontSizePlaceHolderText;
-        placeHolderText.text = dialog.textPlaceHolderText;
+            placeHolderText.color = dialog.colorPlaceHolderText;
+            placeHolderText.fontStyle = dialog.fontStylePlaceHolderText;
+            placeHolderText.fontSize = dialog.fontSizePlaceHolderText;
+            placeHolderText.text = dialog.textPlaceHolderText;
+        }
     }
 }
+

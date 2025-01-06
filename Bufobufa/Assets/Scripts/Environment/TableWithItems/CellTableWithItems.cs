@@ -3,36 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CellTableWithItems : MonoBehaviour
+namespace Game.Environment.TableWithItems
 {
-    [SerializeField] private int indexCell = 0;
-
-    public UnityEvent<PickUpItem> OnPickUpItem;
-    public UnityEvent<PickUpItem> OnPutItem;
-
-    private TableWithItems tableWithItems;
-
-    public void Init(TableWithItems tableWithItems)
+    public class CellTableWithItems : MonoBehaviour
     {
-        this.tableWithItems = tableWithItems;
-        this.tableWithItems.OnPickUpItem.AddListener((item) =>
+        [SerializeField] private int indexCell = 0;
+
+        public UnityEvent<PickUpItem> OnPickUpItem;
+        public UnityEvent<PickUpItem> OnPutItem;
+
+        private TableWithItems tableWithItems;
+
+        public void Init(TableWithItems tableWithItems)
         {
-            OnPickUpItem?.Invoke(item);
-        });
+            this.tableWithItems = tableWithItems;
+            this.tableWithItems.OnPickUpItem.AddListener((item) =>
+            {
+                OnPickUpItem?.Invoke(item);
+            });
 
-        this.tableWithItems.OnPutItem.AddListener((item) =>
+            this.tableWithItems.OnPutItem.AddListener((item) =>
+            {
+                OnPutItem?.Invoke(item);
+            });
+        }
+
+        public PickUpItem PickUpItem()
         {
-            OnPutItem?.Invoke(item);
-        });
-    }
+            return tableWithItems.PickUpItem(indexCell);
+        }
 
-    public PickUpItem PickUpItem()
-    {
-        return tableWithItems.PickUpItem(indexCell);
-    }
-
-    public bool PutItem(PickUpItem pickUpItem)
-    {
-       return tableWithItems.PutItem(pickUpItem, indexCell);
+        public bool PutItem(PickUpItem pickUpItem)
+        {
+            return tableWithItems.PutItem(pickUpItem, indexCell);
+        }
     }
 }

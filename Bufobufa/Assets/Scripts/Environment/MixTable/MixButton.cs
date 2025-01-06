@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MixButton : MonoBehaviour
+
+namespace Game.Environment.MixTable
 {
-    private GameObject MixTable;
-
-    private void Start()
+    public class MixButton : MonoBehaviour
     {
-        MixTable = GameObject.Find("MixTable");
-    }
+        private GameObject MixTable;
 
-    private void OnMouseDown()
-    {
-        MixTable.GetComponent<ThingsInTableMix>().MixIngredients();
-        transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
+        private void Start()
+        {
+            MixTable = GameObject.Find("MixTable");
+        }
+
+        private void OnMouseDown()
+        {
+            MixTable.GetComponent<ThingsInTableMix>().MixIngredients();
+            transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
+        }
     }
 }

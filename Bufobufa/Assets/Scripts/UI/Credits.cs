@@ -4,29 +4,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Credits : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private GameObject creditsPanel;
-    [SerializeField] private Animator creditsText;
-
-    private void Update()
+    public class Credits : MonoBehaviour
     {
-        if (IsAnimationPlaying("CreditsAnimation") == false)
-            creditsPanel.gameObject.SetActive(false);
-    }
+        [SerializeField] private GameObject creditsPanel;
+        [SerializeField] private Animator creditsText;
 
-    public bool IsAnimationPlaying(string animationName)
-    {
-        var animatorStateInfo = creditsText.GetCurrentAnimatorStateInfo(0);
-        if (animatorStateInfo.IsName(animationName))
+        private void Update()
         {
-            return true;
+            if (IsAnimationPlaying("CreditsAnimation") == false)
+                creditsPanel.gameObject.SetActive(false);
         }
-        return false;
-    }
 
-    public void EndAnimation()
-    {
-        creditsPanel.gameObject.SetActive(false);
+        public bool IsAnimationPlaying(string animationName)
+        {
+            var animatorStateInfo = creditsText.GetCurrentAnimatorStateInfo(0);
+            if (animatorStateInfo.IsName(animationName))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void EndAnimation()
+        {
+            creditsPanel.gameObject.SetActive(false);
+        }
     }
 }

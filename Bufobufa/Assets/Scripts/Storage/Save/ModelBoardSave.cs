@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class ModelBoardSave
+namespace External.Storage
 {
-    public string typeModelBoard;
+    [Serializable]
+    public class ModelBoardSave
+    {
+        public string typeModelBoard;
+    }
 }

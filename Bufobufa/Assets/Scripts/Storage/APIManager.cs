@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
-namespace API
+namespace External.API
 {
     // Данные игрока для передачи на сервер
     [Serializable]

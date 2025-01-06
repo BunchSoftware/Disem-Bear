@@ -2,74 +2,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimDeleteIngredients : MonoBehaviour
+namespace Game.Environment.MixTable
 {
-    private GameObject MixTable;
-    private float TimeAnimation = 1f;
-    private bool DeleteOn = false;
-    private bool CreateOn = false;
-    private float timer = 0f;
-
-    private Vector3 StartCoord;
-    private Vector3 EndCoord;
-    private Vector3 StartRotation;
-    private Vector3 EndRotation;
-    private Vector3 StartScale;
-    private Vector3 EndScale;
-
-    public void DeleteIngredient()
+    public class AnimDeleteIngredients : MonoBehaviour
     {
-        DeleteOn = true;
+        private GameObject MixTable;
+        private float TimeAnimation = 1f;
+        private bool DeleteOn = false;
+        private bool CreateOn = false;
+        private float timer = 0f;
 
-        StartCoord = transform.position;
-        EndCoord = MixTable.transform.position;
-        StartRotation = new Vector3(0, 0, 0);
-        EndRotation = new Vector3(0, 0, 1440f);
-        StartScale = transform.localScale;
-        EndScale = new Vector3(0.01f, 0.01f, 0.01f);
+        private Vector3 StartCoord;
+        private Vector3 EndCoord;
+        private Vector3 StartRotation;
+        private Vector3 EndRotation;
+        private Vector3 StartScale;
+        private Vector3 EndScale;
 
-        timer = 0f;
-    }
-
-    public void CreateIngredient(Vector3 lcS)
-    {
-        CreateOn = true;
-
-
-        StartRotation = new Vector3(0, 0, 0);
-        EndRotation = new Vector3(0, 0, 1440f);
-        StartScale = transform.localScale;
-        EndScale = lcS;
-
-        timer = 0f;
-    }
-    private void Start()
-    {
-        MixTable = GameObject.Find("MixTable");
-    }
-    private void Update()
-    {
-        if (DeleteOn)
+        public void DeleteIngredient()
         {
-            if (timer <= TimeAnimation)
-            {
-                timer += Time.deltaTime;
-                transform.position = Vector3.Lerp(StartCoord, EndCoord, timer/TimeAnimation);
-                transform.localEulerAngles = Vector3.Lerp(StartRotation, EndRotation, timer/TimeAnimation);
-                transform.localScale = Vector3.Lerp(StartScale, EndScale, timer/TimeAnimation);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            DeleteOn = true;
+
+            StartCoord = transform.position;
+            EndCoord = MixTable.transform.position;
+            StartRotation = new Vector3(0, 0, 0);
+            EndRotation = new Vector3(0, 0, 1440f);
+            StartScale = transform.localScale;
+            EndScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+            timer = 0f;
         }
-        if (CreateOn)
+
+        public void CreateIngredient(Vector3 lcS)
         {
-            if (timer <= TimeAnimation)
+            CreateOn = true;
+
+
+            StartRotation = new Vector3(0, 0, 0);
+            EndRotation = new Vector3(0, 0, 1440f);
+            StartScale = transform.localScale;
+            EndScale = lcS;
+
+            timer = 0f;
+        }
+        private void Start()
+        {
+            MixTable = GameObject.Find("MixTable");
+        }
+        private void Update()
+        {
+            if (DeleteOn)
             {
-                timer += Time.deltaTime;
-                transform.localEulerAngles = Vector3.Lerp(StartRotation, EndRotation, timer / TimeAnimation);
-                transform.localScale = Vector3.Lerp(StartScale, EndScale, timer / TimeAnimation);
+                if (timer <= TimeAnimation)
+                {
+                    timer += Time.deltaTime;
+                    transform.position = Vector3.Lerp(StartCoord, EndCoord, timer / TimeAnimation);
+                    transform.localEulerAngles = Vector3.Lerp(StartRotation, EndRotation, timer / TimeAnimation);
+                    transform.localScale = Vector3.Lerp(StartScale, EndScale, timer / TimeAnimation);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
+            if (CreateOn)
+            {
+                if (timer <= TimeAnimation)
+                {
+                    timer += Time.deltaTime;
+                    transform.localEulerAngles = Vector3.Lerp(StartRotation, EndRotation, timer / TimeAnimation);
+                    transform.localScale = Vector3.Lerp(StartScale, EndScale, timer / TimeAnimation);
+                }
             }
         }
     }

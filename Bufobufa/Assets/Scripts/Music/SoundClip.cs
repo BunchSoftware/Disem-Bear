@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
-public class SoundClip 
+namespace Game.Music
 {
-    public AudioClip audioClip;
-    public bool isLoop = false;
+    [System.Serializable]
+    public class SoundClip
+    {
+        public AudioClip audioClip;
+        public bool isLoop = false;
+    }
 }

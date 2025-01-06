@@ -2,48 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagnetMouseMove : MonoBehaviour
+namespace Game.Environment.Fridge
 {
-    public bool OnDrag = false;
-
-    private Transform FrontFridge;
-
-
-    private void Start()
+    public class MagnetMouseMove : MonoBehaviour
     {
-        FrontFridge = transform.parent.Find("FrontFridge");
-    }
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        public bool OnDrag = false;
+
+        private Transform FrontFridge;
+
+
+        private void Start()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
+            FrontFridge = transform.parent.Find("FrontFridge");
+        }
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Magnet")) && infoHit.transform == transform)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("ClickedObject")))
                 {
-                    OnDrag = true;
-                    transform.parent.GetComponent<FridgeOpen>().ChangeMouseTrigger();
-                    transform.GetChild(0).gameObject.SetActive(false);
+                    if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Magnet")) && infoHit.transform == transform)
+                    {
+                        OnDrag = true;
+                        transform.parent.GetComponent<FridgeOpen>().ChangeMouseTrigger();
+                        transform.GetChild(0).gameObject.SetActive(false);
+                    }
                 }
             }
-        }
-        if (OnDrag)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("MagnetCollider")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("DoorHandle")))
+            if (OnDrag)
             {
-                if (infoHit.transform == FrontFridge)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("ClickedObject")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("MagnetCollider")) && !Physics.Raycast(ray, Mathf.Infinity, LayerMask.GetMask("DoorHandle")))
                 {
-                    transform.position = new Vector3(infoHit.point.x, infoHit.point.y, infoHit.point.z);// + offset;
+                    if (infoHit.transform == FrontFridge)
+                    {
+                        transform.position = new Vector3(infoHit.point.x, infoHit.point.y, infoHit.point.z);// + offset;
+                    }
                 }
             }
-        }
-        if (Input.GetMouseButtonUp(0) && OnDrag)
-        {
-            OnDrag = false;
-            transform.parent.GetComponent<FridgeOpen>().OnMouseTrigger();
-            transform.GetChild(0).gameObject.SetActive(true);
+            if (Input.GetMouseButtonUp(0) && OnDrag)
+            {
+                OnDrag = false;
+                transform.parent.GetComponent<FridgeOpen>().OnMouseTrigger();
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
 }
