@@ -24,7 +24,7 @@ namespace Game.LPlayer
     {
         [HideInInspector] public Action<Move> OnMove;
         [SerializeField] private NavMeshAgent navMeshAgent;
-        private bool moveOn = true;
+        private bool isMove = true;
         private Move move = new Move();
 
         private Vector3 preveiusPosition;
@@ -38,7 +38,7 @@ namespace Game.LPlayer
 
         public void OnUpdate(float deltaTime)
         {
-            if (moveOn && Input.GetMouseButtonDown(0))
+            if (isMove && Input.GetMouseButtonDown(0))
             {
                 Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
@@ -92,11 +92,11 @@ namespace Game.LPlayer
         }
         public void StopPlayerMove()
         {
-            moveOn = false;
+            isMove = false;
         }
         public void ReturnPlayerMove()
         {
-            moveOn = true;
+            isMove = true;
         }
     }
 }

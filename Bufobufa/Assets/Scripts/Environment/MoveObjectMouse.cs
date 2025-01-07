@@ -44,15 +44,9 @@ namespace Game.Environment
                 OnDrag = false;
                 if (!InTableMix)
                 {
-                    ResetIngredient();
                     Destroy(gameObject);
                 }
             }
-        }
-
-        public void ResetIngredient()
-        {
-            StoreManager.Instance.AddIngridient(GetComponent<Ingredient>().IngredientName);
         }
     }
 }

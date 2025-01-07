@@ -29,10 +29,10 @@ namespace Game.Environment.LMixTable
                 MixTable.GetComponent<ThingsInTableMix>().MixTableOn = false;
                 if (MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject != null)
                 {
-                    Player.GetComponent<Player>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
+                    //Player.GetComponent<Player>().currentPickObject = MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject;
                     MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject.transform.parent = Player.transform;
                     MixTable.GetComponent<ThingsInTableMix>().currentPrinterObject = null;
-                    Player.GetComponent<Player>().PickSomething();
+                   // Player.GetComponent<Player>().PickSomething();
                 }
             }
         }

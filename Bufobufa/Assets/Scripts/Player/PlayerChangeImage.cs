@@ -77,10 +77,10 @@ namespace Game.LPlayer
 
         private void FlipPickItem(Vector3 position)
         {
-            if (player.currentPickObject != null)
+            if (player.GetPickUpItem() != null)
             {
-                player.currentPickObject.transform.localEulerAngles = Vector3.zero;
-                player.currentPickObject.transform.position = position;
+                player.GetPickUpItem().transform.localEulerAngles = Vector3.zero;
+                player.GetPickUpItem().transform.position = position;
             }
         }
     }

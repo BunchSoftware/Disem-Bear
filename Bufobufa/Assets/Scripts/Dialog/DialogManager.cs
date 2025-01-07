@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Game.Dialog
+namespace Game.LDialog
 {
     [Serializable]
     public class DialogManager

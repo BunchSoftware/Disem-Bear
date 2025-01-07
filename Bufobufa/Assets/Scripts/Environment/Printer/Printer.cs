@@ -68,16 +68,16 @@ namespace Game.Environment.Printer
 
             if (!PrinterWork && ClickedMouse && InTrigger && Player.GetComponent<Player>().PlayerPickUpItem && !Player.GetComponent<Player>().PlayerInSomething)
             {
-                if (Player.GetComponent<Player>().currentPickObject.GetComponent<PrinterObjectInfo>())
+                if (Player.GetComponent<Player>().GetPickUpItem().GetComponent<PrinterObjectInfo>())
                 {
                     for (int i = 0; i < objectInfos.Count; i++)
                     {
-                        if (objectInfos[i].NameItemForPrint == Player.GetComponent<Player>().currentPickObject.GetComponent<PrinterObjectInfo>().WhatThis)
+                        if (objectInfos[i].NameItemForPrint == Player.GetComponent<Player>().GetPickUpItem().GetComponent<PrinterObjectInfo>().WhatThis)
                         {
                             ObjectDone = false;
                             PrinterWork = true;
                             Player.GetComponent<Player>().PutItem();
-                            Destroy(Player.GetComponent<Player>().currentPickObject);
+                            Destroy(Player.GetComponent<Player>().GetPickUpItem());
                             SoundManager.OnPlayOneShot(VrVrVrVr);
                             animator.Play("Printer");
                             particleSys.Play();
@@ -92,9 +92,9 @@ namespace Game.Environment.Printer
             {
 
                 PrinterImage.GetComponent<MeshRenderer>().material = OrigPrinter;
-                Player.GetComponent<Player>().PickSomething();
-                Player.GetComponent<Player>().currentPickObject = Instantiate(currentObject);
-                Player.GetComponent<Player>().currentPickObject.GetComponent<MouseTrigger>().enabled = false;
+                //Player.GetComponent<Player>().PickSomething();
+                //Player.GetComponent<Player>().currentPickObject = Instantiate(currentObject);
+                //Player.GetComponent<Player>().currentPickObject.GetComponent<MouseTrigger>().enabled = false;
                 currentObject = null;
                 ClickedMouse = false;
                 PrinterWork = false;

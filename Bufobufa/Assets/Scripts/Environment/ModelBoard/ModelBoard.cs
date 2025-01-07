@@ -8,18 +8,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Game.Environment.LTableWithItems.TableWithItems;
 
-namespace Game.Environment.ModelBoard
+namespace Game.Environment.LModelBoard
 {
     public class ModelBoard : MonoBehaviour, IPickUpItem, IPutItem
     {
         [Serializable]
-        class CellModelBoard
+        class CellBoard
         {
             public CellModelBoard cellModelBoard;
             public PickUpItem currentItemInCell;
         }
-        [SerializeField] private List<CellModelBoard> cellModelBoards;
+        [SerializeField] private List<CellBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
 
         public UnityEvent<PickUpItem> OnPickUpItem;
@@ -27,10 +28,18 @@ namespace Game.Environment.ModelBoard
 
         private SaveManager saveManager;
         private MixTable mixTable;
+        private Player player;
 
-        public void Init(SaveManager saveManager)
+        public void Init(SaveManager saveManager, MixTable mixTable, Player player)
         {
+            this.mixTable = mixTable;
             this.saveManager = saveManager;
+            this.player = player;
+
+            for (int i = 0; i < cellBoards.Count; i++)
+            {
+                cellBoards[i].cellModelBoard.Init(this, player);
+            }
 
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
             //{
@@ -50,96 +59,15 @@ namespace Game.Environment.ModelBoard
             //    }
             //}
         }
-        private void Update()
-        {
-            if (GetComponent<OpenObject>().ObjectIsOpen && Workbench.GetComponent<OpenObject>().ObjectIsOpen && OneTap)
-            {
-                OneTap = false;
-                Workbench.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
-                GetComponent<OpenObject>().ArgumentsNotQuit += 1;
-                InTableAndBoard = true;
-            }
-            if (GetComponent<OpenObject>().ArgumentsNotQuit != 2 && InTableAndBoard && !GetComponent<OpenObject>().ObjectAnim && GetComponent<OpenObject>().ObjectIsOpen && Input.GetMouseButtonDown(1))
-            {
-                OneTap = true;
-                //GetComponent<OpenObject>().TriggerObject.SetActive(false);
-                GetComponent<OpenObject>().ObjectIsOpen = false;
-                GetComponent<OpenObject>().ObjectAnim = true;
-                GetComponent<OpenObject>().ClickedMouse = false;
-
-                GetComponent<OpenObject>().Vcam.GetComponent<MoveCameraAnimation>().EndMove();
-
-                StartCoroutine(WaitAnimTable(GetComponent<OpenObject>().Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
-                StartCoroutine(WaitAnimCamera(GetComponent<OpenObject>().Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
-
-                GetComponent<BoxCollider>().enabled = true;
-                GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
-                InTableAndBoard = false;
-            }
-
-            if (!GetComponent<OpenObject>().ObjectIsOpen && GetComponent<OpenObject>().InTrigger && GetComponent<OpenObject>().ClickedMouse && Player.GetComponent<Player>().PlayerPickUpItem)
-            {
-                GetComponent<OpenObject>().ClickedMouse = false;
-                if (Player.GetComponent<Player>().currentPickObject.GetComponent<PackageInfo>())
-                {
-                    if (Player.GetComponent<Player>().currentPickObject.GetComponent<PackageInfo>().PackageName == "Document")
-                    {
-                        if (items.Count < points.Count)
-                        {
-                            if (Player.GetComponent<Player>().currentPickObject.GetComponent<PackageInfo>().HaveIngredients)
-                            {
-                                for (int i = 0; i < Player.GetComponent<Player>().currentPickObject.GetComponent<PackageInfo>().amount; i++)
-                                {
-                                    mixTable.AddIngridient(Player.GetComponent<Player>().currentPickObject.GetComponent<PackageInfo>().NameIngredient);
-                                }
-                            }
-
-
-                            GameObject item = Instantiate(Player.GetComponent<Player>().currentPickObject.GetComponent<PackageInfo>().ItemInPackage);
-                            items.Add(item);
-                            items[items.Count - 1].transform.parent = transform;
-                            items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
-                            items[items.Count - 1].SetActive(true);
-                            Player.GetComponent<Player>().PutItem();
-                            Destroy(Player.GetComponent<Player>().currentPickObject);
-
-                            if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves == null)
-                                saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves = new List<ModelBoardSave>();
-
-                            saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Add(new ModelBoardSave()
-                            {
-                                typeModelBoard = Player.GetComponent<Player>().currentPickObject.GetComponent<GetItemFromTable>().typeItemFromTable,
-                            });
-
-                            Player.GetComponent<Player>().currentPickObject = null;
-
-                            saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = null;
-                            saveManager.UpdatePlayerFile();
-                        }
-                    }
-                }
-            }
-        }
-        IEnumerator WaitAnimTable(float f)
-        {
-            yield return new WaitForSeconds(f);
-            GetComponent<OpenObject>().ObjectAnim = false;
-            Workbench.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
-        }
-        IEnumerator WaitAnimCamera(float f)
-        {
-            yield return new WaitForSeconds(f);
-            Player.GetComponent<Player>().PutItem();
-        }
 
         public PickUpItem PickUpItem(int indexCell)
         {
-            PickUpItem pickUpItem = cellTables[indexCell].currentItemInCell;
+            PickUpItem pickUpItem = cellBoards[indexCell].currentItemInCell;
 
-            if (cellTables[indexCell].currentItemInCell != null)
+            if (cellBoards[indexCell].currentItemInCell != null)
             {
-                OnPickUpItem?.Invoke(cellTables[indexCell].currentItemInCell);
-                cellTables[indexCell].currentItemInCell = null;
+                OnPickUpItem?.Invoke(cellBoards[indexCell].currentItemInCell);
+                cellBoards[indexCell].currentItemInCell = null;
             }
 
             return pickUpItem;
@@ -147,16 +75,48 @@ namespace Game.Environment.ModelBoard
 
         public bool PutItem(PickUpItem pickUpItem, int indexCell)
         {
-            if (cellTables[indexCell].currentItemInCell == null)
+            if (cellBoards[indexCell].currentItemInCell == null)
             {
-                OnPutItem?.Invoke(cellTables[indexCell].currentItemInCell);
-                cellTables[indexCell].currentItemInCell.transform.parent = cellTables[indexCell].cellTableWithItems.transform;
-                cellTables[indexCell].currentItemInCell.transform.position = cellTables[indexCell].cellTableWithItems.transform.position;
+                OnPutItem?.Invoke(cellBoards[indexCell].currentItemInCell);
+                cellBoards[indexCell].currentItemInCell.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
+                cellBoards[indexCell].currentItemInCell.transform.position = cellBoards[indexCell].cellModelBoard.transform.position;
 
-                cellTables[indexCell].currentItemInCell = pickUpItem;
+                cellBoards[indexCell].currentItemInCell = pickUpItem;
+
+                switch (pickUpItem.TypeItem)
+                {
+                    case TypePickUpItem.None:
+                        break;
+                    case TypePickUpItem.PickUpItem:
+                        break;
+                    case TypePickUpItem.Package:
+
+                        PackageItem packageItem;
+                        if (player.GetPickUpItem().TryGetComponent(out packageItem))
+                        {
+                            if (packageItem.ingradients.Count >= 1)
+                            {
+                                for (int i = 0; i < packageItem.ingradients.Count; i++)
+                                {
+                                    mixTable.AddIngradient(packageItem.ingradients[i]);
+                                }
+
+                                PickUpItem item = Instantiate(packageItem.itemInPackage);
+
+                                item.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
+                                item.transform.localPosition = cellBoards[indexCell].cellModelBoard.transform.localPosition;
+                                cellBoards[indexCell].currentItemInCell = item;
+
+                                Destroy(pickUpItem);
+                            }
+                        }
+                        else
+                            Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
+
+                        break;
+                }
                 return true;
             }
-
             return false;
         }
     }

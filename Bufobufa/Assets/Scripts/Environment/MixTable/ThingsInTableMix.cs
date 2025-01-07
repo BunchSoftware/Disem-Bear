@@ -11,7 +11,6 @@ namespace Game.Environment.LMixTable
 {
     public class ThingsInTableMix : MonoBehaviour
     {
-
         public List<GameObject> IngredientsIn = new();
         public List<string> ingredients = new();
         public List<Recipe> Recipes = new();
@@ -31,7 +30,7 @@ namespace Game.Environment.LMixTable
 
         private void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.GetComponent<Ingredient>())
+            if (collision.gameObject.GetComponent<IngradientSpawner>())
             {
                 IngredientsIn.Add(collision.gameObject);
                 collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = true;
@@ -39,7 +38,7 @@ namespace Game.Environment.LMixTable
         }
         private void OnTriggerExit(Collider collision)
         {
-            if (collision.gameObject.GetComponent<Ingredient>())
+            if (collision.gameObject.GetComponent<IngradientSpawner>())
             {
                 IngredientsIn.Remove(collision.gameObject);
                 collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = false;
@@ -55,7 +54,7 @@ namespace Game.Environment.LMixTable
                 ingredients.Clear();
                 for (int i = 0; i < IngredientsIn.Count; i++)
                 {
-                    ingredients.Add(IngredientsIn[i].GetComponent<Ingredient>().IngredientName);
+                    ingredients.Add(IngredientsIn[i].GetComponent<IngradientSpawner>().GetIngradient().typeIngradient);
                 }
                 ingredients.Sort();
                 for (int i = 0; i < Recipes.Count; i++)
@@ -63,7 +62,7 @@ namespace Game.Environment.LMixTable
                     List<string> IngredientStrings = new();
                     for (int k = 0; k < Recipes[i].IngredientsForRecipe.Count; k++)
                     {
-                        IngredientStrings.Add(Recipes[i].IngredientsForRecipe[k].GetComponent<Ingredient>().IngredientName);
+                        IngredientStrings.Add(Recipes[i].IngredientsForRecipe[k].GetComponent<IngradientSpawner>().GetIngradient().typeIngradient);
                     }
                     IngredientStrings.Sort();
                     if (ingredients.SequenceEqual(IngredientStrings))
@@ -100,7 +99,7 @@ namespace Game.Environment.LMixTable
         {
             for (int j = IngredientsIn.Count - 1; j >= 0; j--)
             {
-                IngredientsIn[j].GetComponent<MoveObjectMouse>().ResetIngredient();
+                //IngredientsIn[j].GetComponent<MoveObjectMouse>().ResetIngredient();
                 Destroy(IngredientsIn[j]);
             }
             IngredientsIn = new();

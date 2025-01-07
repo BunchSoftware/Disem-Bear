@@ -13,7 +13,6 @@ namespace Game.Environment.LPostTube
         public void ObjectFall(MoveAnimation prefab)
         {
             GameObject currentFallObject = Instantiate(prefab.gameObject, ejectionPosition, prefab.transform.rotation);
-            currentFallObject.GetComponent<GetItemFromTable>().isTube = true;
 
             MoveAnimation moveAnimation = currentFallObject.GetComponent<MoveAnimation>();
             moveAnimation.needPosition = true;

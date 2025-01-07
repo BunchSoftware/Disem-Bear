@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7032152802063289227}
+  - component: {fileID: 2960375915947232601}
   m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
@@ -31,6 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3933690519876170411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2960375915947232601
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4030711029017922334}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 0.1, z: 4}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1 &4899132208007916572
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,16 +220,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9eacdf4542ada49ad780c7f2f9e35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveManager: {fileID: 0}
-  getItemFromTables:
-  - {fileID: 391935746798126346, guid: 32d67d30c00dff441927372d04180542, type: 3}
-  points:
-  - {fileID: 4030711029017922334}
-  - {fileID: 7337838368135552641}
-  - {fileID: 9093321681898666293}
-  - {fileID: 8315067880912709030}
-  items: []
-  ModelOpen: 0
+  cellBoards: []
+  triggerObject: {fileID: 0}
+  OnPickUpItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutItem:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3972026811509519195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2265677066462564735}
+  - component: {fileID: 3616402462093401686}
   m_Layer: 0
   m_Name: Point2
   m_TagString: Untagged
@@ -303,6 +324,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3933690519876170411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3616402462093401686
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7337838368135552641}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 0.1, z: 4}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1 &8315067880912709030
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +354,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1646431254744779042}
+  - component: {fileID: 8334947607929864445}
   m_Layer: 0
   m_Name: Point4
   m_TagString: Untagged
@@ -334,6 +377,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3933690519876170411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8334947607929864445
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315067880912709030}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 0.1, z: 4}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1 &9093321681898666293
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3522769029189748558}
+  - component: {fileID: 8542152190733507429}
   m_Layer: 0
   m_Name: Point3
   m_TagString: Untagged
@@ -365,6 +430,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3933690519876170411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8542152190733507429
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093321681898666293}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 0.1, z: 4}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1001 &4725208624378121158
 PrefabInstance:
   m_ObjectHideFlags: 0

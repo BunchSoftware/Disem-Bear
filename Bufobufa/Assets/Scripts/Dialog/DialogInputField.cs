@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Dialog
+namespace Game.LDialog
 {
     public class DialogInputField : MonoBehaviour
     {

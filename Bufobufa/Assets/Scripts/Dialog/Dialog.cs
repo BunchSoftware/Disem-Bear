@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-namespace Game.Dialog
+namespace Game.LDialog
 {
     [System.Serializable]
     public class Dialog

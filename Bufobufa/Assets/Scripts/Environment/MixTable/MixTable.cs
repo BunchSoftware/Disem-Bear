@@ -1,27 +1,26 @@
 using External.Storage;
+using Game.Environment.Item;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Game.Environment.LMixTable
 {
     public class MixTable : MonoBehaviour
     {
-        public SaveManager saveManager;
-        public List<Ingredient> TypesIngredients = new();
+        [SerializeField] private List<IngradientSpawner> ingradientSpawners;
 
-        public static MixTable Instance;
+        public UnityEvent<PickUpItem> OnPickUpItem;
+        public UnityEvent<PickUpItem> OnPutItem;
 
+        [SerializeField] private SaveManager saveManager;
 
-        private void Start()
+        public void Init(SaveManager saveManager)
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-
+            this.saveManager = saveManager;
             //if (saveManager.filePlayer.JSONPlayer.resources.ingradientSaves == null || saveManager.filePlayer.JSONPlayer.resources.ingradientSaves.Count == 0)
             //{
             //    saveManager.filePlayer.JSONPlayer.resources.ingradientSaves = new List<IngradientSave> { };
@@ -49,32 +48,28 @@ namespace Game.Environment.LMixTable
             //}
         }
 
-        public void AddIngridient(string nameIngridient)
+        public void AddIngradient(Ingradient ingradient)
         {
-            for (int i = 0; i < TypesIngredients.Count; i++)
+            for (int i = 0; i < ingradientSpawners.Count; i++)
             {
-                if (TypesIngredients[i].name == nameIngridient)
+                Ingradient ingradientSpawner = ingradientSpawners[i].GetIngradient();
+                if (ingradientSpawner.typeIngradient == ingradient.typeIngradient)
                 {
-                    TypesIngredients[i].Spawner.GetComponent<Spawner>().count++;
-
-                    for (int j = 0; j < TypesIngredients.Count; j++)
-                    {
-                        if (saveManager.filePlayer.JSONPlayer.resources.ingradientSaves[i].typeIngradient == TypesIngredients[i].name)
-                        {
-                            saveManager.filePlayer.JSONPlayer.resources.ingradientSaves[i].countIngradient = TypesIngredients[i].Spawner.GetComponent<Spawner>().count;
-                        }
-                    }
-
-                    saveManager.UpdatePlayerFile();
+                    ingradientSpawner.countIngradient += ingradient.countIngradient;
                 }
             }
         }
 
-        [Serializable]
-        public class Ingredient
+        public void ReduceIngradient(Ingradient ingradient)
         {
-            public string name;
-            public GameObject Spawner;
+            for(int i = 0; i < ingradientSpawners.Count; i++)
+            {
+                Ingradient ingradientSpawner = ingradientSpawners[i].GetIngradient();
+                if (ingradientSpawner.typeIngradient == ingradient.typeIngradient)
+                {
+                    ingradientSpawner.countIngradient -= ingradient.countIngradient;
+                }
+            }
         }
     }
 }

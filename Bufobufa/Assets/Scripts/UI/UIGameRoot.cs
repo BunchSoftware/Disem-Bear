@@ -1,6 +1,6 @@
 using External.DI;
 using External.Storage;
-using Game.Dialog;
+using Game.LDialog;
 using System;
 using System.Collections;
 using System.Collections.Generic;

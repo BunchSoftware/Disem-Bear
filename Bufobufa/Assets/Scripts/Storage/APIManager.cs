@@ -21,7 +21,7 @@ namespace External.API
         public int currentIndexDialogPoint = 0;
         public int currentIndexDialog = 0;
         public List<ExerciseSave> exerciseSaves;
-        public List<IngradientSave> ingradientSaves;
+        public List<Ingradient> ingradientSaves;
         public ItemFromTableSave currentItemFromTableSave;
         public List<ModelBoardSave> modelBoardSaves;
         public List<ItemFromTableSave> itemFromTableSaves;

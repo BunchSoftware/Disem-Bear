@@ -1,5 +1,10 @@
+using External.Storage;
+using Game.Environment;
 using Game.Environment.Item;
+using Game.Environment.LMixTable;
+using Game.Environment.LPostTube;
 using Game.Environment.LTableWithItems;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,6 +25,7 @@ namespace Game.LPlayer
         public UnityEvent OnExitSomething;
 
         private PickUpItem pickUpItem;
+        private TypePickUpItem typePickUpItem = TypePickUpItem.None;
 
         [SerializeField] private ParticleSystem playerParticleSystem;
         public ParticleSystem PlayerParticleSystem => playerParticleSystem;
@@ -64,6 +70,8 @@ namespace Game.LPlayer
             {
                 playerInSomething = true;
 
+                typePickUpItem = pickUpItem.TypeItem;
+
                 this.pickUpItem = pickUpItem;
                 this.pickUpItem.transform.parent = transform;
 
@@ -77,6 +85,7 @@ namespace Game.LPlayer
             {
                 playerInSomething = false;
                 pickUpItem = null;
+                typePickUpItem = TypePickUpItem.None;
                 OnPutItem?.Invoke(pickUpItem);
             }
 
@@ -95,9 +104,14 @@ namespace Game.LPlayer
             OnExitSomething?.Invoke();
         }
 
-        public PickUpItem GetPickUpObject()
+        public PickUpItem GetPickUpItem()
         {
             return pickUpItem;
+        }
+
+        public TypePickUpItem GetTypePickUpItem()
+        {
+            return typePickUpItem;
         }
     }
 }

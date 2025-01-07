@@ -1,4 +1,4 @@
-using Game.Dialog;
+using Game.LDialog;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Game.Tutorial
 
                 if (transform.GetChild(i).TryGetComponent<PointerTutorial>(out pointerTutorial))
                 {
-                    pointerTutorial.Init(dialogManager, this);
+                    pointerTutorial.Init(player, dialogManager, this);
                     this.pointerTutorial.Add(pointerTutorial);
                 }
             }

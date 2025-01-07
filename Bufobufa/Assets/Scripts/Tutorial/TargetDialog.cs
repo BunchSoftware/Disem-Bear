@@ -1,9 +1,9 @@
-using Game.Dialog;
+using Game.LDialog;
 using Game.Environment;
 using Game.Environment.Aquarium;
 using Game.Environment.LMixTable;
 using Game.Environment.LPostTube;
-using Game.Environment.ModelBoard;
+using Game.Environment.LModelBoard;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,7 +76,7 @@ namespace Game.Tutorial
                 else if (targets[i].TypeTarget == TargetType.ModelBoardGetItem)
                 {
                     board = GetComponent<ModelBoard>();
-                    CountItems = board.items.Count;
+                    //CountItems = board.items.Count;
                 }
                 else if (targets[i].TypeTarget == TargetType.PlayerPickPackage)
                 {
@@ -213,36 +213,36 @@ namespace Game.Tutorial
         }
         private void ModelBoardGetItemFunc(int i)
         {
-            if (board.items.Count > CountItems)
-            {
-                CountItems = board.items.Count;
-                if (targets[i].Active)
-                {
-                    if (targets[i].NewDialog)
-                    {
-                        //DialogManager.StartDialog(targets[i].NumDialog);
-                        if (!targets[i].StayActiveAfter)
-                        {
-                            targets[i].Active = false;
-                        }
-                    }
-                    else
-                    {
-                        //DialogManager.RunConditionSkip(targets[i].DialogTag);
-                    }
-                    for (int j = 0; j < targets[i].NeedActivate.Count; j++)
-                    {
-                        for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
-                        {
-                            ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
-                        }
-                    }
-                }
-            }
+            //if (board.items.Count > CountItems)
+            //{
+            //    CountItems = board.items.Count;
+            //    if (targets[i].Active)
+            //    {
+            //        if (targets[i].NewDialog)
+            //        {
+            //            //DialogManager.StartDialog(targets[i].NumDialog);
+            //            if (!targets[i].StayActiveAfter)
+            //            {
+            //                targets[i].Active = false;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //DialogManager.RunConditionSkip(targets[i].DialogTag);
+            //        }
+            //        for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+            //        {
+            //            for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+            //            {
+            //                ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+            //            }
+            //        }
+            //    }
+            //}
         }
         private void PlayerPickPackageFunc(int i)
         {
-            if (Player_Info.PlayerPickUpItem && Player_Info.currentPickObject.GetComponent<PackageInfo>() && OneTap)
+            if (Player_Info.PlayerPickUpItem && Player_Info.GetPickUpItem().GetComponent<PackageItem>() && OneTap)
             {
                 OneTap = false;
                 if (targets[i].Active)
@@ -275,36 +275,36 @@ namespace Game.Tutorial
         }
         private void ModelOpenFunc(int i)
         {
-            if (board.ModelOpen && OneTap)
-            {
-                OneTap = false;
-                if (targets[i].Active)
-                {
-                    if (targets[i].NewDialog)
-                    {
-                        //DialogManager.StartDialog(targets[i].NumDialog);
-                        if (!targets[i].StayActiveAfter)
-                        {
-                            targets[i].Active = false;
-                        }
-                    }
-                    else
-                    {
-                        //DialogManager.RunConditionSkip(targets[i].DialogTag);
-                    }
-                    for (int j = 0; j < targets[i].NeedActivate.Count; j++)
-                    {
-                        for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
-                        {
-                            ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
-                        }
-                    }
-                }
-            }
-            else if (!board.ModelOpen && !OneTap)
-            {
-                OneTap = true;
-            }
+            //if (board.ModelOpen && OneTap)
+            //{
+            //    OneTap = false;
+            //    if (targets[i].Active)
+            //    {
+            //        if (targets[i].NewDialog)
+            //        {
+            //            //DialogManager.StartDialog(targets[i].NumDialog);
+            //            if (!targets[i].StayActiveAfter)
+            //            {
+            //                targets[i].Active = false;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //DialogManager.RunConditionSkip(targets[i].DialogTag);
+            //        }
+            //        for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+            //        {
+            //            for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+            //            {
+            //                ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+            //            }
+            //        }
+            //    }
+            //}
+            //else if (!board.ModelOpen && !OneTap)
+            //{
+            //    OneTap = true;
+            //}
         }
         private void TermometrClick(int i)
         {

@@ -1,4 +1,5 @@
 using Game.LPlayer;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -7,53 +8,19 @@ using UnityEngine;
 
 namespace Game.Environment.Item
 {
+    public enum TypePickUpItem
+    {
+        None = 0,
+        PickUpItem = 1,
+        Package = 2
+    }
     public class PickUpItem : MonoBehaviour
     {
-        public string TypeItem => typeItem;
-        [SerializeField] private string typeItem;
-        public bool falling = true;
-        private Vector3 lcScale = new();
-        public bool PickUp = false;
-        private bool InTrigger = false;
+        public TypePickUpItem TypeItem => typeItem;
+        [SerializeField] private TypePickUpItem typeItem = TypePickUpItem.None;
 
-        private void Start()
-        {
-            StartCoroutine(NotFalling());
-        }
-        private void Update()
-        {
-            if (!falling && !PickUp && InTrigger)
-            {
-                GetComponent<MouseTrigger>().enabled = false;
-                PickUp = true;
-                GetComponent<BoxCollider>().enabled = false;
-                //Player.GetComponent<Player>().PickSomething();
-                //Player.GetComponent<Player>().currentPickObject = gameObject;
-                Destroy(this);
-            }
-        }
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.tag == "Player")
-            {
-                InTrigger = false;
-            }
-        }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag == "Player")
-            {
-                InTrigger = true;
-            }
-        }
+        public string NameItem => nameItem;
+        [SerializeField] private string nameItem;
 
-
-
-        IEnumerator NotFalling()
-        {
-            yield return new WaitForSeconds(1f);
-
-            falling = false;
-        }
     }
 }

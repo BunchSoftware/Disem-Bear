@@ -1,5 +1,5 @@
 using External.Storage;
-using Game.Dialog;
+using Game.LDialog;
 using Game.Environment.LPostTube;
 using Game.LPlayer;
 using System.Collections;

@@ -3,7 +3,6 @@ using External.Storage;
 using Game.Environment;
 using Game.LPlayer;
 using Game.Music;
-using Game.Player;
 using Game.Tutorial;
 using System.Collections.Generic;
 using UI;
@@ -56,7 +55,7 @@ namespace External.DI
             soundManager.Init(this);
 
             updateListeners.Add(environmentRoot);
-            environmentRoot.Init(playerMouseMove, saveManager);
+            environmentRoot.Init(player, playerMouseMove, saveManager);
 
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player, saveManager);
 

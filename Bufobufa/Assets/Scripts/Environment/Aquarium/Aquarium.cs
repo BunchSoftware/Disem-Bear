@@ -12,14 +12,13 @@ namespace Game.Environment.Aquarium
         public string NameMaterial = "Classic";
         private GameObject DisplayCount;
         public bool NormalTemperature = false;
-        //public bool OnAquarium = false;
         public float NormalTimeCell = 3f;
         private float TimeCell = 666f;
         private float timerCell = 0f;
         public int CountCells = 0;
         public float TimeWaterSpend = -1f;
         public bool OnAquarium = false;
-        private SpriteRenderer SpriteAquarium;
+        private SpriteRenderer spriteRenderer;
 
         [SerializeField] private Sprite NullFase;
         [SerializeField] private Sprite FirstFase;
@@ -39,9 +38,9 @@ namespace Game.Environment.Aquarium
         {
             GetAllCells();
             NumCell = (NumCell + ch + CellsList.Count) % CellsList.Count;
-            NameIngredient = CellsList[NumCell].GetComponent<Ingredient>().IngredientName;
+            //NameIngredient = CellsList[NumCell].GetComponent<IngradientItem>().typeIngradient;
             ChoiceCellSprite.sprite = CellsList[NumCell].GetComponent<SpriteRenderer>().sprite;
-            NormalTimeCell = CellsList[NumCell].GetComponent<Ingredient>().TimeInAquarium;
+            //NormalTimeCell = CellsList[NumCell].GetComponent<IngradientItem>().TimeInAquarium;
             timerCell = 0f;
         }
         private void OnMouseDown()
@@ -61,7 +60,7 @@ namespace Game.Environment.Aquarium
             StartCoroutine(waitDisplayCount());
             for (int i = 0; i < CountCells; i++)
             {
-                MixTable.Instance.AddIngridient(NameIngredient);
+                //MixTable.Instance.AddIngridient(NameIngredient);
             }
             CountCells = 0;
         }
@@ -74,14 +73,14 @@ namespace Game.Environment.Aquarium
         private void Start()
         {
             ParticleSystemm = transform.Find("Particle System").GetComponent<ParticleSystem>();
-            SpriteAquarium = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
             if (CellsList.Count > 0)
             {
-                NameIngredient = CellsList[NumCell].GetComponent<Ingredient>().IngredientName;
+                //NameIngredient = CellsList[NumCell].GetComponent<IngradientItem>().typeIngradient;
             }
             ChoiceCellSprite.sprite = CellsList[NumCell].GetComponent<SpriteRenderer>().sprite;
-            NormalTimeCell = CellsList[NumCell].GetComponent<Ingredient>().TimeInAquarium;
+            //NormalTimeCell = CellsList[NumCell].GetComponent<IngradientItem>().TimeInAquarium;
 
             TimeCell = NormalTimeCell;
             DisplayCount = transform.Find("DisplayCount").gameObject;
@@ -96,44 +95,44 @@ namespace Game.Environment.Aquarium
             {
                 if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
                 {
-                    SpriteAquarium.sprite = NullFaseDirty;
+                    spriteRenderer.sprite = NullFaseDirty;
                 }
                 else
                 {
-                    SpriteAquarium.sprite = NullFase;
+                    spriteRenderer.sprite = NullFase;
                 }
             }
             else if (CountCells < 4 && OnAquarium)
             {
                 if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
                 {
-                    SpriteAquarium.sprite = FirstFaseDirty;
+                    spriteRenderer.sprite = FirstFaseDirty;
                 }
                 else
                 {
-                    SpriteAquarium.sprite = FirstFase;
+                    spriteRenderer.sprite = FirstFase;
                 }
             }
             else if (CountCells < 9 && OnAquarium)
             {
                 if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
                 {
-                    SpriteAquarium.sprite = SecondFaseDirty;
+                    spriteRenderer.sprite = SecondFaseDirty;
                 }
                 else
                 {
-                    SpriteAquarium.sprite = SecondFase;
+                    spriteRenderer.sprite = SecondFase;
                 }
             }
             else if (CountCells < 15 && OnAquarium)
             {
                 if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
                 {
-                    SpriteAquarium.sprite = ThirdFaseDirty;
+                    spriteRenderer.sprite = ThirdFaseDirty;
                 }
                 else
                 {
-                    SpriteAquarium.sprite = ThirdFase;
+                    spriteRenderer.sprite = ThirdFase;
                 }
             }
             if (NormalTemperature) TimeCell = NormalTimeCell;

@@ -55,17 +55,17 @@ namespace Game.Environment.Aquarium
             {
                 //GetComponent<OpenObject>().InTrigger = false;
                 GetComponent<OpenObject>().ClickedMouse = false;
-                if (Player.GetComponent<Player>().currentPickObject.GetComponent<MaterialForAquarium>())
-                {
-                    if (Player.GetComponent<Player>().currentPickObject.GetComponent<MaterialForAquarium>().nameMaterial == AquariumSprite.GetComponent<Aquarium>().NameMaterial)
-                    {
-                        AquariumSprite.GetComponent<Aquarium>().TimeWaterSpend = Player.GetComponent<Player>().currentPickObject.GetComponent<MaterialForAquarium>().TimeMaterial;
-                        AquariumSprite.GetComponent<Aquarium>().OnAquarium = true;
-                        Player.GetComponent<Player>().PutItem();
-                        Destroy(Player.GetComponent<Player>().currentPickObject);
-                        Player.GetComponent<Player>().currentPickObject = null;
-                    }
-                }
+                //if (Player.GetComponent<Player>().currentPickObject.GetComponent<MaterialForAquarium>())
+                //{
+                //    if (Player.GetComponent<Player>().currentPickObject.GetComponent<MaterialForAquarium>().nameMaterial == AquariumSprite.GetComponent<Aquarium>().NameMaterial)
+                //    {
+                //        AquariumSprite.GetComponent<Aquarium>().TimeWaterSpend = Player.GetComponent<Player>().currentPickObject.GetComponent<MaterialForAquarium>().TimeMaterial;
+                //        AquariumSprite.GetComponent<Aquarium>().OnAquarium = true;
+                //        Player.GetComponent<Player>().PutItem();
+                //        Destroy(Player.GetComponent<Player>().currentPickObject);
+                //        Player.GetComponent<Player>().currentPickObject = null;
+                //    }
+                //}
             }
         }
     }
