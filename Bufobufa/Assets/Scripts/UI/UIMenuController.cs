@@ -1,39 +1,44 @@
+using External.Storage;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
-public class UIMenuController : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Fade fade;
-    [SerializeField] private SaveManager saveManager;
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button continueButton;
 
-    public void Start()
+    public class UIMenuController : MonoBehaviour
     {
-        fade.FadeWhite();
-        if (saveManager.GetJSONPlayer().resources != null && saveManager.GetJSONPlayer().resources.isPlayerRegistration)
+        [SerializeField] private Fade fade;
+        [SerializeField] private SaveManager saveManager;
+        [SerializeField] private Button startButton;
+        [SerializeField] private Button continueButton;
+
+        public void Start()
         {
-            startButton.gameObject.SetActive(false);
-            continueButton.gameObject.SetActive(true);
+            fade.FadeWhite();
+            if (saveManager.GetJSONPlayer().resources != null && saveManager.GetJSONPlayer().resources.isPlayerRegistration)
+            {
+                startButton.gameObject.SetActive(false);
+                continueButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                startButton.gameObject.SetActive(true);
+                continueButton.gameObject.SetActive(false);
+            }
         }
-        else
+
+        public void ApllicationQuit()
         {
-            startButton.gameObject.SetActive(true);
-            continueButton.gameObject.SetActive(false);
+            Application.Quit();
         }
-    }
 
-    public void ApllicationQuit()
-    {
-        Application.Quit();
-    }
-
-    public void LoadLevel(int buildIndex)
-    {
-        fade.currentIndexScene = buildIndex;
-        fade.FadeBlack();
+        public void LoadLevel(int buildIndex)
+        {
+            fade.currentIndexScene = buildIndex;
+            fade.FadeBlack();
+        }
     }
 }

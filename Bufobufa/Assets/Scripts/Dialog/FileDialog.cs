@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[CreateAssetMenu(fileName = "New Dialog", menuName = "Dialog")]
-public class FileDialog : ScriptableObject
+namespace Game.LDialog
 {
-    public List<DialogPoint> dialogPoints = new List<DialogPoint>();
+    [CreateAssetMenu(fileName = "New Dialog", menuName = "Dialog")]
+    public class FileDialog : ScriptableObject
+    {
+        public List<DialogPoint> dialogPoints = new List<DialogPoint>();
+    }
 }

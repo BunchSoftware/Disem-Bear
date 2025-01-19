@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 4001399094569568040}
   - component: {fileID: 4036968444998537156}
   - component: {fileID: 8975040544648408492}
-  - component: {fileID: 391935746798126346}
   - component: {fileID: 7871138960482414917}
   m_Layer: 7
   m_Name: PackageBlue
@@ -70,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4246479402191905792, guid: 7ce38d9bee340e24b9c10faacb4090dd, type: 3}
+  - {fileID: 2100000, guid: fe22c9539b27d284ba4f55313abd88bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeItem: 0
+  nameItem: 
   falling: 1
   PickUp: 0
 --- !u!54 &4036968444998537156
@@ -183,28 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aeea4201deae4544888c11a71fb97b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PackageName: Document
-  ItemInPackage: {fileID: 7352654662971261209, guid: accf02c5f2b51b743b2cf0cf8b34bfff, type: 3}
-  HaveIngredients: 1
-  NameIngredient: Blue
-  amount: 1
---- !u!114 &391935746798126346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522447525192828825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d60e0bc39c6944b4386b3b5855102b6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeItemFromTable: DocumentBluePackage
-  InTrigger: 0
-  ClickedMouse: 0
-  isTube: 0
-  indexPoint: 0
+  itemInPackage: {fileID: 0}
+  ingradients: []
 --- !u!114 &7871138960482414917
 MonoBehaviour:
   m_ObjectHideFlags: 0

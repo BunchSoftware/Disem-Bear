@@ -4,81 +4,85 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueWindow : MonoBehaviour
+namespace Game.LDialog
 {
-    [SerializeField] private Text textDialog;
-    [SerializeField] private Image iconDialog;
-    [SerializeField] private Button skipButton;
-    [SerializeField] private DialogInputField dialogInputField;
-    [SerializeField] private Image imageClickButtonForSkip;
-    [HideInInspector] public Animator animator;
 
-    private Font standartFont;
-
-    public void Init(DialogManager dialogManager)
+    public class DialogueWindow : MonoBehaviour
     {
-        animator = GetComponentInChildren<Animator>();
-        standartFont = textDialog.font;
-        skipButton.onClick.RemoveAllListeners();
-        skipButton.onClick.AddListener(() =>
+        [SerializeField] private Text textDialog;
+        [SerializeField] private Image iconDialog;
+        [SerializeField] private Button skipButton;
+        [SerializeField] private DialogInputField dialogInputField;
+        [SerializeField] private Image imageClickButtonForSkip;
+        [HideInInspector] public Animator animator;
+
+        private Font standartFont;
+
+        public void Init(DialogManager dialogManager)
         {
-            dialogManager.RunConditionSkip("");
-        });
+            animator = GetComponentInChildren<Animator>();
+            standartFont = textDialog.font;
+            skipButton.onClick.RemoveAllListeners();
+            skipButton.onClick.AddListener(() =>
+            {
+                dialogManager.RunConditionSkip("");
+            });
 
-        dialogInputField.Init(dialogManager);
-    }
-
-    public void StartTypeLine(Dialog dialog)
-    {
-        StopAllCoroutines();
-        StartCoroutine(TypeLineIE(dialog));
-    }
-
-    public void StopTypeLine()
-    {
-        StopAllCoroutines();
-    }
-
-    IEnumerator TypeLineIE(Dialog dialog)
-    {
-        textDialog.text = "";
-        SetParametres(dialog);
-        dialogInputField.SetParametres(dialog);
-        for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
-        {
-            textDialog.text += dialog.textDialog[j];
-            yield return new WaitForSeconds(dialog.speedText);
+            dialogInputField.Init(dialogManager);
         }
-    }
 
-    public void DialogLast(Dialog dialog)
-    {
-        SetParametres(dialog);
-        dialogInputField.SetParametres(dialog);
-        textDialog.text = dialog.textDialog;
-    }
-
-    private void SetParametres(Dialog dialog)
-    {
-        if (dialog.fontText != null)
-            textDialog.font = dialog.fontText;
-        else
-            textDialog.font = standartFont;
-        textDialog.fontStyle = dialog.fontStyleText;
-        textDialog.fontSize = dialog.fontSizeText;
-        textDialog.color = dialog.colorText;
-        iconDialog.sprite = dialog.avatar;
-        iconDialog.preserveAspect = true;
-
-        if (dialog.imageClickButtonForSkip != null)
+        public void StartTypeLine(Dialog dialog)
         {
-            imageClickButtonForSkip.sprite = dialog.imageClickButtonForSkip;
-            imageClickButtonForSkip.preserveAspect = true;
-            imageClickButtonForSkip.gameObject.SetActive(true);
+            StopAllCoroutines();
+            StartCoroutine(TypeLineIE(dialog));
         }
-        else
-            imageClickButtonForSkip.gameObject.SetActive(false);
 
-        dialogInputField.gameObject.SetActive(dialog.isActiveInputField);
+        public void StopTypeLine()
+        {
+            StopAllCoroutines();
+        }
+
+        IEnumerator TypeLineIE(Dialog dialog)
+        {
+            textDialog.text = "";
+            SetParametres(dialog);
+            dialogInputField.SetParametres(dialog);
+            for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
+            {
+                textDialog.text += dialog.textDialog[j];
+                yield return new WaitForSeconds(dialog.speedText);
+            }
+        }
+
+        public void DialogLast(Dialog dialog)
+        {
+            SetParametres(dialog);
+            dialogInputField.SetParametres(dialog);
+            textDialog.text = dialog.textDialog;
+        }
+
+        private void SetParametres(Dialog dialog)
+        {
+            if (dialog.fontText != null)
+                textDialog.font = dialog.fontText;
+            else
+                textDialog.font = standartFont;
+            textDialog.fontStyle = dialog.fontStyleText;
+            textDialog.fontSize = dialog.fontSizeText;
+            textDialog.color = dialog.colorText;
+            iconDialog.sprite = dialog.avatar;
+            iconDialog.preserveAspect = true;
+
+            if (dialog.imageClickButtonForSkip != null)
+            {
+                imageClickButtonForSkip.sprite = dialog.imageClickButtonForSkip;
+                imageClickButtonForSkip.preserveAspect = true;
+                imageClickButtonForSkip.gameObject.SetActive(true);
+            }
+            else
+                imageClickButtonForSkip.gameObject.SetActive(false);
+
+            dialogInputField.gameObject.SetActive(dialog.isActiveInputField);
+        }
     }
 }

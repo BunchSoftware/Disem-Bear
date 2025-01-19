@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    nameUser: ybtbng
+    nameUser: Denis
     resources:
       isPlayerRegistration: 1
       currentIndexDialogPoint: 0
-      currentIndexDialog: 15
+      currentIndexDialog: 2
       exerciseSaves:
       - indexExercise: 0
-        typeOfExerciseCompletion: 3
-        isGetPackage: 1
+        typeOfExerciseCompletion: 2
+        isGetPackage: 0
       ingradientSaves:
       - typeIngradient: cell
-        countIngradient: 5
+        countIngradient: 6
       - typeIngradient: detoxification
         countIngradient: 0
       - typeIngradient: digestion
@@ -38,19 +38,24 @@ MonoBehaviour:
       - typeIngradient: gas
         countIngradient: 0
       - typeIngradient: regulation
-        countIngradient: 1
+        countIngradient: 0
       - typeIngradient: reduction
         countIngradient: 0
       - typeIngradient: Blue
-        countIngradient: 1
+        countIngradient: 0
       currentItemFromTableSave:
         typeItemFromTable: 
         indexPoint: 0
       modelBoardSaves:
       - typeModelBoard: DocumentPackage
-      - typeModelBoard: DocumentBluePackage
-      itemFromTableSaves:
-      - typeItemFromTable: 
-        indexPoint: 0
-      magnetSaves: []
-      products: []
+      itemFromTableSaves: []
+      magnetSaves:
+      - typeMagnet: sota
+        x: -0.01113781
+        y: -0.00297
+        z: 0.00316
+      products:
+      - typeProduct: sigmaCell
+        countProduct: 0
+      - typeProduct: sota
+        countProduct: 1

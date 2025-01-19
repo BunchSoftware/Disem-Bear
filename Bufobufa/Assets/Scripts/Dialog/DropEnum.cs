@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DropEnum
+namespace Game.LDialog
 {
-    None,
-    DropDown,
-    DropUp,
-    DropRight,
-    DropLeft
+    public enum DropEnum
+    {
+        None,
+        DropDown,
+        DropUp,
+        DropRight,
+        DropLeft
+    }
 }

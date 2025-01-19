@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7751074802334589093}
   - component: {fileID: 7751074802334589094}
-  - component: {fileID: 1203793971}
   m_Layer: 0
   m_Name: 'Music '
   m_TagString: Music
@@ -130,24 +129,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1203793971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7751074802334589097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d9e65fc54df5cc4283b567baa7a4cd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: -2342996771716774877, guid: 360cebffc71bd224e97e49564dc0dd23, type: 2}
-  nameKey: Music
-  soundSlider: {fileID: 0}
-  playAwake:
-    audioClip: {fileID: 0}
-    isLoop: 0
-  soundClips: []
-  MinDB: -40
-  MaxDB: 10
