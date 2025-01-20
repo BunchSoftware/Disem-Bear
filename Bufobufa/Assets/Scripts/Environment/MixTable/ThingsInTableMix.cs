@@ -49,7 +49,7 @@ namespace Game.Environment.LMixTable
         {
             if (MixTableOn)
             {
-                transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
+                //transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit += 1;
                 bool NotExistReceip = true;
                 ingredients.Clear();
                 for (int i = 0; i < IngredientsIn.Count; i++)
@@ -92,7 +92,7 @@ namespace Game.Environment.LMixTable
                         }
                     }
                 }
-                if (NotExistReceip) transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
+                //if (NotExistReceip) transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
             }
         }
         public void ClearIngredients()
@@ -138,7 +138,7 @@ namespace Game.Environment.LMixTable
                 IsPrinterObject = false;
             }
             CreateObject = false;
-            transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
+            //transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
         }
         private class InfoInstObj
         {

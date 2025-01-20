@@ -1,5 +1,6 @@
 using External.Storage;
 using Game.Environment.Item;
+using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,30 +9,32 @@ using UnityEngine.Events;
 
 namespace Game.Environment.LTableWithItems
 {
-    public class TableWithItems : MonoBehaviour, IPickUpItem, IPutItem
+    public class TableWithItems : MonoBehaviour
     {
-        [System.Serializable]
-        public class CellTable
-        {
-            public CellTableWithItems cellTableWithItems;
-            [HideInInspector] public PickUpItem currentItemInCell;
-        }
-
-        [SerializeField] private List<CellTable> cellTables = new List<CellTable>();
-
-        public UnityEvent<PickUpItem> OnPickUpItem;
-        public UnityEvent<PickUpItem> OnPutItem;
+        [SerializeField] private List<CellTableWithItems> cellTables = new List<CellTableWithItems>();
 
         private SaveManager saveManager;
+        private Player player;
 
-        public void Init(SaveManager saveManager)
+        public void Init(SaveManager saveManager, Player player)
         {
             this.saveManager = saveManager;
+            this.player = player;
 
             for (int i = 0; i < cellTables.Count; i++)
             {
-                cellTables[i].cellTableWithItems.Init(this);
+                cellTables[i].Init(this, player);
             }
+
+            //triggerObject.OnTriggerEnterEvent.AddListener((collider) =>
+            //{
+            //    isTrigger = true;
+            //});
+
+            //triggerObject.OnTriggerExitEvent.AddListener((collider) =>
+            //{
+            //    isTrigger = false;
+            //});
 
             //if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves != null)
             //{
@@ -59,34 +62,6 @@ namespace Game.Environment.LTableWithItems
             //        }
             //    }
             //}
-        }
-
-        public PickUpItem PickUpItem(int indexCell)
-        {
-            PickUpItem pickUpItem = cellTables[indexCell].currentItemInCell;
-
-            if (cellTables[indexCell].currentItemInCell != null)
-            {
-                OnPickUpItem?.Invoke(cellTables[indexCell].currentItemInCell);
-                cellTables[indexCell].currentItemInCell = null;
-            }
-
-            return pickUpItem;
-        }
-
-        public bool PutItem(PickUpItem pickUpItem, int indexCell)
-        {
-            if (cellTables[indexCell].currentItemInCell == null)
-            {
-                OnPutItem?.Invoke(cellTables[indexCell].currentItemInCell);
-                cellTables[indexCell].currentItemInCell.transform.parent = cellTables[indexCell].cellTableWithItems.transform;
-                cellTables[indexCell].currentItemInCell.transform.position = cellTables[indexCell].cellTableWithItems.transform.position;
-
-                cellTables[indexCell].currentItemInCell = pickUpItem;
-                return true;
-            }
-
-            return false;
         }
 
         //public bool TakeObject(ItemFromTableSave itemFromTableSave)

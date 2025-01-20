@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 5202541338638712873}
   - component: {fileID: 7416796259608130418}
   - component: {fileID: 4384090794540443603}
-  - component: {fileID: 6794435014750928419}
-  - component: {fileID: 3533640208678846503}
-  - component: {fileID: 3220970814278903489}
+  - component: {fileID: 985319091860500215}
   m_Layer: 7
   m_Name: InItem2
   m_TagString: Untagged
@@ -111,7 +109,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 15.539999, y: 14.387867, z: 2.62}
   m_Center: {x: -0, y: 0.11203896, z: 0}
---- !u!114 &6794435014750928419
+--- !u!114 &985319091860500215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,39 +118,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7352654662971261209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1239f845ea855743b83c280962cff8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3533640208678846503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352654662971261209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnyCase: 1
-  OnScaleChange: 0
-  TimeAnim: 0.2
-  FullZero: 1
---- !u!114 &3220970814278903489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352654662971261209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  needPosition: 1
-  startCoords: {x: 0.01, y: 10.9, z: -0.12}
-  needRotate: 1
-  startRotate: {x: -0.49987787, y: 0.5001221, z: -0.49987787, w: -0.5001221}
-  TimeAnimation: 0.5
+  typeItem: 1
+  nameItem: Document2

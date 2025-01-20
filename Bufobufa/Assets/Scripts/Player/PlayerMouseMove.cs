@@ -43,8 +43,9 @@ namespace Game.LPlayer
                 Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
                 {
-                    if (EventSystem.current.IsPointerOverGameObject())
-                        return;
+                    // Если на камера Physcical Raycast
+                    //if (EventSystem.current.IsPointerOverGameObject())
+                    //    return;
                     MovePlayer(hitInfo.point);
                 }
             }

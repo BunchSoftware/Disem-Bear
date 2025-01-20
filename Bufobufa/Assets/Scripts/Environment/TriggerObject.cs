@@ -10,28 +10,25 @@ namespace Game.Environment
     {
         [SerializeField] private string tagObject;
         public UnityEvent<Collider> OnTriggerEnterEvent;
+        public UnityEvent<Collider> OnTriggerStayEvent;
         public UnityEvent<Collider> OnTriggerExitEvent;
-
-        private Collider triggerObject;
-
-        private void Awake()
-        {
-            triggerObject = GetComponent<Collider>();
-        }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == tagObject)
                 OnTriggerEnterEvent?.Invoke(other);
-
-            triggerObject.enabled = false;
         }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.tag == tagObject)
+                OnTriggerStayEvent?.Invoke(other);
+        }
+
         private void OnTriggerExit(Collider other)
         {
             if (other.tag == tagObject)
                 OnTriggerExitEvent?.Invoke(other);
-
-            triggerObject.enabled = true;
         }
     }
 }

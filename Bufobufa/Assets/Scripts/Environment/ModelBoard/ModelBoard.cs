@@ -1,3 +1,4 @@
+using External.DI;
 using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
@@ -12,33 +13,49 @@ using static Game.Environment.LTableWithItems.TableWithItems;
 
 namespace Game.Environment.LModelBoard
 {
-    public class ModelBoard : MonoBehaviour, IPickUpItem, IPutItem
+    public class ModelBoard : MonoBehaviour, IUpdateListener
     {
-        [Serializable]
-        class CellBoard
-        {
-            public CellModelBoard cellModelBoard;
-            public PickUpItem currentItemInCell;
-        }
-        [SerializeField] private List<CellBoard> cellBoards;
+        [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
+        [SerializeField] private OpenObject openObject;
+        [SerializeField] private ScaleChooseObject scaleChooseObject;
 
-        public UnityEvent<PickUpItem> OnPickUpItem;
-        public UnityEvent<PickUpItem> OnPutItem;
+        [Header("Drag&Drop")]
+        [SerializeField] private Transform draggingParent;
+        [SerializeField] private Transform originalParent;
+        [SerializeField] private Transform freeDragingParent;
+
+        public UnityEvent OnModelBoardOpen;
+        public UnityEvent OnModelBoardClose;
 
         private SaveManager saveManager;
         private MixTable mixTable;
         private Player player;
+        private PlayerMouseMove playerMouseMove;
 
-        public void Init(SaveManager saveManager, MixTable mixTable, Player player)
+        public void Init(SaveManager saveManager, MixTable mixTable, Player player, PlayerMouseMove playerMouseMove)
         {
             this.mixTable = mixTable;
             this.saveManager = saveManager;
             this.player = player;
+            this.playerMouseMove = playerMouseMove;
+
+            openObject.OnObjectOpen.AddListener(() =>
+            {
+                scaleChooseObject.on = false;
+                OnModelBoardOpen?.Invoke();
+            });
+            openObject.OnObjectClose.AddListener(() =>
+            {
+                scaleChooseObject.on = true;
+                OnModelBoardClose?.Invoke();
+            });
+            openObject.Init(triggerObject, playerMouseMove, player);
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
-                cellBoards[i].cellModelBoard.Init(this, player);
+                cellBoards[i].Init(this, mixTable, player, triggerObject,
+                    draggingParent, originalParent, freeDragingParent);
             }
 
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
@@ -60,64 +77,69 @@ namespace Game.Environment.LModelBoard
             //}
         }
 
-        public PickUpItem PickUpItem(int indexCell)
+        public void OnUpdate(float deltaTime)
         {
-            PickUpItem pickUpItem = cellBoards[indexCell].currentItemInCell;
-
-            if (cellBoards[indexCell].currentItemInCell != null)
-            {
-                OnPickUpItem?.Invoke(cellBoards[indexCell].currentItemInCell);
-                cellBoards[indexCell].currentItemInCell = null;
-            }
-
-            return pickUpItem;
+            openObject.OnUpdate(deltaTime);
         }
 
-        public bool PutItem(PickUpItem pickUpItem, int indexCell)
-        {
-            if (cellBoards[indexCell].currentItemInCell == null)
-            {
-                OnPutItem?.Invoke(cellBoards[indexCell].currentItemInCell);
-                cellBoards[indexCell].currentItemInCell.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
-                cellBoards[indexCell].currentItemInCell.transform.position = cellBoards[indexCell].cellModelBoard.transform.position;
+        //public PickUpItem PickUpItem(int indexCell)
+        //{
+        //    PickUpItem pickUpItem = cellBoards[indexCell].currentItemInCell;
 
-                cellBoards[indexCell].currentItemInCell = pickUpItem;
+        //    if (cellBoards[indexCell].currentItemInCell != null)
+        //    {
+        //        OnPickUpItem?.Invoke(cellBoards[indexCell].currentItemInCell);
+        //        cellBoards[indexCell].currentItemInCell = null;
+        //    }
 
-                switch (pickUpItem.TypeItem)
-                {
-                    case TypePickUpItem.None:
-                        break;
-                    case TypePickUpItem.PickUpItem:
-                        break;
-                    case TypePickUpItem.Package:
+        //    return pickUpItem;
+        //}
 
-                        PackageItem packageItem;
-                        if (player.GetPickUpItem().TryGetComponent(out packageItem))
-                        {
-                            if (packageItem.ingradients.Count >= 1)
-                            {
-                                for (int i = 0; i < packageItem.ingradients.Count; i++)
-                                {
-                                    mixTable.AddIngradient(packageItem.ingradients[i]);
-                                }
+        //public bool PutItem(PickUpItem pickUpItem, int indexCell)
+        //{
+        //    if (cellBoards[indexCell].currentItemInCell == null)
+        //    {
+        //        OnPutItem?.Invoke(cellBoards[indexCell].currentItemInCell);
+        //        cellBoards[indexCell].currentItemInCell.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
+        //        cellBoards[indexCell].currentItemInCell.transform.position = cellBoards[indexCell].cellModelBoard.transform.position;
 
-                                PickUpItem item = Instantiate(packageItem.itemInPackage);
+        //        cellBoards[indexCell].currentItemInCell = pickUpItem;
 
-                                item.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
-                                item.transform.localPosition = cellBoards[indexCell].cellModelBoard.transform.localPosition;
-                                cellBoards[indexCell].currentItemInCell = item;
+        //        switch (pickUpItem.TypeItem)
+        //        {
+        //            case TypePickUpItem.None:
+        //                break;
+        //            case TypePickUpItem.PickUpItem:
+        //                break;
+        //            case TypePickUpItem.Package:
 
-                                Destroy(pickUpItem);
-                            }
-                        }
-                        else
-                            Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
+        //                PackageItem packageItem;
+        //                if (player.GetPickUpItem().TryGetComponent(out packageItem))
+        //                {
+        //                    if (packageItem.ingradients.Count >= 1)
+        //                    {
+        //                        for (int i = 0; i < packageItem.ingradients.Count; i++)
+        //                        {
+        //                            mixTable.AddIngradient(packageItem.ingradients[i]);
+        //                        }
 
-                        break;
-                }
-                return true;
-            }
-            return false;
-        }
+        //                        PickUpItem item = Instantiate(packageItem.itemInPackage);
+
+        //                        item.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
+        //                        item.transform.localPosition = cellBoards[indexCell].cellModelBoard.transform.localPosition;
+        //                        cellBoards[indexCell].currentItemInCell = item;
+
+        //                        Destroy(pickUpItem);
+        //                    }
+        //                }
+        //                else
+        //                    Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
+
+        //                break;
+        //        }
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

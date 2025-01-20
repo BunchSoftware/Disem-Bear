@@ -25,81 +25,82 @@ namespace Game.Environment
 
         private void Update()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
-            {
-                if (infoHit.collider.gameObject == gameObject)
-                {
-                    if (AnyCase)
-                    {
-                        if (FullZero)
-                        {
-                            FullZero = false;
-                            originalScale = transform.localScale;
-                        }
-                        OnScaleChange = true;
-                        FinallyMove = true;
-                    }
-                    else if (GetComponent<OpenObject>())
-                    {
-                        if (!GetComponent<OpenObject>().ObjectIsOpen)
-                        {
-                            if (FullZero)
-                            {
-                                FullZero = false;
-                                originalScale = transform.localScale;
-                            }
-                            OnScaleChange = true;
-                            FinallyMove = true;
-                        }
-                    }
-                    else
-                    {
-                        if (!Player.GetComponent<Player>().PlayerInSomething)
-                        {
-                            if (FullZero)
-                            {
-                                FullZero = false;
-                                originalScale = transform.localScale;
-                            }
-                            OnScaleChange = true;
-                            FinallyMove = true;
-                        }
-                    }
-                }
-                else
-                {
-                    OnScaleChange = false;
-                    FinallyMove = true;
-                }
-            }
-            if (OnScaleChange)
-            {
-                if (timer <= TimeAnim)
-                {
-                    transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
-                    timer += Time.deltaTime;
-                }
-                else if (FinallyMove)
-                {
-                    transform.localScale = originalScale * 1.08f;
-                    FinallyMove = false;
-                }
-            }
-            else
-            {
-                if (timer >= 0f)
-                {
-                    transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
-                    timer -= Time.deltaTime;
-                }
-                else if (FinallyMove)
-                {
-                    transform.localScale = originalScale;
-                    FinallyMove = false;
-                    FullZero = true;
-                }
-            }
+            //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //    if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+            //    {
+            //        if (infoHit.collider.gameObject == gameObject)
+            //        {
+            //            if (AnyCase)
+            //            {
+            //                if (FullZero)
+            //                {
+            //                    FullZero = false;
+            //                    originalScale = transform.localScale;
+            //                }
+            //                OnScaleChange = true;
+            //                FinallyMove = true;
+            //            }
+            //            else if (GetComponent<OpenObject>())
+            //            {
+            //                if (!GetComponent<OpenObject>().ObjectIsOpen)
+            //                {
+            //                    if (FullZero)
+            //                    {
+            //                        FullZero = false;
+            //                        originalScale = transform.localScale;
+            //                    }
+            //                    OnScaleChange = true;
+            //                    FinallyMove = true;
+            //                }
+            //            }
+            //            else
+            //            {
+            //                if (!Player.GetComponent<Player>().PlayerInSomething)
+            //                {
+            //                    if (FullZero)
+            //                    {
+            //                        FullZero = false;
+            //                        originalScale = transform.localScale;
+            //                    }
+            //                    OnScaleChange = true;
+            //                    FinallyMove = true;
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            OnScaleChange = false;
+            //            FinallyMove = true;
+            //        }
+            //    }
+            //    if (OnScaleChange)
+            //    {
+            //        if (timer <= TimeAnim)
+            //        {
+            //            transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
+            //            timer += Time.deltaTime;
+            //        }
+            //        else if (FinallyMove)
+            //        {
+            //            transform.localScale = originalScale * 1.08f;
+            //            FinallyMove = false;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (timer >= 0f)
+            //        {
+            //            transform.localScale = Vector3.Lerp(originalScale, originalScale * 1.08f, timer / TimeAnim);
+            //            timer -= Time.deltaTime;
+            //        }
+            //        else if (FinallyMove)
+            //        {
+            //            transform.localScale = originalScale;
+            //            FinallyMove = false;
+            //            FullZero = true;
+            //        }
+            //    }
+            //}
         }
     }
 }

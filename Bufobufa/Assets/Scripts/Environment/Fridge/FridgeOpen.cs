@@ -52,26 +52,26 @@ namespace Game.Environment.Fridge
 
         private void Update()
         {
-            if (GetComponent<OpenObject>().ObjectIsOpen && OneTap)
-            {
-                OneTap = false;
-                FrontFridge.SetActive(true);
-                for (int i = 0; i < magnetsGUI.Count; i++)
-                {
-                    magnetsGUI[i].GetComponent<BoxCollider>().enabled = true;
-                    magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(true);
-                }
-            }
-            else if (!GetComponent<OpenObject>().ObjectIsOpen && !OneTap)
-            {
-                OneTap = true;
-                FrontFridge.SetActive(false);
-                for (int i = 0; i < magnetsGUI.Count; i++)
-                {
-                    magnetsGUI[i].GetComponent<BoxCollider>().enabled = false;
-                    magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(false);
-                }
-            }
+            //if (GetComponent<OpenObject>().ObjectIsOpen && OneTap)
+            //{
+            //    OneTap = false;
+            //    FrontFridge.SetActive(true);
+            //    for (int i = 0; i < magnetsGUI.Count; i++)
+            //    {
+            //        magnetsGUI[i].GetComponent<BoxCollider>().enabled = true;
+            //        magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(true);
+            //    }
+            //}
+            //else if (!GetComponent<OpenObject>().ObjectIsOpen && !OneTap)
+            //{
+            //    OneTap = true;
+            //    FrontFridge.SetActive(false);
+            //    for (int i = 0; i < magnetsGUI.Count; i++)
+            //    {
+            //        magnetsGUI[i].GetComponent<BoxCollider>().enabled = false;
+            //        magnetsGUI[i].transform.GetChild(0).gameObject.SetActive(false);
+            //    }
+            //}
         }
 
         public void ChangeMouseTrigger()
