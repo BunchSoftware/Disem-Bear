@@ -34,13 +34,13 @@ namespace Game.Environment
                 nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
             }
 
-            tableWithItems.Init(saveManager);
+            tableWithItems.Init(saveManager, player);
             mixTable.Init(saveManager);
-            modelBoard.Init(saveManager, mixTable, player);
+            modelBoard.Init(saveManager, mixTable, player, playerMouseMove);
         }
         public void OnUpdate(float deltaTime)
         {
-
+            modelBoard.OnUpdate(deltaTime);
         }
     }
 }

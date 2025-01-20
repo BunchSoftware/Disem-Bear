@@ -5,6 +5,7 @@ using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Environment.LModelBoard;
 
 namespace Game.Tutorial
 {
@@ -12,6 +13,7 @@ namespace Game.Tutorial
     {
         [SerializeField] private PointerTutorialManager pointerTutorialManager;
         [SerializeField] private PostTube postTube;
+        [SerializeField] private ModelBoard modelBoard;
 
         private DialogManager dialogManager;
         private Player player;

@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 5202541338638712873}
   - component: {fileID: 7416796259608130418}
   - component: {fileID: 4384090794540443603}
-  - component: {fileID: 3533640208678846503}
-  - component: {fileID: 3220970814278903489}
   - component: {fileID: 2979826074301052321}
   m_Layer: 7
   m_Name: InItem
@@ -29,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7352654662971261209}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: -0.5}
   m_LocalPosition: {x: 2.46, y: 0.37, z: -2.51}
-  m_LocalScale: {x: 0.020098, y: 0.020098, z: 0.020098}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 270, z: 0}
 --- !u!212 &7416796259608130418
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -111,39 +109,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 15.539999, y: 21.975315, z: 2.62}
   m_Center: {x: -0, y: 0.06828228, z: 0}
---- !u!114 &3533640208678846503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352654662971261209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnyCase: 1
-  OnScaleChange: 0
-  TimeAnim: 0.2
-  FullZero: 1
---- !u!114 &3220970814278903489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352654662971261209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  needPosition: 1
-  startCoords: {x: 0.01, y: 10.9, z: -0.12}
-  needRotate: 1
-  startRotate: {x: -0.49987787, y: 0.5001221, z: -0.49987787, w: -0.5001221}
-  TimeAnimation: 0.5
 --- !u!114 &2979826074301052321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,5 +123,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeItem: 1
   nameItem: Document
-  falling: 1
-  PickUp: 0

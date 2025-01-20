@@ -71,7 +71,7 @@ namespace Game.Tutorial
             {
                 if (targets[i].TypeTarget == TargetType.OpenObject)
                 {
-                    OpenObj = GetComponent<OpenObject>();
+                    //OpenObj = GetComponent<OpenObject>();
                 }
                 else if (targets[i].TypeTarget == TargetType.ModelBoardGetItem)
                 {
@@ -105,7 +105,7 @@ namespace Game.Tutorial
                 }
                 else if (targets[i].TypeTarget == TargetType.TalantAcadem)
                 {
-                    OpenObj = GetComponent<OpenObject>();
+                    //OpenObj = GetComponent<OpenObject>();
                     //AllPointerManager = GameObject.Find("AllPointerManager").GetComponent<PointerManager>();
                 }
                 else if (targets[i].TypeTarget == TargetType.CraftPrinter)
@@ -180,36 +180,36 @@ namespace Game.Tutorial
 
         private void OpenObjectFunc(int i)
         {
-            if (OpenObj.ObjectIsOpen && OneTap)
-            {
-                OneTap = false;
-                if (targets[i].Active)
-                {
-                    if (targets[i].NewDialog)
-                    {
-                        //DialogManager.StartDialog(targets[i].NumDialog);
-                        if (!targets[i].StayActiveAfter)
-                        {
-                            targets[i].Active = false;
-                        }
-                    }
-                    else
-                    {
-                        //DialogManager.RunConditionSkip(targets[i].DialogTag);
-                    }
-                    for (int j = 0; j < targets[i].NeedActivate.Count; j++)
-                    {
-                        for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
-                        {
-                            ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
-                        }
-                    }
-                }
-            }
-            else if (!OpenObj.ObjectIsOpen && OneTap == false)
-            {
-                OneTap = true;
-            }
+            //if (OpenObj.ObjectIsOpen && OneTap)
+            //{
+            //    OneTap = false;
+            //    if (targets[i].Active)
+            //    {
+            //        if (targets[i].NewDialog)
+            //        {
+            //            //DialogManager.StartDialog(targets[i].NumDialog);
+            //            if (!targets[i].StayActiveAfter)
+            //            {
+            //                targets[i].Active = false;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //DialogManager.RunConditionSkip(targets[i].DialogTag);
+            //        }
+            //        for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+            //        {
+            //            for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+            //            {
+            //                ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+            //            }
+            //        }
+            //    }
+            //}
+            //else if (!OpenObj.ObjectIsOpen && OneTap == false)
+            //{
+            //    OneTap = true;
+            //}
         }
         private void ModelBoardGetItemFunc(int i)
         {
@@ -431,37 +431,37 @@ namespace Game.Tutorial
         }
         private void Academ(int i)
         {
-            if (OpenObj.ObjectIsOpen && OneTap)
-            {
-                OneTap = false;
-                if (targets[i].Active)
-                {
-                    AllPointerManager.SetPointer(7);
-                    if (targets[i].NewDialog)
-                    {
-                        //DialogManager.StartDialog(targets[i].NumDialog);
-                        if (!targets[i].StayActiveAfter)
-                        {
-                            targets[i].Active = false;
-                        }
-                    }
-                    else
-                    {
-                        //DialogManager.RunConditionSkip(targets[i].DialogTag);
-                    }
-                    for (int j = 0; j < targets[i].NeedActivate.Count; j++)
-                    {
-                        for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
-                        {
-                            ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
-                        }
-                    }
-                }
-            }
-            else if (!OpenObj.ObjectIsOpen && OneTap == false)
-            {
-                OneTap = true;
-            }
+            //if (OpenObj.ObjectIsOpen && OneTap)
+            //{
+            //    OneTap = false;
+            //    if (targets[i].Active)
+            //    {
+            //        AllPointerManager.SetPointer(7);
+            //        if (targets[i].NewDialog)
+            //        {
+            //            //DialogManager.StartDialog(targets[i].NumDialog);
+            //            if (!targets[i].StayActiveAfter)
+            //            {
+            //                targets[i].Active = false;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //DialogManager.RunConditionSkip(targets[i].DialogTag);
+            //        }
+            //        for (int j = 0; j < targets[i].NeedActivate.Count; j++)
+            //        {
+            //            for (int k = 0; k < targets[i].NeedActivate[j].Ids.Count; k++)
+            //            {
+            //                ActivateTarget(targets[i].NeedActivate[j].obj, targets[i].NeedActivate[j].Ids[k]);
+            //            }
+            //        }
+            //    }
+            //}
+            //else if (!OpenObj.ObjectIsOpen && OneTap == false)
+            //{
+            //    OneTap = true;
+            //}
         }
         private void PrinterCraft(int i)
         {

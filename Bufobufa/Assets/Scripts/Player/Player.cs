@@ -45,36 +45,25 @@ namespace Game.LPlayer
 
         private void OnCollisionEnter(Collision collision)
         {
-            PickUpItem pickUpItem;
-            CellTableWithItems cellTableWithItems;
+            if (playerPickUpItem == false)
+            {
+                PickUpItem pickUpItem;
 
-            if (collision.collider.TryGetComponent<PickUpItem>(out pickUpItem))
-            {
-                PickUpItem(pickUpItem);
-            }
-            else if (collision.collider.TryGetComponent<CellTableWithItems>(out cellTableWithItems))
-            {
-                if (playerPickUpItem)
-                    PickUpItem(cellTableWithItems.PickUpItem());
-                else if (playerPickUpItem == false)
-                {
-                    if (cellTableWithItems.PutItem(this.pickUpItem))
-                        PutItem();
-                }
+                if (collision.collider.TryGetComponent<PickUpItem>(out pickUpItem))
+                    PickUpItem(pickUpItem);
             }
         }
 
         public void PickUpItem(PickUpItem pickUpItem)
         {
-            if (playerPickUpItem == false)
+            if (playerPickUpItem == false && pickUpItem != null)
             {
-                playerInSomething = true;
-
-                typePickUpItem = pickUpItem.TypeItem;
+                playerPickUpItem = true;
 
                 this.pickUpItem = pickUpItem;
                 this.pickUpItem.transform.parent = transform;
 
+                typePickUpItem = pickUpItem.TypeItem;
                 OnPickUpItem?.Invoke(pickUpItem);
             }
         }
@@ -83,7 +72,7 @@ namespace Game.LPlayer
         {
             if (playerPickUpItem)
             {
-                playerInSomething = false;
+                playerPickUpItem = false;
                 pickUpItem = null;
                 typePickUpItem = TypePickUpItem.None;
                 OnPutItem?.Invoke(pickUpItem);

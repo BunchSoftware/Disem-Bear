@@ -1,10 +1,11 @@
+using Game.Environment;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game.Environment
+namespace A
 {
     public class OpenObject : MonoBehaviour
     {
