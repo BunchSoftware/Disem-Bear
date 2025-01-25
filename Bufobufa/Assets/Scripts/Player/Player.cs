@@ -73,9 +73,9 @@ namespace Game.LPlayer
             if (playerPickUpItem)
             {
                 playerPickUpItem = false;
+                OnPutItem?.Invoke(pickUpItem);
                 pickUpItem = null;
                 typePickUpItem = TypePickUpItem.None;
-                OnPutItem?.Invoke(pickUpItem);
             }
 
             return pickUpItem;

@@ -1,60 +1,58 @@
 using External.DI;
+using Game.Environment;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class ScaleChooseObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+namespace Game.Environment
 {
-    public bool on = true;
-    public float coefficient = 1.08f;
-
-    private Vector3 maxScale;
-    private Vector3 minScale;
-    private bool increaseScale = false;
-
-    private void Start()
+    [RequireComponent(typeof(ClickableObject))]
+    public class ScaleChooseObject : MonoBehaviour
     {
-        minScale = transform.localScale;
-        maxScale = new Vector3(minScale.x * coefficient, minScale.y * coefficient, minScale.z * coefficient);
-    }
+        public bool on = true;
+        public float coefficient = 1.08f;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        increaseScale = true;
-    }
+        private Vector3 maxScale;
+        private Vector3 minScale;
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        increaseScale = false;
-    }
+        private ClickableObject clickableObject;
 
-    private void Update()
-    {
-        if (on && increaseScale && transform.localScale.x < maxScale.x)
+        private void Start()
         {
-            Vector3 scale = new Vector3(transform.localScale.x + Time.deltaTime * minScale.x, transform.localScale.y + Time.deltaTime * minScale.y, transform.localScale.z + Time.deltaTime * minScale.z);
-            if (scale.x > maxScale.x)
-            {
-                scale = maxScale;
-            }
-            transform.localScale = scale;
+            clickableObject = GetComponent<ClickableObject>();
+            minScale = transform.localScale;
+            maxScale = new Vector3(minScale.x * coefficient, minScale.y * coefficient, minScale.z * coefficient);
         }
-        else if (transform.localScale.x > minScale.x && (!on || !increaseScale))
-        {
-            Vector3 scale = new Vector3(transform.localScale.x - Time.deltaTime * minScale.x, transform.localScale.y - Time.deltaTime * minScale.y, transform.localScale.z - Time.deltaTime * minScale.z);
-            if (scale.x < minScale.x)
-            {
-                scale = minScale;
-            }
-            transform.localScale = scale;
-        }
-    }
 
-    public void RemoveComponent()
-    {
-        transform.localScale = minScale;
-        Destroy(this);
+
+        private void Update()
+        {
+            if (on && clickableObject.MouseStayOnObject && transform.localScale.x < maxScale.x)
+            {
+                Vector3 scale = new Vector3(transform.localScale.x + Time.deltaTime * minScale.x, transform.localScale.y + Time.deltaTime * minScale.y, transform.localScale.z + Time.deltaTime * minScale.z);
+                if (scale.x > maxScale.x)
+                {
+                    scale = maxScale;
+                }
+                transform.localScale = scale;
+            }
+            else if (transform.localScale.x > minScale.x && (!on || !clickableObject.MouseStayOnObject))
+            {
+                Vector3 scale = new Vector3(transform.localScale.x - Time.deltaTime * minScale.x, transform.localScale.y - Time.deltaTime * minScale.y, transform.localScale.z - Time.deltaTime * minScale.z);
+                if (scale.x < minScale.x)
+                {
+                    scale = minScale;
+                }
+                transform.localScale = scale;
+            }
+        }
+
+        public void RemoveComponent()
+        {
+            transform.localScale = minScale;
+            Destroy(this);
+        }
     }
 }
