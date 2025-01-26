@@ -71,12 +71,6 @@ namespace Game.Environment.LTableWithItems
         {
             boxCollider.enabled = true;
             PickUpItem item = null;
-
-            ScaleChooseObject scaleChooseObject = currentItemInCell.GetComponent<ScaleChooseObject>();
-
-            if (scaleChooseObject != null)
-                scaleChooseObject.RemoveComponent();
-
             item = currentItemInCell;
 
             OnPickUpItem?.Invoke(currentItemInCell);

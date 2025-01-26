@@ -62,9 +62,7 @@ namespace Game.LPlayer
 
                 this.pickUpItem = pickUpItem;
                 if (this.pickUpItem.TryGetComponent(out ScaleChooseObject scaleChooseObject))
-                {
-                    Destroy(scaleChooseObject);
-                }
+                    scaleChooseObject.RemoveComponent();
                 this.pickUpItem.transform.parent = transform;
 
                 typePickUpItem = pickUpItem.TypeItem;

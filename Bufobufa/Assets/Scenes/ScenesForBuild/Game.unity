@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: aeaa6268f7d6b8946a5f283d212b574a, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 041d635948aa351498335e7952c1fbfb, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -12346,22 +12346,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 860054388363624321, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2647423813428839471, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 2647423813428839471, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 9.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2647423813428839471, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 27
-      objectReference: {fileID: 0}
     - target: {fileID: 2647423813428839471, guid: 32d67d30c00dff441927372d04180542, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3699999
@@ -12406,21 +12390,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Package
       objectReference: {fileID: 0}
-    - target: {fileID: 8856062554466753015, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: fe22c9539b27d284ba4f55313abd88bf, type: 2}
-    - target: {fileID: 8975040544648408492, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      propertyPath: ingradients.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4522447525192828825, guid: 32d67d30c00dff441927372d04180542, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 797616264}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d67d30c00dff441927372d04180542, type: 3}
 --- !u!1 &379382650
 GameObject:
@@ -15409,7 +15382,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 369755943107966362, guid: 32d67d30c00dff441927372d04180542, type: 3}
   m_PrefabInstance: {fileID: 371942758}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797616257}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
@@ -15420,7 +15393,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1416277121592618411, guid: 32d67d30c00dff441927372d04180542, type: 3}
   m_PrefabInstance: {fileID: 371942758}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797616257}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
@@ -16017,25 +15990,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &797616257 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4522447525192828825, guid: 32d67d30c00dff441927372d04180542, type: 3}
-  m_PrefabInstance: {fileID: 371942758}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &797616264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797616257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  on: 1
-  coefficient: 1.08
 --- !u!4 &809192200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8054770960052085468, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
@@ -26902,7 +26856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1839648470
 Transform:
   m_ObjectHideFlags: 0
