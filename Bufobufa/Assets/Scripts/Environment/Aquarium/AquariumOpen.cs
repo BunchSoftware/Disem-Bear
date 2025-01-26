@@ -1,29 +1,67 @@
+using External.Storage;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Game.Environment.Aquarium
 {
     public class AquariumOpen : MonoBehaviour
     {
-        private GameObject Player;
-        private GameObject AquariumSprite;
+        private OpenObject openObject;
+        private ScaleChooseObject scaleChooseObject;
+        [SerializeField] private TriggerObject triggerObject;
 
-        private bool OneTap = true;
+        public UnityEvent OnAquariumOpen;
+        public UnityEvent OnAquariumClose;
 
-        [Header("Координаты куда должен уйти объект при открытии стола(Игрок, камера и сам аквариум)")]
-        public Vector3 CoordAquarium = new();
-        public Quaternion RotateAquarium = new();
-        public float TimeAnimationAquarium = 1f;
+        private SaveManager saveManager;
+        private Player player;
+        private PlayerMouseMove playerMouseMove;
+        private MovePointToPoint spriteMovePointToPoint;
 
 
-        private void Start()
+
+        public void Init(SaveManager saveManager, Player player, PlayerMouseMove playerMouseMove)
         {
-            Player = GameObject.FindGameObjectWithTag("Player");
-            AquariumSprite = transform.Find("AquariumSprite").gameObject;
+            this.saveManager = saveManager;
+            this.player = player;
+            this.playerMouseMove = playerMouseMove;
+
+            openObject = GetComponent<OpenObject>();
+            scaleChooseObject = GetComponent<ScaleChooseObject>();
+            spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
+
+            openObject.OnObjectOpen.AddListener(() =>
+            {
+                spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
+                scaleChooseObject.on = false;
+                OnAquariumOpen?.Invoke();
+            });
+            openObject.OnObjectClose.AddListener(() =>
+            {
+                spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
+                scaleChooseObject.on = true;
+                OnAquariumClose?.Invoke();
+            });
+            openObject.Init(triggerObject, playerMouseMove, player);
+
         }
+
+
+
+        public void OnUpdate(float deltatime)
+        {
+            openObject.OnUpdate(deltatime);
+        }
+
+        //private void Start()
+        //{
+        //    Player = GameObject.FindGameObjectWithTag("Player");
+        //    AquariumSprite = transform.Find("AquariumSprite").gameObject;
+        //}
         private void Update()
         {
             //if (GetComponent<OpenObject>().ObjectIsOpen && OneTap)

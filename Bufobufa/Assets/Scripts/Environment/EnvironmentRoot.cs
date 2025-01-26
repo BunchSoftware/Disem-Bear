@@ -1,6 +1,7 @@
 using DG.Tweening.Core.Easing;
 using External.DI;
 using External.Storage;
+using Game.Environment.Aquarium;
 using Game.Environment.LMixTable;
 using Game.Environment.LModelBoard;
 using Game.Environment.LTableWithItems;
@@ -22,6 +23,8 @@ namespace Game.Environment
         [SerializeField] private ModelBoard modelBoard;
         [Header("MixTable")]
         [SerializeField] private MixTable mixTable;
+        [Header("MixTable")]
+        [SerializeField] private AquariumOpen aquariumOpen;
 
         private SaveManager saveManager;
 
@@ -37,10 +40,12 @@ namespace Game.Environment
             tableWithItems.Init(saveManager, player);
             mixTable.Init(saveManager);
             modelBoard.Init(saveManager, mixTable, player, playerMouseMove);
+            aquariumOpen.Init(saveManager, player, playerMouseMove);
         }
         public void OnUpdate(float deltaTime)
         {
             modelBoard.OnUpdate(deltaTime);
+            aquariumOpen.OnUpdate(deltaTime);
         }
     }
 }
