@@ -16,6 +16,7 @@ namespace Game.Environment.LTableWithItems
 
         private TableWithItems tableWithItems;
         private TriggerObject triggerObject;
+        private BoxCollider boxCollider;
 
         private PickUpItem currentItemInCell;
 
@@ -25,10 +26,11 @@ namespace Game.Environment.LTableWithItems
 
         public void Init(TableWithItems tableWithItems, Player player)
         {
-            triggerObject = GetComponent<TriggerObject>();
+            triggerObject = transform.Find("TriggerObject").GetComponent<TriggerObject>();
+            boxCollider = GetComponent<BoxCollider>();
 
             this.tableWithItems = tableWithItems;
-            this.player = player;   
+            this.player = player;
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
@@ -41,7 +43,12 @@ namespace Game.Environment.LTableWithItems
                         player.PutItem();
                         Debug.Log("Я положил предмет в Table");
                     }
-                    else if (player.PlayerPickUpItem == false)
+                }
+                else if (currentItemInCell != null && currentItemInCell.IsClicked)
+                {
+                    currentItemInCell.IsClicked = false;
+
+                    if (player.PlayerPickUpItem == false)
                     {
                         player.PickUpItem(PickUpItem());
                         Debug.Log("Я поднял предмет из Table");
@@ -62,21 +69,19 @@ namespace Game.Environment.LTableWithItems
 
         public PickUpItem PickUpItem()
         {
+            boxCollider.enabled = true;
             PickUpItem item = null;
 
-            if (currentItemInCell != null)
-            {
-                ScaleChooseObject scaleChooseObject = currentItemInCell.GetComponent<ScaleChooseObject>();
+            ScaleChooseObject scaleChooseObject = currentItemInCell.GetComponent<ScaleChooseObject>();
 
-                if (scaleChooseObject != null)
-                    scaleChooseObject.RemoveComponent();
+            if (scaleChooseObject != null)
+                scaleChooseObject.RemoveComponent();
 
-                item = currentItemInCell;
+            item = currentItemInCell;
 
-                OnPickUpItem?.Invoke(currentItemInCell);
+            OnPickUpItem?.Invoke(currentItemInCell);
 
-                currentItemInCell = null;
-            }
+            currentItemInCell = null;
 
             return item;
         }
@@ -87,6 +92,7 @@ namespace Game.Environment.LTableWithItems
             {
                 OnPutItem?.Invoke(currentItemInCell);
 
+                boxCollider.enabled = false;
                 currentItemInCell = pickUpItem;
                 currentItemInCell.transform.parent = transform;
                 currentItemInCell.transform.position = transform.position;

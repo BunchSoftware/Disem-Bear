@@ -67,9 +67,6 @@ namespace Game.Environment
                     IMouseOver mouseOver;
                     if (raycastHits[i].collider.gameObject.TryGetComponent(out mouseOver))
                     {
-                        if (currentMouseOver != null)
-                            currentMouseOver.OnMouseExitObject();
-
                         currentMouseOver = mouseOver;
                         currentMouseOver.OnMouseEnterObject();
 
