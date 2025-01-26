@@ -10,7 +10,6 @@ namespace Game.Environment.Aquarium
     {
         private GameObject Player;
         private GameObject AquariumSprite;
-        private GameObject Temperature;
 
         private bool OneTap = true;
 
@@ -24,7 +23,6 @@ namespace Game.Environment.Aquarium
         {
             Player = GameObject.FindGameObjectWithTag("Player");
             AquariumSprite = transform.Find("AquariumSprite").gameObject;
-            Temperature = AquariumSprite.transform.Find("Termometr").gameObject;
         }
         private void Update()
         {

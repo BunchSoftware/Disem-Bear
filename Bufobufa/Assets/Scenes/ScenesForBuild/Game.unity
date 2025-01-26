@@ -13925,10 +13925,12 @@ GameObject:
   m_Component:
   - component: {fileID: 560113123}
   - component: {fileID: 560113121}
+  - component: {fileID: 560113128}
   - component: {fileID: 560113120}
   - component: {fileID: 560113124}
   - component: {fileID: 560113125}
   - component: {fileID: 560113126}
+  - component: {fileID: 560113127}
   m_Layer: 7
   m_Name: Printer
   m_TagString: Untagged
@@ -13943,7 +13945,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560113119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
   m_Name: 
@@ -14051,6 +14053,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets: []
+--- !u!114 &560113127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560113119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c021d23e14354e85b5c1928ab018f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MouseClickObject: 0
+  MouseStayOnObject: 0
+--- !u!114 &560113128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560113119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
 --- !u!1001 &586079431
 PrefabInstance:
   m_ObjectHideFlags: 0

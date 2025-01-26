@@ -33,11 +33,13 @@ public class OpenObject : MonoBehaviour, IUpdateListener
 
     private bool isClick = false;
 
+
     public void Init(TriggerObject triggerObject, PlayerMouseMove playerMouseMove, Player player)
     {
         this.player = player;
         this.triggerObject = triggerObject;
         this.playerMouseMove = playerMouseMove;
+
 
         moveCamera = Camera.main.GetComponent<MoveCamera>();
 
