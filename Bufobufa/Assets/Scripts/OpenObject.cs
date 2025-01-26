@@ -9,7 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [Serializable]
-public class OpenObject : MonoBehaviour, IUpdateListener
+public class OpenObject : MonoBehaviour, ILeftMouseClickable, IRightMouseClickable
 {
     public float timeOpen = 1f;
     [SerializeField] private Transform cameraTransform;
@@ -73,17 +73,9 @@ public class OpenObject : MonoBehaviour, IUpdateListener
         });
     }
 
-    public void OnUpdate(float deltaTime)
+    public void OnMouseLeftClickObject()
     {
-        if (isOpen && Input.GetMouseButtonDown(1) && moveCamera.IsMove() == false)
-        {
-            moveCamera.StartMoveTo(lastMoveCameraToPosition);
-            playerMouseMove.MovePlayer(lastPlayerPosition);
-            isOpen = false;
-            OnObjectClose.Invoke();
-            playerMouseMove.ReturnPlayerMove();
-        }
-        else if(player.PlayerPickUpItem == false && !isOpen && Input.GetMouseButtonDown(0) && moveCamera.IsMove() == false)
+        if (player.PlayerPickUpItem == false && !isOpen && moveCamera.IsMove() == false)
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
 
@@ -100,8 +92,29 @@ public class OpenObject : MonoBehaviour, IUpdateListener
 
                 isClick = true;
                 break;
-            }        
+            }
         }
+    }
+
+    public void OnMouseRightClickObject()
+    {
+        if (isOpen && moveCamera.IsMove() == false)
+        {
+            moveCamera.StartMoveTo(lastMoveCameraToPosition);
+            playerMouseMove.MovePlayer(lastPlayerPosition);
+            isOpen = false;
+            OnObjectClose.Invoke();
+            playerMouseMove.ReturnPlayerMove();
+        }
+    }
+
+    public void OnMouseRightClickOtherObject()
+    {
+        isClick = false;
+    }
+    public void OnMouseLeftClickOtherObject()
+    {
+        isClick = false;
     }
 }
 [Serializable]

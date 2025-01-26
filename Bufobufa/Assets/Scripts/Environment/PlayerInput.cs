@@ -10,6 +10,12 @@ namespace Game.Environment
         void OnMouseLeftClickOtherObject();
     }
 
+    public interface IRightMouseClickable
+    {
+        void OnMouseRightClickObject();
+        void OnMouseRightClickOtherObject();
+    }
+
     public interface IMouseOver
     {
         void OnMouseEnterObject();
@@ -20,12 +26,15 @@ namespace Game.Environment
     public class PlayerInput : IUpdateListener
     {
         private ILeftMouseClickable currentLeftMouseClickable;
+        private IRightMouseClickable currentRightMouseClickable;
         private IMouseOver currentMouseOver;
 
         public void OnUpdate(float deltaTime)
         {
             if (Input.GetMouseButtonDown(0))
                 LeftMouseClick();
+            if (Input.GetMouseButtonDown(1))
+                RightMouseClick();
 
             MouseOver();
         }
@@ -56,6 +65,32 @@ namespace Game.Environment
             }
         }
 
+        private void RightMouseClick()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit[] raycastHits = Physics.RaycastAll(ray, 100f);
+            if (raycastHits.Length != 0)
+            {
+                for (int i = 0; i < raycastHits.Length; i++)
+                {
+                    IRightMouseClickable rightMouseClickable;
+                    if (raycastHits[i].collider.gameObject.TryGetComponent(out rightMouseClickable))
+                    {
+                        if (currentRightMouseClickable != null)
+                            currentRightMouseClickable.OnMouseRightClickOtherObject();
+
+                        currentRightMouseClickable = rightMouseClickable;
+                        currentRightMouseClickable.OnMouseRightClickObject();
+
+                        return;
+                    }
+                }
+
+                if (currentRightMouseClickable != null)
+                    currentRightMouseClickable.OnMouseRightClickOtherObject();
+            }
+        }
+
         private void MouseOver()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -67,6 +102,9 @@ namespace Game.Environment
                     IMouseOver mouseOver;
                     if (raycastHits[i].collider.gameObject.TryGetComponent(out mouseOver))
                     {
+                        if (currentMouseOver != null && currentMouseOver != mouseOver)
+                            currentMouseOver.OnMouseExitObject();
+
                         currentMouseOver = mouseOver;
                         currentMouseOver.OnMouseEnterObject();
 
