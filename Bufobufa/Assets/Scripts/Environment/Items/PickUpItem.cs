@@ -14,13 +14,23 @@ namespace Game.Environment.Item
         PickUpItem = 1,
         Package = 2
     }
-    public class PickUpItem : MonoBehaviour
+    public class PickUpItem : MonoBehaviour, ILeftMouseClickable
     {
+        public bool IsClicked = false;
         public TypePickUpItem TypeItem => typeItem;
         [SerializeField] private TypePickUpItem typeItem = TypePickUpItem.None;
 
         public string NameItem => nameItem;
         [SerializeField] private string nameItem;
 
+        public void OnMouseLeftClickObject()
+        {
+            IsClicked = true;
+        }
+
+        public void OnMouseLeftClickOtherObject()
+        {
+            IsClicked = false;
+        }
     }
 }
