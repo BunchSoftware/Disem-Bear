@@ -79,7 +79,7 @@ namespace Game.Environment.LModelBoard
 
         public void OnUpdate(float deltaTime)
         {
-            
+            openObject.OnUpdate(deltaTime);
         }
 
         //public PickUpItem PickUpItem(int indexCell)
