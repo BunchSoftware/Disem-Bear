@@ -9,7 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [Serializable]
-public class OpenObject : MonoBehaviour, ILeftMouseClickable, IRightMouseClickable
+public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
 {
     public float timeOpen = 1f;
     [SerializeField] private Transform cameraTransform;
@@ -96,9 +96,14 @@ public class OpenObject : MonoBehaviour, ILeftMouseClickable, IRightMouseClickab
         }
     }
 
-    public void OnMouseRightClickObject()
+    public void OnMouseLeftClickOtherObject()
     {
-        if (isOpen && moveCamera.IsMove() == false)
+        isClick = false;
+    }
+
+    public void OnUpdate(float deltaTime)
+    {
+        if (Input.GetMouseButtonDown(1) && isOpen && moveCamera.IsMove() == false)
         {
             moveCamera.StartMoveTo(lastMoveCameraToPosition);
             playerMouseMove.MovePlayer(lastPlayerPosition);
@@ -106,15 +111,6 @@ public class OpenObject : MonoBehaviour, ILeftMouseClickable, IRightMouseClickab
             OnObjectClose.Invoke();
             playerMouseMove.ReturnPlayerMove();
         }
-    }
-
-    public void OnMouseRightClickOtherObject()
-    {
-        isClick = false;
-    }
-    public void OnMouseLeftClickOtherObject()
-    {
-        isClick = false;
     }
 }
 [Serializable]
