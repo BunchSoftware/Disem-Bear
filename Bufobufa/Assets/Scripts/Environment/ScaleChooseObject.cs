@@ -8,20 +8,17 @@ using UnityEngine.UIElements;
 
 namespace Game.Environment
 {
-    [RequireComponent(typeof(ClickableObject))]
-    public class ScaleChooseObject : MonoBehaviour
+    public class ScaleChooseObject : MonoBehaviour, IMouseOver
     {
         public bool on = true;
         public float coefficient = 1.08f;
 
         private Vector3 maxScale;
         private Vector3 minScale;
-
-        private ClickableObject clickableObject;
+        private bool increaseScale = false;
 
         private void Start()
         {
-            clickableObject = GetComponent<ClickableObject>();
             minScale = transform.localScale;
             maxScale = new Vector3(minScale.x * coefficient, minScale.y * coefficient, minScale.z * coefficient);
         }
@@ -29,7 +26,7 @@ namespace Game.Environment
 
         private void Update()
         {
-            if (on && clickableObject.MouseStayOnObject && transform.localScale.x < maxScale.x)
+            if (on && increaseScale && transform.localScale.x < maxScale.x)
             {
                 Vector3 scale = new Vector3(transform.localScale.x + Time.deltaTime * minScale.x, transform.localScale.y + Time.deltaTime * minScale.y, transform.localScale.z + Time.deltaTime * minScale.z);
                 if (scale.x > maxScale.x)
@@ -38,7 +35,7 @@ namespace Game.Environment
                 }
                 transform.localScale = scale;
             }
-            else if (transform.localScale.x > minScale.x && (!on || !clickableObject.MouseStayOnObject))
+            else if (transform.localScale.x > minScale.x && (!on || !increaseScale))
             {
                 Vector3 scale = new Vector3(transform.localScale.x - Time.deltaTime * minScale.x, transform.localScale.y - Time.deltaTime * minScale.y, transform.localScale.z - Time.deltaTime * minScale.z);
                 if (scale.x < minScale.x)
@@ -53,6 +50,16 @@ namespace Game.Environment
         {
             transform.localScale = minScale;
             Destroy(this);
+        }
+
+        public void OnMouseEnterObject()
+        {
+            increaseScale = true;
+        }
+
+        public void OnMouseExitObject()
+        {
+            increaseScale = false;
         }
     }
 }

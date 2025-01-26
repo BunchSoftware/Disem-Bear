@@ -9,8 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.Environment.LTableWithItems
 {
-    [RequireComponent(typeof(ClickableObject))]
-    public class CellTableWithItems : MonoBehaviour//, IPointerDownHandler
+    public class CellTableWithItems : MonoBehaviour, ILeftMouseClickable
     {
         public UnityEvent<PickUpItem> OnPickUpItem;
         public UnityEvent<PickUpItem> OnPutItem;
@@ -19,16 +18,13 @@ namespace Game.Environment.LTableWithItems
         private TriggerObject triggerObject;
 
         private PickUpItem currentItemInCell;
-        private ClickableObject ItemInCellClickableObject = null;
 
         private Player player;
 
-        private ClickableObject clickableObject;
+        private bool isClick = false;
 
         public void Init(TableWithItems tableWithItems, Player player)
         {
-            clickableObject = gameObject.GetComponent<ClickableObject>();
-
             triggerObject = GetComponent<TriggerObject>();
 
             this.tableWithItems = tableWithItems;
@@ -36,21 +32,17 @@ namespace Game.Environment.LTableWithItems
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
-                if (clickableObject.MouseClickObject)
+                if (isClick)
                 {
-                    clickableObject.MouseClickObject = false;
+                    isClick = false;
 
                     if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
                     {
                         player.PutItem();
                         Debug.Log("Я положил предмет в Table");
                     }
-                }
-                else if (currentItemInCell != null)
-                {
-                    if (ItemInCellClickableObject.MouseClickObject && player.PlayerPickUpItem == false)
+                    else if (player.PlayerPickUpItem == false)
                     {
-                        ItemInCellClickableObject.MouseClickObject = false;
                         player.PickUpItem(PickUpItem());
                         Debug.Log("Я поднял предмет из Table");
                     }
@@ -58,13 +50,15 @@ namespace Game.Environment.LTableWithItems
             });
         }
 
-        //public void OnPointerDown(PointerEventData eventData)
-        //{
-        //    if (eventData.button == PointerEventData.InputButton.Left)
-        //        isClick = true;
-        //    else
-        //        isClick = false;
-        //}
+        public void OnMouseLeftClickObject()
+        {
+            isClick = true;
+        }
+
+        public void OnMouseLeftClickOtherObject()
+        {
+            isClick = false;
+        }
 
         public PickUpItem PickUpItem()
         {
@@ -81,7 +75,6 @@ namespace Game.Environment.LTableWithItems
 
                 OnPickUpItem?.Invoke(currentItemInCell);
 
-                gameObject.layer = LayerMask.NameToLayer("ClickedObject");
                 currentItemInCell = null;
             }
 
@@ -94,19 +87,10 @@ namespace Game.Environment.LTableWithItems
             {
                 OnPutItem?.Invoke(currentItemInCell);
 
-                gameObject.layer = LayerMask.NameToLayer("Default");
                 currentItemInCell = pickUpItem;
                 currentItemInCell.transform.parent = transform;
                 currentItemInCell.transform.position = transform.position;
 
-                if (currentItemInCell.GetComponent<ClickableObject>() == null)
-                {
-                    ItemInCellClickableObject = currentItemInCell.AddComponent<ClickableObject>();
-                }
-                else
-                {
-                    ItemInCellClickableObject = currentItemInCell.GetComponent<ClickableObject>();
-                }
                 if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
                 {
                     ScaleChooseObject scaleChooseObject = currentItemInCell.AddComponent<ScaleChooseObject>();

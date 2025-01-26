@@ -42,6 +42,8 @@ namespace External.DI
         [SerializeField] private FileShop fileShop;
         [SerializeField] private APIManager apiManager;
 
+        [SerializeField] private PlayerInput playerInput = new();
+
         private SaveManager saveManager = new SaveManager();
 
         private List<IUpdateListener> updateListeners = new();
@@ -67,6 +69,8 @@ namespace External.DI
 
             updateListeners.Add(playerMouseMove);
             playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
+
+            updateListeners.Add(playerInput);
         }
 
         private void Update()
