@@ -8,11 +8,13 @@ using UnityEngine.Events;
 
 namespace Game.Environment.Aquarium
 {
+    [RequireComponent(typeof(OpenObject))]
+    [RequireComponent(typeof(ScaleChooseObject))]
     public class AquariumOpen : MonoBehaviour
     {
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
-        [SerializeField] private TriggerObject triggerObject;
+        private TriggerObject triggerObject;
 
         public UnityEvent OnAquariumOpen;
         public UnityEvent OnAquariumClose;
@@ -32,6 +34,7 @@ namespace Game.Environment.Aquarium
 
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
+            triggerObject = GetComponentInChildren<TriggerObject>();
             spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
 
             openObject.OnObjectOpen.AddListener(() =>
@@ -52,9 +55,9 @@ namespace Game.Environment.Aquarium
 
 
 
-        public void OnUpdate(float deltatime)
+        public void OnUpdate(float deltaTime)
         {
-            openObject.OnUpdate(deltatime);
+            openObject.OnUpdate(deltaTime);
         }
 
         //private void Start()

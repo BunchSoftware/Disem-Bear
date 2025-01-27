@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace A
 {
-    public class OpenObject : MonoBehaviour
+    public class ExOpenObject : MonoBehaviour
     {
         public UnityEvent ApperanceAnimationTV;
         public UnityEvent DisapperanceAnimationTV;
