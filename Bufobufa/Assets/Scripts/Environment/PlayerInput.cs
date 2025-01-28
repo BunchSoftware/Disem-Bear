@@ -25,9 +25,9 @@ namespace Game.Environment
     [Serializable]
     public class PlayerInput : IUpdateListener
     {
-        private ILeftMouseClickable currentLeftMouseClickable;
-        private IRightMouseClickable currentRightMouseClickable;
-        private IMouseOver currentMouseOver;
+        private ILeftMouseClickable[] currentLeftMouseClickable = new ILeftMouseClickable[0];
+        private IRightMouseClickable[] currentRightMouseClickable = new IRightMouseClickable[0];
+        private IMouseOver[] currentMouseOver = new IMouseOver[0];
 
         public void OnUpdate(float deltaTime)
         {
@@ -47,21 +47,36 @@ namespace Game.Environment
             {
                 for (int i = 0; i < raycastHits.Length; i++)
                 {
-                    ILeftMouseClickable leftMouseClickable;
-                    if (raycastHits[i].collider.gameObject.TryGetComponent(out leftMouseClickable))
+                    ILeftMouseClickable[] leftMouseClickable = raycastHits[i].collider.gameObject.GetComponents<ILeftMouseClickable>();
+                    if (leftMouseClickable.Length > 0)
                     {
-                        if (currentLeftMouseClickable != null)
-                            currentLeftMouseClickable.OnMouseLeftClickOtherObject();
+                        if (currentLeftMouseClickable.Length > 0)
+                        {
+                            foreach (var obj in currentLeftMouseClickable)
+                            {
+                                obj.OnMouseLeftClickOtherObject();
+
+                            }
+                        }
 
                         currentLeftMouseClickable = leftMouseClickable;
-                        currentLeftMouseClickable.OnMouseLeftClickObject();
+                        foreach (var obj in currentLeftMouseClickable)
+                        {
+                            obj.OnMouseLeftClickObject();
+                        }
+
 
                         return;
                     }
                 }
 
                 if (currentLeftMouseClickable != null)
-                      currentLeftMouseClickable.OnMouseLeftClickOtherObject();
+                {
+                    foreach (var obj in currentLeftMouseClickable)
+                    {
+                        obj.OnMouseLeftClickOtherObject();
+                    }
+                }
             }
         }
 
@@ -73,21 +88,35 @@ namespace Game.Environment
             {
                 for (int i = 0; i < raycastHits.Length; i++)
                 {
-                    IRightMouseClickable rightMouseClickable;
-                    if (raycastHits[i].collider.gameObject.TryGetComponent(out rightMouseClickable))
+                    IRightMouseClickable[] rightMouseClickable = raycastHits[i].collider.gameObject.GetComponents<IRightMouseClickable>();
+                    if (rightMouseClickable.Length > 0)
                     {
-                        if (currentRightMouseClickable != null)
-                            currentRightMouseClickable.OnMouseRightClickOtherObject();
+                        if (currentRightMouseClickable.Length > 0)
+                        {
+                            foreach (var obj in currentRightMouseClickable)
+                            {
+                                obj.OnMouseRightClickOtherObject();
+                            }
+                        }
 
                         currentRightMouseClickable = rightMouseClickable;
-                        currentRightMouseClickable.OnMouseRightClickObject();
+                        foreach (var obj in currentRightMouseClickable)
+                        {
+                            obj.OnMouseRightClickObject();
+                        }
+
 
                         return;
                     }
                 }
 
                 if (currentRightMouseClickable != null)
-                    currentRightMouseClickable.OnMouseRightClickOtherObject();
+                {
+                    foreach (var obj in currentRightMouseClickable)
+                    {
+                        obj.OnMouseRightClickOtherObject();
+                    }
+                }
             }
         }
 
@@ -99,21 +128,34 @@ namespace Game.Environment
             {
                 for (int i = 0; i < raycastHits.Length; i++)
                 {
-                    IMouseOver mouseOver;
-                    if (raycastHits[i].collider.gameObject.TryGetComponent(out mouseOver))
+                    IMouseOver[] mouseOver = raycastHits[i].collider.gameObject.GetComponents<IMouseOver>();
+                    if (mouseOver.Length > 0)
                     {
-                        if (currentMouseOver != null && currentMouseOver != mouseOver)
-                            currentMouseOver.OnMouseExitObject();
+                        if (currentMouseOver.Length > 0 && currentMouseOver != mouseOver)
+                        {
+                            foreach(var obj in currentMouseOver)
+                            {
+                                obj.OnMouseExitObject();
+                            }
+                        }
 
                         currentMouseOver = mouseOver;
-                        currentMouseOver.OnMouseEnterObject();
+                        foreach (var obj in currentMouseOver)
+                        {
+                            obj.OnMouseEnterObject();
+                        }
 
                         return;
                     }
                 }
 
-                if (currentMouseOver != null)
-                    currentMouseOver.OnMouseExitObject();
+                if (currentMouseOver.Length > 0)
+                {
+                    foreach (var obj in currentMouseOver)
+                    {
+                        obj.OnMouseExitObject();
+                    }
+                }
             }
         }
     }
