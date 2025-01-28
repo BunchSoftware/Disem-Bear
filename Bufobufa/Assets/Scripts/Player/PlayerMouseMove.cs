@@ -47,6 +47,7 @@ namespace Game.LPlayer
                     if (!hit.collider.isTrigger)
                     {
                         MovePlayer(hit.point);
+                        return;
                     }
                 }
                 //if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))

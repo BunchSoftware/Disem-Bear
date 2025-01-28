@@ -95,13 +95,11 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
             //    break;
             //}
         }
-        Debug.Log("OpenClick");
     }
 
     public void OnMouseLeftClickOtherObject()
     {
         isClick = false;
-        Debug.Log("OpenNotCLick");
     }
 
     public void OnUpdate(float deltaTime)

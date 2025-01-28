@@ -111,12 +111,12 @@ namespace Game.Environment.Aquarium
 
         public void OnMouseLeftClickObject()
         {
-            Debug.Log("AquariumClick");
+
         }
 
         public void OnMouseLeftClickOtherObject()
         {
-            Debug.Log("AquariumNotClick");
+
         }
     }
 }
