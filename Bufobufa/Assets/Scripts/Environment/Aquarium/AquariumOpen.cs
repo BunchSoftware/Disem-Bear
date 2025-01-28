@@ -10,7 +10,7 @@ namespace Game.Environment.Aquarium
 {
     [RequireComponent(typeof(OpenObject))]
     [RequireComponent(typeof(ScaleChooseObject))]
-    public class AquariumOpen : MonoBehaviour
+    public class AquariumOpen : MonoBehaviour, ILeftMouseClickable
     {
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
@@ -23,6 +23,7 @@ namespace Game.Environment.Aquarium
         private Player player;
         private PlayerMouseMove playerMouseMove;
         private MovePointToPoint spriteMovePointToPoint;
+        
 
 
 
@@ -106,6 +107,16 @@ namespace Game.Environment.Aquarium
             //    //    }
             //    //}
             //}
+        }
+
+        public void OnMouseLeftClickObject()
+        {
+            Debug.Log("AquariumClick");
+        }
+
+        public void OnMouseLeftClickOtherObject()
+        {
+            Debug.Log("AquariumNotClick");
         }
     }
 }

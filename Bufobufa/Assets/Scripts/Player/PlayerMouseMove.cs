@@ -41,13 +41,21 @@ namespace Game.LPlayer
             if (isMove && Input.GetMouseButtonDown(0))
             {
                 Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+                RaycastHit[] hits = Physics.RaycastAll(movePosition, 100f);
+                foreach (RaycastHit hit in hits)
                 {
-                    // Если на камера Physcical Raycast
-                    //if (EventSystem.current.IsPointerOverGameObject())
-                    //    return;
-                    MovePlayer(hitInfo.point);
+                    if (!hit.collider.isTrigger)
+                    {
+                        MovePlayer(hit.point);
+                    }
                 }
+                //if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+                //{
+                //    // Если на камера Physcical Raycast
+                //    //if (EventSystem.current.IsPointerOverGameObject())
+                //    //    return;
+                //    MovePlayer(hitInfo.point);
+                //}
             }
 
             Vector3 currentPosition = navMeshAgent.transform.position;
