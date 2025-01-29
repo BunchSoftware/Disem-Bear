@@ -30,6 +30,8 @@ namespace Game.Environment
         [SerializeField] private FridgeOpen fridgeOpen;
         [Header("Table")]
         [SerializeField] private TableOpen TableOpen;
+        [Header("Shelf")]
+        [SerializeField] private TableWithItems shelfWithItems;
 
         private SaveManager saveManager;
 
@@ -48,6 +50,7 @@ namespace Game.Environment
             aquariumOpen.Init(saveManager, player, playerMouseMove);
             fridgeOpen.Init(saveManager, player, playerMouseMove);
             TableOpen.Init(saveManager, player, playerMouseMove);
+            shelfWithItems.Init(saveManager, player);
         }
         public void OnUpdate(float deltaTime)
         {
