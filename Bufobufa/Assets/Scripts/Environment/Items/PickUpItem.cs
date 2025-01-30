@@ -17,6 +17,7 @@ namespace Game.Environment.Item
     public class PickUpItem : MonoBehaviour, ILeftMouseClickable
     {
         public bool IsClicked = false;
+        public bool CanTakeByCollisionPlayer = true;
         public TypePickUpItem TypeItem => typeItem;
         [SerializeField] private TypePickUpItem typeItem = TypePickUpItem.None;
 

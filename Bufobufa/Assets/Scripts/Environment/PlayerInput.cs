@@ -46,7 +46,7 @@ namespace Game.Environment
             int layermask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log(hitInfo.collider.name);
+                //Debug.Log(hitInfo.collider.name);
                 ILeftMouseClickable[] leftMouseClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseClickable>();
                 if (leftMouseClickable.Length > 0)
                 {

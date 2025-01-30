@@ -49,7 +49,7 @@ namespace Game.LPlayer
             {
                 PickUpItem pickUpItem;
 
-                if (collision.collider.TryGetComponent<PickUpItem>(out pickUpItem))
+                if (collision.collider.TryGetComponent<PickUpItem>(out pickUpItem) && pickUpItem.CanTakeByCollisionPlayer)
                     PickUpItem(pickUpItem);
             }
         }
@@ -59,6 +59,7 @@ namespace Game.LPlayer
             if (playerPickUpItem == false && pickUpItem != null)
             {
                 playerPickUpItem = true;
+                pickUpItem.CanTakeByCollisionPlayer = false;
 
                 this.pickUpItem = pickUpItem;
                 if (this.pickUpItem.TryGetComponent(out ScaleChooseObject scaleChooseObject))
