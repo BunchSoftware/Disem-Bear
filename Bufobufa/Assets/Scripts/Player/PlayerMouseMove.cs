@@ -1,6 +1,7 @@
 using External.DI;
 using System;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -41,22 +42,12 @@ namespace Game.LPlayer
             if (isMove && Input.GetMouseButtonDown(0))
             {
                 Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit[] hits = Physics.RaycastAll(movePosition, 100f);
-                foreach (RaycastHit hit in hits)
+                float maxdistance = 100f;
+                int layermask = -1;
+                if (Physics.Raycast(movePosition, out var hitinfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
                 {
-                    if (!hit.collider.isTrigger)
-                    {
-                        MovePlayer(hit.point);
-                        return;
-                    }
+                    MovePlayer(hitinfo.point);
                 }
-                //if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
-                //{
-                //    // Если на камера Physcical Raycast
-                //    //if (EventSystem.current.IsPointerOverGameObject())
-                //    //    return;
-                //    MovePlayer(hitInfo.point);
-                //}
             }
 
             Vector3 currentPosition = navMeshAgent.transform.position;
