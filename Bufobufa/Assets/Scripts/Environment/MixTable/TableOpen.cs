@@ -9,8 +9,8 @@ using UnityEngine.Events;
 
 namespace Game.Environment.LMixTable
 {
-    [RequireComponent(typeof(OpenObject))]
-    [RequireComponent(typeof(ScaleChooseObject))]
+    //[RequireComponent(typeof(OpenObject))]
+    //[RequireComponent(typeof(ScaleChooseObject))]
     public class TableOpen : MonoBehaviour
     {
         private GameObject Player;
@@ -18,7 +18,7 @@ namespace Game.Environment.LMixTable
 
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
-        private TriggerObject triggerObject;
+        [SerializeField] private TriggerObject triggerObject;
 
         public UnityEvent OnTableOpen;
         public UnityEvent OnTableClose;
@@ -37,7 +37,6 @@ namespace Game.Environment.LMixTable
 
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
-            triggerObject = GetComponentInChildren<TriggerObject>();
 
             openObject.OnObjectOpen.AddListener(() =>
             {
