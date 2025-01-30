@@ -42,40 +42,39 @@ namespace Game.Environment
         private void LeftMouseClick()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] raycastHits = Physics.RaycastAll(ray, 100f);
-            if (raycastHits.Length != 0)
+            float maxdistance = 100f;
+            int layermask = -1;
+            if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
             {
-                for (int i = 0; i < raycastHits.Length; i++)
+                Debug.Log(hitInfo.collider.name);
+                ILeftMouseClickable[] leftMouseClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseClickable>();
+                if (leftMouseClickable.Length > 0)
                 {
-                    ILeftMouseClickable[] leftMouseClickable = raycastHits[i].collider.gameObject.GetComponents<ILeftMouseClickable>();
-                    if (leftMouseClickable.Length > 0)
+                    if (currentLeftMouseClickable.Length > 0)
                     {
-                        if (currentLeftMouseClickable.Length > 0)
-                        {
-                            foreach (var obj in currentLeftMouseClickable)
-                            {
-                                obj.OnMouseLeftClickOtherObject();
-
-                            }
-                        }
-
-                        currentLeftMouseClickable = leftMouseClickable;
                         foreach (var obj in currentLeftMouseClickable)
                         {
-                            obj.OnMouseLeftClickObject();
+                            obj.OnMouseLeftClickOtherObject();
+
                         }
-
-
-                        return;
                     }
-                }
 
-                if (currentLeftMouseClickable != null)
-                {
+                    currentLeftMouseClickable = leftMouseClickable;
                     foreach (var obj in currentLeftMouseClickable)
                     {
-                        obj.OnMouseLeftClickOtherObject();
+                        obj.OnMouseLeftClickObject();
                     }
+
+
+                    return;
+                }
+            }
+
+            if (currentLeftMouseClickable.Length > 0)
+            {
+                foreach (var obj in currentLeftMouseClickable)
+                {
+                    obj.OnMouseLeftClickOtherObject();
                 }
             }
         }
@@ -83,39 +82,37 @@ namespace Game.Environment
         private void RightMouseClick()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] raycastHits = Physics.RaycastAll(ray, 100f);
-            if (raycastHits.Length != 0)
+            float maxdistance = 100f;
+            int layermask = -1;
+            if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
             {
-                for (int i = 0; i < raycastHits.Length; i++)
+                IRightMouseClickable[] rightMouseClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseClickable>();
+                if (rightMouseClickable.Length > 0)
                 {
-                    IRightMouseClickable[] rightMouseClickable = raycastHits[i].collider.gameObject.GetComponents<IRightMouseClickable>();
-                    if (rightMouseClickable.Length > 0)
+                    if (currentRightMouseClickable.Length > 0)
                     {
-                        if (currentRightMouseClickable.Length > 0)
-                        {
-                            foreach (var obj in currentRightMouseClickable)
-                            {
-                                obj.OnMouseRightClickOtherObject();
-                            }
-                        }
-
-                        currentRightMouseClickable = rightMouseClickable;
                         foreach (var obj in currentRightMouseClickable)
                         {
-                            obj.OnMouseRightClickObject();
+                            obj.OnMouseRightClickOtherObject();
                         }
-
-
-                        return;
                     }
-                }
 
-                if (currentRightMouseClickable != null)
-                {
+                    currentRightMouseClickable = rightMouseClickable;
                     foreach (var obj in currentRightMouseClickable)
                     {
-                        obj.OnMouseRightClickOtherObject();
+                        obj.OnMouseRightClickObject();
                     }
+
+
+                    return;
+                }
+            }
+
+            if (currentRightMouseClickable.Length > 0)
+            {
+                foreach (var obj in currentRightMouseClickable)
+                {
+                    obj.OnMouseRightClickOtherObject();
                 }
             }
         }
@@ -123,30 +120,29 @@ namespace Game.Environment
         private void MouseOver()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] raycastHits = Physics.RaycastAll(ray, 100f);
-            if (raycastHits.Length != 0)
+            float maxdistance = 100f;
+            int layermask = -1;
+            if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
             {
-                for (int i = 0; i < raycastHits.Length; i++)
+                //Debug.Log(hitInfo.collider.name);
+                IMouseOver[] mouseOver = hitInfo.collider.gameObject.GetComponents<IMouseOver>();
+                if (mouseOver.Length > 0)
                 {
-                    IMouseOver[] mouseOver = raycastHits[i].collider.gameObject.GetComponents<IMouseOver>();
-                    if (mouseOver.Length > 0)
+                    if (currentMouseOver.Length > 0 && currentMouseOver != mouseOver)
                     {
-                        if (currentMouseOver.Length > 0 && currentMouseOver != mouseOver)
-                        {
-                            foreach(var obj in currentMouseOver)
-                            {
-                                obj.OnMouseExitObject();
-                            }
-                        }
-
-                        currentMouseOver = mouseOver;
                         foreach (var obj in currentMouseOver)
                         {
-                            obj.OnMouseEnterObject();
+                            obj.OnMouseExitObject();
                         }
-
-                        return;
                     }
+
+                    currentMouseOver = mouseOver;
+                    foreach (var obj in currentMouseOver)
+                    {
+                        obj.OnMouseEnterObject();
+                    }
+
+                    return;
                 }
 
                 if (currentMouseOver.Length > 0)
