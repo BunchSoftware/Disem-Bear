@@ -87,6 +87,16 @@ namespace Game.Environment.LModelBoard
             openObject.OnMouseLeftClickObject();
         }
 
+        public void OnMouseEnterObject()
+        {
+            scaleChooseObject.OnMouseEnterObject();
+        }
+
+        public void OnMouseExitObject()
+        {
+            scaleChooseObject.OnMouseExitObject();
+        }
+
         public void OnUpdate(float deltaTime)
         {
             openObject.OnUpdate(deltaTime);

@@ -43,12 +43,12 @@ namespace Game.Environment
         private void LeftMouseClick()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float maxdistance = 100f;
-            int layermask = -1;
-            if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
+            float maxDistance = 100f;
+            int layerMask = -1;
+            if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                //Debug.Log(hitInfo.collider.name);
                 ILeftMouseClickable[] leftMouseClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseClickable>();
+                
                 if (leftMouseClickable.Length > 0)
                 {
                     if (currentLeftMouseClickable.Length > 0)
@@ -83,9 +83,9 @@ namespace Game.Environment
         private void RightMouseClick()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float maxdistance = 100f;
-            int layermask = -1;
-            if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
+            float maxDistance = 100f;
+            int layerMask = -1;
+            if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
                 IRightMouseClickable[] rightMouseClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseClickable>();
                 if (rightMouseClickable.Length > 0)
@@ -121,11 +121,10 @@ namespace Game.Environment
         private void MouseOver()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float maxdistance = 100f;
-            int layermask = -1;
-            if (Physics.Raycast(ray, out var hitInfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
+            float maxDistance = 100f;
+            int layerMask = -1;
+            if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                //Debug.Log(hitInfo.collider.name);
                 IMouseOver[] mouseOver = hitInfo.collider.gameObject.GetComponents<IMouseOver>();
                 if (mouseOver.Length > 0)
                 {

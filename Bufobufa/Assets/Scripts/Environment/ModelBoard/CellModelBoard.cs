@@ -15,7 +15,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.Environment.LModelBoard
 {
-    public class CellModelBoard : MonoBehaviour, ILeftMouseClickable, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class CellModelBoard : MonoBehaviour, ILeftMouseClickable, IMouseOver, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
         public UnityEvent<PickUpItem> OnPickUpItem;
         public UnityEvent<PickUpItem> OnPutItem;
@@ -188,6 +188,16 @@ namespace Game.Environment.LModelBoard
             }
 
             return false;
+        }
+
+        public void OnMouseEnterObject()
+        {
+            modelBoard.OnMouseEnterObject();
+        }
+
+        public void OnMouseExitObject()
+        {
+            modelBoard.OnMouseExitObject();
         }
     }
 }
