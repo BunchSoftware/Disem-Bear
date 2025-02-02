@@ -77,6 +77,11 @@ namespace Game.Environment.LModelBoard
             //}
         }
 
+        public void OpenModelBoard()
+        {
+            openObject.OnMouseLeftClickObject();
+        }
+
         public void OnUpdate(float deltaTime)
         {
             openObject.OnUpdate(deltaTime);

@@ -1,10 +1,11 @@
 using External.DI;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Game.Environment
 {
-    public interface ILeftMouseClickable
+    interface ILeftMouseClickable
     {
         void OnMouseLeftClickObject();
         void OnMouseLeftClickOtherObject();

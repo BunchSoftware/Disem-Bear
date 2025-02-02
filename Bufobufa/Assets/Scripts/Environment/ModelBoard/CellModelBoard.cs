@@ -15,7 +15,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.Environment.LModelBoard
 {
-    public class CellModelBoard : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class CellModelBoard : MonoBehaviour, ILeftMouseClickable, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
         public UnityEvent<PickUpItem> OnPickUpItem;
         public UnityEvent<PickUpItem> OnPutItem;
@@ -65,6 +65,9 @@ namespace Game.Environment.LModelBoard
             {
                 if (isClick)
                 {
+                    if(player.PlayerPickUpItem == false)
+                        modelBoard.OpenModelBoard();
+                    
                     isClick = false;
 
                     if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
@@ -76,26 +79,22 @@ namespace Game.Environment.LModelBoard
             });
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnMouseLeftClickObject()
         {
-            if (currentItemInCell == null)
-            {
-                if (eventData.button == PointerEventData.InputButton.Left)
-                    isClick = true;
-                else
-                    isClick = false;
-            }
-            else
-            {
+            isClick = true;
+        }
 
-            }
+        public void OnMouseLeftClickOtherObject()
+        {
+            isClick = false;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-                pointerWithObject.transform.position = 
-                Camera.main.ScreenToViewportPoint(
-                    new Vector3(Input.mousePosition.x, 10f, Input.mousePosition.y));
+            if(pointerWithObject != null)
+            {
+                pointerWithObject.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
 
             Debug.Log(1);
         }
