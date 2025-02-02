@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -178,7 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &30582574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,11 +443,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3411db160b24474594cce67176bfa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordPlayer: {x: 14.43, y: 2.4, z: -12.35}
-  TimeAnimationPlayer: 1
-  CoordVcam: {x: 16.86, y: 5.48, z: -19.5}
-  TimeAnimationVcam: 2.2
-  RightRoomStrelka: {fileID: 1925220354}
+  positionPlayer: {x: 0, y: 0, z: 0}
+  positionCamera: {x: 0, y: 0, z: 0}
+  timeAnimationCamera: 1
+  oppositeArrow: {fileID: 0}
 --- !u!1 &59109072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3075019929822471777, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -527,7 +528,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92e15c808fe9eb44bc9a85f92c9e131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumPoint: 0
+  OnPickUpItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutItem:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &98747624
 GameObject:
   m_ObjectHideFlags: 3
@@ -757,6 +763,8 @@ GameObject:
   - component: {fileID: 132401910}
   - component: {fileID: 132401909}
   - component: {fileID: 132401908}
+  - component: {fileID: 132401914}
+  - component: {fileID: 132401913}
   m_Layer: 7
   m_Name: Aquarium (1)
   m_TagString: Untagged
@@ -808,7 +816,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &132401910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,9 +831,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: 0, y: 0.695, z: -0.4800005}
-  RotateAquarium: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &132401911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -863,6 +876,41 @@ Transform:
   - {fileID: 273204264}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &132401913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132401907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &132401914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132401907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &132614182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 87419473d4830de469f2502a3c43d664, type: 3}
@@ -3231,7 +3279,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92e15c808fe9eb44bc9a85f92c9e131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumPoint: 1
+  OnPickUpItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutItem:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &335999587
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,6 +3532,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7d7bdd860ac7d3408b10956be208ac9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 639215244}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7d7bdd860ac7d3408b10956be208ac9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 639215246}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7d7bdd860ac7d3408b10956be208ac9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 639215245}
   m_SourcePrefab: {fileID: 100100000, guid: b7d7bdd860ac7d3408b10956be208ac9, type: 3}
 --- !u!1 &347348756
 GameObject:
@@ -4098,7 +4157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &433979962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4378,7 +4439,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92e15c808fe9eb44bc9a85f92c9e131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumPoint: 2
+  OnPickUpItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutItem:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &462094387
 GameObject:
   m_ObjectHideFlags: 0
@@ -4498,7 +4564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &467115719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5379,7 +5447,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &545500841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5497,6 +5567,8 @@ GameObject:
   - component: {fileID: 545754228}
   - component: {fileID: 545754227}
   - component: {fileID: 545754226}
+  - component: {fileID: 545754232}
+  - component: {fileID: 545754231}
   m_Layer: 7
   m_Name: Aquarium (3)
   m_TagString: Untagged
@@ -5548,7 +5620,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &545754228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5561,9 +5635,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: 0.445, y: 0.669, z: -0.015}
-  RotateAquarium: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &545754229
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5603,6 +5680,41 @@ Transform:
   - {fileID: 269738531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545754231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545754225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &545754232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545754225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &551948338
 GameObject:
   m_ObjectHideFlags: 0
@@ -5751,7 +5863,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!65 &560113121
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6265,7 +6379,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &639215244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6278,14 +6394,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b93353cbd681c43ac13494b59a6e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Magnets:
-  - {fileID: 2061135942}
-  - {fileID: 30582571}
-  - {fileID: 545500839}
-  - {fileID: 1976968135}
-  - {fileID: 467115717}
-  - {fileID: 1948901736}
-  - {fileID: 433979959}
+  prefabMagnet: {fileID: 0}
+  fileMagnets: {fileID: 0}
+  OnCreateMagnet:
+    m_PersistentCalls:
+      m_Calls: []
+  magnetsGUI: []
+--- !u!114 &639215245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639215237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &639215246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639215237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &651123146
 GameObject:
   m_ObjectHideFlags: 0
@@ -13447,6 +13596,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b61d73cad036c489bf7e63d0695dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerObject: {fileID: 0}
+  OnTableOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTableClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &1009302865
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13538,7 +13694,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!65 &1009302868
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14139,14 +14297,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1066448000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: b191c22b39aec1c4e9b06fdd5f32b73f, type: 2}
-  isGlobal: 1
+  m_IsGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 1
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: 7b35c73f959df1e41a330ace9bc8865d, type: 2}
 --- !u!1 &1070312610
 GameObject:
   m_ObjectHideFlags: 0
@@ -14723,7 +14881,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!1 &1090677183
 GameObject:
   m_ObjectHideFlags: 0
@@ -14736,8 +14896,8 @@ GameObject:
   - component: {fileID: 1090677185}
   - component: {fileID: 1090677184}
   - component: {fileID: 1090677187}
-  - component: {fileID: 1090677188}
   - component: {fileID: 1090677189}
+  - component: {fileID: 1090677188}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -14862,57 +15022,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090677183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 1090677186}
-  volumeLayer:
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 0
-  antialiasingMode: 2
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_VolumeTrigger: {fileID: 1090677186}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 2
+  m_StopNaN: 1
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &1090677189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14922,14 +15066,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090677183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 9533e182393a21046bf7baee3a758b24, type: 2}
-  isGlobal: 1
+  m_IsGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 0.5
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: cc698c39b2f1b03489bcb32a9433d827, type: 2}
 --- !u!114 &1107251956 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5981550430289068629, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -16181,7 +16325,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92e15c808fe9eb44bc9a85f92c9e131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumPoint: 3
+  OnPickUpItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutItem:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1263786189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16844,10 +16993,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925c14d0ca0879d4cb41494a44983c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemExist: 1
-  currentObj: {fileID: 4522447525192828825, guid: 32d67d30c00dff441927372d04180542, type: 3}
-  TubePosition: {x: -3.757045, y: 5.6, z: -9.009}
-  NotObjectDown: 1
+  ejectionPosition: {x: 0, y: 0, z: 0}
+  exitPoint: {fileID: 0}
+  particleSystem: {fileID: 0}
 --- !u!65 &1402415645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17019,7 +17167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &1424547106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18651,6 +18801,8 @@ GameObject:
   - component: {fileID: 1666216645}
   - component: {fileID: 1666216646}
   - component: {fileID: 1666216647}
+  - component: {fileID: 1666216649}
+  - component: {fileID: 1666216648}
   m_Layer: 7
   m_Name: Aquarium
   m_TagString: Untagged
@@ -18709,9 +18861,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: -0.28, y: 0.669, z: -0.015}
-  RotateAquarium: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1666216646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18725,7 +18880,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &1666216647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18757,6 +18914,41 @@ MonoBehaviour:
   RotateVcam: {x: 0.1704658, y: 0.6862517, z: -0.1704658, w: 0.6862517}
   TimeAnimationVcam: 1
   currentPosPlayer: {x: 0, y: 0, z: 0}
+--- !u!114 &1666216648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666216641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &1666216649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666216641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1675605289
 GameObject:
   m_ObjectHideFlags: 0
@@ -18999,14 +19191,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1704647367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: b191c22b39aec1c4e9b06fdd5f32b73f, type: 2}
-  isGlobal: 1
+  m_IsGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 1
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: 7b35c73f959df1e41a330ace9bc8865d, type: 2}
 --- !u!1001 &1708257660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19638,6 +19830,8 @@ GameObject:
   - component: {fileID: 1782896313}
   - component: {fileID: 1782896312}
   - component: {fileID: 1782896311}
+  - component: {fileID: 1782896317}
+  - component: {fileID: 1782896316}
   m_Layer: 7
   m_Name: Aquarium (2)
   m_TagString: Untagged
@@ -19689,7 +19883,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &1782896313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19702,9 +19898,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: 0, y: 0.695, z: -0.4800005}
-  RotateAquarium: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1782896314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19744,6 +19943,41 @@ Transform:
   - {fileID: 809192200}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1782896316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782896310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &1782896317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782896310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1788452850
 GameObject:
   m_ObjectHideFlags: 0
@@ -19984,6 +20218,8 @@ MonoBehaviour:
     OutPut: {fileID: 5610431095258980298, guid: db3805b962c25cf49826aed04f3c9a20, type: 3}
   MixTableOn: 0
   currentPrinterObject: {fileID: 0}
+  CreateObject: 0
+  IsPrinterObject: 0
 --- !u!212 &1803389759
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -25787,11 +26023,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3411db160b24474594cce67176bfa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordPlayer: {x: 5.36, y: 2.4, z: -12.35}
-  TimeAnimationPlayer: 1
-  CoordVcam: {x: 2.56, y: 5.48, z: -19.5}
-  TimeAnimationVcam: 2.2
-  RightRoomStrelka: {fileID: 58684831}
+  positionPlayer: {x: 0, y: 0, z: 0}
+  positionCamera: {x: 0, y: 0, z: 0}
+  timeAnimationCamera: 1
+  oppositeArrow: {fileID: 0}
 --- !u!1 &1945639250
 GameObject:
   m_ObjectHideFlags: 0
@@ -25896,7 +26131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &1948901738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26136,7 +26373,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &1976968137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26917,7 +27156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 1
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!1 &2069411206
 GameObject:
   m_ObjectHideFlags: 0
@@ -27049,6 +27290,8 @@ GameObject:
   - component: {fileID: 2131093815}
   - component: {fileID: 2131093816}
   - component: {fileID: 2131093818}
+  - component: {fileID: 2131093820}
+  - component: {fileID: 2131093819}
   m_Layer: 7
   m_Name: ModelBoard
   m_TagString: Untagged
@@ -27184,7 +27427,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnyCase: 0
+  OnScaleChange: 0
   TimeAnim: 0.2
+  FullZero: 1
 --- !u!114 &2131093815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27197,13 +27442,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9eacdf4542ada49ad780c7f2f9e35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 1009688078}
-  - {fileID: 860220684}
-  - {fileID: 565671591}
-  - {fileID: 571077840}
-  items: []
-  ModelOpen: 0
+  cellBoards: []
+  triggerObject: {fileID: 0}
+  draggingParent: {fileID: 0}
+  originalParent: {fileID: 0}
+  freeDragingParent: {fileID: 0}
+  OnModelBoardOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnModelBoardClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2131093816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27266,6 +27515,41 @@ MonoBehaviour:
     NumDialog: 0
     UniqId: 2
     NeedActivate: []
+--- !u!114 &2131093819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131093807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &2131093820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131093807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2138814532
 GameObject:
   m_ObjectHideFlags: 0

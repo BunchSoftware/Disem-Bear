@@ -668,6 +668,8 @@ GameObject:
   - component: {fileID: 132401910}
   - component: {fileID: 132401909}
   - component: {fileID: 132401908}
+  - component: {fileID: 132401914}
+  - component: {fileID: 132401913}
   m_Layer: 7
   m_Name: Aquarium (1)
   m_TagString: Untagged
@@ -734,9 +736,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: 0, y: 0.695, z: -0.4800005}
-  RotateAquarium: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &132401911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -776,6 +781,41 @@ Transform:
   - {fileID: 273204264}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &132401913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132401907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &132401914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132401907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &132614182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 87419473d4830de469f2502a3c43d664, type: 3}
@@ -22132,6 +22172,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b61d73cad036c489bf7e63d0695dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerObject: {fileID: 0}
+  OnTableOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTableClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &1009302865
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22659,14 +22706,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1066448000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: b191c22b39aec1c4e9b06fdd5f32b73f, type: 2}
-  isGlobal: 1
+  m_IsGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 1
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: 7b35c73f959df1e41a330ace9bc8865d, type: 2}
 --- !u!1 &1070312610
 GameObject:
   m_ObjectHideFlags: 0
@@ -23056,8 +23103,8 @@ GameObject:
   - component: {fileID: 1090677185}
   - component: {fileID: 1090677184}
   - component: {fileID: 1090677187}
-  - component: {fileID: 1090677188}
   - component: {fileID: 1090677189}
+  - component: {fileID: 1090677188}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -23160,57 +23207,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090677183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 1090677186}
-  volumeLayer:
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 0
-  antialiasingMode: 2
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_VolumeTrigger: {fileID: 1090677186}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 2
+  m_StopNaN: 1
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &1090677189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23220,14 +23251,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090677183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 9533e182393a21046bf7baee3a758b24, type: 2}
-  isGlobal: 1
+  m_IsGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 0.5
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: cc698c39b2f1b03489bcb32a9433d827, type: 2}
 --- !u!1001 &1123822071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31708,6 +31739,8 @@ GameObject:
   - component: {fileID: 1666216645}
   - component: {fileID: 1666216646}
   - component: {fileID: 1666216647}
+  - component: {fileID: 1666216649}
+  - component: {fileID: 1666216648}
   m_Layer: 7
   m_Name: Aquarium
   m_TagString: Untagged
@@ -31766,9 +31799,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: -0.28, y: 0.669, z: -0.015}
-  RotateAquarium: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1666216646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31816,6 +31852,41 @@ MonoBehaviour:
   RotateVcam: {x: 0.1704658, y: 0.6862517, z: -0.1704658, w: 0.6862517}
   TimeAnimationVcam: 1
   currentPosPlayer: {x: 0, y: 0, z: 0}
+--- !u!114 &1666216648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666216641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &1666216649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666216641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1672061963
 GameObject:
   m_ObjectHideFlags: 0
@@ -31972,14 +32043,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1704647367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: b191c22b39aec1c4e9b06fdd5f32b73f, type: 2}
-  isGlobal: 1
+  m_IsGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 1
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: 7b35c73f959df1e41a330ace9bc8865d, type: 2}
 --- !u!1001 &1723192981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32381,6 +32452,8 @@ GameObject:
   - component: {fileID: 1782896313}
   - component: {fileID: 1782896312}
   - component: {fileID: 1782896311}
+  - component: {fileID: 1782896317}
+  - component: {fileID: 1782896316}
   m_Layer: 7
   m_Name: Aquarium (2)
   m_TagString: Untagged
@@ -32447,9 +32520,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoordAquarium: {x: 0, y: 0.695, z: -0.4800005}
-  RotateAquarium: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  TimeAnimationAquarium: 1
+  OnAquariumOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAquariumClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1782896314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32489,6 +32565,41 @@ Transform:
   - {fileID: 809192200}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1782896316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782896310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &1782896317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782896310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1787987998
 GameObject:
   m_ObjectHideFlags: 0
@@ -44442,6 +44553,8 @@ GameObject:
   - component: {fileID: 2131093815}
   - component: {fileID: 2131093816}
   - component: {fileID: 2131093818}
+  - component: {fileID: 2131093820}
+  - component: {fileID: 2131093819}
   m_Layer: 7
   m_Name: ModelBoard
   m_TagString: Untagged
@@ -44594,8 +44707,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellBoards: []
   triggerObject: {fileID: 0}
-  openObject: {fileID: 0}
-  scaleChooseObject: {fileID: 0}
   draggingParent: {fileID: 0}
   originalParent: {fileID: 0}
   freeDragingParent: {fileID: 0}
@@ -44669,6 +44780,41 @@ MonoBehaviour:
     NeedActivate:
     - obj: {fileID: 58684828}
       Ids: 0b000000
+--- !u!114 &2131093819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131093807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
+--- !u!114 &2131093820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131093807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOpen: 1
+  cameraTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
+  OnObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2139873989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 759597650961980167, guid: 7a7be2c47d259da4d86d057b895f8412, type: 3}
