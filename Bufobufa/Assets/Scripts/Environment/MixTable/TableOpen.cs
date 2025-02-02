@@ -1,22 +1,66 @@
+using External.Storage;
 using Game.LPlayer;
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Game.Environment.LMixTable
 {
+    //[RequireComponent(typeof(OpenObject))]
+    //[RequireComponent(typeof(ScaleChooseObject))]
     public class TableOpen : MonoBehaviour
     {
         private GameObject Player;
         private GameObject MixTable;
 
+        private OpenObject openObject;
+        private ScaleChooseObject scaleChooseObject;
+        [SerializeField] private TriggerObject triggerObject;
+
+        public UnityEvent OnTableOpen;
+        public UnityEvent OnTableClose;
+
+        private SaveManager saveManager;
+        private Player player;
+        private PlayerMouseMove playerMouseMove;
+
+
+
+        public void Init(SaveManager saveManager, Player player, PlayerMouseMove playerMouseMove)
+        {
+            this.saveManager = saveManager;
+            this.player = player;
+            this.playerMouseMove = playerMouseMove;
+
+            openObject = GetComponent<OpenObject>();
+            scaleChooseObject = GetComponent<ScaleChooseObject>();
+
+            openObject.OnObjectOpen.AddListener(() =>
+            {
+                scaleChooseObject.on = false;
+                OnTableOpen?.Invoke();
+            });
+            openObject.OnObjectClose.AddListener(() =>
+            {
+                scaleChooseObject.on = true;
+                OnTableClose?.Invoke();
+            });
+            openObject.Init(triggerObject, playerMouseMove, player);
+        }
+
+        public void OnUpdate(float deltaTime)
+        {
+            openObject.OnUpdate(deltaTime);
+        }
+
 
         private void Start()
         {
-            Player = GameObject.FindGameObjectWithTag("Player");
-            MixTable = transform.Find("MixTable").gameObject;
+            //Player = GameObject.FindGameObjectWithTag("Player");
+            //MixTable = transform.Find("MixTable").gameObject;
         }
         private void Update()
         {

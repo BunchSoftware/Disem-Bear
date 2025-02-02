@@ -77,22 +77,23 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
     {
         if (player.PlayerPickUpItem == false && !isOpen && moveCamera.IsMove() == false)
         {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            isClick = true;
+            //PointerEventData pointerData = new PointerEventData(EventSystem.current);
 
-            pointerData.position = Input.mousePosition;
-            pointerData.pointerId = -1;
+            //pointerData.position = Input.mousePosition;
+            //pointerData.pointerId = -1;
 
-            List<RaycastResult> results = new List<RaycastResult>();
+            //List<RaycastResult> results = new List<RaycastResult>();
 
-            EventSystem.current.RaycastAll(pointerData, results);
+            //EventSystem.current.RaycastAll(pointerData, results);
 
-            for (int i = 0; i < results.Count; i++)
-            {
-                if (results[i].gameObject.tag != "OpenObject") continue;
+            //for (int i = 0; i < results.Count; i++)
+            //{
+            //    if (results[i].gameObject.tag != "OpenObject") continue;
 
-                isClick = true;
-                break;
-            }
+            //    isClick = true;
+            //    break;
+            //}
         }
     }
 

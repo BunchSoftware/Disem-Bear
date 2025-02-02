@@ -13,12 +13,14 @@ using static Game.Environment.LTableWithItems.TableWithItems;
 
 namespace Game.Environment.LModelBoard
 {
+    [RequireComponent(typeof(OpenObject))]
+    [RequireComponent(typeof(ScaleChooseObject))]
     public class ModelBoard : MonoBehaviour, IUpdateListener
     {
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
-        [SerializeField] private OpenObject openObject;
-        [SerializeField] private ScaleChooseObject scaleChooseObject;
+        private OpenObject openObject;
+        private ScaleChooseObject scaleChooseObject;
 
         [Header("Drag&Drop")]
         [SerializeField] private Transform draggingParent;
@@ -39,6 +41,9 @@ namespace Game.Environment.LModelBoard
             this.saveManager = saveManager;
             this.player = player;
             this.playerMouseMove = playerMouseMove;
+
+            openObject = GetComponent<OpenObject>();
+            scaleChooseObject = GetComponent<ScaleChooseObject>();
 
             openObject.OnObjectOpen.AddListener(() =>
             {

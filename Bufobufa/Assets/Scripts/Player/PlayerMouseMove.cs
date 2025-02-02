@@ -1,6 +1,7 @@
 using External.DI;
 using System;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -41,12 +42,11 @@ namespace Game.LPlayer
             if (isMove && Input.GetMouseButtonDown(0))
             {
                 Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(movePosition, out var hitInfo, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
+                float maxdistance = 100f;
+                int layermask = -1;
+                if (Physics.Raycast(movePosition, out var hitinfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
                 {
-                    // Если на камера Physcical Raycast
-                    //if (EventSystem.current.IsPointerOverGameObject())
-                    //    return;
-                    MovePlayer(hitInfo.point);
+                    MovePlayer(hitinfo.point);
                 }
             }
 

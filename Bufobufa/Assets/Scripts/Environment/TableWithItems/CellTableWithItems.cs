@@ -86,6 +86,7 @@ namespace Game.Environment.LTableWithItems
             {
                 OnPutItem?.Invoke(currentItemInCell);
 
+                pickUpItem.CanTakeByCollisionPlayer = false;
                 boxCollider.enabled = false;
                 currentItemInCell = pickUpItem;
                 currentItemInCell.transform.parent = transform;
