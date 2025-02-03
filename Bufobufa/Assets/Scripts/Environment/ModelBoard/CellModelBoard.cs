@@ -32,13 +32,9 @@ namespace Game.Environment.LModelBoard
 
         // Drag&Drop
         private Transform draggingParent;
-        private Transform originalParent;
-        private Transform freeDragingParent;
-        private PickUpItem pointerWithObject;
 
-        public void Init
-            (ModelBoard modelBoard, MixTable mixTable, Player player, TriggerObject triggerObject, 
-            Transform draggingParent, Transform originalParent, Transform freeDragingParent)
+        public void Init(ModelBoard modelBoard, MixTable mixTable, Player player, TriggerObject triggerObject, 
+            Transform draggingParent)
         {
             this.mixTable = mixTable;
             this.triggerObject = triggerObject;
@@ -46,8 +42,6 @@ namespace Game.Environment.LModelBoard
             this.player = player;
 
             this.draggingParent = draggingParent;
-            this.originalParent = originalParent;
-            this.freeDragingParent = freeDragingParent;
 
             modelBoard.OnModelBoardOpen.AddListener(() =>
             {
@@ -91,38 +85,65 @@ namespace Game.Environment.LModelBoard
 
         public void OnDrag(PointerEventData eventData)
         {
-            if(pointerWithObject != null)
+            if (currentItemInCell != null)
             {
-                pointerWithObject.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
+                Vector3 position = Camera.main.ScreenToWorldPoint(
+                    new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane + 1)
+                );
 
-            Debug.Log(1);
+                currentItemInCell.transform.position = 
+                    new Vector3(
+                        currentItemInCell.transform.position.x,
+                        position.y,
+                        position.z
+                    );
+            }
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (currentItemInCell != null && pointerWithObject == null)
+            if (currentItemInCell != null)
             {
-                pointerWithObject = currentItemInCell;
-                pointerWithObject.transform.parent = draggingParent;
+                scaleCurrentItemInCell = null;
+                currentItemInCell.GetComponent<ScaleChooseObject>().RemoveComponent();
+                currentItemInCell.transform.parent = draggingParent;
             }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            //if (In((RectTransform)freeDragingParent, Input.mousePosition))
-            //{
-            //    InsertInventory();
-            //}
-            //else
-            //{
-            //    currentItemInCell = null;
-            //    Render(true);
-            //    Destroy(pointerWithObject);
-            //}
+            if (InModelBoard())
+            {
+                modelBoard.InsertPointerObjectToModelBoard(this);
+                Debug.Log("OKK");
+            }
+            else
+            {
+                Debug.Log("No OKK");
+                currentItemInCell.transform.parent = transform;
+                currentItemInCell.transform.position = transform.position;
+            }
         }
 
-        // На случай. если будем делать механику забирания предмета
+
+        private bool InModelBoard()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float maxDistance = 100f;
+
+            RaycastHit[] raycastHits = Physics.RaycastAll(ray, maxDistance);
+
+            for (int i = 0; i < raycastHits.Length; i++)
+            {
+                if (raycastHits[i].collider.gameObject.TryGetComponent<ModelBoard>(out var modelBoard))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public PickUpItem PickUpItem()
         {
             PickUpItem item = null;
@@ -149,7 +170,22 @@ namespace Game.Environment.LModelBoard
                     case TypePickUpItem.None:
                         break;
                     case TypePickUpItem.PickUpItem:
-                        break;
+                        {
+                            pickUpItem.transform.parent = transform;
+                            pickUpItem.transform.position = transform.position;
+                            currentItemInCell = pickUpItem;
+
+                            Debug.Log(gameObject.name);
+
+                            if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
+                            {
+                                scaleCurrentItemInCell = currentItemInCell.AddComponent<ScaleChooseObject>();
+                                scaleCurrentItemInCell.coefficient = 1.08f;
+                                scaleCurrentItemInCell.on = false;
+                            }
+
+                            break;
+                        }
                     case TypePickUpItem.Package:
 
                         PackageItem packageItem;

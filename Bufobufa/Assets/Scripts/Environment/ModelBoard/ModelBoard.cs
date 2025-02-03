@@ -60,7 +60,7 @@ namespace Game.Environment.LModelBoard
             for (int i = 0; i < cellBoards.Count; i++)
             {
                 cellBoards[i].Init(this, mixTable, player, triggerObject,
-                    draggingParent, originalParent, freeDragingParent);
+                    draggingParent);
             }
 
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
@@ -102,64 +102,27 @@ namespace Game.Environment.LModelBoard
             openObject.OnUpdate(deltaTime);
         }
 
-        //public PickUpItem PickUpItem(int indexCell)
-        //{
-        //    PickUpItem pickUpItem = cellBoards[indexCell].currentItemInCell;
+        public void InsertPointerObjectToModelBoard(CellModelBoard cellModelBoard)
+        {
+            PickUpItem curentPickUpItem = cellModelBoard.PickUpItem();
+            if (curentPickUpItem != null)
+            {
+                int closesIndex = 0;
 
-        //    if (cellBoards[indexCell].currentItemInCell != null)
-        //    {
-        //        OnPickUpItem?.Invoke(cellBoards[indexCell].currentItemInCell);
-        //        cellBoards[indexCell].currentItemInCell = null;
-        //    }
+                for (int i = 0; i < cellBoards.Count; i++)
+                {
+                    if (Vector3.Distance(curentPickUpItem.transform.position, cellBoards[i].transform.position) <=
+                        Vector3.Distance(curentPickUpItem.transform.position, cellBoards[closesIndex].transform.position)
+                        )
+                    {
+                        closesIndex = i;
+                    }
+                }
 
-        //    return pickUpItem;
-        //}
+                Debug.Log("1235");
 
-        //public bool PutItem(PickUpItem pickUpItem, int indexCell)
-        //{
-        //    if (cellBoards[indexCell].currentItemInCell == null)
-        //    {
-        //        OnPutItem?.Invoke(cellBoards[indexCell].currentItemInCell);
-        //        cellBoards[indexCell].currentItemInCell.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
-        //        cellBoards[indexCell].currentItemInCell.transform.position = cellBoards[indexCell].cellModelBoard.transform.position;
-
-        //        cellBoards[indexCell].currentItemInCell = pickUpItem;
-
-        //        switch (pickUpItem.TypeItem)
-        //        {
-        //            case TypePickUpItem.None:
-        //                break;
-        //            case TypePickUpItem.PickUpItem:
-        //                break;
-        //            case TypePickUpItem.Package:
-
-        //                PackageItem packageItem;
-        //                if (player.GetPickUpItem().TryGetComponent(out packageItem))
-        //                {
-        //                    if (packageItem.ingradients.Count >= 1)
-        //                    {
-        //                        for (int i = 0; i < packageItem.ingradients.Count; i++)
-        //                        {
-        //                            mixTable.AddIngradient(packageItem.ingradients[i]);
-        //                        }
-
-        //                        PickUpItem item = Instantiate(packageItem.itemInPackage);
-
-        //                        item.transform.parent = cellBoards[indexCell].cellModelBoard.transform;
-        //                        item.transform.localPosition = cellBoards[indexCell].cellModelBoard.transform.localPosition;
-        //                        cellBoards[indexCell].currentItemInCell = item;
-
-        //                        Destroy(pickUpItem);
-        //                    }
-        //                }
-        //                else
-        //                    Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
-
-        //                break;
-        //        }
-        //        return true;
-        //    }
-        //    return false;
-        //}
+                Debug.Log(cellBoards[closesIndex].PutItem(curentPickUpItem));
+            }
+        }
     }
 }
