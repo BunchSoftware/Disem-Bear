@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5202541338638712873}
   - component: {fileID: 7416796259608130418}
   - component: {fileID: 2979826074301052321}
+  - component: {fileID: 5534621751564661999}
   m_Layer: 7
   m_Name: InItem
   m_TagString: Untagged
@@ -99,7 +100,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsClicked: 0
+  IsClickedLeftMouseButton: 0
+  IsClickedRightMouseButton: 0
   CanTakeByCollisionPlayer: 1
   typeItem: 1
   nameItem: Document
+--- !u!65 &5534621751564661999
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352654662971261209}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15.63, y: 21.440214, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

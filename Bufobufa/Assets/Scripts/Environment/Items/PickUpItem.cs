@@ -14,9 +14,11 @@ namespace Game.Environment.Item
         PickUpItem = 1,
         Package = 2
     }
-    public class PickUpItem : MonoBehaviour, ILeftMouseClickable
+    public class PickUpItem : MonoBehaviour, ILeftMouseClickable, IRightMouseClickable
     {
-        public bool IsClicked = false;
+        public bool IsClickedLeftMouseButton = false;
+        public bool IsClickedRightMouseButton = false;
+
         public bool CanTakeByCollisionPlayer = true;
         public TypePickUpItem TypeItem => typeItem;
         [SerializeField] private TypePickUpItem typeItem = TypePickUpItem.None;
@@ -26,12 +28,22 @@ namespace Game.Environment.Item
 
         public void OnMouseLeftClickObject()
         {
-            IsClicked = true;
+            IsClickedLeftMouseButton = true;
         }
 
         public void OnMouseLeftClickOtherObject()
         {
-            IsClicked = false;
+            IsClickedLeftMouseButton = false;
+        }
+
+        public void OnMouseRightClickObject()
+        {
+            IsClickedRightMouseButton = true;
+        }
+
+        public void OnMouseRightClickOtherObject()
+        {
+            IsClickedRightMouseButton = false;
         }
     }
 }

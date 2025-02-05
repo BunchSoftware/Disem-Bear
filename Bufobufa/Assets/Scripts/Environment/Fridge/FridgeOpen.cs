@@ -42,12 +42,12 @@ namespace Game.Environment.Fridge
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
 
-            openObject.OnObjectOpen.AddListener(() =>
+            openObject.OnEndObjectOpen.AddListener(() =>
             {
                 scaleChooseObject.on = false;
                 OnFridgeOpen?.Invoke();
             });
-            openObject.OnObjectClose.AddListener(() =>
+            openObject.OnEndObjectClose.AddListener(() =>
             {
                 scaleChooseObject.on = true;
                 OnFridgeClose?.Invoke();

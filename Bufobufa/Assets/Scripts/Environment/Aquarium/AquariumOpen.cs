@@ -38,13 +38,13 @@ namespace Game.Environment.Aquarium
             triggerObject = GetComponentInChildren<TriggerObject>();
             spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
 
-            openObject.OnObjectOpen.AddListener(() =>
+            openObject.OnEndObjectOpen.AddListener(() =>
             {
                 spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
                 scaleChooseObject.on = false;
                 OnAquariumOpen?.Invoke();
             });
-            openObject.OnObjectClose.AddListener(() =>
+            openObject.OnEndObjectClose.AddListener(() =>
             {
                 spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
                 scaleChooseObject.on = true;

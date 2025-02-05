@@ -38,12 +38,12 @@ namespace Game.Environment.LMixTable
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
-            openObject.OnObjectOpen.AddListener(() =>
+            openObject.OnEndObjectOpen.AddListener(() =>
             {
                 scaleChooseObject.on = false;
                 OnTableOpen?.Invoke();
             });
-            openObject.OnObjectClose.AddListener(() =>
+            openObject.OnEndObjectClose.AddListener(() =>
             {
                 scaleChooseObject.on = true;
                 OnTableClose?.Invoke();

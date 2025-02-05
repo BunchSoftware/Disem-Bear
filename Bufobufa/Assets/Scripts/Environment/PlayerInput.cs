@@ -32,12 +32,14 @@ namespace Game.Environment
 
         public void OnUpdate(float deltaTime)
         {
-            if (Input.GetMouseButtonDown(0))
-                LeftMouseClick();
-            if (Input.GetMouseButtonDown(1))
-                RightMouseClick();
-
             MouseOver();
+
+            PointerEventData eventData = new PointerEventData(EventSystem.current);
+
+            if (Input.GetMouseButton(0) && eventData.dragging == false)
+                LeftMouseClick();
+            if (Input.GetMouseButton(1) && eventData.dragging == false)
+                RightMouseClick();
         }
 
         private void LeftMouseClick()

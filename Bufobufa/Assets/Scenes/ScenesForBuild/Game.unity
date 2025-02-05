@@ -5508,13 +5508,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 0}
   playerTransform: {fileID: 0}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &139041738
@@ -13466,13 +13473,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 0}
   playerTransform: {fileID: 0}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &551948338
@@ -24575,7 +24589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
-  m_DragThreshold: 10
+  m_DragThreshold: -1
 --- !u!4 &1595963984
 Transform:
   m_ObjectHideFlags: 0
@@ -24948,13 +24962,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 0}
   playerTransform: {fileID: 0}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1672061963
@@ -25893,13 +25914,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 0}
   playerTransform: {fileID: 0}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1787987998
@@ -43948,6 +43976,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2236222406731073772, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
+      propertyPath: timeFocusItem
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2236222406731073772, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
+      propertyPath: timeDefocusItem
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3933690519876170411, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.93
@@ -43987,6 +44023,10 @@ PrefabInstance:
     - target: {fileID: 3933690519876170411, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280962171170994821, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
+      propertyPath: m_RayTracingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4899132208007916572, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
       propertyPath: m_Name
@@ -44256,13 +44296,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 451101739}
   playerTransform: {fileID: 487972173}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &7011096796303665585

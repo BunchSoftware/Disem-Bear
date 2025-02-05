@@ -1,3 +1,4 @@
+using DG.Tweening;
 using External.DI;
 using External.Storage;
 using Game.Environment.Item;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static Game.Environment.LTableWithItems.TableWithItems;
+using static UnityEditor.Progress;
 
 namespace Game.Environment.LModelBoard
 {
@@ -19,21 +21,28 @@ namespace Game.Environment.LModelBoard
     {
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
+        public float timeFocusItem = 1f;
+        public float timeDefocusItem = 1f;
+
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
 
-        [Header("Drag&Drop")]
-        [SerializeField] private Transform draggingParent;
-        [SerializeField] private Transform originalParent;
-        [SerializeField] private Transform freeDragingParent;
+        public UnityEvent OnStartModelBoardOpen;
+        public UnityEvent OnEndModelBoardOpen;
 
-        public UnityEvent OnModelBoardOpen;
-        public UnityEvent OnModelBoardClose;
+        public UnityEvent OnStartModelBoardClose;
+        public UnityEvent OnEndModelBoardClose;
+
+        public UnityEvent<PickUpItem> OnFocusItem;
+        public UnityEvent<PickUpItem> OnDefocusItem;
 
         private SaveManager saveManager;
         private MixTable mixTable;
         private Player player;
         private PlayerMouseMove playerMouseMove;
+
+        public bool IsOpen => isOpen;
+        private bool isOpen = false;
 
         public void Init(SaveManager saveManager, MixTable mixTable, Player player, PlayerMouseMove playerMouseMove)
         {
@@ -45,22 +54,31 @@ namespace Game.Environment.LModelBoard
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
-            openObject.OnObjectOpen.AddListener(() =>
+            openObject.OnStartObjectOpen.AddListener(() =>
             {
                 scaleChooseObject.on = false;
-                OnModelBoardOpen?.Invoke();
+                OnStartModelBoardOpen?.Invoke();
             });
-            openObject.OnObjectClose.AddListener(() =>
+            openObject.OnEndObjectOpen.AddListener(() =>
+            {
+                isOpen = true;
+                OnEndModelBoardOpen?.Invoke();
+            });
+            openObject.OnStartObjectClose.AddListener(() =>
+            {
+                OnStartModelBoardClose?.Invoke();
+            });
+            openObject.OnEndObjectClose.AddListener(() =>
             {
                 scaleChooseObject.on = true;
-                OnModelBoardClose?.Invoke();
+                isOpen = false;
+                OnEndModelBoardClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
-                cellBoards[i].Init(this, mixTable, player, triggerObject,
-                    draggingParent);
+                cellBoards[i].Init(this, mixTable, player, triggerObject, transform);
             }
 
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
@@ -80,6 +98,54 @@ namespace Game.Environment.LModelBoard
             //        }
             //    }
             //}
+        }
+
+        public void FocusItem(PickUpItem item)
+        {
+            Vector3 positionCenterScreen = Camera.main.ScreenToWorldPoint(
+                new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane + 1)
+            );
+
+            openObject.on = false;
+            item.transform.DOMove(new Vector3(positionCenterScreen.x, positionCenterScreen.y, positionCenterScreen.z), timeFocusItem).SetEase(Ease.Linear);
+
+            for (int i = 0; i < cellBoards.Count; i++)
+            {
+                cellBoards[i].GetComponent<Collider>().enabled = false;
+            }
+
+            StartCoroutine(IFocusItem(item, timeFocusItem));
+        }
+
+        private IEnumerator IFocusItem(PickUpItem item, float time)
+        {
+            yield return new WaitForSeconds(time);
+
+            item.GetComponent<BoxCollider>().enabled = true;
+            OnFocusItem?.Invoke(item);
+        }
+
+        public void DefocusItem(PickUpItem item)
+        {
+            Vector3 position = item.transform.parent.position;
+
+            item.transform.DOMove(position, timeFocusItem).SetEase(Ease.Linear);
+            item.GetComponent<BoxCollider>().enabled = false;
+
+            StartCoroutine(IDefocusItem(item, timeDefocusItem));
+        }
+
+        private IEnumerator IDefocusItem(PickUpItem item, float time)
+        {
+            yield return new WaitForSeconds(time);
+
+            for (int i = 0; i < cellBoards.Count; i++)
+            {
+                cellBoards[i].GetComponent<Collider>().enabled = true;
+            }
+
+            openObject.on = true;
+            OnDefocusItem?.Invoke(item);
         }
 
         public void OpenModelBoard()
@@ -119,9 +185,8 @@ namespace Game.Environment.LModelBoard
                     }
                 }
 
-                Debug.Log("1235");
 
-                Debug.Log(cellBoards[closesIndex].PutItem(curentPickUpItem));
+                cellBoards[closesIndex].PutItem(curentPickUpItem);
             }
         }
     }

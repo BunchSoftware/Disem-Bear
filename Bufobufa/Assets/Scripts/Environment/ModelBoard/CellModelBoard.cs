@@ -15,13 +15,16 @@ using UnityEngine.EventSystems;
 
 namespace Game.Environment.LModelBoard
 {
+    [RequireComponent(typeof(ScaleChooseObject))]
     public class CellModelBoard : MonoBehaviour, ILeftMouseClickable, IMouseOver, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
+        public UnityEvent<PickUpItem> OnFocusItem;
+        public UnityEvent<PickUpItem> OnDefocusItem;
         public UnityEvent<PickUpItem> OnPickUpItem;
         public UnityEvent<PickUpItem> OnPutItem;
 
         private PickUpItem currentItemInCell;
-        private ScaleChooseObject scaleCurrentItemInCell;
+        private ScaleChooseObject scaleChooseObject;
         private TriggerObject triggerObject;
 
         private MixTable mixTable;
@@ -29,6 +32,7 @@ namespace Game.Environment.LModelBoard
         private Player player;
 
         private bool isClick;
+        private bool isDrag;
 
         // Drag&Drop
         private Transform draggingParent;
@@ -43,31 +47,50 @@ namespace Game.Environment.LModelBoard
 
             this.draggingParent = draggingParent;
 
-            modelBoard.OnModelBoardOpen.AddListener(() =>
+            scaleChooseObject = GetComponent<ScaleChooseObject>();
+
+            modelBoard.OnEndModelBoardOpen.AddListener(() =>
             {
-                if(scaleCurrentItemInCell != null)
-                    scaleCurrentItemInCell.on = true;
+                if(currentItemInCell != null && scaleChooseObject != null)
+                    scaleChooseObject.on = true;
             });
 
-            modelBoard.OnModelBoardClose.AddListener(() =>
+            modelBoard.OnStartModelBoardClose.AddListener(() =>
             {
-                if (scaleCurrentItemInCell != null)
-                    scaleCurrentItemInCell.on = false;
+                if (currentItemInCell != null && scaleChooseObject != null)
+                    scaleChooseObject.on = false;
             });
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
-                if (isClick)
+                if (!isDrag)
                 {
-                    if(player.PlayerPickUpItem == false)
-                        modelBoard.OpenModelBoard();
-                    
-                    isClick = false;
-
-                    if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
+                    if (isClick && !modelBoard.IsOpen)
                     {
-                        player.PutItem();
-                        Debug.Log("Я положил предмет в ModelBoard");
+                        if (player.PlayerPickUpItem == false)
+                            modelBoard.OpenModelBoard();
+
+                        isClick = false;
+
+                        if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
+                        {
+                            player.PutItem();
+                            Debug.Log("Я положил предмет в ModelBoard");
+                        }
+                    }
+                    else if (isClick && modelBoard.IsOpen &&
+                            currentItemInCell != null && !currentItemInCell.IsClickedRightMouseButton)
+                    {
+
+                        isClick = false;
+                        modelBoard.FocusItem(currentItemInCell);
+                        OnFocusItem?.Invoke(currentItemInCell);
+                    }
+                    else if (modelBoard.IsOpen && currentItemInCell != null && currentItemInCell.IsClickedRightMouseButton)
+                    {
+                        currentItemInCell.IsClickedRightMouseButton = false;
+                        modelBoard.DefocusItem(currentItemInCell);
+                        OnDefocusItem?.Invoke(currentItemInCell);
                     }
                 }
             });
@@ -83,9 +106,19 @@ namespace Game.Environment.LModelBoard
             isClick = false;
         }
 
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (currentItemInCell != null && modelBoard.IsOpen)
+                currentItemInCell.transform.parent = draggingParent;
+
+            isDrag = true;
+            isClick = false;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
-            if (currentItemInCell != null)
+            if (currentItemInCell != null && modelBoard.IsOpen)
             {
                 Vector3 position = Camera.main.ScreenToWorldPoint(
                     new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane + 1)
@@ -100,29 +133,19 @@ namespace Game.Environment.LModelBoard
             }
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            if (currentItemInCell != null)
-            {
-                scaleCurrentItemInCell = null;
-                currentItemInCell.GetComponent<ScaleChooseObject>().RemoveComponent();
-                currentItemInCell.transform.parent = draggingParent;
-            }
-        }
-
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (InModelBoard())
+            if (InModelBoard() && modelBoard.IsOpen)
             {
                 modelBoard.InsertPointerObjectToModelBoard(this);
-                Debug.Log("OKK");
             }
             else
             {
-                Debug.Log("No OKK");
                 currentItemInCell.transform.parent = transform;
                 currentItemInCell.transform.position = transform.position;
             }
+
+            isDrag = false;
         }
 
 
@@ -150,6 +173,7 @@ namespace Game.Environment.LModelBoard
 
             if (currentItemInCell != null)
             {
+                currentItemInCell.GetComponent<BoxCollider>().enabled = true;
                 item = currentItemInCell;
 
                 OnPickUpItem?.Invoke(currentItemInCell);
@@ -173,16 +197,9 @@ namespace Game.Environment.LModelBoard
                         {
                             pickUpItem.transform.parent = transform;
                             pickUpItem.transform.position = transform.position;
+                            pickUpItem.GetComponent<BoxCollider>().enabled = false;
+
                             currentItemInCell = pickUpItem;
-
-                            Debug.Log(gameObject.name);
-
-                            if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
-                            {
-                                scaleCurrentItemInCell = currentItemInCell.AddComponent<ScaleChooseObject>();
-                                scaleCurrentItemInCell.coefficient = 1.08f;
-                                scaleCurrentItemInCell.on = false;
-                            }
 
                             break;
                         }
@@ -203,14 +220,9 @@ namespace Game.Environment.LModelBoard
 
                             item.transform.parent = transform;
                             item.transform.position = transform.position;
-                            currentItemInCell = item;
+                            pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
-                            if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
-                            {
-                                scaleCurrentItemInCell = currentItemInCell.AddComponent<ScaleChooseObject>();
-                                scaleCurrentItemInCell.coefficient = 1.08f;
-                                scaleCurrentItemInCell.on = false;
-                            }
+                            currentItemInCell = item;
 
                             Destroy(pickUpItem.gameObject);
                         }

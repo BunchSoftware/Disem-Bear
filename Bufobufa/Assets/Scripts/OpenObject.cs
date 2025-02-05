@@ -11,12 +11,16 @@ using UnityEngine.EventSystems;
 [Serializable]
 public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
 {
+    public bool on = true;
     public float timeOpen = 1f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform playerTransform;
 
-    public UnityEvent OnObjectOpen;
-    public UnityEvent OnObjectClose;
+    public UnityEvent OnStartObjectOpen;
+    public UnityEvent OnEndObjectOpen;
+
+    public UnityEvent OnStartObjectClose;
+    public UnityEvent OnEndObjectClose;
 
     private bool isOpen = false;
 
@@ -52,11 +56,10 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
 
         triggerObject.OnTriggerStayEvent.AddListener((collider) =>
         {
-            if (isClick && isOpen == false && moveCamera.IsMove() == false)
+            if (isClick && isOpen == false && moveCamera.IsMove() == false && on)
             {
                 isOpen = true;
                 isClick = false;
-                OnObjectOpen.Invoke();
 
                 lastMoveCameraToPosition = new CameraMoveToPosition()
                 {
@@ -69,32 +72,30 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
                 moveCamera.StartMoveTo(moveCameraToPosition);
                 playerMouseMove.StopPlayerMove();
                 playerMouseMove.MovePlayer(playerTransform.position);
+
+                OnStartObjectOpen?.Invoke();
+
+                StartCoroutine(IObjectOpen(timeOpen));
             }
         });
     }
 
+    private IEnumerator IObjectOpen(float time)
+    {
+        yield return new WaitForSeconds(time);
+        OnEndObjectOpen.Invoke();
+    }
+
+    private IEnumerator IObjectClose(float time)
+    {
+        yield return new WaitForSeconds(time);
+        OnEndObjectClose.Invoke();
+    }
+
     public void OnMouseLeftClickObject()
     {
-        if (player.PlayerPickUpItem == false && !isOpen && moveCamera.IsMove() == false)
-        {
+        if (player.PlayerPickUpItem == false && !isOpen && moveCamera.IsMove() == false && on)
             isClick = true;
-            //PointerEventData pointerData = new PointerEventData(EventSystem.current);
-
-            //pointerData.position = Input.mousePosition;
-            //pointerData.pointerId = -1;
-
-            //List<RaycastResult> results = new List<RaycastResult>();
-
-            //EventSystem.current.RaycastAll(pointerData, results);
-
-            //for (int i = 0; i < results.Count; i++)
-            //{
-            //    if (results[i].gameObject.tag != "OpenObject") continue;
-
-            //    isClick = true;
-            //    break;
-            //}
-        }
     }
 
     public void OnMouseLeftClickOtherObject()
@@ -104,13 +105,15 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
 
     public void OnUpdate(float deltaTime)
     {
-        if (Input.GetMouseButtonDown(1) && isOpen && moveCamera.IsMove() == false)
+        if (Input.GetMouseButtonDown(1) && isOpen && moveCamera.IsMove() == false && on)
         {
             moveCamera.StartMoveTo(lastMoveCameraToPosition);
             playerMouseMove.MovePlayer(lastPlayerPosition);
             isOpen = false;
-            OnObjectClose.Invoke();
             playerMouseMove.ReturnPlayerMove();
+
+            OnStartObjectClose?.Invoke();
+            StartCoroutine(IObjectClose(timeOpen));
         }
     }
 }

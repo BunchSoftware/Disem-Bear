@@ -44,9 +44,9 @@ namespace Game.Environment.LTableWithItems
                         Debug.Log("Я положил предмет в Table");
                     }
                 }
-                else if (currentItemInCell != null && currentItemInCell.IsClicked)
+                else if (currentItemInCell != null && currentItemInCell.IsClickedLeftMouseButton)
                 {
-                    currentItemInCell.IsClicked = false;
+                    currentItemInCell.IsClickedLeftMouseButton = false;
 
                     if (player.PlayerPickUpItem == false)
                     {
