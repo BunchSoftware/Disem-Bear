@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.Environment.LTableWithItems
 {
-    public class CellTableWithItems : MonoBehaviour, ILeftMouseClickable
+    public class CellTableWithItems : MonoBehaviour, ILeftMouseDownClickable
     {
         public UnityEvent<PickUpItem> OnPickUpItem;
         public UnityEvent<PickUpItem> OnPutItem;
@@ -57,15 +57,16 @@ namespace Game.Environment.LTableWithItems
             });
         }
 
-        public void OnMouseLeftClickObject()
+        public void OnMouseLeftClickDownObject()
         {
             isClick = true;
         }
 
-        public void OnMouseLeftClickOtherObject()
+        public void OnMouseLeftClickDownOtherObject()
         {
             isClick = false;
         }
+
 
         public PickUpItem PickUpItem()
         {

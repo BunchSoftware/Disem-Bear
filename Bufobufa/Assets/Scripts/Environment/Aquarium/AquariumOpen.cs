@@ -23,7 +23,7 @@ namespace Game.Environment.Aquarium
         private Player player;
         private PlayerMouseMove playerMouseMove;
         private MovePointToPoint spriteMovePointToPoint;
-        
+
 
 
 
@@ -38,15 +38,23 @@ namespace Game.Environment.Aquarium
             triggerObject = GetComponentInChildren<TriggerObject>();
             spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
 
-            openObject.OnEndObjectOpen.AddListener(() =>
+            openObject.OnStartObjectOpen.AddListener(() =>
             {
                 spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
                 scaleChooseObject.on = false;
+            });
+            openObject.OnEndObjectOpen.AddListener(() =>
+            {
+                
                 OnAquariumOpen?.Invoke();
+            });
+
+            openObject.OnStartObjectClose.AddListener(() =>
+            {
+                spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
             });
             openObject.OnEndObjectClose.AddListener(() =>
             {
-                spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
                 scaleChooseObject.on = true;
                 OnAquariumClose?.Invoke();
             });

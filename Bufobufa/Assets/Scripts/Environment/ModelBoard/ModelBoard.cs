@@ -156,7 +156,7 @@ namespace Game.Environment.LModelBoard
 
         public void OpenModelBoard()
         {
-            openObject.OnMouseLeftClickObject();
+            openObject.OnMouseLeftClickDownObject();
         }
 
         public void OnMouseEnterObject()

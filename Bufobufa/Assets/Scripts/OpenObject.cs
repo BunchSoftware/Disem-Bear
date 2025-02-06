@@ -9,7 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [Serializable]
-public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
+public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickable
 {
     public bool on = true;
     public float timeOpen = 1f;
@@ -92,13 +92,13 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseClickable
         OnEndObjectClose.Invoke();
     }
 
-    public void OnMouseLeftClickObject()
+    public void OnMouseLeftClickDownObject()
     {
         if (player.PlayerPickUpItem == false && !isOpen && moveCamera.IsMove() == false && on)
             isClick = true;
     }
 
-    public void OnMouseLeftClickOtherObject()
+    public void OnMouseLeftClickDownOtherObject()
     {
         isClick = false;
     }

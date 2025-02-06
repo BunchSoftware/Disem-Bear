@@ -14,7 +14,7 @@ namespace Game.Environment.Item
         PickUpItem = 1,
         Package = 2
     }
-    public class PickUpItem : MonoBehaviour, ILeftMouseClickable, IRightMouseClickable
+    public class PickUpItem : MonoBehaviour, IRightMouseClickable, ILeftMouseDownClickable
     {
         public bool IsClickedLeftMouseButton = false;
         public bool IsClickedRightMouseButton = false;
@@ -26,12 +26,12 @@ namespace Game.Environment.Item
         public string NameItem => nameItem;
         [SerializeField] private string nameItem;
 
-        public void OnMouseLeftClickObject()
+        public void OnMouseLeftClickDownObject()
         {
             IsClickedLeftMouseButton = true;
         }
 
-        public void OnMouseLeftClickOtherObject()
+        public void OnMouseLeftClickDownOtherObject()
         {
             IsClickedLeftMouseButton = false;
         }
