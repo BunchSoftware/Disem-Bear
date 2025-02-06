@@ -33,6 +33,9 @@ namespace Game.Environment.LModelBoard
         public UnityEvent OnStartModelBoardClose;
         public UnityEvent OnEndModelBoardClose;
 
+        public UnityEvent<PickUpItem> OnDragItem;
+        public UnityEvent<PickUpItem> OnDropItem;
+
         public UnityEvent<PickUpItem> OnFocusItem;
         public UnityEvent<PickUpItem> OnDefocusItem;
 
@@ -43,6 +46,9 @@ namespace Game.Environment.LModelBoard
 
         public bool IsOpen => isOpen;
         private bool isOpen = false;
+
+        public bool IsDrag => isDrag;
+        private bool isDrag = false;
 
         public void Init(SaveManager saveManager, MixTable mixTable, Player player, PlayerMouseMove playerMouseMove)
         {
@@ -168,7 +174,14 @@ namespace Game.Environment.LModelBoard
             openObject.OnUpdate(deltaTime);
         }
 
-        public void InsertPointerObjectToModelBoard(CellModelBoard cellModelBoard)
+        public void DragItem(CellModelBoard cellModelBoard)
+        {
+            PickUpItem curentPickUpItem = cellModelBoard.PickUpItem();
+            isDrag = true;
+            OnDropItem?.Invoke(curentPickUpItem);
+        }
+
+        public void DropItem(CellModelBoard cellModelBoard)
         {
             PickUpItem curentPickUpItem = cellModelBoard.PickUpItem();
             if (curentPickUpItem != null)
@@ -187,6 +200,8 @@ namespace Game.Environment.LModelBoard
 
 
                 cellBoards[closesIndex].PutItem(curentPickUpItem);
+                isDrag = false;
+                OnDropItem?.Invoke(curentPickUpItem);
             }
         }
     }

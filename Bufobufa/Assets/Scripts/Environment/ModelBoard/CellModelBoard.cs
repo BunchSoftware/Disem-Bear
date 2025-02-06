@@ -16,7 +16,7 @@ using UnityEngine.EventSystems;
 namespace Game.Environment.LModelBoard
 {
     [RequireComponent(typeof(ScaleChooseObject))]
-    public class CellModelBoard : MonoBehaviour, ILeftMouseClickable, IMouseOver, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class CellModelBoard : MonoBehaviour, ILeftMouseUpClickable, IMouseOver, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
         public UnityEvent<PickUpItem> OnFocusItem;
         public UnityEvent<PickUpItem> OnDefocusItem;
@@ -32,7 +32,6 @@ namespace Game.Environment.LModelBoard
         private Player player;
 
         private bool isClick;
-        private bool isDrag;
 
         // Drag&Drop
         private Transform draggingParent;
@@ -63,45 +62,41 @@ namespace Game.Environment.LModelBoard
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
-                if (!isDrag)
+                if (isClick && !modelBoard.IsOpen)
                 {
-                    if (isClick && !modelBoard.IsOpen)
-                    {
-                        if (player.PlayerPickUpItem == false)
-                            modelBoard.OpenModelBoard();
+                    if (player.PlayerPickUpItem == false)
+                        modelBoard.OpenModelBoard();
 
-                        isClick = false;
+                    isClick = false;
 
-                        if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
-                        {
-                            player.PutItem();
-                            Debug.Log("Я положил предмет в ModelBoard");
-                        }
-                    }
-                    else if (isClick && modelBoard.IsOpen &&
-                            currentItemInCell != null && !currentItemInCell.IsClickedRightMouseButton)
+                    if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
                     {
-
-                        isClick = false;
-                        modelBoard.FocusItem(currentItemInCell);
-                        OnFocusItem?.Invoke(currentItemInCell);
+                        player.PutItem();
+                        Debug.Log("Я положил предмет в ModelBoard");
                     }
-                    else if (modelBoard.IsOpen && currentItemInCell != null && currentItemInCell.IsClickedRightMouseButton)
-                    {
-                        currentItemInCell.IsClickedRightMouseButton = false;
-                        modelBoard.DefocusItem(currentItemInCell);
-                        OnDefocusItem?.Invoke(currentItemInCell);
-                    }
+                }
+                else if (!modelBoard.IsDrag && isClick && modelBoard.IsOpen &&
+                        currentItemInCell != null && !currentItemInCell.IsClickedRightMouseButton)
+                {
+                    isClick = false;
+                    modelBoard.FocusItem(currentItemInCell);
+                    OnFocusItem?.Invoke(currentItemInCell);
+                }
+                else if (!modelBoard.IsDrag && modelBoard.IsOpen && currentItemInCell != null && currentItemInCell.IsClickedRightMouseButton)
+                {
+                    currentItemInCell.IsClickedRightMouseButton = false;
+                    modelBoard.DefocusItem(currentItemInCell);
+                    OnDefocusItem?.Invoke(currentItemInCell);
                 }
             });
         }
 
-        public void OnMouseLeftClickObject()
+        public void OnMouseLeftClickUpObject()
         {
             isClick = true;
         }
 
-        public void OnMouseLeftClickOtherObject()
+        public void OnMouseLeftClickUpOtherObject()
         {
             isClick = false;
         }
@@ -111,9 +106,6 @@ namespace Game.Environment.LModelBoard
         {
             if (currentItemInCell != null && modelBoard.IsOpen)
                 currentItemInCell.transform.parent = draggingParent;
-
-            isDrag = true;
-            isClick = false;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -137,15 +129,15 @@ namespace Game.Environment.LModelBoard
         {
             if (InModelBoard() && modelBoard.IsOpen)
             {
-                modelBoard.InsertPointerObjectToModelBoard(this);
+                modelBoard.DropItem(this);
             }
-            else
+            else if(currentItemInCell != null)
             {
                 currentItemInCell.transform.parent = transform;
                 currentItemInCell.transform.position = transform.position;
             }
 
-            isDrag = false;
+            Debug.Log(123);
         }
 
 
