@@ -33,6 +33,8 @@ namespace Game.Environment.LModelBoard
 
         private bool isClick;
 
+        [HideInInspector] public bool isEndDrag = false;
+
         // Drag&Drop
         private Transform draggingParent;
 
@@ -79,13 +81,13 @@ namespace Game.Environment.LModelBoard
                         currentItemInCell != null && !currentItemInCell.IsClickedRightMouseButton)
                 {
                     isClick = false;
-                    modelBoard.FocusItem(currentItemInCell);
+                    modelBoard.FocusItem(this);
                     OnFocusItem?.Invoke(currentItemInCell);
                 }
                 else if (!modelBoard.IsDrag && modelBoard.IsOpen && currentItemInCell != null && currentItemInCell.IsClickedRightMouseButton)
                 {
                     currentItemInCell.IsClickedRightMouseButton = false;
-                    modelBoard.DefocusItem(currentItemInCell);
+                    modelBoard.DefocusItem(this);
                     OnDefocusItem?.Invoke(currentItemInCell);
                 }
             });
@@ -93,7 +95,10 @@ namespace Game.Environment.LModelBoard
 
         public void OnMouseLeftClickUpObject()
         {
-            isClick = true;
+            if(isEndDrag)
+                isEndDrag = false;
+            else
+                isClick = true;
         }
 
         public void OnMouseLeftClickUpOtherObject()
@@ -104,19 +109,23 @@ namespace Game.Environment.LModelBoard
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (currentItemInCell != null && modelBoard.IsOpen)
+            if (currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
+            {
+                scaleChooseObject.on = false;
                 currentItemInCell.transform.parent = draggingParent;
+                modelBoard.DragItem(this);
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (currentItemInCell != null && modelBoard.IsOpen)
+            if (currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
             {
                 Vector3 position = Camera.main.ScreenToWorldPoint(
                     new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane + 1)
                 );
 
-                currentItemInCell.transform.position = 
+                currentItemInCell.transform.position =
                     new Vector3(
                         currentItemInCell.transform.position.x,
                         position.y,
@@ -127,17 +136,20 @@ namespace Game.Environment.LModelBoard
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (InModelBoard() && modelBoard.IsOpen)
+            if (!modelBoard.IsFocus)
             {
-                modelBoard.DropItem(this);
+                if (InModelBoard() && modelBoard.IsOpen)
+                {
+                    modelBoard.DropItem(this);
+                    scaleChooseObject.on = true;
+                }
+                else if (currentItemInCell != null)
+                {
+                    currentItemInCell.transform.parent = transform;
+                    currentItemInCell.transform.position = transform.position;
+                    scaleChooseObject.on = true;
+                }
             }
-            else if(currentItemInCell != null)
-            {
-                currentItemInCell.transform.parent = transform;
-                currentItemInCell.transform.position = transform.position;
-            }
-
-            Debug.Log(123);
         }
 
 
@@ -157,6 +169,11 @@ namespace Game.Environment.LModelBoard
             }
 
             return false;
+        }
+
+        public PickUpItem GetCurrentItemInCell()
+        {
+            return currentItemInCell;
         }
 
         public PickUpItem PickUpItem()
@@ -179,8 +196,6 @@ namespace Game.Environment.LModelBoard
         {
             if (currentItemInCell == null)
             {
-                OnPutItem?.Invoke(currentItemInCell);
-
                 switch (pickUpItem.TypeItem)
                 {
                     case TypePickUpItem.None:
@@ -192,6 +207,7 @@ namespace Game.Environment.LModelBoard
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
                             currentItemInCell = pickUpItem;
+                            OnPutItem?.Invoke(currentItemInCell);
 
                             break;
                         }
@@ -213,13 +229,14 @@ namespace Game.Environment.LModelBoard
                             item.transform.parent = transform;
                             item.transform.position = transform.position;
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
-
                             currentItemInCell = item;
 
                             Destroy(pickUpItem.gameObject);
                         }
                         else
                             Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
+
+                        OnPutItem?.Invoke(currentItemInCell);
 
                         break;
                 }

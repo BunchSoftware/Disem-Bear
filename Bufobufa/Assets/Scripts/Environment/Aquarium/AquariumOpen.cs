@@ -10,7 +10,7 @@ namespace Game.Environment.Aquarium
 {
     [RequireComponent(typeof(OpenObject))]
     [RequireComponent(typeof(ScaleChooseObject))]
-    public class AquariumOpen : MonoBehaviour, ILeftMouseClickable
+    public class AquariumOpen : MonoBehaviour, ILeftMouseDownClickable
     {
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
@@ -117,12 +117,12 @@ namespace Game.Environment.Aquarium
             //}
         }
 
-        public void OnMouseLeftClickObject()
+        public void OnMouseLeftClickDownObject()
         {
 
         }
 
-        public void OnMouseLeftClickOtherObject()
+        public void OnMouseLeftClickDownOtherObject()
         {
 
         }

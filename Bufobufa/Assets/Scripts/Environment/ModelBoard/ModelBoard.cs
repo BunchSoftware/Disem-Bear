@@ -21,8 +21,11 @@ namespace Game.Environment.LModelBoard
     {
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
-        public float timeFocusItem = 1f;
-        public float timeDefocusItem = 1f;
+
+        [Header("Focus Item")]
+        public float coefficientScaleItem = 1.08f;
+        public float timeFocusItem = 0.5f;
+        public float timeDefocusItem = 0.5f;
 
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
@@ -43,6 +46,9 @@ namespace Game.Environment.LModelBoard
         private MixTable mixTable;
         private Player player;
         private PlayerMouseMove playerMouseMove;
+
+        public bool IsFocus => isFocus;
+        private bool isFocus = false;
 
         public bool IsOpen => isOpen;
         private bool isOpen = false;
@@ -106,42 +112,60 @@ namespace Game.Environment.LModelBoard
             //}
         }
 
-        public void FocusItem(PickUpItem item)
+        public void FocusItem(CellModelBoard cellModelBoard)
         {
             Vector3 positionCenterScreen = Camera.main.ScreenToWorldPoint(
                 new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane + 1)
             );
 
             openObject.on = false;
-            item.transform.DOMove(new Vector3(positionCenterScreen.x, positionCenterScreen.y, positionCenterScreen.z), timeFocusItem).SetEase(Ease.Linear);
+
+            PickUpItem pickUpItem = cellModelBoard.GetCurrentItemInCell();
+
+            pickUpItem.transform.DOMove(new Vector3(positionCenterScreen.x, positionCenterScreen.y, positionCenterScreen.z), timeFocusItem).SetEase(Ease.Linear);
+            pickUpItem.transform.DOScale(new Vector3
+                (
+                pickUpItem.transform.localScale.x * coefficientScaleItem,
+                pickUpItem.transform.localScale.y * coefficientScaleItem,
+                pickUpItem.transform.localScale.z * coefficientScaleItem
+                ), timeFocusItem).SetEase(Ease.Linear);
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
                 cellBoards[i].GetComponent<Collider>().enabled = false;
             }
 
-            StartCoroutine(IFocusItem(item, timeFocusItem));
+            StartCoroutine(IFocusItem(cellModelBoard, timeFocusItem));
         }
 
-        private IEnumerator IFocusItem(PickUpItem item, float time)
+        private IEnumerator IFocusItem(CellModelBoard cellModelBoard, float time)
         {
             yield return new WaitForSeconds(time);
 
-            item.GetComponent<BoxCollider>().enabled = true;
-            OnFocusItem?.Invoke(item);
+            isFocus = true;
+            cellModelBoard.GetCurrentItemInCell().GetComponent<BoxCollider>().enabled = true;
+            OnFocusItem?.Invoke(cellModelBoard.GetCurrentItemInCell());
         }
 
-        public void DefocusItem(PickUpItem item)
-        {
-            Vector3 position = item.transform.parent.position;
+        public void DefocusItem(CellModelBoard cellModelBoard)
+        { 
+            PickUpItem pickUpItem = cellModelBoard.GetCurrentItemInCell();        
+            Vector3 position = pickUpItem.transform.parent.position;
 
-            item.transform.DOMove(position, timeFocusItem).SetEase(Ease.Linear);
-            item.GetComponent<BoxCollider>().enabled = false;
+            pickUpItem.transform.DOMove(position, timeFocusItem).SetEase(Ease.Linear);
+            pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
-            StartCoroutine(IDefocusItem(item, timeDefocusItem));
+            pickUpItem.transform.DOScale(new Vector3
+            (
+                pickUpItem.transform.localScale.x / coefficientScaleItem,
+                pickUpItem.transform.localScale.y / coefficientScaleItem,
+                pickUpItem.transform.localScale.z / coefficientScaleItem
+             ), timeFocusItem).SetEase(Ease.Linear);
+
+            StartCoroutine(IDefocusItem(cellModelBoard, timeDefocusItem));
         }
 
-        private IEnumerator IDefocusItem(PickUpItem item, float time)
+        private IEnumerator IDefocusItem(CellModelBoard cellModelBoard, float time)
         {
             yield return new WaitForSeconds(time);
 
@@ -150,8 +174,9 @@ namespace Game.Environment.LModelBoard
                 cellBoards[i].GetComponent<Collider>().enabled = true;
             }
 
+            isFocus = false;
             openObject.on = true;
-            OnDefocusItem?.Invoke(item);
+            OnDefocusItem?.Invoke(cellModelBoard.GetCurrentItemInCell());
         }
 
         public void OpenModelBoard()
@@ -176,33 +201,50 @@ namespace Game.Environment.LModelBoard
 
         public void DragItem(CellModelBoard cellModelBoard)
         {
-            PickUpItem curentPickUpItem = cellModelBoard.PickUpItem();
-            isDrag = true;
-            OnDropItem?.Invoke(curentPickUpItem);
+            if(cellModelBoard.GetCurrentItemInCell())
+            {
+                isDrag = true;
+                OnDragItem?.Invoke(cellModelBoard.GetCurrentItemInCell());
+            }
         }
 
         public void DropItem(CellModelBoard cellModelBoard)
         {
-            PickUpItem curentPickUpItem = cellModelBoard.PickUpItem();
-            if (curentPickUpItem != null)
+            PickUpItem currentPickUpItem = cellModelBoard.PickUpItem();
+            if (currentPickUpItem != null)
             {
                 int closesIndex = 0;
 
                 for (int i = 0; i < cellBoards.Count; i++)
                 {
-                    if (Vector3.Distance(curentPickUpItem.transform.position, cellBoards[i].transform.position) <=
-                        Vector3.Distance(curentPickUpItem.transform.position, cellBoards[closesIndex].transform.position)
+                    if (Vector3.Distance(currentPickUpItem.transform.position, cellBoards[i].transform.position) <=
+                        Vector3.Distance(currentPickUpItem.transform.position, cellBoards[closesIndex].transform.position)
                         )
                     {
                         closesIndex = i;
                     }
                 }
 
+                if (cellBoards[closesIndex].GetCurrentItemInCell() == null)
+                {
+                    cellBoards[closesIndex].PutItem(currentPickUpItem);
+                    cellBoards[closesIndex].isEndDrag = true;
+                    isDrag = false;
+                    OnDropItem?.Invoke(currentPickUpItem);
+                }
+                else
+                {
+                    PickUpItem exchangePickUpItem = cellBoards[closesIndex].PickUpItem();
+                    cellModelBoard.PutItem(exchangePickUpItem);
 
-                cellBoards[closesIndex].PutItem(curentPickUpItem);
-                isDrag = false;
-                OnDropItem?.Invoke(curentPickUpItem);
+                    cellBoards[closesIndex].PutItem(currentPickUpItem);
+                    cellBoards[closesIndex].isEndDrag = true;
+
+                    isDrag = false;
+                    OnDropItem?.Invoke(currentPickUpItem);
+                }
             }
+
         }
     }
 }

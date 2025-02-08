@@ -26,7 +26,12 @@ namespace Game.Environment
 
         private void Update()
         {
-            if (on && increaseScale && transform.localScale.x < maxScale.x)
+            if(!on || on)
+            {
+                // ћоментальный возврат к изначальному scales
+                transform.localScale = minScale;
+            }
+            else if (on && increaseScale && transform.localScale.x < maxScale.x)
             {
                 Vector3 scale = new Vector3(transform.localScale.x + Time.deltaTime * minScale.x, transform.localScale.y + Time.deltaTime * minScale.y, transform.localScale.z + Time.deltaTime * minScale.z);
                 if (scale.x > maxScale.x)
@@ -35,7 +40,7 @@ namespace Game.Environment
                 }
                 transform.localScale = scale;
             }
-            else if (transform.localScale.x > minScale.x && (!on || !increaseScale))
+            else if (transform.localScale.x > minScale.x && !increaseScale && !on)
             {
                 Vector3 scale = new Vector3(transform.localScale.x - Time.deltaTime * minScale.x, transform.localScale.y - Time.deltaTime * minScale.y, transform.localScale.z - Time.deltaTime * minScale.z);
                 if (scale.x < minScale.x)
