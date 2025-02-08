@@ -19,6 +19,7 @@ namespace Game.Environment.LMixTable
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
         [SerializeField] private TriggerObject triggerObject;
+        private BoxCollider boxCollider;
 
         public UnityEvent OnTableOpen;
         public UnityEvent OnTableClose;
@@ -35,16 +36,19 @@ namespace Game.Environment.LMixTable
             this.player = player;
             this.playerMouseMove = playerMouseMove;
 
+            boxCollider = GetComponent<BoxCollider>();
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
             openObject.OnEndObjectOpen.AddListener(() =>
             {
+                boxCollider.enabled = false;
                 scaleChooseObject.on = false;
                 OnTableOpen?.Invoke();
             });
             openObject.OnEndObjectClose.AddListener(() =>
             {
+                boxCollider.enabled = true;
                 scaleChooseObject.on = true;
                 OnTableClose?.Invoke();
             });

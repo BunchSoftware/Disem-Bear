@@ -49,13 +49,13 @@ namespace Game.Environment.LMixTable
         {
             if (ingradient.countIngradient != 0)
             {
-                DisplayCount.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshPro>().text = ingradient.countIngradient.ToString();
-                DisplayCount.GetComponent<Animator>().SetBool("On", true);
+                //DisplayCount.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshPro>().text = ingradient.countIngradient.ToString();
+                //DisplayCount.GetComponent<Animator>().SetBool("On", true);
             }
         }
         private void OnMouseExit()
         {
-            DisplayCount.GetComponent<Animator>().SetBool("On", false);
+            //DisplayCount.GetComponent<Animator>().SetBool("On", false);
         }
         private void Update()
         {
