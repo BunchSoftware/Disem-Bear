@@ -110,11 +110,7 @@ namespace Game.Environment.LModelBoard
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
-            {
-                scaleChooseObject.on = false;
-                currentItemInCell.transform.parent = draggingParent;
                 modelBoard.DragItem(this);
-            }
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -141,13 +137,11 @@ namespace Game.Environment.LModelBoard
                 if (InModelBoard() && modelBoard.IsOpen)
                 {
                     modelBoard.DropItem(this);
-                    scaleChooseObject.on = true;
                 }
                 else if (currentItemInCell != null)
                 {
                     currentItemInCell.transform.parent = transform;
                     currentItemInCell.transform.position = transform.position;
-                    scaleChooseObject.on = true;
                 }
             }
         }
