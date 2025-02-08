@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static Game.Environment.LTableWithItems.TableWithItems;
-using static UnityEditor.Progress;
 
 namespace Game.Environment.LModelBoard
 {

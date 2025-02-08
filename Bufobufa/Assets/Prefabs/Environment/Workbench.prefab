@@ -188,13 +188,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 5774015550671953654}
   playerTransform: {fileID: 5405203576536953509}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6295905014401501763
@@ -223,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b61d73cad036c489bf7e63d0695dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerObject: {fileID: 0}
   OnTableOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -7165,11 +7173,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Size.x
-      value: 0.46875
+      value: 0.3181818
       objectReference: {fileID: 0}
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Size.y
-      value: 0.28125
+      value: 0.3181818
       objectReference: {fileID: 0}
     - target: {fileID: 5188828811109701773, guid: 90ada61d8abeb8e44be21796eb2de51f, type: 3}
       propertyPath: m_Sprite
