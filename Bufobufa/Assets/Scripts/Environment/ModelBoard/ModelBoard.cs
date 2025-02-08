@@ -205,6 +205,11 @@ namespace Game.Environment.LModelBoard
             {
                 isDrag = true;
                 OnDragItem?.Invoke(cellModelBoard.GetCurrentItemInCell());
+
+                for (int i = 0; i < cellBoards.Count; i++)
+                {
+                    cellBoards[i].GetComponent<Collider>().enabled = false;
+                }
             }
         }
 
@@ -242,6 +247,11 @@ namespace Game.Environment.LModelBoard
 
                     isDrag = false;
                     OnDropItem?.Invoke(currentPickUpItem);
+                }
+
+                for (int i = 0; i < cellBoards.Count; i++)
+                {
+                    cellBoards[i].GetComponent<Collider>().enabled = true;
                 }
             }
 
