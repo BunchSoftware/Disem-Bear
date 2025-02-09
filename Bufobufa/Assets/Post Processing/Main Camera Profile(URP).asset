@@ -236,6 +236,40 @@ MonoBehaviour:
   dirtIntensity:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-108551402959763579
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 0.6463306, y: 0.69624394, z: 1, w: -0.14238046}
+  midtones:
+    m_OverrideState: 0
+    m_Value: {x: 0.9270349, y: 1, z: 0.96607494, w: -0.035594903}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {x: 0.8922502, y: 1, z: 0.81351167, w: 0.14238027}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +288,36 @@ MonoBehaviour:
   - {fileID: 6932343602156008444}
   - {fileID: 3570152135817846435}
   - {fileID: -6412710637289879287}
+  - {fileID: -108551402959763579}
+  - {fileID: 2301457385254837538}
+--- !u!114 &2301457385254837538
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.51
+  xMultiplier:
+    m_OverrideState: 1
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &3570152135817846435
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -312,7 +376,7 @@ MonoBehaviour:
     m_Value: 0
   contrast:
     m_OverrideState: 1
-    m_Value: 18
+    m_Value: 52
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 0.42869055, b: 0, a: 1}
@@ -321,7 +385,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 40
+    m_Value: 32
 --- !u!114 &7734726721907719085
 MonoBehaviour:
   m_ObjectHideFlags: 3
