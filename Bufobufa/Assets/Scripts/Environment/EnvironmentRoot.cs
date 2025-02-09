@@ -7,6 +7,7 @@ using Game.Environment.LMixTable;
 using Game.Environment.LModelBoard;
 using Game.Environment.LTableWithItems;
 using Game.LPlayer;
+using Game.Music;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace Game.Environment
         [Header("Transition Between Rooms")]
         [SerializeField] private List<NextRoom> nextRooms;
         [SerializeField] private GameObject invisibleWallBetweenRooms;
+        [Header("TV")]
+        [SerializeField] private TV tv;
         [Header("MixTable")]
         [SerializeField] private MixTable mixTable;
         [Header("Table")]
@@ -30,10 +33,12 @@ namespace Game.Environment
         [SerializeField] private List<AquariumOpen> aquariumOpens;
         [Header("Fridge")]
         [SerializeField] private List<Fridge.Fridge> fridges;
+        [Header("Printer")]
+        [SerializeField] private Printer.Printer printer;
 
         private SaveManager saveManager;
 
-        public void Init(Player player, PlayerMouseMove playerMouseMove, SaveManager saveManager)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, SaveManager saveManager, SoundManager soundManager)
         {
             this.saveManager = saveManager;
 
@@ -62,6 +67,8 @@ namespace Game.Environment
                 fridges[i].Init(saveManager, player, playerMouseMove);
             }
             tableOpen.Init(saveManager, player, playerMouseMove);
+            tv.Init(playerMouseMove, player);
+            printer.Init(soundManager, player);
         }
         public void OnUpdate(float deltaTime)
         {
@@ -79,6 +86,7 @@ namespace Game.Environment
             }
 
             tableOpen.OnUpdate(deltaTime);
+            tv.OnUpdate(deltaTime);
         }
     }
 }

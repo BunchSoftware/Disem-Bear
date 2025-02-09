@@ -60,6 +60,9 @@ namespace Game.Environment.LModelBoard
             {
                 if (currentItemInCell != null && scaleChooseObject != null)
                     scaleChooseObject.on = false;
+
+                if (modelBoard.IsOpen && !modelBoard.IsFocus)
+                    modelBoard.DropItem(this);
             });
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
@@ -109,13 +112,13 @@ namespace Game.Environment.LModelBoard
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
+            if (eventData.button == PointerEventData.InputButton.Left && currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
                 modelBoard.DragItem(this);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
+            if (eventData.button == PointerEventData.InputButton.Left && currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
             {           
                 float distancePlane = Vector3.Distance(modelBoard.transform.position, Camera.main.transform.position);
                 Vector3 position = Camera.main.ScreenToWorldPoint(
@@ -133,37 +136,8 @@ namespace Game.Environment.LModelBoard
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (!modelBoard.IsFocus)
-            {
-                if (InModelBoard() && modelBoard.IsOpen)
-                {
-                    modelBoard.DropItem(this);
-                }
-                else if (currentItemInCell != null)
-                {
-                    currentItemInCell.transform.parent = transform;
-                    currentItemInCell.transform.position = transform.position;
-                }
-            }
-        }
-
-
-        private bool InModelBoard()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float maxDistance = 100f;
-
-            RaycastHit[] raycastHits = Physics.RaycastAll(ray, maxDistance);
-
-            for (int i = 0; i < raycastHits.Length; i++)
-            {
-                if (raycastHits[i].collider.gameObject.TryGetComponent<ModelBoard>(out var modelBoard))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            if (modelBoard.IsOpen && !modelBoard.IsFocus)
+                modelBoard.DropItem(this);
         }
 
         public PickUpItem GetCurrentItemInCell()

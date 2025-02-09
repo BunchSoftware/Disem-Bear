@@ -42,26 +42,47 @@ namespace Game.Environment.Fridge
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
 
+            for (int i = 0; i < magnets.Count; i++)
+            {
+                magnets[i].Init(this, saveManager, null);
+            }
+
+            content.GetComponent<Collider>().enabled = false;
+            for (int i = 0; i < content.transform.childCount; i++)
+            {
+                content.transform.GetChild(i).GetComponent<Collider>().enabled = false;
+            }
+
             openObject.OnEndObjectOpen.AddListener(() =>
             {
                 isOpen = true;
                 scaleChooseObject.on = false;
                 OnFridgeOpen?.Invoke();
                 GetComponent<Collider>().enabled = false;
+
+                content.GetComponent<Collider>().enabled = true;
+                for (int i = 0; i < content.transform.childCount; i++)
+                {
+                    content.transform.GetChild(i).GetComponent<Collider>().enabled = true;
+                }
+            });
+
+            openObject.OnStartObjectClose.AddListener(() =>
+            {
+                isOpen = false;
+                content.GetComponent<Collider>().enabled = false;
+                for (int i = 0; i < content.transform.childCount; i++)
+                {
+                    content.transform.GetChild(i).GetComponent<Collider>().enabled = false;
+                }
             });
             openObject.OnEndObjectClose.AddListener(() =>
             {
-                isOpen = false;
                 scaleChooseObject.on = true;
                 OnFridgeClose?.Invoke();
                 GetComponent<Collider>().enabled = true;
             });
             openObject.Init(triggerObject, playerMouseMove, player);
-
-            for (int i = 0; i < magnets.Count; i++)
-            {
-                magnets[i].Init(this, saveManager, null);
-            }
 
             //FrontFridge = transform.Find("FrontFridge").gameObject;
 

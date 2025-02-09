@@ -73,15 +73,19 @@ namespace Game.LPlayer
 
         public PickUpItem PutItem()
         {
+            PickUpItem temp = null;
             if (playerPickUpItem)
             {
                 playerPickUpItem = false;
                 OnPutItem?.Invoke(pickUpItem);
+
+                temp = pickUpItem;
                 pickUpItem = null;
+
                 typePickUpItem = TypePickUpItem.None;
             }
 
-            return pickUpItem;
+            return temp;
         }
 
         public void EnterSomething()

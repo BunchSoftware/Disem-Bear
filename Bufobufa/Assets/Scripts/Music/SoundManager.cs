@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using System;
+using External.DI;
 
 namespace Game.Music
 {
     [Serializable]
     public class SoundManager
     {
-        [SerializeField] private AudioSource audio;
+        [SerializeField] private AudioSource prefabAudioSource;
         [SerializeField] private AudioMixerGroup mixer;
         // Ключ, название которого совпадает с названием AudioMixer и названием переменной в реестре
         [SerializeField] private string nameKey;
@@ -23,15 +24,13 @@ namespace Game.Music
         [Range(-100f, 20f)]
         [SerializeField] private float MaxDB = 10;
 
+        private List<AudioSource> audios = new List<AudioSource>();
+
         private MonoBehaviour context;
 
         public void Init(MonoBehaviour context)
         {
             this.context = context;
-
-            audio.mute = false;
-            audio.loop = false;
-            audio.playOnAwake = false;
 
             // Проверка на наличие слайдера регулировки звука
             if (mixer == null)
@@ -59,12 +58,17 @@ namespace Game.Music
             }
 
 
-            if (playAwake != null)
+            if (playAwake.audioClip != null)
             {
-                audio.Stop();
+                AudioSource audio = GameObject.Instantiate(prefabAudioSource);
                 audio.clip = playAwake.audioClip;
                 audio.loop = playAwake.isLoop;
                 audio.Play();
+
+                audios.Add(audio);
+
+                if(!audio.loop)
+                    context.StartCoroutine(EndAudioClip(audio));
             }
         }
 
@@ -103,13 +107,32 @@ namespace Game.Music
             }
         }
 
+        private IEnumerator EndAudioClip(AudioSource audioSource)
+        {
+            yield return new WaitForSeconds(audioSource.clip.length);
+            audios.Remove(audioSource);
+            GameObject.Destroy(audioSource.gameObject);
+        }
+
+        private IEnumerator EndAudioClip(AudioSource audioSource, AudioClip audioClip)
+        {
+            yield return new WaitForSeconds(audioClip.length);
+            audios.Remove(audioSource);
+            GameObject.Destroy(audioSource.gameObject);
+        }
+
         // Чтобы запускать звук один раз по индексу в списке звуков
         public void OnPlayOneShot(int indexSound)
         {
-            audio.loop = false;
             if (indexSound >= 0 && indexSound <= soundClips.Count)
             {
+                AudioSource audio = GameObject.Instantiate(prefabAudioSource);
+                audio.loop = false;
+
+                audios.Add(audio);
                 audio.PlayOneShot(soundClips[indexSound].audioClip);
+
+                context.StartCoroutine(EndAudioClip(audio, soundClips[indexSound].audioClip));
             }
             else
                 Debug.LogError("Выход за рамки массива звуков");
@@ -118,36 +141,52 @@ namespace Game.Music
         // Чтобы запускать звук один раз по исходному файлу звука
         public void OnPlayOneShot(AudioClip audioClip)
         {
+            AudioSource audio = GameObject.Instantiate(prefabAudioSource);
             audio.loop = false;
-            if (!audio.isPlaying)
-                audio.PlayOneShot(audioClip);
+
+            audios.Add(audio);
+            audio.PlayOneShot(audioClip);
+
+            context.StartCoroutine(EndAudioClip(audio, audioClip));
         }
         // Запуск звука с режимом бесконечного повторения
         public void OnPlayLoop(int indexSound)
         {
             if (indexSound >= 0 && indexSound <= soundClips.Count)
             {
+                AudioSource audio = GameObject.Instantiate(prefabAudioSource);
                 audio.loop = true;
                 audio.clip = soundClips[indexSound].audioClip;
                 audio.Play();
+
+                audios.Add(audio);
             }
             else
                 Debug.LogError("Выход за рамки массива звуков");
         }
         public void OnPlayLoop(AudioClip audioClip)
         {
+            AudioSource audio = GameObject.Instantiate(prefabAudioSource);
             audio.loop = true;
             audio.clip = audioClip;
             audio.Play();
+
+            audios.Add(audio);
         }
 
         public void PlaySound(int indexSound)
         {
             if (indexSound >= 0 && indexSound <= soundClips.Count)
             {
-                audio.clip = soundClips[indexSound].audioClip;
+                AudioSource audio = GameObject.Instantiate(prefabAudioSource);
                 audio.loop = soundClips[indexSound].isLoop;
+                audio.clip = soundClips[indexSound].audioClip;
                 audio.Play();
+
+                audios.Add(audio);
+
+                if(!audio.loop)
+                    context.StartCoroutine(EndAudioClip(audio));
             }
             else
                 Debug.LogError("Выход за рамки массива звуков");
@@ -155,14 +194,22 @@ namespace Game.Music
         // Остановить воспроизведение звуков
         public void Stop()
         {
-            if (audio.isPlaying)
-                audio.Stop();
+            for (int i = 0; i < audios.Count; i++)
+            {
+                if (audios[i].isPlaying)
+                    audios[i].Stop();
+            }
+
+            context.StopAllCoroutines();
         }
 
         public void Play()
         {
-            if (audio.isPlaying == false)
-                audio.Play();
+            for (int i = 0; i < audios.Count; i++)
+            {
+                if (audios[i].isPlaying == false)
+                    audios[i].Play();
+            }
         }
 
         // Чтобы узнавать ValueSlider
@@ -187,12 +234,18 @@ namespace Game.Music
         // Включения звука
         public void OnSound()
         {
-            audio.mute = true;
+            for (int i = 0; i < audios.Count; i++)
+            {
+                audios[i].mute = true;
+            }
         }
         // Выключение звука
         public void OffSound()
         {
-            audio.mute = false;
+            for (int i = 0; i < audios.Count; i++)
+            {
+                audios[i].mute = false;
+            }
         }
 
         public void SoundDecay(float time)

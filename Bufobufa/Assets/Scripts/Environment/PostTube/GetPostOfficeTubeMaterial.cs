@@ -16,16 +16,11 @@ namespace Game.Environment
 
     public class GetPostOfficeTubeMaterial : MonoBehaviour
     {
-        private PostTube PostTube;
+        [SerializeField] private PostTube PostTube;
         [SerializeField] private List<TypePostOfficeTubeMaterial> typePostOfficeTubeMaterials;
         public UnityEvent<TypePostOfficeTubeMaterial> OnGetPostOfficeTubeMaterial;
 
         private GameObject getMaterial;
-
-        private void Start()
-        {
-            PostTube = GameObject.Find("PostOfficeTube").GetComponent<PostTube>();
-        }
 
         private void Update()
         {

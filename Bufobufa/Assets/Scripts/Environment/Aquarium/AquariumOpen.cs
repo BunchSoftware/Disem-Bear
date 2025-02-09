@@ -51,7 +51,7 @@ namespace Game.Environment.Aquarium
 
             openObject.OnStartObjectClose.AddListener(() =>
             {
-                spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
+                spriteMovePointToPoint.StartMoveTo(openObject.timeClose);
             });
             openObject.OnEndObjectClose.AddListener(() =>
             {

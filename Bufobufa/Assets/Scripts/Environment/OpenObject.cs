@@ -13,6 +13,7 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
 {
     public bool on = true;
     public float timeOpen = 1f;
+    public float timeClose = 1f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform playerTransform;
 
@@ -113,7 +114,7 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
             playerMouseMove.ReturnPlayerMove();
 
             OnStartObjectClose?.Invoke();
-            StartCoroutine(IObjectClose(timeOpen));
+            StartCoroutine(IObjectClose(timeClose));
         }
     }
 }

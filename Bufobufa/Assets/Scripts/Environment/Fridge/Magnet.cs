@@ -49,7 +49,7 @@ namespace Game.Environment.Fridge
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if(fridge.IsOpen)
+            if(fridge.IsOpen && eventData.button == PointerEventData.InputButton.Left)
             {
                 isDrag = true;
                 OnDragMagnet?.Invoke();
@@ -58,7 +58,7 @@ namespace Game.Environment.Fridge
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (fridge.IsOpen)
+            if (fridge.IsOpen && eventData.button == PointerEventData.InputButton.Left)
             {
                 float distancePlane = Vector3.Distance(contentColider.transform.position, Camera.main.transform.position);
 

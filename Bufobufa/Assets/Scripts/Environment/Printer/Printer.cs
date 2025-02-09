@@ -1,119 +1,122 @@
+using External.DI;
+using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Music;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static Game.Environment.Printer.Printer;
 
 namespace Game.Environment.Printer
 {
-    public class Printer : MonoBehaviour
+    public class Printer : MonoBehaviour, ILeftMouseDownClickable
     {
-        public bool InTrigger = false;
-        private bool ClickedMouse = false;
-        public bool PrinterWork = false;
-        public bool ObjectDone = false;
-        public GameObject currentObject;
-        public List<ObjectInfo> objectInfos = new();
+        public bool IsPrinterWork => isPrinterWork;
+        private bool isPrinterWork = false;
 
-        private GameObject Player;
-        private SoundManager SoundManager;
+        [SerializeField] private List<PrinterObjectInfo> printerObjectInfos = new();
+
+        [SerializeField] private TriggerObject triggerObject;
+        [SerializeField] private ParticleSystem particle;
+        [SerializeField] private MeshRenderer printerRenderer;
+        [SerializeField] private Material materialDonePrinter;
+        [SerializeField] private AudioClip soundPrinter;
+
+        public UnityEvent<PickUpItem> OnPickUpItem;
+        public UnityEvent<PickUpItem> OnPutItem;
+
+        public UnityEvent<PickUpItem> OnStartWork;
+        public UnityEvent<PickUpItem> OnEndWork;
+
+        private Material materialPrinter;
+        private Player player;
+        private SoundManager soundManager;
         private Animator animator;
-        private ParticleSystem particleSys;
+        private bool isClick = false;
+        private PrinterObjectInfo outPrinterObjectInfo;
 
-        [SerializeField] Material OrigPrinter;
-        [SerializeField] Material DonePrinter;
-
-        [SerializeField] GameObject PrinterImage;
-
-        [SerializeField] private AudioClip VrVrVrVr;
-
-        private void Start()
+        public void Init(SoundManager soundManager, Player player)
         {
-            particleSys = transform.Find("Particle System").GetComponent<ParticleSystem>();
             animator = GetComponent<Animator>();
-            //SoundManager = GameObject.Find("Sound").GetComponent<SoundManager>();
-            Player = GameObject.FindGameObjectWithTag("Player");
-        }
-        public void OnTrigEnter(Collider other)
-        {
-            if (other.tag == "Player")
-            {
-                InTrigger = true;
-            }
-        }
-        public void OnTrigExit(Collider other)
-        {
-            if (other.tag == "Player")
-            {
-                InTrigger = false;
-            }
-        }
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out var infoHit, Mathf.Infinity, LayerMask.GetMask("Floor", "ClickedObject")))
-                {
-                    if (infoHit.collider.gameObject == gameObject)
-                    {
-                        ClickedMouse = true;
-                    }
-                    else
-                    {
-                        ClickedMouse = false;
-                    }
-                }
-            }
+            materialPrinter = printerRenderer.material;
 
-            if (!PrinterWork && ClickedMouse && InTrigger && Player.GetComponent<Player>().PlayerPickUpItem && !Player.GetComponent<Player>().PlayerInSomething)
+            this.soundManager = soundManager;
+            this.player = player;
+
+            triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
-                if (Player.GetComponent<Player>().GetPickUpItem().GetComponent<PrinterObjectInfo>())
+                if (isClick)
                 {
-                    for (int i = 0; i < objectInfos.Count; i++)
+                    isClick = false;
+                    if (!isPrinterWork && player.PlayerPickUpItem && !player.PlayerInSomething)
                     {
-                        if (objectInfos[i].NameItemForPrint == Player.GetComponent<Player>().GetPickUpItem().GetComponent<PrinterObjectInfo>().WhatThis)
+                        for (int i = 0; i < printerObjectInfos.Count; i++)
                         {
-                            ObjectDone = false;
-                            PrinterWork = true;
-                            Player.GetComponent<Player>().PutItem();
-                            Destroy(Player.GetComponent<Player>().GetPickUpItem());
-                            SoundManager.OnPlayOneShot(VrVrVrVr);
-                            animator.Play("Printer");
-                            particleSys.Play();
-                            StartCoroutine(WaitWhilePrintObject(objectInfos[i].TimePrint));
-                            currentObject = objectInfos[i].ReturnItem;
-                            break;
+                            if (printerObjectInfos[i].nameItemForPrint == player.GetPickUpItem().NameItem)
+                            {
+                                isPrinterWork = true;
+
+                                PickUpItem pickUpItem = player.PutItem();
+                                Destroy(pickUpItem.gameObject);
+
+                                soundManager.OnPlayOneShot(soundPrinter);
+                                animator.SetInteger("State", 1);
+                                particle.Play();
+
+                                StartCoroutine(WaitWhilePrintObject(printerObjectInfos[i]));
+
+                                break;
+                            }
                         }
                     }
-                }
-            }
-            else if (PrinterWork && ObjectDone && InTrigger && ClickedMouse && !Player.GetComponent<Player>().PlayerPickUpItem)
-            {
+                    else if (isPrinterWork && !player.PlayerPickUpItem)
+                    {
+                        printerRenderer.GetComponent<MeshRenderer>().material = materialPrinter;
+                        PickUpItem pickUpItem = Instantiate(outPrinterObjectInfo.outItem);
+                        OnPickUpItem?.Invoke(pickUpItem);
+                        player.PickUpItem(pickUpItem);
 
-                PrinterImage.GetComponent<MeshRenderer>().material = OrigPrinter;
-                //Player.GetComponent<Player>().PickSomething();
-                //Player.GetComponent<Player>().currentPickObject = Instantiate(currentObject);
-                //Player.GetComponent<Player>().currentPickObject.GetComponent<MouseTrigger>().enabled = false;
-                currentObject = null;
-                ClickedMouse = false;
-                PrinterWork = false;
-                ObjectDone = false;
-            }
+                        outPrinterObjectInfo = null;
+                        isPrinterWork = false;
+                    }
+                }
+            });
         }
-        IEnumerator WaitWhilePrintObject(float t)
+
+        IEnumerator WaitWhilePrintObject(PrinterObjectInfo printerObjectInfo)
         {
-            yield return new WaitForSeconds(t);
-            ObjectDone = true;
-            PrinterImage.GetComponent<MeshRenderer>().material = DonePrinter;
-            particleSys.Stop();
+            OnStartWork?.Invoke(printerObjectInfo.outItem);
+            OnPutItem?.Invoke(printerObjectInfo.outItem);
+
+            yield return new WaitForSeconds(printerObjectInfo.timePrint);
+
+            outPrinterObjectInfo = printerObjectInfo;
+
+            animator.SetInteger("State", 0);
+            printerRenderer.GetComponent<MeshRenderer>().material = materialDonePrinter;
+            particle.Stop();
+
+            OnEndWork?.Invoke(printerObjectInfo.outItem);
         }
+
+        public void OnMouseLeftClickDownObject()
+        {
+            isClick = true;
+        }
+
+        public void OnMouseLeftClickDownOtherObject()
+        {
+            isClick = false;
+        }
+
+
         [System.Serializable]
-        public class ObjectInfo
+        public class PrinterObjectInfo
         {
-            public string NameItemForPrint;
-            public float TimePrint;
-            public GameObject ReturnItem;
+            public string nameItemForPrint;
+            public float timePrint;
+            public PickUpItem outItem;
         }
     }
 }

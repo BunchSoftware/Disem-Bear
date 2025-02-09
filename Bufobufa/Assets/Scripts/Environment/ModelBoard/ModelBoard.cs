@@ -78,11 +78,11 @@ namespace Game.Environment.LModelBoard
             openObject.OnStartObjectClose.AddListener(() =>
             {
                 OnStartModelBoardClose?.Invoke();
+                isOpen = false;
             });
             openObject.OnEndObjectClose.AddListener(() =>
             {
                 scaleChooseObject.on = true;
-                isOpen = false;
                 OnEndModelBoardClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
@@ -212,10 +212,28 @@ namespace Game.Environment.LModelBoard
             }
         }
 
+        private bool InModelBoard()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float maxDistance = 100f;
+
+            RaycastHit[] raycastHits = Physics.RaycastAll(ray, maxDistance);
+
+            for (int i = 0; i < raycastHits.Length; i++)
+            {
+                if (raycastHits[i].collider.gameObject.TryGetComponent<ModelBoard>(out var modelBoard))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void DropItem(CellModelBoard cellModelBoard)
         {
             PickUpItem currentPickUpItem = cellModelBoard.PickUpItem();
-            if (currentPickUpItem != null)
+            if (currentPickUpItem != null && InModelBoard())
             {
                 int closesIndex = 0;
 
@@ -233,8 +251,6 @@ namespace Game.Environment.LModelBoard
                 {
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
                     cellBoards[closesIndex].isEndDrag = true;
-                    isDrag = false;
-                    OnDropItem?.Invoke(currentPickUpItem);
                 }
                 else
                 {
@@ -243,17 +259,22 @@ namespace Game.Environment.LModelBoard
 
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
                     cellBoards[closesIndex].isEndDrag = true;
-
-                    isDrag = false;
-                    OnDropItem?.Invoke(currentPickUpItem);
-                }
-
-                for (int i = 0; i < cellBoards.Count; i++)
-                {
-                    cellBoards[i].GetComponent<Collider>().enabled = true;
                 }
             }
+            else if(currentPickUpItem != null)
+            {
+                currentPickUpItem.transform.parent = transform;
+                currentPickUpItem.transform.position = transform.position;
+                cellModelBoard.PutItem(currentPickUpItem);
+            }
 
+            isDrag = false;
+            OnDropItem?.Invoke(currentPickUpItem);
+
+            for (int i = 0; i < cellBoards.Count; i++)
+            {
+                cellBoards[i].GetComponent<Collider>().enabled = true;
+            }
         }
     }
 }

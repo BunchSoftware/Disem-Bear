@@ -127,16 +127,16 @@ namespace Game.Environment.LMixTable
         {
             yield return new WaitForSeconds(f);
             ParticleSystem.Stop();
-            if (obj.GetComponent<PrinterObjectInfo>())
-            {
-                MixTableOn = false;
-                currentPrinterObject = obj;
-                IsPrinterObject = true;
-            }
-            else
-            {
-                IsPrinterObject = false;
-            }
+            //if (obj.GetComponent<PrinterObjectInfo>())
+            //{
+            //    MixTableOn = false;
+            //    currentPrinterObject = obj;
+            //    IsPrinterObject = true;
+            //}
+            //else
+            //{
+            //    IsPrinterObject = false;
+            //}
             CreateObject = false;
             //transform.parent.GetComponent<OpenObject>().ArgumentsNotQuit -= 1;
         }

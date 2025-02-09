@@ -59,7 +59,7 @@ namespace External.DI
             soundManager.Init(this);
 
             updateListeners.Add(environmentRoot);
-            environmentRoot.Init(player, playerMouseMove, saveManager);
+            environmentRoot.Init(player, playerMouseMove, saveManager, soundManager);
 
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player, saveManager);
 
