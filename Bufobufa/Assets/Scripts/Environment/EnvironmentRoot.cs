@@ -27,7 +27,7 @@ namespace Game.Environment
         [Header("Aquarium")]
         [SerializeField] private AquariumOpen aquariumOpen;
         [Header("Fridge")]
-        [SerializeField] private FridgeOpen fridgeOpen;
+        [SerializeField] private Fridge.Fridge fridgeOpen;
         [Header("Table")]
         [SerializeField] private TableOpen TableOpen;
         [Header("Shelf")]

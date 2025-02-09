@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 7032152802063289227}
   - component: {fileID: 2960375915947232601}
   - component: {fileID: 6055145357989144650}
+  - component: {fileID: 6695652875462632909}
   m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
@@ -128,12 +129,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ffaf5962c63174797a6b218764054a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFocusItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefocusItem:
+    m_PersistentCalls:
+      m_Calls: []
   OnPickUpItem:
     m_PersistentCalls:
       m_Calls: []
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
+  isEndDrag: 0
+--- !u!114 &6695652875462632909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4030711029017922334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
 --- !u!1 &4899132208007916572
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,13 +268,31 @@ MonoBehaviour:
   - {fileID: 1239196346301392598}
   - {fileID: 6332595131864228544}
   triggerObject: {fileID: 8879720377761815387}
-  draggingParent: {fileID: 3933690519876170411}
-  originalParent: {fileID: 8376804862587204714}
-  freeDragingParent: {fileID: 3933690519876170411}
-  OnModelBoardOpen:
+  coefficientScaleItem: 1.08
+  timeFocusItem: 0.5
+  timeDefocusItem: 0.5
+  OnStartModelBoardOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnModelBoardClose:
+  OnEndModelBoardOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartModelBoardClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndModelBoardClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDragItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDropItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFocusItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefocusItem:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &8668202944895057323
@@ -335,13 +375,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
   cameraTransform: {fileID: 8758063795630142194}
   playerTransform: {fileID: 3073441470213963323}
-  OnObjectOpen:
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7337838368135552641
@@ -355,6 +402,7 @@ GameObject:
   - component: {fileID: 2265677066462564735}
   - component: {fileID: 3616402462093401686}
   - component: {fileID: 3274923023672263744}
+  - component: {fileID: 5046381060444138138}
   m_Layer: 0
   m_Name: Point2
   m_TagString: Untagged
@@ -410,12 +458,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ffaf5962c63174797a6b218764054a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFocusItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefocusItem:
+    m_PersistentCalls:
+      m_Calls: []
   OnPickUpItem:
     m_PersistentCalls:
       m_Calls: []
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
+  isEndDrag: 0
+--- !u!114 &5046381060444138138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7337838368135552641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
 --- !u!1 &7630756384906021985
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +531,7 @@ GameObject:
   - component: {fileID: 1646431254744779042}
   - component: {fileID: 8334947607929864445}
   - component: {fileID: 6332595131864228544}
+  - component: {fileID: 7832529652740151048}
   m_Layer: 0
   m_Name: Point4
   m_TagString: Untagged
@@ -517,12 +587,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ffaf5962c63174797a6b218764054a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFocusItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefocusItem:
+    m_PersistentCalls:
+      m_Calls: []
   OnPickUpItem:
     m_PersistentCalls:
       m_Calls: []
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
+  isEndDrag: 0
+--- !u!114 &7832529652740151048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315067880912709030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
 --- !u!1 &9093321681898666293
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +625,7 @@ GameObject:
   - component: {fileID: 3522769029189748558}
   - component: {fileID: 8542152190733507429}
   - component: {fileID: 1239196346301392598}
+  - component: {fileID: 5697274594864546571}
   m_Layer: 0
   m_Name: Point3
   m_TagString: Untagged
@@ -589,12 +681,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ffaf5962c63174797a6b218764054a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFocusItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefocusItem:
+    m_PersistentCalls:
+      m_Calls: []
   OnPickUpItem:
     m_PersistentCalls:
       m_Calls: []
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
+  isEndDrag: 0
+--- !u!114 &5697274594864546571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093321681898666293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
 --- !u!1001 &4725208624378121158
 PrefabInstance:
   m_ObjectHideFlags: 0
