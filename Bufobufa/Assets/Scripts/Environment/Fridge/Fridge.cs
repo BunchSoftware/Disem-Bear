@@ -14,7 +14,9 @@ namespace Game.Environment.Fridge
     {
         [SerializeField] private GameObject content;
         [SerializeField] private GameObject prefabMagnet;
-        [SerializeField] private FileMagnets fileMagnets;
+
+        public UnityEvent OnFridgeOpen;
+        public UnityEvent OnFridgeClose;
 
         public bool IsOpen => isOpen;
         private bool isOpen = false;
@@ -24,9 +26,6 @@ namespace Game.Environment.Fridge
         private SaveManager saveManager;
         private Player player;
         private PlayerMouseMove playerMouseMove;
-
-        private UnityEvent OnFridgeOpen;
-        private UnityEvent OnFridgeClose;
 
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
@@ -101,12 +100,12 @@ namespace Game.Environment.Fridge
 
         public void CreateMagnet(string typeMagnet)
         {
-            for (int i = 0; i < fileMagnets.magnets.Count; i++)
+            for (int i = 0; i < saveManager.fileMagnets.magnets.Count; i++)
             {
-                if (fileMagnets.magnets[i].typeMagnet == typeMagnet)
+                if (saveManager.fileMagnets.magnets[i].typeMagnet == typeMagnet)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-                    magnet.Init(this, saveManager, fileMagnets.magnets[i]);
+                    magnet.Init(this, saveManager, saveManager.fileMagnets.magnets[i]);
                     magnets.Add(magnet);
 
                     MagnetSave magnetSave = new MagnetSave();

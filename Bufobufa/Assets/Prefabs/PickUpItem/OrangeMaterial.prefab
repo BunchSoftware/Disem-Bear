@@ -15,11 +15,9 @@ GameObject:
   - component: {fileID: 1416277121592618411}
   - component: {fileID: 4001399094569568040}
   - component: {fileID: 4036968444998537156}
-  - component: {fileID: 391935746798126346}
-  - component: {fileID: 7871138960482414917}
   - component: {fileID: 8688015039957210573}
   m_Layer: 7
-  m_Name: BlueMaterial
+  m_Name: OrangeMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,8 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  falling: 1
-  PickUp: 0
+  IsClickedLeftMouseButton: 0
+  IsClickedRightMouseButton: 0
+  CanTakeByCollisionPlayer: 1
+  typeItem: 0
+  nameItem: 
 --- !u!54 &4036968444998537156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -172,39 +173,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &391935746798126346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522447525192828825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d60e0bc39c6944b4386b3b5855102b6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeItemFromTable: blueMaterial
-  InTrigger: 0
-  ClickedMouse: 0
-  isTube: 0
-  indexPoint: 0
---- !u!114 &7871138960482414917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522447525192828825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de78b81da7e2dbf4fa654ae2eb1d1e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnyCase: 0
-  OnScaleChange: 0
-  TimeAnim: 0.2
-  FullZero: 1
 --- !u!114 &8688015039957210573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432ed7162cd4076419ccd56fa8feb695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameMaterial: Blue
+  nameMaterial: Orange
   TimeMaterial: 60
 --- !u!1 &8256711546220021766
 GameObject:
@@ -294,7 +262,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: bd65b8cdf0c01854d9694bf6a1e9a97a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 460c7b627d3401b4ab5b3ddf2c419282, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

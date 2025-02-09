@@ -1,6 +1,7 @@
 using External.API;
 using External.Storage;
 using Game.Environment;
+using Game.Environment.Fridge;
 using Game.LPlayer;
 using Game.Music;
 using Game.Tutorial;
@@ -38,6 +39,7 @@ namespace External.DI
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
         [Header("Save System")]
+        [SerializeField] private FileMagnets fileMagnets;
         [SerializeField] private FilePlayer filePlayer;
         [SerializeField] private FileShop fileShop;
         [SerializeField] private APIManager apiManager;
@@ -51,7 +53,7 @@ namespace External.DI
 
         private void Awake()
         {
-            saveManager.Init(apiManager, filePlayer, fileShop);
+            saveManager.Init(apiManager, filePlayer, fileShop, fileMagnets);
 
             musicManager.Init(this);
             soundManager.Init(this);

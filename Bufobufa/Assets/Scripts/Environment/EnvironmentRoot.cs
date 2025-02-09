@@ -18,20 +18,18 @@ namespace Game.Environment
         [Header("Transition Between Rooms")]
         [SerializeField] private List<NextRoom> nextRooms;
         [SerializeField] private GameObject invisibleWallBetweenRooms;
-        [Header("Table")]
-        [SerializeField] private TableWithItems tableWithItems;
-        [Header("Board")]
-        [SerializeField] private ModelBoard modelBoard;
         [Header("MixTable")]
         [SerializeField] private MixTable mixTable;
-        [Header("Aquarium")]
-        [SerializeField] private AquariumOpen aquariumOpen;
-        [Header("Fridge")]
-        [SerializeField] private Fridge.Fridge fridgeOpen;
         [Header("Table")]
-        [SerializeField] private TableOpen TableOpen;
-        [Header("Shelf")]
-        [SerializeField] private TableWithItems shelfWithItems;
+        [SerializeField] private TableOpen tableOpen;
+        [Header("Table")]
+        [SerializeField] private List<TableWithItems> tablesWithItems;
+        [Header("Board")]
+        [SerializeField] private List<ModelBoard> modelBoards;
+        [Header("Aquarium")]
+        [SerializeField] private List<AquariumOpen> aquariumOpens;
+        [Header("Fridge")]
+        [SerializeField] private List<Fridge.Fridge> fridges;
 
         private SaveManager saveManager;
 
@@ -44,20 +42,43 @@ namespace Game.Environment
                 nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
             }
 
-            tableWithItems.Init(saveManager, player);
+            for (int i = 0; i < tablesWithItems.Count; i++)
+            {
+                tablesWithItems[i].Init(saveManager, player);
+            }
+
             mixTable.Init(saveManager);
-            modelBoard.Init(saveManager, mixTable, player, playerMouseMove);
-            aquariumOpen.Init(saveManager, player, playerMouseMove);
-            fridgeOpen.Init(saveManager, player, playerMouseMove);
-            TableOpen.Init(saveManager, player, playerMouseMove);
-            shelfWithItems.Init(saveManager, player);
+
+            for (int i = 0; i < modelBoards.Count; i++)
+            {
+                modelBoards[i].Init(saveManager, mixTable, player, playerMouseMove);
+            }
+            for (int i = 0; i < aquariumOpens.Count; i++)
+            {
+                aquariumOpens[i].Init(saveManager, player, playerMouseMove);
+            }
+            for (int i = 0; i < fridges.Count; i++)
+            {
+                fridges[i].Init(saveManager, player, playerMouseMove);
+            }
+            tableOpen.Init(saveManager, player, playerMouseMove);
         }
         public void OnUpdate(float deltaTime)
         {
-            modelBoard.OnUpdate(deltaTime);
-            aquariumOpen.OnUpdate(deltaTime);
-            fridgeOpen.OnUpdate(deltaTime);
-            TableOpen.OnUpdate(deltaTime);
+            for (int i = 0; i < modelBoards.Count; i++)
+            {
+                modelBoards[i].OnUpdate(deltaTime);
+            }
+            for (int i = 0; i < fridges.Count; i++)
+            {
+                fridges[i].OnUpdate(deltaTime);
+            }
+            for (int i = 0; i < aquariumOpens.Count; i++)
+            {
+                aquariumOpens[i].OnUpdate(deltaTime);
+            }
+
+            tableOpen.OnUpdate(deltaTime);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Game.Environment.LMixTable
             if (collision.gameObject.GetComponent<IngradientSpawner>())
             {
                 IngredientsIn.Add(collision.gameObject);
-                collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = true;
+                //collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = true;
             }
         }
         private void OnTriggerExit(Collider collision)
@@ -41,7 +41,7 @@ namespace Game.Environment.LMixTable
             if (collision.gameObject.GetComponent<IngradientSpawner>())
             {
                 IngredientsIn.Remove(collision.gameObject);
-                collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = false;
+                //collision.gameObject.GetComponent<MoveObjectMouse>().InTableMix = false;
             }
         }
 

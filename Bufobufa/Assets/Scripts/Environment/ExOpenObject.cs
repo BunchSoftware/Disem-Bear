@@ -86,12 +86,12 @@ namespace A
                 currentPosVcam = tmpPosCamera;
                 currentRotVcam = Vcam.transform.rotation;
 
-                Vcam.GetComponent<MoveCameraAnimation>().startCoords = CoordVcam;
-                Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
-                Vcam.GetComponent<MoveCameraAnimation>().startRotate = RotateVcam;
-                Vcam.GetComponent<MoveCameraAnimation>().needRotate = true;
-                Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation = TimeAnimationVcam;
-                Vcam.GetComponent<MoveCameraAnimation>().StartMove();
+                //Vcam.GetComponent<MoveCameraAnimation>().startCoords = CoordVcam;
+                //Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
+                //Vcam.GetComponent<MoveCameraAnimation>().startRotate = RotateVcam;
+                //Vcam.GetComponent<MoveCameraAnimation>().needRotate = true;
+                //Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation = TimeAnimationVcam;
+                //Vcam.GetComponent<MoveCameraAnimation>().StartMove();
 
 
                 currentPosPlayer = Player.transform.position;
@@ -104,7 +104,7 @@ namespace A
                 //TriggerObject.SetActive(false);
                 Player.GetComponent<Player>().EnterSomething();
                 ObjectAnim = true;
-                StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
+                //StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
                 GetComponent<BoxCollider>().enabled = false;
             }
             else if (ArgumentsNotQuit == 0 && !ObjectAnim && ObjectIsOpen && Input.GetMouseButtonDown(1))
@@ -115,15 +115,15 @@ namespace A
                 ObjectAnim = true;
                 ClickedMouse = false;
 
-                Vcam.GetComponent<MoveCameraAnimation>().startCoords = currentPosVcam;
-                Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
-                Vcam.GetComponent<MoveCameraAnimation>().startRotate = currentRotVcam;
-                Vcam.GetComponent<MoveCameraAnimation>().needRotate = true;
-                Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation = TimeAnimationVcam;
-                Vcam.GetComponent<MoveCameraAnimation>().StartMove();
+                //Vcam.GetComponent<MoveCameraAnimation>().startCoords = currentPosVcam;
+                //Vcam.GetComponent<MoveCameraAnimation>().needPosition = true;
+                //Vcam.GetComponent<MoveCameraAnimation>().startRotate = currentRotVcam;
+                //Vcam.GetComponent<MoveCameraAnimation>().needRotate = true;
+                //Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation = TimeAnimationVcam;
+                //Vcam.GetComponent<MoveCameraAnimation>().StartMove();
 
-                StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
-                StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
+                //StartCoroutine(WaitAnimTable(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
+                //StartCoroutine(WaitAnimCamera(Vcam.GetComponent<MoveCameraAnimation>().TimeAnimation + 0.1f));
 
                 Player.GetComponent<PlayerMouseMove>().MovePlayer(currentPosPlayer);
                 Player.GetComponent<PlayerMouseMove>().ReturnPlayerMove();

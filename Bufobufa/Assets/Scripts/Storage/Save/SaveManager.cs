@@ -1,4 +1,5 @@
 using External.API;
+using Game.Environment.Fridge;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,13 +13,14 @@ namespace External.Storage
         private APIManager apiManager;
         private SaveManagerIO saveManagerIO;
 
-        public FilePlayer filePlayer;
+        public FileMagnets fileMagnets;
+        public FilePlayer filePlayer; 
         public FileShop fileShop;
 
         private string pathToFileResourcePlayer;
         private string pathToFileResourceShop;
 
-        public void Init(APIManager apiManager, FilePlayer filePlayer, FileShop fileShop)
+        public void Init(APIManager apiManager, FilePlayer filePlayer, FileShop fileShop, FileMagnets fileMagnets)
         {
             this.filePlayer = filePlayer;
             this.fileShop = fileShop;

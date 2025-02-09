@@ -39,11 +39,11 @@ namespace Game.Environment.LMixTable
         }
         private void OnMouseUp()
         {
-            if (OnDrag && !IngredientObj.GetComponent<MoveObjectMouse>().InTableMix)
-            {
-                ingradient.countIngradient++;
-                Destroy(IngredientObj);
-            }
+            //if (OnDrag && !IngredientObj.GetComponent<MoveObjectMouse>().InTableMix)
+            //{
+            //    ingradient.countIngradient++;
+            //    Destroy(IngredientObj);
+            //}
         }
         private void OnMouseEnter()
         {

@@ -8,7 +8,7 @@ namespace Game.Environment
     public class NextRoom : MonoBehaviour
     {
         private PlayerMouseMove playerMouseMove;
-        private MoveCameraAnimation moveCameraAnimation;
+        //private MoveCameraAnimation moveCameraAnimation;
         private GameObject invisibleWallBetweenRooms;
 
         [Header("Координаты куда должен уйти игрок")]
@@ -22,7 +22,7 @@ namespace Game.Environment
         {
             this.playerMouseMove = playerMouseMove;
             this.invisibleWallBetweenRooms = invisibleWallBetweenRooms;
-            moveCameraAnimation = Camera.main.GetComponent<MoveCameraAnimation>();
+            //moveCameraAnimation = Camera.main.GetComponent<MoveCameraAnimation>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -34,11 +34,11 @@ namespace Game.Environment
                 StartCoroutine(WaitBakeMesh(0.01f));
                 playerMouseMove.StopPlayerMove();
 
-                moveCameraAnimation.startCoords = positionCamera;
-                moveCameraAnimation.needPosition = true;
-                moveCameraAnimation.needRotate = false;
-                moveCameraAnimation.TimeAnimation = timeAnimationCamera;
-                moveCameraAnimation.StartMove();
+                //moveCameraAnimation.startCoords = positionCamera;
+                //moveCameraAnimation.needPosition = true;
+                //moveCameraAnimation.needRotate = false;
+                //moveCameraAnimation.TimeAnimation = timeAnimationCamera;
+                //moveCameraAnimation.StartMove();
 
                 StartCoroutine(WaitAnimCamera(timeAnimationCamera));
             }
