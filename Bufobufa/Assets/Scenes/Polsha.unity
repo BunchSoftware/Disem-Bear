@@ -17487,7 +17487,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 44.1
+  field of view: 43
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -18796,7 +18796,7 @@ Transform:
   m_GameObject: {fileID: 1424547099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
-  m_LocalPosition: {x: 3.81, y: 4.36, z: -2.64}
+  m_LocalPosition: {x: 3.81, y: 4.36, z: -2.6}
   m_LocalScale: {x: 2.89, y: 1.8, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18837,7 +18837,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 1
+  m_MotionVectors: 0
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
@@ -18847,12 +18847,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b79ad7652d6049443b555eb1338c3912, type: 2}
+  - {fileID: 2100000, guid: a9b7306675c5f5f4585797222c28a578, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
+  m_ProbeAnchor: {fileID: 1424547100}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -44357,6 +44357,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5454736117120642183, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b6626c98fe3d6f941b3a4ea746d371ea, type: 3}
     - target: {fileID: 5556334972061106700, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -44508,6 +44512,22 @@ PrefabInstance:
     - target: {fileID: 7545496833028302624, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586128246848002400, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586128246848002400, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586128246848002400, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586128246848002400, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7616973347126264769, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -45235,6 +45255,10 @@ PrefabInstance:
     - target: {fileID: 2419548010282586426, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081710493308422674, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
+      propertyPath: DisplayCount
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3081710493308422674, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
       propertyPath: ingradient.countIngradient
