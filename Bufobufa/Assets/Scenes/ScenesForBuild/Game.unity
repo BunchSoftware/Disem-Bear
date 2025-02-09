@@ -7613,6 +7613,14 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 5251532820319538870, guid: f2cb14f2c90b74c4da4eba17c6f9de8a, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5251532820319538870, guid: f2cb14f2c90b74c4da4eba17c6f9de8a, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8448415488670691417, guid: f2cb14f2c90b74c4da4eba17c6f9de8a, type: 3}
       propertyPath: m_Name
       value: Magnet (1)
@@ -39465,6 +39473,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5552172818072445381, guid: ab80d28c31d085148981db2e0c094479, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5679405136899525201, guid: ab80d28c31d085148981db2e0c094479, type: 3}
       propertyPath: m_Name
       value: Fridge
@@ -39489,6 +39501,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.0004
       objectReference: {fileID: 0}
+    - target: {fileID: 7940777003317267734, guid: ab80d28c31d085148981db2e0c094479, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8306745138275641521, guid: ab80d28c31d085148981db2e0c094479, type: 3}
       propertyPath: m_Size.x
       value: 1.15
@@ -39503,6 +39519,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8306745138275641521, guid: ab80d28c31d085148981db2e0c094479, type: 3}
       propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8306745138275641521, guid: ab80d28c31d085148981db2e0c094479, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8306745138275641521, guid: ab80d28c31d085148981db2e0c094479, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
