@@ -7,8 +7,8 @@ public class MovePointToPoint : MonoBehaviour
 {
     private bool isMove = false;
     private string state = "point1";
-    [SerializeField] private Transform point1;
-    [SerializeField] private Transform point2;
+    public Transform point1;
+    public Transform point2;
     
 
 

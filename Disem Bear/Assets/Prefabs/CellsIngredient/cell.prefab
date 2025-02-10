@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1798414506367105030}
   - component: {fileID: 1230801010732381242}
-  - component: {fileID: 8328892675079702255}
-  - component: {fileID: 7967345627986332447}
   - component: {fileID: 6582413136795209603}
   - component: {fileID: 7379255367490559250}
   - component: {fileID: 1777373657152096248}
+  - component: {fileID: 5806171486245036471}
   m_Layer: 7
   m_Name: cell
   m_TagString: Untagged
@@ -91,34 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8328892675079702255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8628483798543188246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8edde6e76c945ca4885967e46edda282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IngredientName: cell
-  TimeInAquarium: 3
-  InTableMix: 0
---- !u!114 &7967345627986332447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8628483798543188246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdc043fdfa1abd346b008d3ebdbfd835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnDrag: 0
 --- !u!65 &6582413136795209603
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -179,3 +150,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf23efe5199a654a9d44da9ba40c273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5806171486245036471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628483798543188246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dfa5315f7e76b419374ca1b773fc47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  point1: {fileID: 0}
+  point2: {fileID: 0}
