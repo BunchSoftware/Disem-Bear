@@ -1,6 +1,7 @@
 using External.DI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -51,15 +52,16 @@ namespace Game.Environment
     [Serializable]
     public class PlayerInput : IUpdateListener
     {
-        private ILeftMouseUpClickable[] currentLeftMouseUpClickable = new ILeftMouseUpClickable[0];
-        private ILeftMouseClickable[] currentLeftMouseClickable = new ILeftMouseClickable[0];
-        private ILeftMouseDownClickable[] currentLeftMouseDownClickable = new ILeftMouseDownClickable[0];
+        private List<ILeftMouseUpClickable> currentLeftMouseUpClickable = new List<ILeftMouseUpClickable>();
+        private List<ILeftMouseClickable> currentLeftMouseClickable = new List<ILeftMouseClickable>();
+        private List<ILeftMouseDownClickable> currentLeftMouseDownClickable = new List<ILeftMouseDownClickable>();
 
-        private IRightMouseUpClickable[] currentRightMouseUpClickable = new IRightMouseUpClickable[0];
-        private IRightMouseClickable[] currentRightMouseClickable = new IRightMouseClickable[0];
-        private IRightMouseDownClickable[] currentRightMouseDownClickable = new IRightMouseDownClickable[0];
+        private List<IRightMouseUpClickable> currentRightMouseUpClickable = new List<IRightMouseUpClickable>();
+        private List<IRightMouseClickable> currentRightMouseClickable = new List<IRightMouseClickable>();
+        private List<IRightMouseDownClickable> currentRightMouseDownClickable = new List<IRightMouseDownClickable>();
 
-        private IMouseOver[] currentMouseOver = new IMouseOver[0];
+        private List<IMouseOver> currentMouseOver = new List<IMouseOver>();
+        private bool isOver = false;
 
         public void OnUpdate(float deltaTime)
         {
@@ -89,11 +91,11 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                ILeftMouseUpClickable[] leftMouseUpClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseUpClickable>();
+                List<ILeftMouseUpClickable> leftMouseUpClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseUpClickable>().ToList();
 
-                if (leftMouseUpClickable.Length > 0)
+                if (leftMouseUpClickable.Count > 0)
                 {
-                    if (currentLeftMouseUpClickable.Length > 0)
+                    if (currentLeftMouseUpClickable.Count > 0)
                     {
                         foreach (var obj in currentLeftMouseUpClickable)
                         {
@@ -113,7 +115,7 @@ namespace Game.Environment
                 }
             }
 
-            if (currentLeftMouseUpClickable.Length > 0)
+            if (currentLeftMouseUpClickable.Count > 0)
             {
                 foreach (var obj in currentLeftMouseUpClickable)
                 {
@@ -129,11 +131,11 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                ILeftMouseClickable[] leftMouseClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseClickable>();
+                List<ILeftMouseClickable> leftMouseClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseClickable>().ToList();
                 
-                if (leftMouseClickable.Length > 0)
+                if (leftMouseClickable.Count > 0)
                 {
-                    if (currentLeftMouseClickable.Length > 0)
+                    if (currentLeftMouseClickable.Count > 0)
                     {
                         foreach (var obj in currentLeftMouseClickable)
                         {
@@ -153,7 +155,7 @@ namespace Game.Environment
                 }
             }
 
-            if (currentLeftMouseClickable.Length > 0)
+            if (currentLeftMouseClickable.Count > 0)
             {
                 foreach (var obj in currentLeftMouseClickable)
                 {
@@ -169,11 +171,11 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                ILeftMouseDownClickable[] leftMouseDownClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseDownClickable>();
+                List<ILeftMouseDownClickable> leftMouseDownClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseDownClickable>().ToList();
 
-                if (leftMouseDownClickable.Length > 0)
+                if (leftMouseDownClickable.Count > 0)
                 {
-                    if (currentLeftMouseDownClickable.Length > 0)
+                    if (currentLeftMouseDownClickable.Count > 0)
                     {
                         foreach (var obj in currentLeftMouseDownClickable)
                         {
@@ -193,7 +195,7 @@ namespace Game.Environment
                 }
             }
 
-            if (currentLeftMouseDownClickable.Length > 0)
+            if (currentLeftMouseDownClickable.Count > 0)
             {
                 foreach (var obj in currentLeftMouseDownClickable)
                 {
@@ -212,10 +214,10 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                IRightMouseUpClickable[] rightMouseUpClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseUpClickable>();
-                if (rightMouseUpClickable.Length > 0)
+                List<IRightMouseUpClickable> rightMouseUpClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseUpClickable>().ToList();
+                if (rightMouseUpClickable.Count > 0)
                 {
-                    if (currentRightMouseUpClickable.Length > 0)
+                    if (currentRightMouseUpClickable.Count > 0)
                     {
                         foreach (var obj in currentRightMouseUpClickable)
                         {
@@ -234,7 +236,7 @@ namespace Game.Environment
                 }
             }
 
-            if (currentRightMouseClickable.Length > 0)
+            if (currentRightMouseClickable.Count > 0)
             {
                 foreach (var obj in currentRightMouseClickable)
                 {
@@ -250,10 +252,10 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                IRightMouseClickable[] rightMouseClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseClickable>();
-                if (rightMouseClickable.Length > 0)
+                List<IRightMouseClickable> rightMouseClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseClickable>().ToList();
+                if (rightMouseClickable.Count > 0)
                 {
-                    if (currentRightMouseClickable.Length > 0)
+                    if (currentRightMouseClickable.Count > 0)
                     {
                         foreach (var obj in currentRightMouseClickable)
                         {
@@ -272,7 +274,7 @@ namespace Game.Environment
                 }
             }
 
-            if (currentRightMouseClickable.Length > 0)
+            if (currentRightMouseClickable.Count > 0)
             {
                 foreach (var obj in currentRightMouseClickable)
                 {
@@ -288,10 +290,10 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                IRightMouseDownClickable[] rightMouseDownClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseDownClickable>();
-                if (rightMouseDownClickable.Length > 0)
+                List<IRightMouseDownClickable> rightMouseDownClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseDownClickable>().ToList();
+                if (rightMouseDownClickable.Count > 0)
                 {
-                    if (currentRightMouseDownClickable.Length > 0)
+                    if (currentRightMouseDownClickable.Count > 0)
                     {
                         foreach (var obj in currentRightMouseDownClickable)
                         {
@@ -310,7 +312,7 @@ namespace Game.Environment
                 }
             }
 
-            if (currentRightMouseDownClickable.Length > 0)
+            if (currentRightMouseDownClickable.Count > 0)
             {
                 foreach (var obj in currentRightMouseDownClickable)
                 {
@@ -327,32 +329,29 @@ namespace Game.Environment
             int layerMask = -1;
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
-                IMouseOver[] mouseOver = hitInfo.collider.gameObject.GetComponents<IMouseOver>();
-                if (mouseOver.Length > 0)
+                List<IMouseOver> mouseOver = hitInfo.collider.gameObject.GetComponents<IMouseOver>().ToList();
+                
+                if (mouseOver.Count > 0)
                 {
-                    if (currentMouseOver.Length > 0 && currentMouseOver != mouseOver)
+                    if (currentMouseOver.Count == 0)
                     {
+                        currentMouseOver = mouseOver;
                         foreach (var obj in currentMouseOver)
                         {
-                            obj.OnMouseExitObject();
+                            obj.OnMouseEnterObject();
                         }
-                    }
-
-                    currentMouseOver = mouseOver;
-                    foreach (var obj in currentMouseOver)
-                    {
-                        obj.OnMouseEnterObject();
                     }
 
                     return;
                 }
 
-                if (currentMouseOver.Length > 0)
+                if (currentMouseOver.Count > 0)
                 {
                     foreach (var obj in currentMouseOver)
                     {
                         obj.OnMouseExitObject();
                     }
+                    currentMouseOver.Clear();
                 }
             }
         }

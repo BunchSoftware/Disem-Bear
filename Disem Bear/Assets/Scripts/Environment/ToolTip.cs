@@ -1,14 +1,15 @@
+using Game.Environment;
 using Game.Environment.LMixTable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolTip : MonoBehaviour
+public class ToolTip : MonoBehaviour, IMouseOver
 {
     [SerializeField] private IngradientSpawner ingradientSpawner; // Ссылка на скрипт IngradientSpawner
     [SerializeField] private string toolTipText; // Текст подсказки
 
-    private void OnMouseEnter()
+    public void OnMouseEnterObject()
     {
         // Получаем количество ингредиентов из IngradientSpawner
         int count = ingradientSpawner.GetIngradient().countIngradient;
@@ -20,7 +21,7 @@ public class ToolTip : MonoBehaviour
         ToolTipManager._instance.ToolTipOn(fullToolTipText);
     }
 
-    private void OnMouseExit()
+    public void OnMouseExitObject()
     {
         // Скрываем подсказку
         ToolTipManager._instance.ToolTipOff();
