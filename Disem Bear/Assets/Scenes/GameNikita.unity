@@ -3347,7 +3347,7 @@ MonoBehaviour:
   tutorialRoot: {fileID: 1451648181}
   environmentRoot: {fileID: 1526206802}
   soundManager:
-    audio: {fileID: 1677811272}
+    prefabAudioSource: {fileID: 1677811272}
     mixer: {fileID: 1214126978491528561, guid: 360cebffc71bd224e97e49564dc0dd23, type: 2}
     nameKey: Sound
     soundSlider: {fileID: 1723936367}
@@ -3358,7 +3358,7 @@ MonoBehaviour:
     MinDB: -40
     MaxDB: 10
   musicManager:
-    audio: {fileID: 2031246427}
+    prefabAudioSource: {fileID: 2031246427}
     mixer: {fileID: -2342996771716774877, guid: 360cebffc71bd224e97e49564dc0dd23, type: 2}
     nameKey: Music
     soundSlider: {fileID: 1277170452}
@@ -5873,6 +5873,7 @@ MonoBehaviour:
   - {fileID: 1605940975}
   fridges:
   - {fileID: 639215244}
+  printer: {fileID: 1934519687}
 --- !u!4 &1526206803
 Transform:
   m_ObjectHideFlags: 0
@@ -7170,6 +7171,17 @@ MonoBehaviour:
   positionCamera: {x: 2.56, y: 5.48, z: -19.5}
   timeAnimationCamera: 2.2
   oppositeArrow: {fileID: 58684831}
+--- !u!114 &1934519687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
+  m_PrefabInstance: {fileID: 153988144627151811}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ad448faebfa2049bef7090d11f2aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1945639250
 GameObject:
   m_ObjectHideFlags: 0

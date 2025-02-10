@@ -1767,17 +1767,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6114930717722908520, guid: ad79d4bd2f3a14d498018ae4a8e7c977, type: 3}
   m_PrefabInstance: {fileID: 496109709}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &577789644 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7479219132167483036, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-  m_PrefabInstance: {fileID: 153988144627151811}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c6b547e3f0b90489a5c3dc1b2573b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &589688477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,11 +1955,6 @@ MonoBehaviour:
   SendInputFieldText:
     m_PersistentCalls:
       m_Calls: []
---- !u!23 &624294950 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7804396837128158593, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-  m_PrefabInstance: {fileID: 153988144627151811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &628739307
 GameObject:
   m_ObjectHideFlags: 0
@@ -4859,11 +4843,6 @@ MonoBehaviour:
   SendInputFieldText:
     m_PersistentCalls:
       m_Calls: []
---- !u!198 &1234485715 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2730447357629728371, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-  m_PrefabInstance: {fileID: 153988144627151811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1277170452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4137254076713093880, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -7580,46 +7559,6 @@ PrefabInstance:
     - target: {fileID: 923985827413949563, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
       propertyPath: m_Name
       value: Printer
-      objectReference: {fileID: 0}
-    - target: {fileID: 7804396837128158593, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: particle
-      value: 
-      objectReference: {fileID: 1234485715}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: soundPrinter
-      value: 
-      objectReference: {fileID: 8300000, guid: 5fe646f0f899d2244ab3197089052ece, type: 3}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: triggerObject
-      value: 
-      objectReference: {fileID: 577789644}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: printerRenderer
-      value: 
-      objectReference: {fileID: 624294950}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: materialDonePrinter
-      value: 
-      objectReference: {fileID: 2100000, guid: 7e4d291d67196af4daf63f5beca45d49, type: 2}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: printerObjectInfos.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: printerObjectInfos.Array.data[0].outItem
-      value: 
-      objectReference: {fileID: 5655420858055952020, guid: 1164e8630954a6949b59aba0fd7e2c41, type: 3}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: printerObjectInfos.Array.data[0].timePrint
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8177907619809047765, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
-      propertyPath: printerObjectInfos.Array.data[0].nameItemForPrint
-      value: FlowerCraft
       objectReference: {fileID: 0}
     - target: {fileID: 8512501137076424386, guid: 6c866d9cc860d0c4a96cf3110477c5c7, type: 3}
       propertyPath: m_LocalPosition.x

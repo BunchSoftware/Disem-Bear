@@ -4918,18 +4918,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ad448faebfa2049bef7090d11f2aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InTrigger: 0
-  PrinterWork: 0
-  ObjectDone: 0
-  currentObject: {fileID: 0}
-  objectInfos:
-  - NameItemForPrint: Flower
-    TimePrint: 4
-    ReturnItem: {fileID: 5610431095258980298, guid: 1164e8630954a6949b59aba0fd7e2c41, type: 3}
-  OrigPrinter: {fileID: 2100000, guid: e25f0e09346341440b2edd35954a94bf, type: 2}
-  DonePrinter: {fileID: 2100000, guid: 7e4d291d67196af4daf63f5beca45d49, type: 2}
-  PrinterImage: {fileID: 3916363917946227447}
-  VrVrVrVr: {fileID: 8300000, guid: 5fe646f0f899d2244ab3197089052ece, type: 3}
+  printerObjectInfos:
+  - nameItemForPrint: FlowerCraft
+    timePrint: 4
+    outItem: {fileID: 5655420858055952020, guid: 1164e8630954a6949b59aba0fd7e2c41, type: 3}
+  triggerObject: {fileID: 7479219132167483036}
+  particle: {fileID: 2730447357629728371}
+  printerRenderer: {fileID: 7804396837128158593}
+  materialDonePrinter: {fileID: 2100000, guid: 7e4d291d67196af4daf63f5beca45d49, type: 2}
+  soundPrinter: {fileID: 8300000, guid: 5fe646f0f899d2244ab3197089052ece, type: 3}
+  OnPickUpItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutItem:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartWork:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndWork:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &417599759837883986
 Animator:
   serializedVersion: 7
@@ -5139,6 +5148,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8054770960052085468, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
   m_PrefabInstance: {fileID: 6729447371731910145}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7479219132167483036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4226710260219498653, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
+  m_PrefabInstance: {fileID: 6729447371731910145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c6b547e3f0b90489a5c3dc1b2573b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8544769285788226011
 PrefabInstance:
   m_ObjectHideFlags: 0
