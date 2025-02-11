@@ -13,16 +13,6 @@ using UnityEngine.AI;
 
 namespace External.DI
 {
-    public interface IUpdateListener
-    {
-        void OnUpdate(float deltaTime);
-    }
-
-    public interface IFixedUpdateListener
-    {
-        void OnFixedUpdate(float fixedDeltaTime);
-    }
-
     public class GameBootstrap : MonoBehaviour
     {
         [Header("Player")]

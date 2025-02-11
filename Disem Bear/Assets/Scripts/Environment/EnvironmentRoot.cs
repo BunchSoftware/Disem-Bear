@@ -24,7 +24,7 @@ namespace Game.Environment
         [Header("MixTable")]
         [SerializeField] private MixTable mixTable;
         [Header("Table")]
-        [SerializeField] private TableOpen tableOpen;
+        [SerializeField] private Workbench tableOpen;
         [Header("Table")]
         [SerializeField] private List<TableWithItems> tablesWithItems;
         [Header("Board")]

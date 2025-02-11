@@ -31,9 +31,8 @@ namespace Game.Environment.LModelBoard
         private ModelBoard modelBoard;
         private Player player;
 
-        private bool isClick;
-
-        [HideInInspector] public bool isEndDrag = false;
+        private bool isClick = false;
+        private bool isEndDrag = false;
 
         // Drag&Drop
         private Transform draggingParent;
@@ -214,6 +213,11 @@ namespace Game.Environment.LModelBoard
             }
 
             return false;
+        }
+
+        public void EndDrag()
+        {
+            isEndDrag = true;
         }
 
         public void OnMouseEnterObject()

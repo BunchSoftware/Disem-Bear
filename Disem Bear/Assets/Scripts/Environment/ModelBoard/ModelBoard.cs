@@ -250,7 +250,7 @@ namespace Game.Environment.LModelBoard
                 if (cellBoards[closesIndex].GetCurrentItemInCell() == null)
                 {
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
-                    cellBoards[closesIndex].isEndDrag = true;
+                    cellBoards[closesIndex].EndDrag();
                 }
                 else
                 {
@@ -258,7 +258,7 @@ namespace Game.Environment.LModelBoard
                     cellModelBoard.PutItem(exchangePickUpItem);
 
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
-                    cellBoards[closesIndex].isEndDrag = true;
+                    cellBoards[closesIndex].EndDrag();
                 }
             }
             else if(currentPickUpItem != null)

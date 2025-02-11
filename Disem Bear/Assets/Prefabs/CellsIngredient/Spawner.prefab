@@ -133,8 +133,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559cb11a89d033947a8c143d8315ce85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 0
-  Ingredient: {fileID: 0}
+  ingradient:
+    typeIngradient: 
+    countIngradient: 0
+  ingradientRenderer: {fileID: 0}
 --- !u!65 &735059859979149942
 BoxCollider:
   m_ObjectHideFlags: 0
