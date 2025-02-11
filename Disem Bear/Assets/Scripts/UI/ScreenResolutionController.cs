@@ -21,9 +21,8 @@ namespace UI
         private Dropdown dropdown;
         [SerializeField] private List<ScreenResolution> screenResolutions;
 
-        private void Start()
+        private void Awake()
         {
-
             dropdown = GetComponent<Dropdown>();
             dropdown.ClearOptions();
             List<string> textOptions = new List<string>();

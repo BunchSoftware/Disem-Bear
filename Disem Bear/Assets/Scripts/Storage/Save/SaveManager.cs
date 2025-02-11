@@ -52,6 +52,27 @@ namespace External.Storage
             }
         }
 
+        public void Init(APIManager apiManager, FilePlayer filePlayer)
+        {
+            this.filePlayer = filePlayer;
+            this.apiManager = apiManager;
+
+            saveManagerIO = new SaveManagerIO();
+
+            pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
+            pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
+
+            if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
+                filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
+
+            if (filePlayer.JSONPlayer == null)
+            {
+                filePlayer.JSONPlayer = new JSONPlayer();
+                filePlayer.JSONPlayer.resources = new ResourcePlayer();
+                saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+            }
+        }
+
         public async void RegistrationShop(string nameShop)
         {
             await Task.Run(() =>
