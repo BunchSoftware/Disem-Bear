@@ -61,7 +61,7 @@ namespace Game.Environment
         private List<IRightMouseDownClickable> currentRightMouseDownClickable = new List<IRightMouseDownClickable>();
 
         private List<IMouseOver> currentMouseOver = new List<IMouseOver>();
-        private bool isOver = false;
+        private GameObject overObject;
 
         public void OnUpdate(float deltaTime)
         {
@@ -330,23 +330,21 @@ namespace Game.Environment
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
                 List<IMouseOver> mouseOver = hitInfo.collider.gameObject.GetComponents<IMouseOver>().ToList();
-                
-                if (mouseOver.Count > 0)
+
+                if (overObject == null && hitInfo.collider.gameObject.TryGetComponent<IMouseOver>(out var temp))
                 {
-                    if (currentMouseOver.Count == 0)
+                    overObject = hitInfo.collider.gameObject;
+                    currentMouseOver = mouseOver;
+
+                    foreach (var obj in currentMouseOver)
                     {
-                        currentMouseOver = mouseOver;
-                        foreach (var obj in currentMouseOver)
-                        {
-                            obj.OnMouseEnterObject();
-                        }
+                        obj.OnMouseEnterObject();
                     }
-
-                    return;
                 }
-
-                if (currentMouseOver.Count > 0)
+                
+                if (overObject != null && overObject != hitInfo.collider.gameObject)
                 {
+                    overObject = null;
                     foreach (var obj in currentMouseOver)
                     {
                         obj.OnMouseExitObject();
