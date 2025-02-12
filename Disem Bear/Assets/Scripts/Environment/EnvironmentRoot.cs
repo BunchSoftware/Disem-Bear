@@ -24,7 +24,7 @@ namespace Game.Environment
         [Header("MixTable")]
         [SerializeField] private MixTable mixTable;
         [Header("Table")]
-        [SerializeField] private Workbench tableOpen;
+        [SerializeField] private Workbench workbench;
         [Header("Table")]
         [SerializeField] private List<TableWithItems> tablesWithItems;
         [Header("Board")]
@@ -66,7 +66,7 @@ namespace Game.Environment
             {
                 fridges[i].Init(saveManager, player, playerMouseMove);
             }
-            tableOpen.Init(saveManager, player, playerMouseMove);
+            workbench.Init(saveManager, player, playerMouseMove);
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);
         }
@@ -85,7 +85,7 @@ namespace Game.Environment
                 aquariumOpens[i].OnUpdate(deltaTime);
             }
 
-            tableOpen.OnUpdate(deltaTime);
+            workbench.OnUpdate(deltaTime);
             tv.OnUpdate(deltaTime);
         }
     }

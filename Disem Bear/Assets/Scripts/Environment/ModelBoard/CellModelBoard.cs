@@ -118,11 +118,8 @@ namespace Game.Environment.LModelBoard
         public void OnDrag(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left && currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
-            {           
-                float distancePlane = Vector3.Distance(modelBoard.transform.position, Camera.main.transform.position);
-                Vector3 position = Camera.main.ScreenToWorldPoint(
-                    new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane + distancePlane)
-                );
+            {
+                Vector3 position = ScreenPositionInWorldPosition.GetWorldPositionOnPlaneYZ(Input.mousePosition,  modelBoard.transform.position.x);
 
                 currentItemInCell.transform.position =
                     new Vector3(

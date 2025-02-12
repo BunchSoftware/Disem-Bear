@@ -17,7 +17,7 @@ namespace Game.Environment.LMixTable
         private void OnMouseDown()
         {
             MixTable.GetComponent<ThingsInTableMix>().ClearIngredients();
-            transform.parent.gameObject.GetComponent<Animator>().Play("PressButtonClear");
+            transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
         }
     }
 }

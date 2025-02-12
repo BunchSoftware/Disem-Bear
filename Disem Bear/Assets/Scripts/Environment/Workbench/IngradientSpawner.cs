@@ -1,7 +1,5 @@
-using Game.Environment.Item;
-using Game.Environment.LPostTube;
-using Game.LPlayer;
-using Unity.VisualScripting;
+using Game.Environment.LModelBoard;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -20,36 +18,54 @@ namespace Game.Environment.LMixTable
         private Workbench workbench;
         private TriggerObject triggerObject;
 
-        private bool isClick = false;
         private bool isEndDrag = false;
 
-        private GameObject pointerDrag;
+        private IngradientCell pointer;
+
+        private Collider spawnerCollider;
+
+        private Collider dragCollider;
+        private Bounds dragBounds;
+
+        private Collider contentCollider;
+        private Bounds contentBounds;
 
         public void Init(Workbench workbench, TriggerObject triggerObject)
         {
             this.workbench = workbench;
             this.triggerObject = triggerObject;
 
+            contentCollider = transform.parent.GetComponent<Collider>();
+            contentBounds = contentCollider.bounds;
+
+            spawnerCollider = GetComponent<Collider>();
+
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             if (ingradient.typeIngradient == string.Empty)
                 Debug.LogError($"Не задан тип инградиента {name}");
 
-            if (ingradient.countIngradient == 0)
-                spriteRenderer.gameObject.SetActive(false);
+            CheckCountIngradient();
 
-
-            triggerObject.OnTriggerStayEvent.AddListener((collider) =>
+            workbench.OnStartWorkbenchClose.AddListener(() =>
             {
-                if (!workbench.IsDrag && isClick && workbench.IsOpen && ingradient.countIngradient > 0)
-                {
-                    isClick = false;
-                }
-                else if (!workbench.IsDrag && workbench.IsOpen && ingradient.countIngradient > 0)
-                {
-
-                }
+                if (workbench.IsOpen && pointer != null)
+                    workbench.DropIngradient(this);
             });
+        }
+
+        private void CheckCountIngradient()
+        {
+            if (ingradient.countIngradient == 0)
+            {
+                spawnerCollider.enabled = false;
+                spriteRenderer.enabled = false;
+            }
+            else if(ingradient.countIngradient > 0)
+            {
+                spawnerCollider.enabled = true;
+                spriteRenderer.enabled = true;
+            }
         }
 
         public Ingradient PickUpIngradient(int countIngradient)
@@ -64,8 +80,7 @@ namespace Game.Environment.LMixTable
 
                 ingradient.countIngradient = (int)Mathf.Clamp(ingradient.countIngradient - countIngradient, 0, int.MaxValue);
 
-                if(ingradient.countIngradient == 0)
-                    spriteRenderer.enabled = false;
+                CheckCountIngradient();
 
                 OnPickUpIngradient?.Invoke(ingradientOut);
             }
@@ -81,26 +96,30 @@ namespace Game.Environment.LMixTable
 
             ingradient.countIngradient = (int)Mathf.Clamp(ingradient.countIngradient + countIngradient, 0, int.MaxValue);
 
-            if (ingradient.countIngradient > 0)
-                spriteRenderer.enabled = true;
+            CheckCountIngradient();
 
             OnPutIngradient?.Invoke(ingradientOut);
-        }
-
-        public Ingradient GetIngradient()
-        {
-            return ingradient;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left && ingradient.countIngradient != 0)
             {
-                pointerDrag = Instantiate(new GameObject(), transform.parent);
-                SpriteRenderer spriteRenderer = pointerDrag.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = this.spriteRenderer.sprite;
+                pointer = workbench.DragIngradient(this);
 
-                workbench.DragIngradient(this, pointerDrag);
+                dragCollider = pointer.GetComponent<Collider>();
+                dragBounds = dragCollider.bounds;
+
+                if ((int)Mathf.Clamp(ingradient.countIngradient - Workbench.countIngradiensTaken, 0, int.MaxValue) == 0)
+                {
+                    spawnerCollider.enabled = false;
+                    spriteRenderer.enabled = false;
+                }
+                else
+                { 
+                    spawnerCollider.enabled = true;
+                    spriteRenderer.enabled = true;
+                }
             }
         }
 
@@ -108,15 +127,17 @@ namespace Game.Environment.LMixTable
         {
             if (eventData.button == PointerEventData.InputButton.Left && ingradient.countIngradient != 0 && workbench.IsOpen)
             {
-                float distancePlane = Vector3.Distance(workbench.transform.position, Camera.main.transform.position);
-                Vector3 position = Camera.main.ScreenToWorldPoint(
-                    new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane + distancePlane)
-                );
+                Vector3 positionCursor = ScreenPositionInWorldPosition.GetWorldPositionOnPlaneXZ(Input.mousePosition, transform.position.y);
 
-                pointerDrag.transform.position =
+                Vector3 position = new Vector3();
+
+                position.x = Math.Clamp(positionCursor.x, contentBounds.min.x + dragBounds.size.x / 2, contentBounds.max.x - dragBounds.size.x / 2);
+                position.z = Math.Clamp(positionCursor.z, contentBounds.min.z + dragBounds.size.z / 2, contentBounds.max.z - dragBounds.size.z / 2);
+
+                pointer.transform.position =
                     new Vector3(
-                        pointerDrag.transform.position.x,
-                        position.y,
+                        position.x,
+                        transform.position.y,
                         position.z
                     );
             }
@@ -127,8 +148,22 @@ namespace Game.Environment.LMixTable
             if (workbench.IsOpen)
             {
                 workbench.DropIngradient(this);
-                pointerDrag = null;
+                CheckCountIngradient();
+
+                pointer = null;
+                dragCollider = null;
             }
+        }
+
+        public Sprite GetSpriteIngradient()
+        {
+            return spriteRenderer.sprite;
+        }
+
+
+        public Ingradient GetIngradient()
+        {
+            return ingradient;
         }
 
         public void EndDrag()
@@ -141,12 +176,18 @@ namespace Game.Environment.LMixTable
             if (isEndDrag)
                 isEndDrag = false;
             else
-                isClick = true;
+            {
+                if (!workbench.IsDrag && workbench.IsOpen && ingradient.countIngradient > 0)
+                {
+                    workbench.DropIngradient(this);
+                    CheckCountIngradient();
+                }
+            }
         }
 
         public void OnMouseLeftClickUpOtherObject()
         {
-            isClick = false;
+            
         }
     }
 }

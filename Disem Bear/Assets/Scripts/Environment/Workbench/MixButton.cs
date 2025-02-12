@@ -9,6 +9,7 @@ namespace Game.Environment.LMixTable
     {
         private GameObject MixTable;
 
+
         private void Start()
         {
             MixTable = GameObject.Find("MixTable");

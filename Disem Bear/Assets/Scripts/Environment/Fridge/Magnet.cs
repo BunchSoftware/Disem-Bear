@@ -1,4 +1,5 @@
 using External.Storage;
+using Game.Environment.LMixTable;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ namespace Game.Environment.Fridge
                                );
 
                 Vector3 position = new Vector3();
-
+                
                 position.x = Math.Clamp(positionCursor.x, dragBounds.min.x + magnetBounds.size.x / 2, dragBounds.max.x - magnetBounds.size.x / 2);
                 position.y = Math.Clamp(positionCursor.y, dragBounds.min.y + magnetBounds.size.y / 2, dragBounds.max.y - magnetBounds.size.y / 2);
                 position.z = Math.Clamp(positionCursor.z, dragBounds.min.z + magnetBounds.size.z / 2, dragBounds.max.z - magnetBounds.size.z / 2);
