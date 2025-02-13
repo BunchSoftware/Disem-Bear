@@ -7,17 +7,17 @@ namespace Game.Environment.LMixTable
 {
     public class MixButton : MonoBehaviour
     {
-        private GameObject MixTable;
+        private Workbench workbench;
+        
 
-
-        private void Start()
+        public void Init(Workbench workbench)
         {
-            MixTable = GameObject.Find("MixTable");
+            this.workbench = workbench;
         }
 
         private void OnMouseDown()
         {
-            MixTable.GetComponent<ThingsInTableMix>().MixIngredients();
+            workbench.MixIngradients();
             transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
         }
     }

@@ -21,8 +21,6 @@ namespace Game.Environment
         [SerializeField] private GameObject invisibleWallBetweenRooms;
         [Header("TV")]
         [SerializeField] private TV tv;
-        [Header("MixTable")]
-        [SerializeField] private MixTable mixTable;
         [Header("Table")]
         [SerializeField] private Workbench workbench;
         [Header("Table")]
@@ -52,12 +50,6 @@ namespace Game.Environment
                 tablesWithItems[i].Init(saveManager, player);
             }
 
-            mixTable.Init(saveManager);
-
-            for (int i = 0; i < modelBoards.Count; i++)
-            {
-                modelBoards[i].Init(saveManager, mixTable, player, playerMouseMove);
-            }
             for (int i = 0; i < aquariumOpens.Count; i++)
             {
                 aquariumOpens[i].Init(saveManager, player, playerMouseMove);
@@ -65,6 +57,10 @@ namespace Game.Environment
             for (int i = 0; i < fridges.Count; i++)
             {
                 fridges[i].Init(saveManager, player, playerMouseMove);
+            }
+            for (int i = 0; i < modelBoards.Count; i++)
+            {
+                modelBoards[i].Init(saveManager, player, playerMouseMove);
             }
             workbench.Init(saveManager, player, playerMouseMove);
             tv.Init(playerMouseMove, player);

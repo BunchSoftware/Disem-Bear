@@ -27,7 +27,6 @@ namespace Game.Environment.LModelBoard
         private ScaleChooseObject scaleChooseObject;
         private TriggerObject triggerObject;
 
-        private MixTable mixTable;
         private ModelBoard modelBoard;
         private Player player;
 
@@ -37,10 +36,9 @@ namespace Game.Environment.LModelBoard
         // Drag&Drop
         private Transform draggingParent;
 
-        public void Init(ModelBoard modelBoard, MixTable mixTable, Player player, TriggerObject triggerObject, 
+        public void Init(ModelBoard modelBoard, Player player, TriggerObject triggerObject, 
             Transform draggingParent)
         {
-            this.mixTable = mixTable;
             this.triggerObject = triggerObject;
             this.modelBoard = modelBoard;
             this.player = player;
@@ -185,7 +183,7 @@ namespace Game.Environment.LModelBoard
                             {
                                 for (int i = 0; i < packageItem.ingradients.Count; i++)
                                 {
-                                    mixTable.AddIngradient(packageItem.ingradients[i]);
+                                    //mixTable.AddIngradient(packageItem.ingradients[i]);
                                 }
                             }
 

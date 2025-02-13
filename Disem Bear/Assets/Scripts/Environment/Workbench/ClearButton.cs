@@ -7,16 +7,16 @@ namespace Game.Environment.LMixTable
 {
     public class ClearButton : MonoBehaviour
     {
-        private GameObject MixTable;
+        private Workbench workbench;
 
-        private void Start()
+        public void Init(Workbench workbench)
         {
-            MixTable = GameObject.Find("MixTable");
+            this.workbench = workbench;
         }
 
         private void OnMouseDown()
         {
-            MixTable.GetComponent<ThingsInTableMix>().ClearIngredients();
+            workbench.ClearIngredients();
             transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
         }
     }

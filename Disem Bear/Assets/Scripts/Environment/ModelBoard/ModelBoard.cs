@@ -42,7 +42,6 @@ namespace Game.Environment.LModelBoard
         public UnityEvent<PickUpItem> OnDefocusItem;
 
         private SaveManager saveManager;
-        private MixTable mixTable;
         private Player player;
         private PlayerMouseMove playerMouseMove;
 
@@ -55,9 +54,8 @@ namespace Game.Environment.LModelBoard
         public bool IsDrag => isDrag;
         private bool isDrag = false;
 
-        public void Init(SaveManager saveManager, MixTable mixTable, Player player, PlayerMouseMove playerMouseMove)
+        public void Init(SaveManager saveManager, Player player, PlayerMouseMove playerMouseMove)
         {
-            this.mixTable = mixTable;
             this.saveManager = saveManager;
             this.player = player;
             this.playerMouseMove = playerMouseMove;
@@ -89,7 +87,7 @@ namespace Game.Environment.LModelBoard
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
-                cellBoards[i].Init(this, mixTable, player, triggerObject, transform);
+                cellBoards[i].Init(this, player, triggerObject, transform);
             }
 
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)

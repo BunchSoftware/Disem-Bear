@@ -76,10 +76,7 @@ public class IngradientCell : MonoBehaviour, ILeftMouseUpClickable, IDragHandler
         else
         {
             if (!workbench.IsDrag && workbench.IsOpen)
-            {
                 workbench.DropIngradient(this);
-                Debug.Log(12351);
-            }
         }
     }
 
