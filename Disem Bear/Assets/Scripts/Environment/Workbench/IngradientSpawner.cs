@@ -20,7 +20,7 @@ namespace Game.Environment.LMixTable
 
         private bool isEndDrag = false;
 
-        private IngradientCell pointer;
+        private IngradientDragCell pointer;
 
         private Collider spawnerCollider;
 
@@ -105,7 +105,7 @@ namespace Game.Environment.LMixTable
         {
             if (eventData.button == PointerEventData.InputButton.Left && ingradient.countIngradient != 0)
             {
-                pointer = workbench.DragIngradient(this);
+                pointer = (IngradientDragCell)workbench.DragIngradient(this);
 
                 dragCollider = pointer.GetComponent<Collider>();
                 dragBounds = dragCollider.bounds;
@@ -166,22 +166,12 @@ namespace Game.Environment.LMixTable
             return ingradient;
         }
 
-        public void EndDrag()
-        {
-            isEndDrag = true;
-        }
-
         public void OnMouseLeftClickUpObject()
         {
-            if (isEndDrag)
-                isEndDrag = false;
-            else
+            if (!workbench.IsDrag && !workbench.IsEndDrag && workbench.IsOpen && ingradient.countIngradient > 0)
             {
-                if (!workbench.IsDrag && workbench.IsOpen && ingradient.countIngradient > 0)
-                {
-                    workbench.DropIngradient(this);
-                    CheckCountIngradient();
-                }
+                workbench.DropIngradient(this);
+                CheckCountIngradient();
             }
         }
 

@@ -41,7 +41,7 @@ namespace Game.Environment.LMixTable
         {
             if(isActive)
             {
-                //workbench.MixIngradients();
+                workbench.PickUpItem();
                 transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
             }
         }

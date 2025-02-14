@@ -54,6 +54,9 @@ namespace Game.Environment.LModelBoard
         public bool IsDrag => isDrag;
         private bool isDrag = false;
 
+        public bool IsEndDrag => isEndDrag;
+        private bool isEndDrag = false;
+
         public void Init(SaveManager saveManager, Workbench workbench, Player player, PlayerMouseMove playerMouseMove)
         {
             this.saveManager = saveManager;
@@ -231,6 +234,7 @@ namespace Game.Environment.LModelBoard
         public void DropItem(CellModelBoard cellModelBoard)
         {
             PickUpItem currentPickUpItem = cellModelBoard.PickUpItem();
+            isEndDrag = true;
             if (currentPickUpItem != null && InModelBoard())
             {
                 int closesIndex = 0;
@@ -246,17 +250,13 @@ namespace Game.Environment.LModelBoard
                 }
 
                 if (cellBoards[closesIndex].GetCurrentItemInCell() == null)
-                {
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
-                    cellBoards[closesIndex].EndDrag();
-                }
                 else
                 {
                     PickUpItem exchangePickUpItem = cellBoards[closesIndex].PickUpItem();
                     cellModelBoard.PutItem(exchangePickUpItem);
 
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
-                    cellBoards[closesIndex].EndDrag();
                 }
             }
             else if(currentPickUpItem != null)
@@ -273,6 +273,14 @@ namespace Game.Environment.LModelBoard
             {
                 cellBoards[i].GetComponent<Collider>().enabled = true;
             }
+
+            StartCoroutine(IEndDrag(0.05f));
+        }
+
+        private IEnumerator IEndDrag(float time)
+        {
+            yield return new WaitForSeconds(time);
+            isEndDrag = false;
         }
     }
 }

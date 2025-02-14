@@ -1,3 +1,4 @@
+using Game.Environment.Item;
 using Game.Environment.LMixTable;
 using System;
 using System.Collections;
@@ -10,4 +11,5 @@ public class CraftRecipe : ScriptableObject
 {
     public List<Ingradient> inputIngradients;
     public List<Ingradient> outIngradients;
+    public List<PickUpItem> outPickUpItems;
 }

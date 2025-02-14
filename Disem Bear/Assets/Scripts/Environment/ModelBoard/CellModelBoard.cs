@@ -32,7 +32,6 @@ namespace Game.Environment.LModelBoard
         private Player player;
 
         private bool isClick = false;
-        private bool isEndDrag = false;
 
         // Drag&Drop
         private Transform draggingParent;
@@ -97,9 +96,7 @@ namespace Game.Environment.LModelBoard
 
         public void OnMouseLeftClickUpObject()
         {
-            if(isEndDrag)
-                isEndDrag = false;
-            else
+             if(!modelBoard.IsEndDrag)
                 isClick = true;
         }
 
@@ -210,11 +207,6 @@ namespace Game.Environment.LModelBoard
             }
 
             return false;
-        }
-
-        public void EndDrag()
-        {
-            isEndDrag = true;
         }
 
         public void OnMouseEnterObject()
