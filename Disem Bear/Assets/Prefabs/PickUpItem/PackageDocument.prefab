@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 860054388363624321}
   - component: {fileID: 1416277121592618411}
   - component: {fileID: 4036968444998537156}
-  - component: {fileID: 8975040544648408492}
   - component: {fileID: 369755943107966362}
   - component: {fileID: 6230950803118389033}
+  - component: {fileID: 1643544644361010742}
   m_Layer: 7
   m_Name: PackageDocument
   m_TagString: Untagged
@@ -156,20 +156,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8975040544648408492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522447525192828825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aeea4201deae4544888c11a71fb97b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemInPackage: {fileID: 2979826074301052321, guid: 1e075f24e38f78a41b710658a4af3a01, type: 3}
-  ingradients: []
 --- !u!114 &369755943107966362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93020ec3b5d47c94aaa182a0a1419cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsClicked: 0
+  IsClickedLeftMouseButton: 0
+  IsClickedRightMouseButton: 0
+  CanTakeByCollisionPlayer: 1
   typeItem: 2
   nameItem: Document
 --- !u!114 &6230950803118389033
@@ -199,3 +187,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   on: 1
   coefficient: 1.08
+--- !u!114 &1643544644361010742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522447525192828825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aeea4201deae4544888c11a71fb97b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInPackage: {fileID: 2979826074301052321, guid: 1e075f24e38f78a41b710658a4af3a01, type: 3}
+  ingradients: []

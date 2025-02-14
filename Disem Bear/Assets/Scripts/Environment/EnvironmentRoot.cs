@@ -60,7 +60,7 @@ namespace Game.Environment
             }
             for (int i = 0; i < modelBoards.Count; i++)
             {
-                modelBoards[i].Init(saveManager, player, playerMouseMove);
+                modelBoards[i].Init(saveManager, workbench, player, playerMouseMove);
             }
             workbench.Init(saveManager, player, playerMouseMove);
             tv.Init(playerMouseMove, player);

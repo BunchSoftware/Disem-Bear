@@ -26,6 +26,7 @@ namespace Game.Environment.LMixTable
         [SerializeField] private Transform mixTable;
         [Header("Buttons")]
         [SerializeField] private MixButton mixButton;
+        [SerializeField] private PickUpButton pickUpButton;
         [SerializeField] private ClearButton clearButton;
         [Header("Recieps Craft")]
         [SerializeField] private List<CraftRecipe> recipes = new List<CraftRecipe>();
@@ -60,7 +61,7 @@ namespace Game.Environment.LMixTable
         public bool IsDrag => isDrag;
         private bool isDrag = false;
 
-
+        private List<Ingradient> ingradients = new List<Ingradient>();
         private List<IngradientCell> ingradientCells = new List<IngradientCell>();
         private IngradientCell pointer;
 
@@ -77,7 +78,17 @@ namespace Game.Environment.LMixTable
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
             mixButton.Init(this);
+            pickUpButton.Init(this);
             clearButton.Init(this);
+
+            mixButton.SetActive(false);
+            pickUpButton.SetActive(false);
+            clearButton.SetActive(true);
+
+            for (int i = 0; i < ingradientSpawners.Count; i++)
+            {
+                ingradients.Add(ingradientSpawners[i].GetIngradient());
+            }
 
             for (int i = 0; i < ingradientSpawners.Count; i++)
             {
@@ -142,10 +153,15 @@ namespace Game.Environment.LMixTable
                 isDrag = true;
                 OnDragIngradient?.Invoke(ingradientSpawner.GetIngradient());
 
-                for (int i = 0; i < ingradientSpawners.Count; i++)
+                for (int i = 0; i < ingradientCells.Count; i++)
                 {
-                    ingradientSpawners[i].GetComponent<Collider>().enabled = false;
+                    ingradientCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
                 }
+
+                pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientCells.Count + 1;
+
+                StartCoroutine(IColliderCellsEnbled(0f, false));
+                StartCoroutine(IColliderSpawnersEnabled(0f, false));
             }
 
             return pointer;
@@ -161,13 +177,13 @@ namespace Game.Environment.LMixTable
 
             for (int i = 0; i < ingradientCells.Count; i++)
             {
-                ingradientCells[i].GetComponent<Collider>().enabled = false;
+                ingradientCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
             }
 
-            for (int i = 0; i < ingradientSpawners.Count; i++)
-            {
-                ingradientSpawners[i].GetComponent<Collider>().enabled = false;
-            }
+            pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientCells.Count + 1;
+
+            StartCoroutine(IColliderCellsEnbled(0f, false));
+            StartCoroutine(IColliderSpawnersEnabled(0f, false));
 
             isDrag = true;
             OnDragIngradient?.Invoke(ingradient);
@@ -202,6 +218,14 @@ namespace Game.Environment.LMixTable
                     pointer.EndDrag();
                     if(!ingradientCells.Exists(x => x == pointer))
                         ingradientCells.Add(pointer);
+
+                    for (int i = 0; i < ingradientCells.Count; i++)
+                    {
+                        ingradientCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
+                    }
+
+                    pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientCells.Count + 1;
+
                     pointer = null;
                 }
                 else
@@ -230,17 +254,25 @@ namespace Game.Environment.LMixTable
                 if (!ingradientCells.Exists(x => x == pointer))
                     ingradientCells.Add(pointer);
 
+                for (int i = 0; i < ingradientCells.Count; i++)
+                {
+                    ingradientCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
+                }
+
+                pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientCells.Count + 1;
+
                 pointer = null;
             }
 
             isDrag = false;
             OnDropIngradient?.Invoke(ingradient);
 
-            for (int i = 0; i < ingradientSpawners.Count; i++)
-            {
-                if (ingradientSpawners[i].GetIngradient().countIngradient > 0)
-                    ingradientSpawners[i].GetComponent<Collider>().enabled = true;
-            }
+            if (CheckIngradientsInMixTable())
+                mixButton.SetActive(true);
+            else
+                mixButton.SetActive(false);
+
+            StartCoroutine(IColliderSpawnersEnabledWithCondition(0.1f, true));
         }
 
         public void DropIngradient(IngradientCell ingradientCell)
@@ -249,16 +281,13 @@ namespace Game.Environment.LMixTable
             ingradient.countIngradient = countIngradiensTaken;
             ingradient.typeIngradient = ingradientCell.GetTypeIngradient();
 
-            pointer = ingradientCell;
-
             if (isDrag)
             {
                 if (InMixTable())
                 {
                     ingradientCell.EndDrag();
                     if (!ingradientCells.Exists(x => x == pointer))
-                        ingradientCells.Add(pointer);
-                    pointer = null;
+                        ingradientCells.Add(ingradientCell);
                 }
                 else
                 {
@@ -268,50 +297,66 @@ namespace Game.Environment.LMixTable
 
                     ingradientCells.Remove(pointer);
 
-                    Destroy(pointer.gameObject);
-
-                    pointer = null;
+                    Destroy(ingradientCell.gameObject);
                 }
             }
             else
             {
                 IngradientSpawner ingradientSpawner = GetIngradientSpawnerOfTypeIngradient(ingradientCell.GetTypeIngradient());
-                pointer.transform.DOMove(ingradientSpawner.transform.position, timeIngradientMoveToMixTable).SetEase(Ease.Linear);
-                StartCoroutine(IDropIngradient(ingradientSpawner, timeIngradientMoveToMixTable));
+                ingradientCell.transform.DOMove(ingradientSpawner.transform.position, timeIngradientMoveToMixTable).SetEase(Ease.Linear);
+                StartCoroutine(IDropIngradient(ingradientCell, ingradientSpawner, timeIngradientMoveToMixTable));
             }
 
             isDrag = false;
             OnDropIngradient?.Invoke(ingradient);
 
-            StartCoroutine(IColliderEnbled(0.1f));
+            if(CheckIngradientsInMixTable())
+                mixButton.SetActive(true);
+            else
+                mixButton.SetActive(false);
 
-            for (int i = 0; i < ingradientSpawners.Count; i++)
-            {
-                if (ingradientSpawners[i].GetIngradient().countIngradient > 0)
-                    ingradientSpawners[i].GetComponent<Collider>().enabled = true;
-            }
+            StartCoroutine(IColliderCellsEnbled(0.1f, true));
+            StartCoroutine(IColliderSpawnersEnabledWithCondition(0.1f, true));
         }
 
-        private IEnumerator IColliderEnbled(float time)
+        private IEnumerator IColliderCellsEnbled(float time, bool isActive)
         {
             yield return new WaitForSeconds(time);
             for (int i = 0; i < ingradientCells.Count; i++)
             {
-                ingradientCells[i].GetComponent<Collider>().enabled = true;
+                ingradientCells[i].GetComponent<Collider>().enabled = isActive;
             }
         }
 
-        private IEnumerator IDropIngradient(IngradientSpawner ingradientSpawner, float time)
+        private IEnumerator IColliderSpawnersEnabled(float time, bool isActive)
+        {
+            yield return new WaitForSeconds(time);
+            for (int i = 0; i < ingradientSpawners.Count; i++)
+            {
+                ingradientSpawners[i].GetComponent<Collider>().enabled = isActive;
+            }
+        }
+
+        private IEnumerator IColliderSpawnersEnabledWithCondition(float time, bool isActive)
+        {
+            yield return new WaitForSeconds(time);
+            for (int i = 0; i < ingradientSpawners.Count; i++)
+            {
+                if (ingradientSpawners[i].GetIngradient().countIngradient > 0)
+                    ingradientSpawners[i].GetComponent<Collider>().enabled = isActive;
+            }
+        }
+
+        private IEnumerator IDropIngradient(IngradientCell ingradientCell, IngradientSpawner ingradientSpawner, float time)
         {
             yield return new WaitForSeconds(time);
             ingradientSpawner.PutIngradient(countIngradiensTaken);
 
-            ingradientCells.Remove(pointer);
+            ingradientCells.Remove(ingradientCell);
 
-            if(pointer != null)
+            if(ingradientCell != null)
             {
-                Destroy(pointer.gameObject);
-                pointer = null;
+                Destroy(ingradientCell.gameObject);
             }
         }
 
@@ -346,6 +391,68 @@ namespace Game.Environment.LMixTable
 
         public void MixIngradients()
         {
+            if (CheckIngradientsInMixTable(out List<Ingradient> outIngradients))
+            {
+                print("Win");
+                particleWorkbench.Play();
+
+                for (int j = 0; j < ingradientCells.Count; j++)
+                {
+                    ingradientCells[j].GetComponent<Collider>().enabled = false;
+                    ingradientCells[j].transform.DOMove(mixTable.transform.position, timeNewIngradientCreation).SetEase(Ease.Linear);
+                    ingradientCells[j].transform.DOScale(new Vector3(0.01f, 0.01f, 0.01f), timeNewIngradientCreation).SetEase(Ease.Linear);
+                    ingradientCells[j].transform.DORotate(new Vector3(0, 0, 1440), timeNewIngradientCreation, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+                }
+
+                StartCoroutine(IAnimationDeleteIngradients(timeNewIngradientCreation, outIngradients));
+                OnMixIngradients?.Invoke();
+
+                mixButton.SetActive(false);
+            }
+        }
+
+        private IEnumerator IAnimationDeleteIngradients(float time, List<Ingradient> outIngradients)
+        {
+            yield return new WaitForSeconds(time);
+
+            for (int i = 0; i < ingradientCells.Count; i++)
+            {
+                Destroy(ingradientCells[i].gameObject);
+            }
+
+            ingradientCells.Clear();
+
+
+            for (int i = 0; i < outIngradients.Count; i++)
+            {
+                IngradientSpawner ingradientSpawner = GetIngradientSpawnerOfTypeIngradient(outIngradients[i].typeIngradient);
+                IngradientCell ingradientCell = InstantiatePointer(ingradientSpawner);
+                ingradientCell.GetComponent<Collider>().enabled = false;
+                ingradientCell.transform.position = new Vector3(mixTable.position.x, ingradientSpawner.transform.position.y, mixTable.position.z);
+                ingradientCell.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+                ingradientCell.transform.DOScale(prefabDragPoint.transform.localScale, timeNewIngradientCreation).SetEase(Ease.Linear);
+                ingradientCell.transform.DORotate(new Vector3(90, 0, 1440), timeNewIngradientCreation, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+
+                ingradientCells.Add(ingradientCell);
+            }
+
+            StartCoroutine(IColliderCellsEnbled(time, true));
+            StartCoroutine(IAnimationCreateIngradient(time));
+
+        }
+        IEnumerator IAnimationCreateIngradient(float time)
+        {
+            yield return new WaitForSeconds(time);
+            particleWorkbench.Stop();         
+        }
+
+        public bool CheckIngradientsInMixTable()
+        {
+            return CheckIngradientsInMixTable(out List<Ingradient> outIngradients);
+        }
+
+        public bool CheckIngradientsInMixTable(out List<Ingradient> outIngradients)
+        {
             for (int i = 0; i < recipes.Count; i++)
             {
                 List<Ingradient> ingradientInputCells = new List<Ingradient>();
@@ -375,7 +482,7 @@ namespace Game.Environment.LMixTable
                     if (!ingradientInput.Exists(x => x.typeIngradient == recipes[i].inputIngradients[j].typeIngradient))
                     {
                         Ingradient ingradient = new Ingradient();
-                        ingradient.countIngradient = ingradientInput.Count;
+                        ingradient.countIngradient = recipes[i].inputIngradients[j].countIngradient;
                         ingradient.typeIngradient = recipes[i].inputIngradients[j].typeIngradient;
                         ingradientInput.Add(ingradient);
                     }
@@ -389,64 +496,19 @@ namespace Game.Environment.LMixTable
                     }
                 }
 
-                ingradientInputCells.OrderBy(x => x.typeIngradient);
-                ingradientInput.OrderBy(x => x.typeIngradient);
+                ingradientInputCells = ingradientInputCells.OrderBy(x => x.typeIngradient).ToList();
+                ingradientInput = ingradientInput.OrderBy(x => x.typeIngradient).ToList();
 
-                print(ingradientInputCells.Count);
-                print(ingradientInput.Count);
-
-                if(CheckIngradients(ingradientInput, ingradientInputCells))
+                if (CheckIngradients(ingradientInput, ingradientInputCells))
                 {
-                    print("Win");
-                    particleWorkbench.Play();
-
-                    for (int j = 0; j < ingradientCells.Count; j++)
-                    {
-                        ingradientCells[j].GetComponent<Collider>().enabled = false;
-                        ingradientCells[j].transform.DOMove(mixTable.transform.position, timeNewIngradientCreation).SetEase(Ease.Linear);
-                        ingradientCells[j].transform.DOScale(new Vector3(0.01f, 0.01f, 0.01f), timeNewIngradientCreation).SetEase(Ease.Linear);
-                        ingradientCells[j].transform.DORotate(new Vector3(0, 0, 1440), timeNewIngradientCreation, RotateMode.FastBeyond360).SetEase(Ease.Linear);
-                    }
-
-                    StartCoroutine(IAnimationDeleteIngradients(timeNewIngradientCreation, recipes[i].outIngradients));
-                    OnMixIngradients?.Invoke();
+                    outIngradients = recipes[i].outIngradients;
+                    Debug.Log("Win");
+                    return true;
                 }
             }
-        }
 
-        private IEnumerator IAnimationDeleteIngradients(float time, List<Ingradient> outIngradients)
-        {
-            yield return new WaitForSeconds(time);
-
-            for (int i = 0; i < ingradientCells.Count; i++)
-            {
-                Destroy(ingradientCells[i].gameObject);
-            }
-
-            ingradientCells.Clear();
-
-
-            for (int i = 0; i < outIngradients.Count; i++)
-            {
-                IngradientSpawner ingradientSpawner = GetIngradientSpawnerOfTypeIngradient(outIngradients[i].typeIngradient);
-                IngradientCell ingradientCell = InstantiatePointer(ingradientSpawner);
-                ingradientCell.GetComponent<Collider>().enabled = false;
-                ingradientCell.transform.position = new Vector3(mixTable.position.x, ingradientSpawner.transform.position.y, mixTable.position.z);
-                ingradientCell.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-                ingradientCell.transform.DOScale(prefabDragPoint.transform.localScale, timeNewIngradientCreation).SetEase(Ease.Linear);
-                ingradientCell.transform.DORotate(new Vector3(90, 0, 1440), timeNewIngradientCreation, RotateMode.FastBeyond360).SetEase(Ease.Linear);
-
-                ingradientCells.Add(ingradientCell);
-            }
-
-            StartCoroutine(IColliderEnbled(time));
-            StartCoroutine(IAnimationCreateIngradient(time));
-
-        }
-        IEnumerator IAnimationCreateIngradient(float time)
-        {
-            yield return new WaitForSeconds(time);
-            particleWorkbench.Stop();         
+            outIngradients = null;
+            return false;
         }
 
         private bool CheckIngradients(List<Ingradient> ingradientInput, List<Ingradient> ingradientInputCells)
@@ -455,15 +517,14 @@ namespace Game.Environment.LMixTable
             {
                 for (int j = 0; j < ingradientInput.Count; j++)
                 {
-                    if (ingradientInput[j].typeIngradient != ingradientInputCells[j].typeIngradient
-                        && ingradientInputCells[j].countIngradient != ingradientInput[j].countIngradient)
+                    if (ingradientInputCells[j].typeIngradient != ingradientInput[j].typeIngradient || ingradientInputCells[j].countIngradient != ingradientInput[j].countIngradient)
                         return false;
                 }
+
+                return true;
             }
             else
                 return false;
-
-            return true;
         }
 
         public void ClearIngredients()
@@ -474,7 +535,8 @@ namespace Game.Environment.LMixTable
                 ingradientCells[i].transform.DOMove(ingradientSpawner.transform.position, timeIngradientMoveToMixTable).SetEase(Ease.Linear);
                 StartCoroutine(IClearIngradients(ingradientSpawner, ingradientCells[i], timeIngradientMoveToMixTable));
             }
-            OnClearIngradients?.Invoke();
+
+            mixButton.SetActive(false);
         }
 
         private IEnumerator IClearIngradients(IngradientSpawner ingradientSpawner, IngradientCell ingradientCell, float time)
@@ -489,6 +551,20 @@ namespace Game.Environment.LMixTable
         public void OnUpdate(float deltaTime)
         {
             openObject.OnUpdate(deltaTime);
+        }
+
+        public void AddIngradient(Ingradient ingradient)
+        {
+            for (int i = 0; i < ingradients.Count; i++)
+            {
+                if (ingradients[i].typeIngradient == ingradient.typeIngradient)
+                {
+                    ingradients[i].countIngradient += ingradient.countIngradient;
+                    return;
+                }
+                else
+                    ingradients.Add(ingradient);
+            }
         }
     }
 }

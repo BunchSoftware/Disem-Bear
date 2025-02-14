@@ -54,7 +54,7 @@ namespace Game.Environment.LModelBoard
         public bool IsDrag => isDrag;
         private bool isDrag = false;
 
-        public void Init(SaveManager saveManager, Player player, PlayerMouseMove playerMouseMove)
+        public void Init(SaveManager saveManager, Workbench workbench, Player player, PlayerMouseMove playerMouseMove)
         {
             this.saveManager = saveManager;
             this.player = player;
@@ -87,7 +87,7 @@ namespace Game.Environment.LModelBoard
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
-                cellBoards[i].Init(this, player, triggerObject, transform);
+                cellBoards[i].Init(this, workbench, player, triggerObject, transform);
             }
 
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
