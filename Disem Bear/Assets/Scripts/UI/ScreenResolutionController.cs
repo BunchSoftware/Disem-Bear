@@ -34,8 +34,9 @@ namespace UI
             dropdown.onValueChanged.RemoveAllListeners();
             dropdown.onValueChanged.AddListener((value) =>
             {
-                Screen.SetResolution(screenResolutions[value].widthScreen, screenResolutions[value].heightScreen, true);
+                Screen.SetResolution(screenResolutions[value].widthScreen, screenResolutions[value].heightScreen, Screen.fullScreenMode);
                 PlayerPrefs.SetInt("ScreenResolution", value);
+                
             });
 
             if (PlayerPrefs.HasKey("ScreenResolution"))
@@ -43,18 +44,18 @@ namespace UI
                 int index = PlayerPrefs.GetInt("ScreenResolution", 0);
                 if (index >= 0 && index <= screenResolutions.Count)
                 {
-                    Screen.SetResolution(screenResolutions[index].widthScreen, screenResolutions[index].heightScreen, true);
+                    Screen.SetResolution(screenResolutions[index].widthScreen, screenResolutions[index].heightScreen, Screen.fullScreenMode);
                     dropdown.value = index;
                 }
                 else
                 {
-                    Screen.SetResolution(1920, 1080, true);
+                    Screen.SetResolution(1920, 1080, Screen.fullScreenMode);
                     dropdown.value = 0;
                 }
             }
             else
             {
-                Screen.SetResolution(1920, 1080, true);
+                Screen.SetResolution(1920, 1080, Screen.fullScreenMode);
                 dropdown.value = 0;
             }
         }
