@@ -21,7 +21,7 @@ namespace UI
         private Dropdown dropdown;
         [SerializeField] private List<QualitySetting> qualitySettings;
 
-        private void Awake()
+        public void Init()
         {
             dropdown = GetComponent<Dropdown>();
             dropdown.ClearOptions();

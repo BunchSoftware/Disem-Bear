@@ -17,7 +17,7 @@ public class AntiAliasingSettingsController : MonoBehaviour
     private Dropdown dropdown;
     [SerializeField] private List<AntiAliasingSetting> antiAliasingSettings;
 
-    private void Awake()
+    public void Init()
     {
         dropdown = GetComponent<Dropdown>();
         dropdown.ClearOptions();

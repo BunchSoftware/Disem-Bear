@@ -17,7 +17,7 @@ public class FPSSettingsControl : MonoBehaviour
     private Dropdown dropdown;
     [SerializeField] private List<FPSSetting> fpsSettings;
 
-    private void Awake()
+    public void Init()
     {
         dropdown = GetComponent<Dropdown>();
         dropdown.ClearOptions();

@@ -14,6 +14,7 @@ namespace UI
         [SerializeField] private Fade fade;
         [SerializeField] private Button startButton;
         [SerializeField] private Button continueButton;
+        [SerializeField] private SettingsController settingsController;
 
         private SaveManager saveManager;
         private SoundManager soundManager;
@@ -22,6 +23,7 @@ namespace UI
         {
             this.saveManager = saveManager;
             this.soundManager = soundManager;
+            settingsController.Init();
 
             fade.FadeWhite();
             if (saveManager.GetJSONPlayer().resources != null && saveManager.GetJSONPlayer().resources.isPlayerRegistration)

@@ -18,7 +18,7 @@ public class FullScreenSettingsController : MonoBehaviour
     private Dropdown dropdown;
     [SerializeField] private List<FullScreenSetting> fullScreenSettings;
 
-    private void Awake()
+    public void Init()
     {
         dropdown = GetComponent<Dropdown>();
         dropdown.ClearOptions();

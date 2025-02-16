@@ -17,7 +17,7 @@ public class VSyncSettingsController : MonoBehaviour
     [SerializeField] private List<VSyncSetting> vSyncSettings;
     [SerializeField] private FPSSettingsControl fpsSettingsControl;
 
-    private void Awake()
+    public void Init()
     {
         dropdown = GetComponent<Dropdown>();
         dropdown.ClearOptions();

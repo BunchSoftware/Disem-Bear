@@ -21,6 +21,7 @@ namespace UI
         [SerializeField] private DialogChat dialogChat;
         [SerializeField] private ShopManager shopManager;
         [SerializeField] private ExerciseManager exerciseManager;
+        [SerializeField] private SettingsController settingsController;
 
         private SaveManager saveManager;
 
@@ -29,6 +30,9 @@ namespace UI
         public void Init(SaveManager saveManager)
         {
             this.saveManager = saveManager;
+
+            settingsController.Init();
+
             fade.FadeWhite();
 
             shopManager.Init(saveManager);

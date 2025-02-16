@@ -93,7 +93,7 @@ namespace Game.Environment
             {
                 List<ILeftMouseUpClickable> leftMouseUpClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseUpClickable>().ToList();
 
-                if (leftMouseUpClickable.Count > 0)
+                if (leftMouseUpClickable != null && leftMouseUpClickable.Count > 0)
                 {
                     if (currentLeftMouseUpClickable.Count > 0)
                     {
@@ -132,8 +132,8 @@ namespace Game.Environment
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
                 List<ILeftMouseClickable> leftMouseClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseClickable>().ToList();
-                
-                if (leftMouseClickable.Count > 0)
+
+                if (leftMouseClickable != null && leftMouseClickable.Count > 0)
                 {
                     if (currentLeftMouseClickable.Count > 0)
                     {
@@ -173,7 +173,7 @@ namespace Game.Environment
             {
                 List<ILeftMouseDownClickable> leftMouseDownClickable = hitInfo.collider.gameObject.GetComponents<ILeftMouseDownClickable>().ToList();
 
-                if (leftMouseDownClickable.Count > 0)
+                if (leftMouseDownClickable != null && leftMouseDownClickable.Count > 0)
                 {
                     if (currentLeftMouseDownClickable.Count > 0)
                     {
@@ -215,7 +215,7 @@ namespace Game.Environment
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
                 List<IRightMouseUpClickable> rightMouseUpClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseUpClickable>().ToList();
-                if (rightMouseUpClickable.Count > 0)
+                if (rightMouseUpClickable != null && rightMouseUpClickable.Count > 0)
                 {
                     if (currentRightMouseUpClickable.Count > 0)
                     {
@@ -253,7 +253,7 @@ namespace Game.Environment
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
                 List<IRightMouseClickable> rightMouseClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseClickable>().ToList();
-                if (rightMouseClickable.Count > 0)
+                if (rightMouseClickable != null && rightMouseClickable.Count > 0)
                 {
                     if (currentRightMouseClickable.Count > 0)
                     {
@@ -291,7 +291,7 @@ namespace Game.Environment
             if (Physics.Raycast(ray, out var hitInfo, maxDistance, layerMask, QueryTriggerInteraction.Ignore))
             {
                 List<IRightMouseDownClickable> rightMouseDownClickable = hitInfo.collider.gameObject.GetComponents<IRightMouseDownClickable>().ToList();
-                if (rightMouseDownClickable.Count > 0)
+                if (rightMouseDownClickable != null && rightMouseDownClickable.Count > 0)
                 {
                     if (currentRightMouseDownClickable.Count > 0)
                     {
