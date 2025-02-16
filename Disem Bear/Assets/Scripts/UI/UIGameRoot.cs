@@ -73,14 +73,12 @@ namespace UI
         public void PauseGame()
         {
             Time.timeScale = 0f;
-            ChangeRenderMode();
             pausePanel.SetActive(true);
             isActivePause = true;
         }
         public void ContinueGame()
         {
             Time.timeScale = 1f;
-            ChangeRenderMode();
             pausePanel.SetActive(false);
             isActivePause = false;
         }
