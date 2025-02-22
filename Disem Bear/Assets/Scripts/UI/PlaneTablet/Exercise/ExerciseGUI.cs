@@ -1,6 +1,7 @@
 
 using External.Storage;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace UI.PlaneTablet.Exercise
 
     public class ExerciseGUI : MonoBehaviour
     {
+        [SerializeField] private GameObject prefabReward;
         [SerializeField] private RectTransform description;
         [SerializeField] private Button exerciseButton;
         [SerializeField] private Image checkMark;
@@ -29,8 +31,6 @@ namespace UI.PlaneTablet.Exercise
 
         [Header("Основные элементы заданий")]
         [SerializeField] private Text headerText;
-        [SerializeField] private Image avatarReward;
-        [SerializeField] private Text countRewardText;
         [SerializeField] private Text descriptionText;
         [SerializeField] private Image avatar;
 
@@ -43,6 +43,7 @@ namespace UI.PlaneTablet.Exercise
         private TypeOfExerciseCompletion currentExerciseCompletion = TypeOfExerciseCompletion.NotDone;
         private bool isExpandExercise = false;
         private Exercise exercise;
+        private List<ExerciseRewardGUI> exerciseRewardGUIs = new List<ExerciseRewardGUI>();
 
         public bool isGetPackage = false;
         private int indexExercise = 0;
@@ -94,11 +95,19 @@ namespace UI.PlaneTablet.Exercise
             this.exercise = exercise;
 
             headerText.text = exercise.header;
-            countRewardText.text = $"{exercise.exerciseReward.countReward}x";
+
+            for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+            {
+                ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, exerciseButton.transform).GetComponent<ExerciseRewardGUI>();
+                exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
+                exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
+
+                exerciseRewardGUIs.Add(exerciseRewardGUI);
+            }
+
             descriptionText.text = exercise.description;
             avatar.sprite = exercise.avatar;
             avatar.preserveAspect = true;
-            avatarReward.sprite = exercise.exerciseReward.avatarReward;
             avatar.preserveAspect = true;
         }
 
@@ -156,11 +165,11 @@ namespace UI.PlaneTablet.Exercise
             return exercise;
         }
 
-        public ExerciseReward DoneExercise(string messageCondition)
+        public List<Reward> DoneExercise(string messageCondition)
         {
-            ExerciseReward exerciseReward = exercise.DoneExercise(messageCondition);
+            List<Reward> exerciseRewards = exercise.DoneExercise(messageCondition);
             SetExerciseCompletion(TypeOfExerciseCompletion.Done);
-            return exerciseReward;
+            return exerciseRewards;
         }
 
         public TypeOfExerciseCompletion GetExerciseCompletion()

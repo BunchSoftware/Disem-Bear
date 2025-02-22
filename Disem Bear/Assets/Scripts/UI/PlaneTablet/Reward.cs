@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI.PlaneTablet.Exercise
+namespace UI.PlaneTablet
 {
     [Serializable]
-    public class ExerciseReward
+    public class Reward
     {
         public string typeReward;
         public int countReward;

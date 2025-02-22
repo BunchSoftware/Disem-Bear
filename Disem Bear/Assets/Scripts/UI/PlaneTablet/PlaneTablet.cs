@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UI.PlaneTablet
 {
@@ -16,13 +17,14 @@ namespace UI.PlaneTablet
 
         public void Appereance()
         {
+            Camera.main.GetComponent<PhysicsRaycaster>().enabled = false;
             gameObject.SetActive(true);
             animator.SetInteger("State", 1);
         }
 
         public void Disappereance()
         {
-            gameObject.SetActive(true);
+            Camera.main.GetComponent<PhysicsRaycaster>().enabled = true;
             animator.SetInteger("State", 2);
         }
 

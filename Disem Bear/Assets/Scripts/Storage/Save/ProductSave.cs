@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet;
 using UnityEngine;
 
 namespace External.Storage
@@ -8,10 +9,8 @@ namespace External.Storage
     [Serializable]
     public class ProductSave
     {
-        public string typeChangeProduct;
-        public int countChangeProduct;
+        public Reward reward;
         public string typePriceChangeProduct;
         public int countPriceChange;
-        public string typeMachineDispensingProduct;
     }
 }

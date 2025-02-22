@@ -11,10 +11,7 @@ namespace UI.PlaneTablet.Exercise
     {
         private bool isCompletedExercise = false;
 
-        public string typePackage;
-        public string typeMachineDispensingPackage;
-
-        public ExerciseReward exerciseReward;
+        public List<Reward> exerciseRewards;
         public string header;
         [TextArea(10, 100)]
         public string description;
@@ -27,12 +24,12 @@ namespace UI.PlaneTablet.Exercise
             return isCompletedExercise;
         }
 
-        public ExerciseReward DoneExercise(string messageCondition)
+        public List<Reward> DoneExercise(string messageCondition)
         {
             if (conditionExercise == messageCondition)
             {
                 isCompletedExercise = true;
-                return exerciseReward;
+                return exerciseRewards;
             }
             else
                 return null;

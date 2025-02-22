@@ -96,7 +96,7 @@ namespace External.Storage
                     {
                         for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
                         {
-                            changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
+                            changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].reward.typeReward.ToString());
                         }
                     }
 
@@ -228,7 +228,7 @@ namespace External.Storage
                     {
                         for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
                         {
-                            changedResources.Add($"changedCountChangeProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].countChangeProduct.ToString());
+                            changedResources.Add($"changedCountChangeProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].reward.typeReward.ToString());
                         }
                     }
 
