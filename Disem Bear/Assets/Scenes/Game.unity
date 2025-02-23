@@ -3860,9 +3860,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.03543195
     y: 0
-    width: 1
+    width: 0.9291361
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
@@ -7333,9 +7333,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.03543195
     y: 0
-    width: 1
+    width: 0.9291361
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
@@ -7972,6 +7972,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2019702673}
+    - target: {fileID: 21771474613180231, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 127413784041622140, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_Value
       value: 1
@@ -8144,6 +8148,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4784197036225995973, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 149.99998
+      objectReference: {fileID: 0}
     - target: {fileID: 4813487085863515753, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -8190,7 +8198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5394816295207799340, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0008544922
+      value: -0.00024414062
       objectReference: {fileID: 0}
     - target: {fileID: 5983243132478860536, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_AnchorMax.y
