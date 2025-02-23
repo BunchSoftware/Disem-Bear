@@ -136,7 +136,12 @@ MonoBehaviour:
   ingradient:
     typeIngradient: 
     countIngradient: 0
-  ingradientRenderer: {fileID: 0}
+  OnPickUpIngradient:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPutIngradient:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &735059859979149942
 BoxCollider:
   m_ObjectHideFlags: 0
