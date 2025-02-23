@@ -35,13 +35,13 @@ namespace UI.PlaneTablet.Shop
         {
             this.product = product;
             headerText.text = product.header;
-            avatarChange.sprite = product.avatarChange;
+            avatarChange.sprite = product.reward.avatarReward;
             avatarPriceChange.sprite = product.avatarPriceChange;
-            if (product.countChangeProduct == -1)
+            if (product.reward.countReward == -1)
                 countProductText.gameObject.SetActive(false);
             else
             {
-                if (product.countChangeProduct == 0)
+                if (product.reward.countReward == 0)
                 {
                     print(2);
                     ActionRemove?.Invoke();
@@ -49,7 +49,7 @@ namespace UI.PlaneTablet.Shop
                 }
             }
 
-            countProductText.text = $"{product.countChangeProduct}x";
+            countProductText.text = $"{product.reward.countReward}x";
             countPriceChangeText.gameObject.SetActive(true);
             countPriceChangeText.text = $"{product.countPriceChange}x";
         }

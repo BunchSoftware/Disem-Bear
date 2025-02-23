@@ -22,7 +22,7 @@ namespace UI.PlaneTablet.Exercise
         private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
 
         public Action<Exercise> GetCurrentExercise;
-        public Action<ExerciseReward> GetExerciseReward;
+        public Action<List<Reward>> GetExerciseRewards;
 
         private ExerciseGUI currentExerciseGUI;
 
@@ -94,21 +94,24 @@ namespace UI.PlaneTablet.Exercise
 
         public void DoneCurrentExercise(string messageExercise)
         {
-            ExerciseReward exerciseReward = currentExerciseGUI.DoneExercise(messageExercise);
-            GetExerciseReward?.Invoke(exerciseReward);
-            GiveReward(exerciseReward);
+            List<Reward> exerciseRewards = currentExerciseGUI.DoneExercise(messageExercise);
+            GetExerciseRewards?.Invoke(exerciseRewards);
+            GiveRewards(exerciseRewards);
             Sort(currentExerciseGUI);
         }
 
-        private void GiveReward(ExerciseReward exerciseReward)
+        private void GiveRewards(List<Reward> exerciseRewards)
         {
             if (typeGiveProducts != null)
             {
                 for (int i = 0; i < typeGiveProducts.Count; i++)
                 {
-                    if (typeGiveProducts[i].typeMachineDispensingProduct == exerciseReward.typeMachineDispensingReward)
+                    for (int j = 0; j < exerciseRewards.Count; j++)
                     {
-                        typeGiveProducts[i].OnGetProduct.Invoke(exerciseReward.typeReward);
+                        if (typeGiveProducts[i].typeMachineDispensingProduct == exerciseRewards[j].typeMachineDispensingReward)
+                        {
+                            typeGiveProducts[i].OnGetReward.Invoke(exerciseRewards[j]);
+                        }
                     }
                 }
             }
@@ -120,9 +123,12 @@ namespace UI.PlaneTablet.Exercise
             {
                 for (int i = 0; i < typeGiveProducts.Count; i++)
                 {
-                    if (typeGiveProducts[i].typeMachineDispensingProduct == exercise.typeMachineDispensingPackage)
+                    for (int j = 0; j < exercise.exerciseRewards.Count; j++)
                     {
-                        typeGiveProducts[i].OnGetProduct.Invoke(exercise.typePackage);
+                        if (typeGiveProducts[i].typeMachineDispensingProduct == exercise.exerciseRewards[j].typeMachineDispensingReward)
+                        {
+                            typeGiveProducts[i].OnGetReward?.Invoke(exercise.exerciseRewards[j]);
+                        }
                     }
                 }
             }

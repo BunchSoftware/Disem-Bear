@@ -12,7 +12,7 @@ namespace UI.PlaneTablet.Shop
     public class TypeMachineDispensingProduct
     {
         public string typeMachineDispensingProduct;
-        public UnityEvent<string> OnGetProduct;
+        public UnityEvent<Reward> OnGetReward;
     }
 
     [Serializable]
@@ -41,9 +41,7 @@ namespace UI.PlaneTablet.Shop
                     {
                         productSaves.Add(new ProductSave()
                         {
-                            countChangeProduct = fileProducts.products[i].countChangeProduct,
-                            typeChangeProduct = fileProducts.products[i].typeChangeProduct,
-                            typeMachineDispensingProduct = fileProducts.products[i].typeMachineDispensingProduct,
+                            reward = fileProducts.products[i].reward,
                             countPriceChange = fileProducts.products[i].countPriceChange,
                             typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
                         });
@@ -58,15 +56,12 @@ namespace UI.PlaneTablet.Shop
                 {
                     indexProduct = i,
                     typePriceChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typePriceChangeProduct,
-                    typeChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typeChangeProduct,
-                    typeMachineDispensingProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typeMachineDispensingProduct,
-                    countChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].countChangeProduct,
+                    reward = saveManager.fileShop.JSONShop.resources.productSaves[i].reward,
                     countPriceChange = saveManager.fileShop.JSONShop.resources.productSaves[i].countPriceChange,
                     header = fileProducts.products[i].header,
                     avatarPriceChange = fileProducts.products[i].avatarPriceChange,
-                    avatarChange = fileProducts.products[i].avatarChange,
                 };
-                if (saveManager.fileShop.JSONShop.resources.productSaves[i].countChangeProduct != 0)
+                if (saveManager.fileShop.JSONShop.resources.productSaves[i].reward.countReward != 0)
                     products.Add(product);
             }
 
@@ -85,10 +80,10 @@ namespace UI.PlaneTablet.Shop
                     productGUI.Init(
                     (product) =>
                     {
-                        if (Buy(product) && product.countChangeProduct - 1 >= 0)
+                        if (Buy(product) && product.reward.countReward - 1 >= 0)
                         {
-                            product.countChangeProduct--;
-                            saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countChangeProduct = product.countChangeProduct;
+                            product.reward.countReward--;
+                            saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].reward = product.reward;
                             saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.countPriceChange;
                             saveManager.UpdateShopFile();
 
@@ -110,7 +105,7 @@ namespace UI.PlaneTablet.Shop
         {
             for (int j = 0; j < productsGUI.Count; j++)
             {
-                if (productsGUI[j].GetProduct().countChangeProduct == -1)
+                if (productsGUI[j].GetProduct().reward.countReward == -1)
                     content.transform.GetChild(j).SetAsFirstSibling();
             }
 
@@ -118,7 +113,7 @@ namespace UI.PlaneTablet.Shop
             {
                 for (var j = 0; j < productsGUI.Count - i; j++)
                 {
-                    if (productsGUI[j].GetProduct().countChangeProduct != -1)
+                    if (productsGUI[j].GetProduct().reward.countReward != -1)
                     {
                         var temp = productsGUI[j];
                         productsGUI[j] = productsGUI[j + 1];
@@ -143,7 +138,7 @@ namespace UI.PlaneTablet.Shop
                             saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct -= product.countPriceChange;
                             for (int j = 0; j < saveManager.filePlayer.JSONPlayer.resources.products.Count; j++)
                             {
-                                if (saveManager.filePlayer.JSONPlayer.resources.products[j].typeProduct == product.typeChangeProduct)
+                                if (saveManager.filePlayer.JSONPlayer.resources.products[j].typeProduct == product.reward.typeReward)
                                 {
                                     saveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
                                     saveManager.UpdatePlayerFile();
@@ -157,7 +152,7 @@ namespace UI.PlaneTablet.Shop
                             saveManager.filePlayer.JSONPlayer.resources.products.Add(new SaveTypeProduct()
                             {
                                 countProduct = 1,
-                                typeProduct = product.typeChangeProduct
+                                typeProduct = product.reward.typeReward,
                             });
 
                             GiveProduct(product);
@@ -179,9 +174,9 @@ namespace UI.PlaneTablet.Shop
             {
                 for (int i = 0; i < typeGiveProducts.Count; i++)
                 {
-                    if (typeGiveProducts[i].typeMachineDispensingProduct == product.typeMachineDispensingProduct)
+                    if (typeGiveProducts[i].typeMachineDispensingProduct == product.reward.typeMachineDispensingReward)
                     {
-                        typeGiveProducts[i].OnGetProduct.Invoke(product.typeChangeProduct);
+                        typeGiveProducts[i].OnGetReward?.Invoke(product.reward);
                     }
                 }
             }
