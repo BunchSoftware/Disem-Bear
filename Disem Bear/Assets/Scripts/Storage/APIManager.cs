@@ -106,6 +106,17 @@ namespace External.API
         [SerializeField] private string UUID;
         public UnityEvent OnNotInternet;
 
+        public void Init()
+        {
+            if (UUID.Length == 0)
+            {
+                Debug.LogError("CriticError-APIManager: UUID не может быть длинной в 0 символов");
+                return;
+            }
+
+            Debug.Log("APIManager: Успешно иницилизирован");
+        }
+
         private void Start()
         {
             // Регистрация игрока и задания ресурсов, если нужно отсутсвие ресурсов, укажите null

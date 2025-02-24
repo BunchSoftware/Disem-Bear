@@ -39,6 +39,8 @@ namespace UI
             exerciseManager.Init(saveManager);
             dialogChat.Init(this);
             dialogManager.Init(saveManager, this);
+
+            Debug.Log("UIGameRoot: Успешно иницилизирован");
         }
 
         public void OnUpdate(float deltaTime)

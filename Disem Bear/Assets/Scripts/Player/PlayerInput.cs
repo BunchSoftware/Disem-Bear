@@ -63,24 +63,29 @@ namespace Game.Environment
         private List<IMouseOver> currentMouseOver = new List<IMouseOver>();
         private GameObject overObject;
 
+        public static bool isActive = true;
+
         public void OnUpdate(float deltaTime)
         {
-            MouseOver();          
+            if (isActive)
+            {
+                MouseOver();
 
-            if (Input.GetMouseButtonUp(0))
-                LeftMouseUpClick();
-            if (Input.GetMouseButtonUp(1))
-                RightMouseUpClick();
+                if (Input.GetMouseButtonUp(0))
+                    LeftMouseUpClick();
+                if (Input.GetMouseButtonUp(1))
+                    RightMouseUpClick();
 
-            if (Input.GetMouseButton(0))
-                LeftMouseClick();
-            if (Input.GetMouseButton(1))
-                RightMouseClick();
+                if (Input.GetMouseButton(0))
+                    LeftMouseClick();
+                if (Input.GetMouseButton(1))
+                    RightMouseClick();
 
-            if (Input.GetMouseButtonDown(0))
-                LeftMouseDownClick();
-            if (Input.GetMouseButtonDown(1))
-                RightMouseDownClick();
+                if (Input.GetMouseButtonDown(0))
+                    LeftMouseDownClick();
+                if (Input.GetMouseButtonDown(1))
+                    RightMouseDownClick();
+            }
         }
         #region LeftMouseClick
 

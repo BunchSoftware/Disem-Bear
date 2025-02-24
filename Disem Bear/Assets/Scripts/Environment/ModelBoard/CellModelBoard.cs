@@ -75,7 +75,7 @@ namespace Game.Environment.LModelBoard
                     if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
                     {
                         player.PutItem();
-                        Debug.Log("Я положил предмет в ModelBoard");
+                        Debug.Log($"Предмет {currentItemInCell.NameItem} был помещен в ячейку {name} ModelBoard");
                     }
                 }
                 else if (!modelBoard.IsDrag && isClick && modelBoard.IsOpen &&
