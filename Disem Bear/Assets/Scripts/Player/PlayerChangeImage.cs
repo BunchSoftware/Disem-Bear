@@ -17,6 +17,8 @@ namespace Game.LPlayer
             this.animator = animator;
             this.player = player;
             playerParticleSystem = player.PlayerParticleSystem;
+
+            Debug.Log("PlayerChangeImage: Успешно иницилизирован");
         }
 
 

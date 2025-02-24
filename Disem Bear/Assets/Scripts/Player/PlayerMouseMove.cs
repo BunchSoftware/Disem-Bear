@@ -35,6 +35,8 @@ namespace Game.LPlayer
             this.navMeshAgent = navMeshAgent;
             move.transform = navMeshAgent.transform;
             preveiusPosition = move.transform.position;
+
+            Debug.Log("PlayerMouseMove: Успешно иницилизирован");
         }
 
         public void OnUpdate(float deltaTime)

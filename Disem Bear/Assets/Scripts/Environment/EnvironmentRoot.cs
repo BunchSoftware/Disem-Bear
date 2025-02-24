@@ -65,6 +65,8 @@ namespace Game.Environment
             workbench.Init(saveManager, player, playerMouseMove);
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);
+
+            Debug.Log("EnvironmentRoot: Успешно иницилизирован");
         }
         public void OnUpdate(float deltaTime)
         {

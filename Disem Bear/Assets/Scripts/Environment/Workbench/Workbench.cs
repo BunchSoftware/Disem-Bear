@@ -30,7 +30,6 @@ namespace Game.Environment.LMixTable
         [SerializeField] private ClearButton clearButton;
         [Header("Recieps Craft")]
         [SerializeField] private List<CraftRecipe> recipes = new List<CraftRecipe>();
-        [SerializeField] private List<IngradientSpawner> ingradientSpawners;
 
         public float timeIngradientMoveToMixTable = 0.5f;
         public float timeIngradientPickUpPlayer = 1.5f;
@@ -68,6 +67,7 @@ namespace Game.Environment.LMixTable
         private List<Ingradient> ingradients = new List<Ingradient>();
         private List<IngradientDragCell> ingradientDragCells = new List<IngradientDragCell>();
         private List<IngradientDragObject> ingradientDragObjects = new List<IngradientDragObject>();
+        private List<IngradientSpawner> ingradientSpawners = new List<IngradientSpawner>();
 
         private IngradientDragBase pointer;
 
@@ -90,6 +90,12 @@ namespace Game.Environment.LMixTable
             mixButton.SetActive(false);
             pickUpButton.SetActive(false);
             clearButton.SetActive(true);
+
+            for (int i = 0; i < content.transform.childCount; i++)
+            {
+                if (content.transform.GetChild(i).TryGetComponent<IngradientSpawner>(out var ingradientSpawner))
+                    ingradientSpawners.Add(ingradientSpawner);
+            }
 
             for (int i = 0; i < ingradientSpawners.Count; i++)
             {
@@ -144,6 +150,8 @@ namespace Game.Environment.LMixTable
                 OnEndWorkbenchClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
+
+            Debug.Log("Workbench: Успешно иницилизирован");
         }
 
         /// <summary>

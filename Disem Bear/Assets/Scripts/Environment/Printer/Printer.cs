@@ -82,6 +82,8 @@ namespace Game.Environment.Printer
                     }
                 }
             });
+
+            Debug.Log("Printer: Успешно иницилизирован");
         }
 
         IEnumerator WaitWhilePrintObject(PrinterObjectInfo printerObjectInfo)

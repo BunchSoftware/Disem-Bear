@@ -43,6 +43,52 @@ namespace External.DI
 
         private void Awake()
         {
+            #region Init
+            if (!player)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной Player");
+                return;
+            }
+
+            if (!tutorialRoot)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной TutorialRoot");
+                return;
+            }
+
+            if (!environmentRoot)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной EnvironmentRoot");
+                return;
+            }
+
+            if (!uiGameRoot)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной UIGameRoot");
+                return;
+            }
+
+            if (!fileMagnets)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FileMagnets");
+                return;
+            }
+
+            if (!filePlayer)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FilePlayer");
+                return;
+            }
+
+            if (!fileShop)
+            {
+                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FileShop");
+                return;
+            }
+            #endregion
+
+            apiManager.Init();
+
             saveManager.Init(apiManager, filePlayer, fileShop, fileMagnets);
 
             musicManager.Init(this);

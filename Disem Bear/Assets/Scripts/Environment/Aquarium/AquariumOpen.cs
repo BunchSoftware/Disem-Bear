@@ -60,6 +60,7 @@ namespace Game.Environment.Aquarium
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
+            Debug.Log("AquariumOpen: Успешно иницилизирован");
         }
 
 
