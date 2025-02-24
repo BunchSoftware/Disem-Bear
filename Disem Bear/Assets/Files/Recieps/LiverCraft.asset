@@ -10,11 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2e7022b50c6a8e4e8daa69d37a8fd67, type: 3}
-  m_Name: RegulationReciepe
+  m_Name: LiverCraft
   m_EditorClassIdentifier: 
   inputIngradients:
-  - typeIngradient: stem
-    countIngradient: 2
-  outIngradients:
-  - typeIngradient: regulation
+  - typeIngradient: adaptation
     countIngradient: 1
+  - typeIngradient: metabolism
+    countIngradient: 1
+  - typeIngradient: detoxification
+    countIngradient: 1
+  - typeIngradient: filtering
+    countIngradient: 1
+  - typeIngradient: yellow
+    countIngradient: 1
+  outIngradients: []
+  outPickUpItems:
+  - {fileID: 2333891684155525614, guid: 99c29ef1ea18e1647932dcea604e3169, type: 3}
