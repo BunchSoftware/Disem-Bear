@@ -24,6 +24,8 @@ namespace Game.Environment.Aquarium
         private PlayerMouseMove playerMouseMove;
         private MovePointToPoint spriteMovePointToPoint;
 
+        [SerializeField] private Aquarium aquarium;
+
 
 
 
@@ -59,7 +61,7 @@ namespace Game.Environment.Aquarium
                 OnAquariumClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
-
+            //aquarium.Init(saveManager, player);
         }
 
 
@@ -67,6 +69,7 @@ namespace Game.Environment.Aquarium
         public void OnUpdate(float deltaTime)
         {
             openObject.OnUpdate(deltaTime);
+            //aquarium.OnUpdate(deltaTime);
         }
 
         //private void Start()

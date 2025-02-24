@@ -185,7 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432ed7162cd4076419ccd56fa8feb695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameMaterial: Blue
+  cells:
+  - detoxification
+  - digestion
+  - adaptation
+  colorMaterial: none
   TimeMaterial: 60
 --- !u!1 &8256711546220021766
 GameObject:

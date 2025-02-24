@@ -31,7 +31,7 @@ namespace Game.Environment.Aquarium
         private void OnMouseDown()
         {
             sr.color = OnCLickButton;
-            transform.parent.GetComponent<Aquarium>().ChangeCell(ChangeCellNum);
+            //transform.parent.GetComponent<Aquarium>().ChangeCell(ChangeCellNum);
         }
         private void OnMouseUp()
         {

@@ -43,7 +43,7 @@ namespace Game.Environment.LMixTable
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             if (ingradient.typeIngradient == string.Empty)
-                Debug.LogError($"Не задан тип инградиента {name}");
+                Debug.LogError($"Не задан тип ингредиента {name}");
 
             CheckCountIngradient();
 
