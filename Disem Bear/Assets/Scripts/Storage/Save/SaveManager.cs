@@ -26,30 +26,39 @@ namespace External.Storage
             this.fileShop = fileShop;
             this.apiManager = apiManager;
 
-            saveManagerIO = new SaveManagerIO();
-
-            pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
-            pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
-
-            if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
-                filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
-
-            if (filePlayer.JSONPlayer == null)
+            try
             {
-                filePlayer.JSONPlayer = new JSONPlayer();
-                filePlayer.JSONPlayer.resources = new ResourcePlayer();
-                saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                saveManagerIO = new SaveManagerIO();
+
+                pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
+                pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
+
+                if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
+                    filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
+
+                if (filePlayer.JSONPlayer == null)
+                {
+                    filePlayer.JSONPlayer = new JSONPlayer();
+                    filePlayer.JSONPlayer.resources = new ResourcePlayer();
+                    saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                }
+
+                if (fileShop.JSONShop.nameShop == "")
+                    fileShop.JSONShop = saveManagerIO.LoadJSONShop(pathToFileResourceShop);
+
+                if (fileShop.JSONShop == null)
+                {
+                    fileShop.JSONShop = new JSONShop();
+                    fileShop.JSONShop.resources = new ResourceShop();
+                    saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+                }
+            }
+            catch
+            {
+                Debug.LogError("SaveManager: Ошибка иницилизации");
             }
 
-            if (fileShop.JSONShop.nameShop == "")
-                fileShop.JSONShop = saveManagerIO.LoadJSONShop(pathToFileResourceShop);
-
-            if (fileShop.JSONShop == null)
-            {
-                fileShop.JSONShop = new JSONShop();
-                fileShop.JSONShop.resources = new ResourceShop();
-                saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
-            }
+            Debug.Log("SaveManager: Успешно иницилизирован");
         }
 
         public void Init(APIManager apiManager, FilePlayer filePlayer)

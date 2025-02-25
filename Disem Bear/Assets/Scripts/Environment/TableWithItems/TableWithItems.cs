@@ -26,6 +26,8 @@ namespace Game.Environment.LTableWithItems
                 cellTables[i].Init(this, player);
             }
 
+            Debug.Log("TableWithItems: Успешно иницилизирован");
+
             //triggerObject.OnTriggerEnterEvent.AddListener((collider) =>
             //{
             //    isTrigger = true;

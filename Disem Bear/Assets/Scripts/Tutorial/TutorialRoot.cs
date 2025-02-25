@@ -24,6 +24,8 @@ namespace Game.Tutorial
             this.player = player;
 
             pointerTutorialManager.Init(dialogManager, player);
+
+            Debug.Log("TutorialRoot: Успешно иницилизирован");
         }
     }
 }

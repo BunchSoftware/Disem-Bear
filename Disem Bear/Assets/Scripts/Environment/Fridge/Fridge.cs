@@ -84,6 +84,8 @@ namespace Game.Environment.Fridge
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
+            Debug.Log("Fridge: Успешно иницилизирован");
+
             //FrontFridge = transform.Find("FrontFridge").gameObject;
 
             //if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)

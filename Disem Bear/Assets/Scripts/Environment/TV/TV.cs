@@ -29,6 +29,8 @@ public class TV : MonoBehaviour, IUpdateListener
         });
 
         openObject.Init(triggerObject, playerMouseMove, player);
+
+        Debug.Log("TV: Успешно иницилизирован");
     }
 
     public void OnUpdate(float deltaTime)

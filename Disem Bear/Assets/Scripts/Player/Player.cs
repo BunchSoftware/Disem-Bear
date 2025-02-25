@@ -61,6 +61,8 @@ namespace Game.LPlayer
                 playerPickUpItem = true;
                 pickUpItem.CanTakeByCollisionPlayer = false;
 
+                Debug.Log($"Игрок поднял предмет: {pickUpItem.name} {pickUpItem.NameItem}");
+
                 this.pickUpItem = pickUpItem;
                 if (this.pickUpItem.TryGetComponent(out ScaleChooseObject scaleChooseObject))
                     scaleChooseObject.RemoveComponent();
@@ -79,6 +81,8 @@ namespace Game.LPlayer
                 playerPickUpItem = false;
                 OnPutItem?.Invoke(pickUpItem);
 
+                Debug.Log($"Игрок положил предмет: {pickUpItem.name} {pickUpItem.NameItem}");
+
                 temp = pickUpItem;
                 pickUpItem = null;
 
@@ -88,15 +92,17 @@ namespace Game.LPlayer
             return temp;
         }
 
-        public void EnterSomething()
+        public void EnterSomething(MonoBehaviour context)
         {
             playerInSomething = true;
+            Debug.Log($"Игрок вошел в управление обьектом {context.name}");
             OnEnterSomething?.Invoke();
         }
 
-        public void ExitSomething()
+        public void ExitSomething(MonoBehaviour context)
         {
             playerInSomething = false;
+            Debug.Log($"Игрок вышел из управления обьектом {context.name}");
             OnExitSomething?.Invoke();
         }
 

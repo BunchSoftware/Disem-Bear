@@ -32,9 +32,28 @@ namespace Game.Music
         {
             this.context = context;
 
-            // Проверка на наличие слайдера регулировки звука
-            if (mixer == null)
-                Debug.LogError("В настройках звука установите Audio Mixer");
+            if(!this.context)
+            {
+                Debug.LogError("CriticError-SoundManager: Переданный аргумент при иницилизации равен null");
+                return;
+            }
+
+            if(!prefabAudioSource)
+            {
+                Debug.LogError("CriticError-SoundManager: Не указано значение переменной PrefabAudioSource");
+                return;
+            }
+            if (!mixer)
+            {
+                Debug.LogError("CriticError-SoundManager: Не указано значение переменной Audio Mixer");
+                return;
+            }
+            if (nameKey.Length == 0)
+            {
+                Debug.LogError("CriticError-SoundManager: Установите NameKey больше одного символа");
+                return;
+            }
+
             if (soundSlider != null)
             {
                 soundSlider.onValueChanged.RemoveAllListeners();
@@ -70,6 +89,8 @@ namespace Game.Music
                 if(!audio.loop)
                     context.StartCoroutine(EndAudioClip(audio));
             }
+
+            Debug.Log("SoundManager: Успешно иницилизирован");
         }
 
         // Эффект затухания громокости звука

@@ -93,6 +93,8 @@ namespace Game.Environment.LModelBoard
                 cellBoards[i].Init(this, workbench, player, triggerObject, transform);
             }
 
+            Debug.Log("APIManager: Успешно иницилизирован");
+
             //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
             //{
             //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Count; i++)
