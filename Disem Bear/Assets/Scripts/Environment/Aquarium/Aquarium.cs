@@ -28,6 +28,8 @@ namespace Game.Environment.Aquarium
         private SpriteRenderer spriteRenderer;
         private ParticleSystem particleSystem;
         private GameObject DisplayCount;
+        [SerializeField] private ChangeCell buttonLeft;
+        [SerializeField] private ChangeCell buttonRight;
 
         private int CountCells = 0;
 
@@ -53,6 +55,9 @@ namespace Game.Environment.Aquarium
             DisplayCount = transform.Find("DisplayCount").gameObject;
 
             UpdateMaterial(materialForAquarium);
+
+            buttonLeft.Init(this);
+            buttonRight.Init(this);
         }
 
         public void OnUpdate(float deltaTime)
@@ -61,48 +66,51 @@ namespace Game.Environment.Aquarium
             {
                 timeMaterial -= Time.deltaTime;
             }
-            if (CountCells == 0)
+            if (phasesAquariums.ContainsKey(colorMaterial))
             {
-                if (timeMaterial <= 0f)
+                if (CountCells == 0)
                 {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].NullFaseDirty;
+                    if (timeMaterial <= 0f)
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].NullFaseDirty;
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].NullFase;
+                    }
                 }
-                else
+                else if (CountCells < 4)
                 {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].NullFase;
+                    if (timeMaterial <= 0f)
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].FirstFaseDirty;
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].FirstFase;
+                    }
                 }
-            }
-            else if (CountCells < 4)
-            {
-                if (timeMaterial <= 0f)
+                else if (CountCells < 9)
                 {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].FirstFaseDirty;
+                    if (timeMaterial <= 0f)
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].SecondFaseDirty;
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].SecondFase;
+                    }
                 }
-                else
+                else if (CountCells < 15)
                 {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].FirstFase;
-                }
-            }
-            else if (CountCells < 9)
-            {
-                if (timeMaterial <= 0f)
-                {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].SecondFaseDirty;
-                }
-                else
-                {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].SecondFase;
-                }
-            }
-            else if (CountCells < 15)
-            {
-                if (timeMaterial <= 0f)
-                {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].ThirdFaseDirty;
-                }
-                else
-                {
-                    spriteRenderer.sprite = phasesAquariums[colorMaterial].ThirdFase;
+                    if (timeMaterial <= 0f)
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].ThirdFaseDirty;
+                    }
+                    else
+                    {
+                        spriteRenderer.sprite = phasesAquariums[colorMaterial].ThirdFase;
+                    }
                 }
             }
             if (timeMaterial > 0f) spendTimeCreateCell += Time.deltaTime;
@@ -119,6 +127,16 @@ namespace Game.Environment.Aquarium
             if (materialForAquarium != null)
             {
                 currentCells = new List<string>(materialForAquarium.cells);
+                if (currentCells.Count > 1)
+                {
+                    buttonLeft.SetOn();
+                    buttonRight.SetOn();
+                }
+                else
+                {
+                    buttonLeft.SetOff();
+                    buttonRight.SetOff();
+                }
                 colorMaterial = materialForAquarium.colorMaterial;
                 timeMaterial = materialForAquarium.TimeMaterial;
                 GetAllCells();

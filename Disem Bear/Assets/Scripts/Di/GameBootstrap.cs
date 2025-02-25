@@ -43,6 +43,7 @@ namespace External.DI
 
         private void Awake()
         {
+            PlayerPrefs.DeleteAll();
             #region Init
             if (!player)
             {

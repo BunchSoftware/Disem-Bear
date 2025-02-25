@@ -53,8 +53,8 @@ namespace UI
             }
             else
             {
-                QualitySettings.SetQualityLevel(0);
-                dropdown.value = 0;
+                QualitySettings.SetQualityLevel(3);
+                dropdown.value = 3;
             }
         }
     }

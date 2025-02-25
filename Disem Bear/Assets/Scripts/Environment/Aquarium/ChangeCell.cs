@@ -7,35 +7,52 @@ namespace Game.Environment.Aquarium
 {
     public class ChangeCell : MonoBehaviour
     {
-        public int ChangeCellNum = 1;
-
-        private SpriteRenderer sr;
+        private SpriteRenderer spriteRenderer;
+        private Aquarium aquarium;
+        [SerializeField] private bool ChangeToLeft = true;
 
         public Color OriginalColor;
         public Color OnEnterButton;
         public Color OnCLickButton;
 
-        private void Start()
+        public void Init(Aquarium aquarium)
         {
-            sr = GetComponent<SpriteRenderer>();
-            sr.color = OriginalColor;
+            this.aquarium = aquarium;
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = OriginalColor;
         }
+
         private void OnMouseEnter()
         {
-            sr.color = OnEnterButton;
+            spriteRenderer.color = OnEnterButton;
         }
         private void OnMouseExit()
         {
-            sr.color = OriginalColor;
+            spriteRenderer.color = OriginalColor;
         }
         private void OnMouseDown()
         {
-            sr.color = OnCLickButton;
-            //transform.parent.GetComponent<Aquarium>().ChangeCell(ChangeCellNum);
+            spriteRenderer.color = OnCLickButton;
+            if (ChangeToLeft)
+            {
+                aquarium.ChangeCellLeft();
+            }
+            else
+            {
+                aquarium.ChangeCellRight();
+            }
         }
         private void OnMouseUp()
         {
-            sr.color = OriginalColor;
+            spriteRenderer.color = OriginalColor;
+        }
+        public void SetOff()
+        {
+            gameObject.SetActive(false);
+        }
+        public void SetOn()
+        {
+            gameObject.SetActive(true);
         }
     }
 }
