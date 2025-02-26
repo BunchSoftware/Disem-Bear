@@ -2700,6 +2700,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 597151225603841999, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 597151225603841999, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: m_Color.r
+      value: 0.85882354
+      objectReference: {fileID: 0}
     - target: {fileID: 1075308218668563968, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: m_Name
       value: Aquarium (4)
@@ -2716,6 +2724,10 @@ PrefabInstance:
       propertyPath: ChangeToLeft
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3997544332078894339, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: buttonLeft
       value: 
@@ -2727,7 +2739,7 @@ PrefabInstance:
     - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: materialForAquarium
       value: 
-      objectReference: {fileID: 8688015039957210573, guid: db66ddf982eeeff4e98f6e5526f763d5, type: 3}
+      objectReference: {fileID: 8688015039957210573, guid: d5099b405a8a40a48a9de7991710106f, type: 3}
     - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: InspectorSpawners.Array.size
       value: 9
