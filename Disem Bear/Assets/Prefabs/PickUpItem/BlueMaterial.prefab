@@ -144,8 +144,8 @@ MonoBehaviour:
   IsClickedLeftMouseButton: 0
   IsClickedRightMouseButton: 0
   CanTakeByCollisionPlayer: 1
-  typeItem: 0
-  nameItem: 
+  typeItem: 1
+  nameItem: BlueMaterial
 --- !u!54 &4036968444998537156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -185,7 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432ed7162cd4076419ccd56fa8feb695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameMaterial: Blue
+  cells:
+  - metabolism
+  - detoxification
+  - digestion
+  colorMaterial: none
   TimeMaterial: 60
 --- !u!1 &8256711546220021766
 GameObject:
@@ -198,7 +202,7 @@ GameObject:
   - component: {fileID: 7027956750471524247}
   - component: {fileID: 1709181368632516143}
   m_Layer: 0
-  m_Name: Illustration18 (17)
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

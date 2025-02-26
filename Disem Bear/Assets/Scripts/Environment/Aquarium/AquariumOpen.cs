@@ -12,9 +12,11 @@ namespace Game.Environment.Aquarium
     [RequireComponent(typeof(ScaleChooseObject))]
     public class AquariumOpen : MonoBehaviour, ILeftMouseDownClickable
     {
+        [SerializeField] private Aquarium aquarium;
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
         private TriggerObject triggerObject;
+        private Collider collider;
 
         public UnityEvent OnAquariumOpen;
         public UnityEvent OnAquariumClose;
@@ -37,6 +39,7 @@ namespace Game.Environment.Aquarium
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
             spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
+            collider = GetComponent<Collider>();
 
             openObject.OnStartObjectOpen.AddListener(() =>
             {
@@ -45,12 +48,13 @@ namespace Game.Environment.Aquarium
             });
             openObject.OnEndObjectOpen.AddListener(() =>
             {
-                
+                collider.enabled = false;
                 OnAquariumOpen?.Invoke();
             });
 
             openObject.OnStartObjectClose.AddListener(() =>
             {
+                collider.enabled = true;
                 spriteMovePointToPoint.StartMoveTo(openObject.timeClose);
             });
             openObject.OnEndObjectClose.AddListener(() =>
@@ -59,6 +63,7 @@ namespace Game.Environment.Aquarium
                 OnAquariumClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
+            aquarium.Init(saveManager, player);
 
             Debug.Log("AquariumOpen: Успешно иницилизирован");
         }
@@ -68,6 +73,7 @@ namespace Game.Environment.Aquarium
         public void OnUpdate(float deltaTime)
         {
             openObject.OnUpdate(deltaTime);
+            aquarium.OnUpdate(deltaTime);
         }
 
         //private void Start()

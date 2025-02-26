@@ -7,7 +7,8 @@ namespace Game.Environment.Aquarium
 {
     public class MaterialForAquarium : MonoBehaviour
     {
-        public string nameMaterial = "none";
+        public List<string> cells = new();
+        public string colorMaterial = "none";
         public float TimeMaterial = 10f;
     }
 }

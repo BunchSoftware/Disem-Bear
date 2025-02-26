@@ -65,6 +65,11 @@ namespace Game.Environment
 
         public static bool isActive = true;
 
+        public PlayerInput()
+        {
+            isActive = true;
+        }
+
         public void OnUpdate(float deltaTime)
         {
             if (isActive)

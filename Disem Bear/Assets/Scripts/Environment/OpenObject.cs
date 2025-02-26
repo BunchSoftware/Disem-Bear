@@ -20,6 +20,8 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform playerTransform;
 
+    [SerializeField] private bool activePlayerInput = true;
+
     public UnityEvent OnStartObjectOpen;
     public UnityEvent OnEndObjectOpen;
 
@@ -65,7 +67,8 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
                 isOpen = true;
                 isClick = false;
 
-                PlayerInput.isActive = false;
+                if(!activePlayerInput)
+                    PlayerInput.isActive = false;
                 OnStartObjectOpen?.Invoke();
                 StartCoroutine(IObjectWaitBeforeOpening(timeWaitBeforeOpening));
             }
@@ -103,7 +106,8 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
     {
         yield return new WaitForSeconds(time);
         player.ExitSomething(this);
-        PlayerInput.isActive = true;
+        if(!activePlayerInput)
+            PlayerInput.isActive = true;
         OnEndObjectClose.Invoke();
     }
 

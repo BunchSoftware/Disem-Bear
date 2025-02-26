@@ -40,6 +40,7 @@ namespace Game.Environment
         {
             this.saveManager = saveManager;
 
+            workbench.Init(saveManager, player, playerMouseMove);
             for (int i = 0; i < nextRooms.Count; i++)
             {
                 nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
@@ -62,7 +63,6 @@ namespace Game.Environment
             {
                 modelBoards[i].Init(saveManager, workbench, player, playerMouseMove);
             }
-            workbench.Init(saveManager, player, playerMouseMove);
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);
 
