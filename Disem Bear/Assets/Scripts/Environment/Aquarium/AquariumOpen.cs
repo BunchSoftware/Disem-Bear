@@ -1,5 +1,6 @@
 using External.Storage;
 using Game.Environment.Item;
+using Game.Environment.LPostTube;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,12 +103,13 @@ namespace Game.Environment.Aquarium
         {
             if (pickUpItem != null)
             {
+                MaterialForAquarium materialForAquarium;
                 switch (pickUpItem.TypeItem)
                 {
                     case TypePickUpItem.None:
                         break;
                     case TypePickUpItem.AquariumMaterial:
-                        MaterialForAquarium materialForAquarium;
+                        
                         if (pickUpItem.TryGetComponent(out materialForAquarium))
                         {
                             aquarium.UpdateMaterial(materialForAquarium);
@@ -115,7 +117,26 @@ namespace Game.Environment.Aquarium
                         }
                         else
                         {
-                            Debug.LogError("Объект задан как материал аквариума, но не имеет нужных скриптов");
+                            Debug.LogError("Объект задан как материал аквариума, но не имеет скрипта MaterialForAquarium");
+                        }
+                        break;
+                    case TypePickUpItem.Package:
+                        PackageItem packageItem;
+                        if (pickUpItem.TryGetComponent(out packageItem))
+                        {
+                            if (packageItem.itemInPackage.TryGetComponent(out materialForAquarium))
+                            {
+                                aquarium.UpdateMaterial(materialForAquarium);
+                                return true;
+                            }
+                            else
+                            {
+                                Debug.Log("Отказ в принятии посылки, так как нет скрипта MaterialForAquarium");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
                         }
                         break;
                 }
