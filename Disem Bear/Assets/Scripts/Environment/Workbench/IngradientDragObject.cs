@@ -26,8 +26,8 @@ public class IngradientDragObject : IngradientDragBase
 
             Vector3 position = new Vector3();
 
-            position.x = Math.Clamp(positionCursor.x, dragFreeBounds.min.x + dragBounds.size.x / 2, dragFreeBounds.max.x - dragBounds.size.x / 2);
-            position.z = Math.Clamp(positionCursor.z, dragFreeBounds.min.z + dragBounds.size.z / 2, dragFreeBounds.max.z - dragBounds.size.z / 2);
+            position.x = Math.Clamp(positionCursor.x, dragFreeBounds.min.x, dragFreeBounds.max.x);
+            position.z = Math.Clamp(positionCursor.z, dragFreeBounds.min.z, dragFreeBounds.max.z);
 
             transform.position =
                 new Vector3(

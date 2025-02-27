@@ -26,6 +26,13 @@ namespace Game.Environment.Item
         public string NameItem => nameItem;
         [SerializeField] private string nameItem;
 
+        private Quaternion rotation;
+
+        private void Awake()
+        {
+            rotation = transform.rotation;
+        }
+
         public void OnMouseLeftClickDownObject()
         {
             IsClickedLeftMouseButton = true;
@@ -44,6 +51,11 @@ namespace Game.Environment.Item
         public void OnMouseRightClickDownOtherObject()
         {
             IsClickedRightMouseButton = false;
+        }
+
+        public void ResetRotation()
+        {
+            transform.rotation = rotation;
         }
     }
 }

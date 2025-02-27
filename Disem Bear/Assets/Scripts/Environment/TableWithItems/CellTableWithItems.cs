@@ -91,7 +91,8 @@ namespace Game.Environment.LTableWithItems
                 boxCollider.enabled = false;
                 currentItemInCell = pickUpItem;
                 currentItemInCell.transform.parent = transform;
-                currentItemInCell.transform.position = transform.position;
+                currentItemInCell.transform.position = 
+                    new Vector3(transform.position.x, transform.position.y + currentItemInCell.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);
 
                 if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
                 {

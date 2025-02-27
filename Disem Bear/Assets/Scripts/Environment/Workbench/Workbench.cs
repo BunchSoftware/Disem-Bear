@@ -83,6 +83,13 @@ namespace Game.Environment.LMixTable
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
+            if(mixButton == null)
+                Debug.LogError("Ошибка. Не добавлен MixButton");
+            if (pickUpButton == null)
+                Debug.LogError("Ошибка. Не добавлен PickUpButton");
+            if (clearButton == null)
+                Debug.LogError("Ошибка. Не добавлен ClearButton");
+
             mixButton.Init(this);
             pickUpButton.Init(this);
             clearButton.Init(this);
@@ -90,6 +97,9 @@ namespace Game.Environment.LMixTable
             mixButton.SetActive(false);
             pickUpButton.SetActive(false);
             clearButton.SetActive(true);
+
+            if (content == null)
+                Debug.LogError("Ошибка. Не добавлен Content с спавнерами обьктов");
 
             for (int i = 0; i < content.transform.childCount; i++)
             {
@@ -172,7 +182,7 @@ namespace Game.Environment.LMixTable
                     ingradientDragCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
                 }
 
-                pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
+                pointer.GetComponentInChildren<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
 
                 StartCoroutine(IColliderDragCellsEnabled(0f, false));
                 StartCoroutine(IColliderSpawnersEnabled(0f, false));
@@ -194,7 +204,7 @@ namespace Game.Environment.LMixTable
                 ingradientDragCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
             }
 
-            pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
+            pointer.GetComponentInChildren<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
 
             StartCoroutine(IColliderDragCellsEnabled(0f, false));
             StartCoroutine(IColliderSpawnersEnabled(0f, false));
@@ -239,7 +249,7 @@ namespace Game.Environment.LMixTable
                         ingradientDragCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
                     }
 
-                    pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
+                    pointer.GetComponentInChildren<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
 
                     pointer = null;
                 }
@@ -251,6 +261,16 @@ namespace Game.Environment.LMixTable
 
                     pointer = null;
                 }
+
+                if (ingradientDragCells.Count > 0)
+                    pickUpButton.SetActive(false);
+                else if (ingradientDragObjects.Count > 0)
+                    pickUpButton.SetActive(true);
+
+                if (CheckIngradientsInMixTable())
+                    mixButton.SetActive(true);
+                else
+                    mixButton.SetActive(false);
             }
             else
             {
@@ -272,23 +292,14 @@ namespace Game.Environment.LMixTable
                     ingradientDragCells[i].GetComponent<SpriteRenderer>().sortingOrder = i;
                 }
 
-                pointer.GetComponent<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
+                pointer.GetComponentInChildren<SpriteRenderer>().sortingOrder = ingradientDragCells.Count + 1;
+                StartCoroutine(IDropFromIngradientSpawner(pointer.GetComponent<IngradientDragCell>(), ingradientSpawner, timeIngradientMoveToMixTable));
 
                 pointer = null;
             }
 
             isDrag = false;
             OnDropIngradient?.Invoke(ingradient);
-
-            if (CheckIngradientsInMixTable())
-                mixButton.SetActive(true);
-            else
-                mixButton.SetActive(false);
-
-            if (ingradientDragCells.Count > 0)
-                pickUpButton.SetActive(false);
-            else if(ingradientDragObjects.Count > 0)
-                pickUpButton.SetActive(true);
 
             StartCoroutine(IEndDrag(0.1f));
             StartCoroutine(IColliderDragObjectsEnabled(0.1f, true));
@@ -325,12 +336,24 @@ namespace Game.Environment.LMixTable
             {
                 IngradientSpawner ingradientSpawner = GetIngradientSpawnerOfTypeIngradient(ingradientCell.GetTypeIngradient());
                 ingradientCell.transform.DOMove(ingradientSpawner.transform.position, timeIngradientMoveToMixTable).SetEase(Ease.Linear);
-                StartCoroutine(IDropIngradientDragCell(ingradientCell, ingradientSpawner, timeIngradientMoveToMixTable));
+                ingradientDragCells.Remove(ingradientCell);
+                StartCoroutine(IDropToIngradientSpawner(ingradientCell, ingradientSpawner, timeIngradientMoveToMixTable));
             }
 
             pointer = null;
             isDrag = false;
             OnDropIngradient?.Invoke(ingradient);
+
+
+            if (ingradientDragCells.Count > 0)
+                pickUpButton.SetActive(false);
+            else if (ingradientDragObjects.Count > 0)
+                pickUpButton.SetActive(true);
+
+            if (CheckIngradientsInMixTable())
+                mixButton.SetActive(true);
+            else
+                mixButton.SetActive(false);
 
             StartCoroutine(IEndDrag(0.1f));
             StartCoroutine(IColliderDragObjectsEnabled(0.1f, true));
@@ -415,17 +438,20 @@ namespace Game.Environment.LMixTable
             }
         }
 
-        private IEnumerator IDropIngradientDragCell(IngradientDragCell ingradientCell, IngradientSpawner ingradientSpawner, float time)
+        private IEnumerator IDropToIngradientSpawner(IngradientDragCell ingradientCell, IngradientSpawner ingradientSpawner, float time)
         {
             yield return new WaitForSeconds(time);
             ingradientSpawner.PutIngradient(countIngradiensTaken);
-
-            ingradientDragCells.Remove(ingradientCell);
 
             if(ingradientCell != null)
             {
                 Destroy(ingradientCell.gameObject);
             }
+        }
+
+        private IEnumerator IDropFromIngradientSpawner(IngradientDragCell ingradientCell, IngradientSpawner ingradientSpawner, float time)
+        {
+            yield return new WaitForSeconds(time);
 
             if (ingradientDragCells.Count > 0)
                 pickUpButton.SetActive(false);
@@ -456,7 +482,7 @@ namespace Game.Environment.LMixTable
         /// <returns></returns>
         public IngradientDragBase InstantiatePointer(IngradientSpawner ingradientSpawner)
         {
-            IngradientDragBase pointer = Instantiate(prefabDragPoint,content.transform).GetComponent<IngradientDragBase>();
+            IngradientDragBase pointer = Instantiate(prefabDragPoint, content.transform).GetComponent<IngradientDragBase>();
             SpriteRenderer spriteRenderer = pointer.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = ingradientSpawner.GetSpriteIngradient();
 
@@ -557,7 +583,7 @@ namespace Game.Environment.LMixTable
 
             for (int i = 0; i < outPickUpItems.Count; i++)
             {
-                PickUpItem pickUpItem = Instantiate(outPickUpItems[i], content.transform);
+                PickUpItem pickUpItem = Instantiate(outPickUpItems[i], mixTable.transform);
                 pickUpItem.GetComponent<Rigidbody>().isKinematic = true;
                 pickUpItem.GetComponent<PickUpItem>().enabled = false;
 
