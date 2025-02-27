@@ -47,7 +47,7 @@ namespace Game.Environment
         IEnumerator WaitExitUI(float f)
         {
             yield return new WaitForSeconds(f);
-            PostTube.ObjectFall(getMaterial.GetComponent<MoveAnimation>());
+            PostTube.ObjectFall(getMaterial);
             getMaterial = null;
         }
     }

@@ -27,9 +27,10 @@ namespace Game.Environment.Aquarium
         private SpriteRenderer ChoiceCellSprite;
         private SpriteRenderer spriteRenderer;
         private ParticleSystem particleSystem;
-        private GameObject DisplayCount;
+        [SerializeField] private FollowDisplayCount DisplayCount;
         [SerializeField] private ChangeCell buttonLeft;
         [SerializeField] private ChangeCell buttonRight;
+        [SerializeField] private Canvas canvas;
 
         private int CountCells = 0;
 
@@ -52,7 +53,8 @@ namespace Game.Environment.Aquarium
             particleSystem = transform.Find("Particle System").GetComponent<ParticleSystem>();
             spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
-            DisplayCount = transform.Find("DisplayCount").gameObject;
+            //DisplayCount = transform.Find("DisplayCount").gameObject;
+            DisplayCount.Init(transform, canvas);
 
             UpdateMaterial(materialForAquarium);
 
@@ -62,6 +64,7 @@ namespace Game.Environment.Aquarium
 
         public void OnUpdate(float deltaTime)
         {
+            DisplayCount.OnUpdate(deltaTime);
             if (timeMaterial > 0f)
             {
                 timeMaterial -= Time.deltaTime;
@@ -174,9 +177,11 @@ namespace Game.Environment.Aquarium
                 particleSystem.Play();
                 StartCoroutine(WaitParticleSystem(0.3f));
             }
-            DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
-            DisplayCount.GetComponent<Animator>().SetBool("On", true);
-            StartCoroutine(waitDisplayCount());
+            DisplayCount.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = CountCells.ToString();
+            //DisplayCount.ChangeCount(CountCells);
+            DisplayCount.GetComponent<Animator>().Play("DisplayCount");
+            //DisplayCount.GetComponent<Animator>().SetBool("On", true);
+            //StartCoroutine(waitDisplayCount());
 
             Spawners[currentCells[NumCell]].PutIngradient(CountCells);
 
