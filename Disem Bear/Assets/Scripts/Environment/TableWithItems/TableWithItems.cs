@@ -4,6 +4,7 @@ using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,8 @@ namespace Game.Environment.LTableWithItems
     public class TableWithItems : MonoBehaviour
     {
         [SerializeField] private List<CellTableWithItems> cellTables = new List<CellTableWithItems>();
+        [Tooltip("Список предметов, которые будут на полке в начале")]
+        [SerializeField] private List<PickUpItem> itemsPutInStart = new(); 
 
         private SaveManager saveManager;
         private Player player;
@@ -24,7 +27,18 @@ namespace Game.Environment.LTableWithItems
             for (int i = 0; i < cellTables.Count; i++)
             {
                 cellTables[i].Init(this, player);
+                if (i < itemsPutInStart.Count)
+                {
+                    if (PrefabUtility.IsPartOfPrefabAsset(itemsPutInStart[i]))
+                    {
+                        itemsPutInStart[i] = Instantiate(itemsPutInStart[i]);
+                    }
+                    cellTables[i].PutItem(itemsPutInStart[i]);
+                }
             }
+            itemsPutInStart.Clear();
+
+            
 
             Debug.Log("TableWithItems: Успешно иницилизирован");
 

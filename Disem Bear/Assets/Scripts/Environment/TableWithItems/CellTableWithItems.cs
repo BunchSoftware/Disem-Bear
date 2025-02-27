@@ -34,6 +34,7 @@ namespace Game.Environment.LTableWithItems
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
+
                 if (isClick)
                 {
                     isClick = false;
