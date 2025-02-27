@@ -15,7 +15,6 @@ using UnityEngine.EventSystems;
 
 namespace Game.Environment.LModelBoard
 {
-    [RequireComponent(typeof(ScaleChooseObject))]
     public class CellModelBoard : MonoBehaviour, ILeftMouseUpClickable, IMouseOver, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
         public UnityEvent<PickUpItem> OnFocusItem;
@@ -45,8 +44,6 @@ namespace Game.Environment.LModelBoard
             this.player = player;
 
             this.draggingParent = draggingParent;
-
-            scaleChooseObject = GetComponent<ScaleChooseObject>();
 
             modelBoard.OnEndModelBoardOpen.AddListener(() =>
             {
@@ -149,6 +146,7 @@ namespace Game.Environment.LModelBoard
 
                 OnPickUpItem?.Invoke(currentItemInCell);
                 currentItemInCell = null;
+                scaleChooseObject = null;
             }
 
             return item;
@@ -162,7 +160,7 @@ namespace Game.Environment.LModelBoard
                 {
                     case TypePickUpItem.None:
                         break;
-                    case TypePickUpItem.PickUpItem:
+                    case TypePickUpItem.ModelBoardItem:
                         {
                             pickUpItem.transform.parent = transform;
                             pickUpItem.transform.position = transform.position;
@@ -171,7 +169,9 @@ namespace Game.Environment.LModelBoard
                             currentItemInCell = pickUpItem;
                             OnPutItem?.Invoke(currentItemInCell);
 
-                            break;
+                            scaleChooseObject =  pickUpItem.AddComponent<ScaleChooseObject>();
+
+                            return true;
                         }
                     case TypePickUpItem.Package:
 
@@ -193,6 +193,8 @@ namespace Game.Environment.LModelBoard
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
                             currentItemInCell = item;
 
+                            scaleChooseObject = item.AddComponent<ScaleChooseObject>();
+
                             Destroy(pickUpItem.gameObject);
                         }
                         else
@@ -200,10 +202,9 @@ namespace Game.Environment.LModelBoard
 
                         OnPutItem?.Invoke(currentItemInCell);
 
-                        break;
-                }
 
-                return true;
+                        return true;
+                }
             }
 
             return false;

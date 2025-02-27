@@ -11,8 +11,9 @@ namespace Game.Environment.Item
     public enum TypePickUpItem
     {
         None = 0,
-        PickUpItem = 1,
-        Package = 2
+        ModelBoardItem = 1,
+        PickUpItem = 2,
+        Package = 3
     }
     public class PickUpItem : MonoBehaviour, IRightMouseDownClickable, ILeftMouseDownClickable
     {
