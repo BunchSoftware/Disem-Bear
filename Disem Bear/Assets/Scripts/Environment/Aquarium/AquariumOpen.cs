@@ -1,4 +1,5 @@
 using External.Storage;
+using Game.Environment.Item;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Game.Environment.Aquarium
         [SerializeField] private Aquarium aquarium;
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
-        private TriggerObject triggerObject;
+        [SerializeField] private TriggerObject triggerObject;
         private Collider collider;
 
         public UnityEvent OnAquariumOpen;
@@ -25,6 +26,9 @@ namespace Game.Environment.Aquarium
         private Player player;
         private PlayerMouseMove playerMouseMove;
         private MovePointToPoint spriteMovePointToPoint;
+
+        private bool isClick = false;
+        private bool isOpen = false;
 
 
 
@@ -37,12 +41,14 @@ namespace Game.Environment.Aquarium
 
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
-            triggerObject = GetComponentInChildren<TriggerObject>();
+            if (triggerObject == null)
+                Debug.LogError("Не задан триггер у аквариума");
             spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
             collider = GetComponent<Collider>();
 
             openObject.OnStartObjectOpen.AddListener(() =>
             {
+                isOpen = true;
                 spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
                 scaleChooseObject.on = false;
             });
@@ -59,11 +65,27 @@ namespace Game.Environment.Aquarium
             });
             openObject.OnEndObjectClose.AddListener(() =>
             {
+                isOpen = false;
                 scaleChooseObject.on = true;
                 OnAquariumClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
             aquarium.Init(saveManager, player);
+
+            triggerObject.OnTriggerStayEvent.AddListener((collider) =>
+            {
+                if (isClick && !isOpen)
+                {
+                    isClick = false;
+
+                    if (player.PlayerPickUpItem && TryGetMaterial(player.GetPickUpItem()))
+                    {
+                        Destroy(player.GetPickUpItem().gameObject);
+                        player.PutItem();
+                        Debug.Log("Material for aquarium update");
+                    }
+                }
+            });
 
             Debug.Log("AquariumOpen: Успешно иницилизирован");
         }
@@ -74,6 +96,31 @@ namespace Game.Environment.Aquarium
         {
             openObject.OnUpdate(deltaTime);
             aquarium.OnUpdate(deltaTime);
+        }
+
+        private bool TryGetMaterial(PickUpItem pickUpItem)
+        {
+            if (pickUpItem != null)
+            {
+                switch (pickUpItem.TypeItem)
+                {
+                    case TypePickUpItem.None:
+                        break;
+                    case TypePickUpItem.AquariumMaterial:
+                        MaterialForAquarium materialForAquarium;
+                        if (pickUpItem.TryGetComponent(out materialForAquarium))
+                        {
+                            aquarium.UpdateMaterial(materialForAquarium);
+                            return true;
+                        }
+                        else
+                        {
+                            Debug.LogError("Объект задан как материал аквариума, но не имеет нужных скриптов");
+                        }
+                        break;
+                }
+            }
+            return false;
         }
 
         //private void Start()
@@ -126,12 +173,12 @@ namespace Game.Environment.Aquarium
 
         public void OnMouseLeftClickDownObject()
         {
-
+            isClick = true;
         }
 
         public void OnMouseLeftClickDownOtherObject()
         {
-
+            isClick = false;
         }
     }
 }

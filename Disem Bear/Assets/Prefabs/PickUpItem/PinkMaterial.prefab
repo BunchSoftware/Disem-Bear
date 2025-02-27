@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 4001399094569568040}
   - component: {fileID: 4036968444998537156}
   - component: {fileID: 8688015039957210573}
-  - component: {fileID: 4366794107000317270}
+  - component: {fileID: 7066002005394538340}
   m_Layer: 7
-  m_Name: BlueMaterial
+  m_Name: PinkMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   IsClickedRightMouseButton: 0
   CanTakeByCollisionPlayer: 1
   typeItem: 2
-  nameItem: BlueMaterial
+  nameItem: PurpleMaterial
 --- !u!54 &4036968444998537156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -133,12 +133,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cells:
-  - metabolism
-  - detoxification
-  - digestion
-  colorMaterial: blue
-  TimeMaterial: 60
---- !u!114 &4366794107000317270
+  - stem
+  colorMaterial: pink
+  TimeMaterial: 30
+--- !u!114 &7066002005394538340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +161,7 @@ GameObject:
   - component: {fileID: 7027956750471524247}
   - component: {fileID: 1709181368632516143}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: Illustration18 (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +225,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bd65b8cdf0c01854d9694bf6a1e9a97a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cf45fb624481f3c4f983223d6f33e43f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

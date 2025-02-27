@@ -13,7 +13,8 @@ namespace Game.Environment.Item
         None = 0,
         ModelBoardItem = 1,
         PickUpItem = 2,
-        Package = 3
+        Package = 3,
+        AquariumMaterial = 4
     }
     public class PickUpItem : MonoBehaviour, IRightMouseDownClickable, ILeftMouseDownClickable
     {

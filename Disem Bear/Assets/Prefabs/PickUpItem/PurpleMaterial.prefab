@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4001399094569568040}
   - component: {fileID: 4036968444998537156}
   - component: {fileID: 8688015039957210573}
+  - component: {fileID: -6294354169033900209}
   m_Layer: 7
   m_Name: PurpleMaterial
   m_TagString: Untagged
@@ -136,7 +137,21 @@ MonoBehaviour:
   - adaptation
   - regulation
   colorMaterial: purple
-  TimeMaterial: 60
+  TimeMaterial: 100
+--- !u!114 &-6294354169033900209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522447525192828825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  on: 1
+  coefficient: 1.08
 --- !u!1 &8256711546220021766
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +226,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1ac2ef8fe9849b84e8abb11f7658de64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

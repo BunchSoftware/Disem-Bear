@@ -37,7 +37,7 @@ namespace Game.Environment.LTableWithItems
                 if (isClick)
                 {
                     isClick = false;
-
+                    Debug.Log(1);
                     if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
                     {
                         player.PutItem();

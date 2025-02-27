@@ -122,7 +122,7 @@ namespace Game.Environment.Aquarium
             }
         }
 
-        private void UpdateMaterial(MaterialForAquarium materialForAquarium)
+        public void UpdateMaterial(MaterialForAquarium materialForAquarium)
         {
             if (materialForAquarium != null)
             {
