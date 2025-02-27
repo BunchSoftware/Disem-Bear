@@ -62,8 +62,10 @@ namespace Game.Environment.LModelBoard
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
+                
                 if (isClick && !modelBoard.IsOpen)
                 {
+
                     if (player.PlayerPickUpItem == false)
                         modelBoard.OpenModelBoard();
 
