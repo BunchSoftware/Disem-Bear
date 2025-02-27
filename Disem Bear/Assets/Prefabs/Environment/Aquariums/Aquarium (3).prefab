@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aquarium: {fileID: 4314196002913402049}
   OnAquariumOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -193,13 +194,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  on: 1
   timeOpen: 1
+  timeWaitBeforeOpening: 0
+  timeClose: 1
+  timeWaitBeforeClosing: 0
   cameraTransform: {fileID: 8166809898712077046}
   playerTransform: {fileID: 7535109557336493822}
-  OnObjectOpen:
+  activePlayerInput: 1
+  OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
-  OnObjectClose:
+  OnEndObjectOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartObjectClose:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1897118703045874810
@@ -302,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3142c4ff0f94e4283bd33cea0efb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChangeCellNum: 1
+  ChangeToLeft: 0
   OriginalColor: {r: 1, g: 1, b: 1, a: 1}
   OnEnterButton: {r: 0.514151, g: 0.514151, b: 0.514151, a: 1}
   OnCLickButton: {r: 0.28773582, g: 0.28773582, b: 0.28773582, a: 1}
@@ -5304,31 +5316,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848072dd53638bd4784444145bcc616e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameIngredient: cell
-  NameMaterial: Classic
-  NormalTemperature: 1
-  NormalTimeCell: 3
-  CountCells: 0
-  TimeWaterSpend: -1
-  OnAquarium: 1
-  NullFase: {fileID: -1125639144, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  FirstFase: {fileID: 138638830, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  SecondFase: {fileID: 1989711107, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  ThirdFase: {fileID: 1183931966, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  NullFaseDirty: {fileID: -1456274509, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  FirstFaseDirty: {fileID: -897941856, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  SecondFaseDirty: {fileID: 383777502, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  ThirdFaseDirty: {fileID: 1585051394, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  CellsList:
-  - {fileID: 8628483798543188246, guid: 429ebfda882f6444295741390f3027ae, type: 3}
-  - {fileID: 8628483798543188246, guid: 2679fa60f81f9054eb6fc3e32817275a, type: 3}
-  - {fileID: 8628483798543188246, guid: 81a9f899c6debfb498e388544fb7c400, type: 3}
-  - {fileID: 8628483798543188246, guid: 651462956ea123544b53eb7ea5ec6147, type: 3}
-  - {fileID: 8628483798543188246, guid: d4a158446491e594989b6242703f2069, type: 3}
-  - {fileID: 8628483798543188246, guid: 9afccacae1124674ba6a0dfe144807ff, type: 3}
-  - {fileID: 8628483798543188246, guid: fd57ef62b45268b448197c77e588523d, type: 3}
-  - {fileID: 8628483798543188246, guid: fae346c00f9e46447a330354af22a2e0, type: 3}
-  - {fileID: 8628483798543188246, guid: 28549b130b03bfe4ba4bef71b3df134b, type: 3}
+  materialForAquarium: {fileID: 8688015039957210573, guid: d5099b405a8a40a48a9de7991710106f, type: 3}
+  InspectorPhasesAquariums:
+  - nameColor: blue
+    phasesAquarium:
+      NullFase: {fileID: 299253766, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      FirstFase: {fileID: 156099500, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      SecondFase: {fileID: -2124305790, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      ThirdFase: {fileID: -215250127, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      NullFaseDirty: {fileID: -73224683, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      FirstFaseDirty: {fileID: -1185996402, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      SecondFaseDirty: {fileID: -482555351, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      ThirdFaseDirty: {fileID: 930932882, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+  - nameColor: green
+    phasesAquarium:
+      NullFase: {fileID: -302152143, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      FirstFase: {fileID: 1963923834, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      SecondFase: {fileID: -1556542021, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      ThirdFase: {fileID: -548954978, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      NullFaseDirty: {fileID: 1970756389, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      FirstFaseDirty: {fileID: 1150995354, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      SecondFaseDirty: {fileID: 1499466135, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      ThirdFaseDirty: {fileID: 1433484011, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+  - nameColor: orange
+    phasesAquarium:
+      NullFase: {fileID: 2066107246, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      FirstFase: {fileID: 1694744574, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      SecondFase: {fileID: 743794224, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      ThirdFase: {fileID: 2020970889, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      NullFaseDirty: {fileID: 1005252970, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      FirstFaseDirty: {fileID: 753328729, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      SecondFaseDirty: {fileID: 1200978691, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      ThirdFaseDirty: {fileID: 616917671, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+  - nameColor: pink
+    phasesAquarium:
+      NullFase: {fileID: -1125639144, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      FirstFase: {fileID: 138638830, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      SecondFase: {fileID: 1989711107, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      ThirdFase: {fileID: 1183931966, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      NullFaseDirty: {fileID: -1456274509, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      FirstFaseDirty: {fileID: -897941856, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      SecondFaseDirty: {fileID: 383777502, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      ThirdFaseDirty: {fileID: 1585051394, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+  - nameColor: purple
+    phasesAquarium:
+      NullFase: {fileID: 744996140, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      FirstFase: {fileID: -812381137, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      SecondFase: {fileID: 1499279839, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      ThirdFase: {fileID: -2047403428, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      NullFaseDirty: {fileID: 1020105, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      FirstFaseDirty: {fileID: 310789485, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      SecondFaseDirty: {fileID: 1398318364, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      ThirdFaseDirty: {fileID: -2066787309, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+  InspectorTimeCells:
+  - name: stem
+    time: 1.5
+  - name: detoxification
+    time: 7
+  - name: digestion
+    time: 14.75
+  - name: adaptation
+    time: 66.31
+  - name: metabolism
+    time: 3.5
+  - name: filtering
+    time: 590.24
+  - name: gas
+    time: 31.38
+  - name: regulation
+    time: 138.72
+  - name: reduction
+    time: 287.33
+  InspectorSpawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  buttonLeft: {fileID: 1317103055750252902}
+  buttonRight: {fileID: 3254833205347162483}
 --- !u!65 &1765401622079548558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5550,7 +5620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3142c4ff0f94e4283bd33cea0efb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChangeCellNum: -1
+  ChangeToLeft: 1
   OriginalColor: {r: 1, g: 1, b: 1, a: 1}
   OnEnterButton: {r: 0.514151, g: 0.514151, b: 0.514151, a: 1}
   OnCLickButton: {r: 0.28773582, g: 0.28773582, b: 0.28773582, a: 1}
@@ -5675,6 +5745,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_Color.r
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
@@ -5697,7 +5775,7 @@ PrefabInstance:
     - target: {fileID: 4588309091890943772, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 90397ba15906ac74ca48ed739d39e33a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4588309091890943772, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_fontStyle
       value: 1
@@ -5721,7 +5799,7 @@ PrefabInstance:
     - target: {fileID: 4588309091890943772, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 6723535441750546639, guid: 90397ba15906ac74ca48ed739d39e33a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4588309091890943772, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 12999260
@@ -5753,7 +5831,7 @@ PrefabInstance:
     - target: {fileID: 8466465690851802567, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 6723535441750546639, guid: 90397ba15906ac74ca48ed739d39e33a, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 8481020337745429001, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_Layer
       value: 0

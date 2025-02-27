@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 7032152802063289227}
   - component: {fileID: 2960375915947232601}
   - component: {fileID: 6055145357989144650}
-  - component: {fileID: 6695652875462632909}
   m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
@@ -141,21 +140,6 @@ MonoBehaviour:
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
-  isEndDrag: 0
---- !u!114 &6695652875462632909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4030711029017922334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  on: 1
-  coefficient: 1.08
 --- !u!1 &4899132208007916572
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +204,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
+  m_RayTracingMode: 0
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
@@ -267,7 +251,7 @@ MonoBehaviour:
   - {fileID: 1239196346301392598}
   - {fileID: 6332595131864228544}
   triggerObject: {fileID: 8879720377761815387}
-  coefficientScaleItem: 1.08
+  coefficientScaleItem: 2
   timeFocusItem: 0.5
   timeDefocusItem: 0.5
   OnStartModelBoardOpen:
@@ -314,7 +298,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 10.000002, y: 0.92849946, z: 10.000006}
-  m_Center: {x: 1.882234e-15, y: 0.28288153, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3119114592162545880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,8 +327,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   on: 1
   timeOpen: 1
+  timeWaitBeforeOpening: 0
+  timeClose: 1
+  timeWaitBeforeClosing: 0
   cameraTransform: {fileID: 8758063795630142194}
   playerTransform: {fileID: 3073441470213963323}
+  activePlayerInput: 1
   OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -368,7 +356,6 @@ GameObject:
   - component: {fileID: 2265677066462564735}
   - component: {fileID: 3616402462093401686}
   - component: {fileID: 3274923023672263744}
-  - component: {fileID: 5046381060444138138}
   m_Layer: 0
   m_Name: Point2
   m_TagString: Untagged
@@ -436,21 +423,6 @@ MonoBehaviour:
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
-  isEndDrag: 0
---- !u!114 &5046381060444138138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7337838368135552641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  on: 1
-  coefficient: 1.08
 --- !u!1 &7630756384906021985
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +469,6 @@ GameObject:
   - component: {fileID: 1646431254744779042}
   - component: {fileID: 8334947607929864445}
   - component: {fileID: 6332595131864228544}
-  - component: {fileID: 7832529652740151048}
   m_Layer: 0
   m_Name: Point4
   m_TagString: Untagged
@@ -565,21 +536,6 @@ MonoBehaviour:
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
-  isEndDrag: 0
---- !u!114 &7832529652740151048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8315067880912709030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  on: 1
-  coefficient: 1.08
 --- !u!1 &9093321681898666293
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +547,6 @@ GameObject:
   - component: {fileID: 3522769029189748558}
   - component: {fileID: 8542152190733507429}
   - component: {fileID: 1239196346301392598}
-  - component: {fileID: 5697274594864546571}
   m_Layer: 0
   m_Name: Point3
   m_TagString: Untagged
@@ -659,21 +614,6 @@ MonoBehaviour:
   OnPutItem:
     m_PersistentCalls:
       m_Calls: []
-  isEndDrag: 0
---- !u!114 &5697274594864546571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093321681898666293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03cd49256214b544a145a9c1bd2b0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  on: 1
-  coefficient: 1.08
 --- !u!1001 &4725208624378121158
 PrefabInstance:
   m_ObjectHideFlags: 0

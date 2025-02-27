@@ -74,9 +74,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   on: 1
   timeOpen: 1
+  timeWaitBeforeOpening: 0
   timeClose: 1
+  timeWaitBeforeClosing: 0.7
   cameraTransform: {fileID: 5741195041769381024}
   playerTransform: {fileID: 4528762219038495578}
+  activePlayerInput: 0
   OnStartObjectOpen:
     m_PersistentCalls:
       m_Calls: []

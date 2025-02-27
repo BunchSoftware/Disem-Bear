@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 8564610378269767714}
   - component: {fileID: 7173357960713817066}
   - component: {fileID: 990450282032452981}
-  - component: {fileID: 1430232223330082390}
   m_Layer: 7
   m_Name: OrgansBoard
   m_TagString: Untagged
@@ -165,34 +164,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10.000004, y: 1, z: 10.000002}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1430232223330082390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919993844622047923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e782ca1ae495e04588e945a47663775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  on: 1
-  timeOpen: 1
-  cameraTransform: {fileID: 7832038771495395959}
-  playerTransform: {fileID: 1680304054148404656}
-  OnStartObjectOpen:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEndObjectOpen:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStartObjectClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEndObjectClose:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7467717708968622721
 GameObject:
   m_ObjectHideFlags: 0
