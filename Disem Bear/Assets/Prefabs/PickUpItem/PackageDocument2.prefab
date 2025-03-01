@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 2885980954455507124}
   - component: {fileID: 8856062554466753015}
   - component: {fileID: 860054388363624321}
+  - component: {fileID: 1416277121592618411}
   - component: {fileID: 4036968444998537156}
   - component: {fileID: 8975040544648408492}
   - component: {fileID: 369755943107966362}
   - component: {fileID: 6230950803118389033}
-  - component: {fileID: 2910252398558461139}
   m_Layer: 7
   m_Name: PackageDocument2
   m_TagString: Untagged
@@ -112,6 +112,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.019999998, y: 0.020000001, z: 0.019999998}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1416277121592618411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522447525192828825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ff92b57e7c4764789fb82597b154d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needPosition: 1
+  startCoords: {x: -3.757045, y: 1.263, z: -9.009}
+  needRotate: 0
+  startRotate: {x: 0, y: 0, z: 0, w: 0}
+  TimeAnimation: 1
 --- !u!54 &4036968444998537156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -184,17 +201,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   on: 1
   coefficient: 1.08
---- !u!114 &2910252398558461139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4522447525192828825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07dfa5315f7e76b419374ca1b773fc47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  point1: {fileID: 0}
-  point2: {fileID: 0}
