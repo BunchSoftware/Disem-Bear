@@ -6,21 +6,36 @@ namespace Game.Environment.LPostTube
 {
     public class PostTube : MonoBehaviour
     {
-        [SerializeField] private Vector3 ejectionPosition;
-        [SerializeField] private GameObject exitPoint;
+        [SerializeField] private Transform startPointObject;
+        [SerializeField] private Transform downPointObject;
         [SerializeField] private ParticleSystem particleSystem;
+        [SerializeField] private float timeFall = 1f;
 
-        public void ObjectFall(MoveAnimation prefab)
+        [SerializeField] private GameObject packageIfTriggerEnter;
+
+        public void ObjectFall(GameObject prefab)
         {
-            GameObject currentFallObject = Instantiate(prefab.gameObject, ejectionPosition, prefab.transform.rotation);
+            GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
 
-            MoveAnimation moveAnimation = currentFallObject.GetComponent<MoveAnimation>();
-            moveAnimation.needPosition = true;
-            moveAnimation.TimeAnimation = 1f;
-            moveAnimation.startCoords = exitPoint.transform.position;
-            moveAnimation.StartMove();
+            Collider colliderCurrentFallObject;
+            if (currentFallObject.TryGetComponent(out colliderCurrentFallObject))
+            {
+                downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + colliderCurrentFallObject.bounds.size.y / 2, downPointObject.position.z);
+            }
 
-            StartCoroutine(ParticleFall(moveAnimation.TimeAnimation));
+            MovePointToPoint movePointToPoint;
+            if (currentFallObject.TryGetComponent(out movePointToPoint))
+            {
+                movePointToPoint.point1 = startPointObject;
+                movePointToPoint.point2 = downPointObject;
+                movePointToPoint.StartMoveTo(timeFall);
+
+                StartCoroutine(ParticleFall(timeFall));
+            }
+            else
+            {
+                Debug.LogError("На объекте в трубе нет скрипта движения, например MovePointToPoint");
+            }
         }
         IEnumerator ParticleFall(float t)
         {
@@ -28,6 +43,15 @@ namespace Game.Environment.LPostTube
             particleSystem.Play();
             yield return new WaitForSeconds(0.2f);
             particleSystem.Stop();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player" && packageIfTriggerEnter != null)
+            {
+                ObjectFall(packageIfTriggerEnter);
+                packageIfTriggerEnter = null;
+            }
         }
     }
 }
