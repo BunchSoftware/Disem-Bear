@@ -18,6 +18,7 @@ namespace Game.Environment.LPostTube
             GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
 
             Collider colliderCurrentFallObject;
+            Vector3 lastDownPointPosition = downPointObject.position;
             if (currentFallObject.TryGetComponent(out colliderCurrentFallObject))
             {
                 downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + colliderCurrentFallObject.bounds.size.y / 2, downPointObject.position.z);
@@ -31,11 +32,14 @@ namespace Game.Environment.LPostTube
                 movePointToPoint.StartMoveTo(timeFall);
 
                 StartCoroutine(ParticleFall(timeFall));
+                StartCoroutine(TimeReturnDownPointPos(timeFall, lastDownPointPosition));
             }
             else
             {
                 Debug.LogError("На объекте в трубе нет скрипта движения, например MovePointToPoint");
+                downPointObject.position = lastDownPointPosition;
             }
+            
         }
         IEnumerator ParticleFall(float t)
         {
@@ -43,6 +47,11 @@ namespace Game.Environment.LPostTube
             particleSystem.Play();
             yield return new WaitForSeconds(0.2f);
             particleSystem.Stop();
+        }
+        IEnumerator TimeReturnDownPointPos(float t, Vector3 lastDownPointPosition)
+        {
+            yield return new WaitForSeconds(t);
+            downPointObject.position = lastDownPointPosition;
         }
 
         private void OnTriggerEnter(Collider other)

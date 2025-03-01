@@ -73,6 +73,7 @@ namespace Game.Environment.Printer
                     else if (isPrinterWork && !player.PlayerPickUpItem)
                     {
                         printerRenderer.GetComponent<MeshRenderer>().material = materialPrinter;
+                        
                         PickUpItem pickUpItem = Instantiate(outPrinterObjectInfo.outItem);
                         OnPickUpItem?.Invoke(pickUpItem);
                         player.PickUpItem(pickUpItem);
