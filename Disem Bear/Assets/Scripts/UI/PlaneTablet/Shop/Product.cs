@@ -11,9 +11,9 @@ namespace UI.PlaneTablet.Shop
         [HideInInspector] public int indexProduct;
         public string header;
         public Reward reward;
-        [Header("PriceChangeProduct")]
-        public string typePriceChangeProduct;
-        public int countPriceChange;
-        public Sprite avatarPriceChange;
+        [Header("PriceProduct")]
+        public string typePriceProduct;
+        public int price = 1;
+        public Sprite avatarPriceProduct;
     }
 }

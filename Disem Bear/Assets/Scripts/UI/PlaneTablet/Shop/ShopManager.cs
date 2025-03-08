@@ -29,49 +29,50 @@ namespace UI.PlaneTablet.Shop
         public void Init(SaveManager saveManager)
         {
             this.saveManager = saveManager;
-            List<Product> products = new List<Product>();
+            List<Product> products = fileProducts.products;
 
 
-            if (saveManager.fileShop.JSONShop != null)
-            {
-                if (saveManager.fileShop.JSONShop.resources.productSaves == null || saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
-                {
-                    List<ProductSave> productSaves = new List<ProductSave>();
-                    for (int i = 0; i < fileProducts.products.Count; i++)
-                    {
-                        productSaves.Add(new ProductSave()
-                        {
-                            reward = fileProducts.products[i].reward,
-                            countPriceChange = fileProducts.products[i].countPriceChange,
-                            typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
-                        });
-                    }
-                    saveManager.fileShop.JSONShop.resources.productSaves = productSaves;
-                }
-            }
+            //if (saveManager.fileShop.JSONShop != null)
+            //{
+            //    if (saveManager.fileShop.JSONShop.resources.productSaves == null || saveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
+            //    {
+            //        List<ProductSave> productSaves = new List<ProductSave>();
+            //        for (int i = 0; i < fileProducts.products.Count; i++)
+            //        {
+            //            productSaves.Add(new ProductSave()
+            //            {
+            //                reward = fileProducts.products[i].reward,
+            //                countPriceChange = fileProducts.products[i].countPriceChange,
+            //                typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
+            //            });
+            //        }
+            //        saveManager.fileShop.JSONShop.resources.productSaves = productSaves;
+            //    }
+            //}
 
-            for (int i = 0; i < fileProducts.products.Count; i++)
-            {
-                Product product = new Product()
-                {
-                    indexProduct = i,
-                    typePriceChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typePriceChangeProduct,
-                    reward = saveManager.fileShop.JSONShop.resources.productSaves[i].reward,
-                    countPriceChange = saveManager.fileShop.JSONShop.resources.productSaves[i].countPriceChange,
-                    header = fileProducts.products[i].header,
-                    avatarPriceChange = fileProducts.products[i].avatarPriceChange,
-                };
-                if (saveManager.fileShop.JSONShop.resources.productSaves[i].reward.countReward != 0)
-                    products.Add(product);
-            }
+            //for (int i = 0; i < fileProducts.products.Count; i++)
+            //{
+            //    Product product = new Product()
+            //    {
+            //        indexProduct = i,
+            //        typePriceChangeProduct = saveManager.fileShop.JSONShop.resources.productSaves[i].typePriceChangeProduct,
+            //        reward = saveManager.fileShop.JSONShop.resources.productSaves[i].reward,
+            //        countPriceChange = saveManager.fileShop.JSONShop.resources.productSaves[i].countPriceChange,
+            //        header = fileProducts.products[i].header,
+            //        avatarPriceChange = fileProducts.products[i].avatarPriceChange,
+            //    };
+            //    if (saveManager.fileShop.JSONShop.resources.productSaves[i].reward.countReward != 0)
+            //        products.Add(product);
+            //}
 
             for (int i = 0; i < products.Count; i++)
             {
                 prefab.name = $"Product {i}";
-                GameObject.Instantiate(prefab, content.transform);
+                ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
+                productsGUI.Add(productGUI);
             }
 
-            for (int i = 0; i < products.Count; i++)
+            for (int i = 0; i < content.transform.childCount; i++)
             {
                 ProductGUI productGUI;
 
@@ -84,7 +85,7 @@ namespace UI.PlaneTablet.Shop
                         {
                             product.reward.countReward--;
                             saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].reward = product.reward;
-                            saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.countPriceChange;
+                            saveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.price;
                             saveManager.UpdateShopFile();
 
                             productGUI.UpdateData(product);
@@ -106,7 +107,10 @@ namespace UI.PlaneTablet.Shop
             for (int j = 0; j < productsGUI.Count; j++)
             {
                 if (productsGUI[j].GetProduct().reward.countReward == -1)
-                    content.transform.GetChild(j).SetAsFirstSibling();
+                {
+                    //content.transform.GetChild(j).SetAsFirstSibling();
+                    Debug.Log(productsGUI[j].GetProduct().reward.countReward);
+                }
             }
 
             for (var i = 1; i < productsGUI.Count; i++)
@@ -131,11 +135,11 @@ namespace UI.PlaneTablet.Shop
             {
                 for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.products.Count; i++)
                 {
-                    if (saveManager.filePlayer.JSONPlayer.resources.products[i].typeProduct == product.typePriceChangeProduct)
+                    if (saveManager.filePlayer.JSONPlayer.resources.products[i].typeProduct == product.typePriceProduct)
                     {
-                        if (saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct - product.countPriceChange >= 0)
+                        if (saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct - product.price >= 0)
                         {
-                            saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct -= product.countPriceChange;
+                            saveManager.filePlayer.JSONPlayer.resources.products[i].countProduct -= product.price;
                             for (int j = 0; j < saveManager.filePlayer.JSONPlayer.resources.products.Count; j++)
                             {
                                 if (saveManager.filePlayer.JSONPlayer.resources.products[j].typeProduct == product.reward.typeReward)

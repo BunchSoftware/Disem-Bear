@@ -9,7 +9,7 @@ namespace UI.PlaneTablet
     public class Reward
     {
         public string typeReward;
-        public int countReward;
+        public int countReward = 1;
         public string typeMachineDispensingReward;
         public Sprite avatarReward;
     }
