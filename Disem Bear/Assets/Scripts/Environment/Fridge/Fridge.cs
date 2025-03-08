@@ -2,6 +2,7 @@ using External.Storage;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -123,12 +124,19 @@ namespace Game.Environment.Fridge
 
         public void CreateMagnet(string typeMagnet)
         {
-            for (int i = 0; i < saveManager.fileMagnets.magnets.Count; i++)
+            for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
             {
-                if (saveManager.fileMagnets.magnets[i].typeMagnet == typeMagnet)
+                if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == typeMagnet)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-                    magnet.Init(this, saveManager, saveManager.fileMagnets.magnets[i]);
+
+                    MagnetInfo magnetInfo = new MagnetInfo();
+                    magnetInfo.typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet;
+                    magnetInfo.x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x;
+                    magnetInfo.y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y;
+                    magnetInfo.z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z;
+
+                    magnet.Init(this, saveManager, magnetInfo);
                     magnets.Add(magnet);
 
                     MagnetSave magnetSave = new MagnetSave();
@@ -142,6 +150,11 @@ namespace Game.Environment.Fridge
                     return;
                 }
             }
+        }
+
+        public void CreateMagnet(Reward reward)
+        {
+            CreateMagnet(reward.typeReward);
         }
     }
 }

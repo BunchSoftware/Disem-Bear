@@ -95,8 +95,6 @@ namespace UI.PlaneTablet.Shop
                     {
                         Remove(productGUI);
                     }, products[i]);
-                    productsGUI.Add(productGUI);
-
                 };
             }
             Sort();
@@ -108,8 +106,7 @@ namespace UI.PlaneTablet.Shop
             {
                 if (productsGUI[j].GetProduct().reward.countReward == -1)
                 {
-                    //content.transform.GetChild(j).SetAsFirstSibling();
-                    Debug.Log(productsGUI[j].GetProduct().reward.countReward);
+                    content.transform.GetChild(j).SetAsFirstSibling();
                 }
             }
 
@@ -160,6 +157,8 @@ namespace UI.PlaneTablet.Shop
                             });
 
                             GiveProduct(product);
+
+                            Debug.Log($"{product.reward.typeReward} был куплен");
 
                             saveManager.UpdatePlayerFile();
                             OnBuyProduct?.Invoke(product);

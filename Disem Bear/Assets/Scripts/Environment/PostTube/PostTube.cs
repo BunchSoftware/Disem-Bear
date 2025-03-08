@@ -1,9 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Environment.LPostTube
 {
+    [Serializable]
+    public class PostTubeObject
+    {
+        public string typeObject;
+        public GameObject prefabObject;
+    }
+
     public class PostTube : MonoBehaviour
     {
         [SerializeField] private Transform startPointObject;
@@ -12,6 +22,9 @@ namespace Game.Environment.LPostTube
         [SerializeField] private float timeFall = 1f;
 
         [SerializeField] private GameObject packageIfTriggerEnter;
+
+        [SerializeField] private List<PostTubeObject> postTubeObjects;
+        public UnityEvent<PostTubeObject> OnGetPostTubeObject;
 
         public void ObjectFall(GameObject prefab)
         {
@@ -41,6 +54,26 @@ namespace Game.Environment.LPostTube
             }
             
         }
+
+        public void ObjectFall(string typeObject)
+        {
+            for (int i = 0; i < postTubeObjects.Count; i++)
+            {
+                if (postTubeObjects[i].typeObject == typeObject)
+                {
+                    ObjectFall(postTubeObjects[i].prefabObject);
+                    OnGetPostTubeObject?.Invoke(postTubeObjects[i]);
+
+                    return;
+                }
+            }
+        }
+
+        public void ObjectFall(Reward reward)
+        {
+            ObjectFall(reward.typeReward);
+        }
+
         IEnumerator ParticleFall(float t)
         {
             yield return new WaitForSeconds(t);

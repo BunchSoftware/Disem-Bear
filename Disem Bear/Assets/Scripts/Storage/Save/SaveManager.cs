@@ -13,18 +13,30 @@ namespace External.Storage
         private APIManager apiManager;
         private SaveManagerIO saveManagerIO;
 
-        public FileMagnets fileMagnets;
+        public FilePlayer defaultFilePlayer;
+        public FileShop defaultFileShop;
+
         public FilePlayer filePlayer; 
         public FileShop fileShop;
 
         private string pathToFileResourcePlayer;
         private string pathToFileResourceShop;
 
-        public void Init(APIManager apiManager, FilePlayer filePlayer, FileShop fileShop, FileMagnets fileMagnets)
+        public void Init(APIManager apiManager, FilePlayer filePlayer, FileShop fileShop, FilePlayer defaultFilePlayer, FileShop defaultFileShop)
         {
+            this.apiManager = apiManager;
             this.filePlayer = filePlayer;
             this.fileShop = fileShop;
-            this.apiManager = apiManager;
+            this.defaultFilePlayer = defaultFilePlayer;
+            this.defaultFileShop = defaultFileShop;
+
+#if UNITY_EDITOR
+            this.filePlayer = this.defaultFilePlayer;
+            this.fileShop = this.defaultFileShop;
+#else
+            
+#endif
+
 
             try
             {

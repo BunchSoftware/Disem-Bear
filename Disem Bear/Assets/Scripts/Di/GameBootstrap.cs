@@ -30,6 +30,8 @@ namespace External.DI
         [SerializeField] private UIGameRoot uiGameRoot;
         [Header("Save System")]
         [SerializeField] private FileMagnets fileMagnets;
+        [SerializeField] private FilePlayer defaultFilePlayer;
+        [SerializeField] private FileShop defaultFileShop;
         [SerializeField] private FilePlayer filePlayer;
         [SerializeField] private FileShop fileShop;
         [SerializeField] private APIManager apiManager;
@@ -90,7 +92,7 @@ namespace External.DI
 
             apiManager.Init();
 
-            saveManager.Init(apiManager, filePlayer, fileShop, fileMagnets);
+            saveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
 
             musicManager.Init(this);
             soundManager.Init(this);
