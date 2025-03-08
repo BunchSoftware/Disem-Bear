@@ -17,7 +17,7 @@ namespace Game.Environment.LMixTable
 {
     [RequireComponent(typeof(OpenObject))]
     [RequireComponent(typeof(ScaleChooseObject))]
-    public class Workbench : MonoBehaviour
+    public class Workbench : MonoBehaviour, ILeftMouseDownClickable
     {
         [SerializeField] private TriggerObject triggerObject;
         [SerializeField] private ParticleSystem particleWorkbench;
@@ -65,7 +65,8 @@ namespace Game.Environment.LMixTable
         public bool IsEndDrag => isEndDrag;
         private bool isEndDrag = false;
 
-        private List<Ingradient> ingradients = new List<Ingradient>();
+        private bool isClick = false;
+
         private List<IngradientDragCell> ingradientDragCellsInMixTable = new List<IngradientDragCell>();
         private List<IngradientDragObject> ingradientDragObjectsInMixTable = new List<IngradientDragObject>();
         private List<IngradientSpawner> ingradientSpawners = new List<IngradientSpawner>();
@@ -107,11 +108,6 @@ namespace Game.Environment.LMixTable
 
             for (int i = 0; i < ingradientSpawners.Count; i++)
             {
-                ingradients.Add(ingradientSpawners[i].GetIngradient());
-            }
-
-            for (int i = 0; i < ingradientSpawners.Count; i++)
-            {
                 if (ingradientSpawners[i] == null)
                     Debug.LogError("Ошибка. Не добавлен Ingradient Spawner в Workbench");
                 ingradientSpawners[i].Init(this, triggerObject);
@@ -122,6 +118,29 @@ namespace Game.Environment.LMixTable
             {
                 content.transform.GetChild(i).GetComponent<Collider>().enabled = false;
             }
+
+            triggerObject.OnTriggerStayEvent.AddListener((collider) =>
+            {
+                if (isClick)
+                {
+                    isClick = false;
+
+                    for (int i = 0; i < ingradientSpawners.Count; i++)
+                    {
+                        if (ingradientSpawners[i].GetIngradient().typeIngradient == player.GetPickUpItem().NameItem)
+                        {
+                            Ingradient ingradient = new Ingradient();
+                            ingradient.countIngradient = 1;
+                            ingradient.typeIngradient = player.GetPickUpItem().NameItem;
+
+                            Destroy(player.PutItem().gameObject);
+
+                            AddIngradient(ingradient);
+                            break;
+                        }
+                    }
+                }
+            });
 
             openObject.OnStartObjectOpen.AddListener(() =>
             {
@@ -756,16 +775,25 @@ namespace Game.Environment.LMixTable
 
         public void AddIngradient(Ingradient ingradient)
         {
-            for (int i = 0; i < ingradients.Count; i++)
+            for (int i = 0; i < ingradientSpawners.Count; i++)
             {
-                if (ingradients[i].typeIngradient == ingradient.typeIngradient)
+                if (ingradientSpawners[i].GetIngradient().typeIngradient == ingradient.typeIngradient)
                 {
-                    ingradients[i].countIngradient += ingradient.countIngradient;
+                    ingradientSpawners[i].PutIngradient(1);
                     return;
                 }
-                else
-                    ingradients.Add(ingradient);
             }
+        }
+
+        public void OnMouseLeftClickDownObject()
+        {
+            if (player.PlayerPickUpItem && !IsOpen)
+                isClick = true;
+        }
+
+        public void OnMouseLeftClickDownOtherObject()
+        {
+            isClick = false;
         }
     }
 }
