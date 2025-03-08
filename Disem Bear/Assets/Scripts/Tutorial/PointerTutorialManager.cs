@@ -11,11 +11,13 @@ namespace Game.Tutorial
         private DialogManager dialogManager;
         private Player player;
         private List<PointerTutorial> pointerTutorial = new List<PointerTutorial>();
+        private MakePathToObject makePathToObject;
 
-        public void Init(DialogManager dialogManager, Player player)
+        public void Init(DialogManager dialogManager, Player player, MakePathToObject makePathToObject)
         {
             this.dialogManager = dialogManager;
             this.player = player;
+            this.makePathToObject = makePathToObject;
 
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -30,12 +32,12 @@ namespace Game.Tutorial
         }
         public void SetPointer(int indexPointer)
         {
-            for (int i = 0; i < pointerTutorial.Count; i++)
-            {
-                pointerTutorial[i].transform.GetChild(0).gameObject.SetActive(false);
-            }
-
-            pointerTutorial[indexPointer].transform.GetChild(0).gameObject.SetActive(true);
+            makePathToObject.SetTarget(pointerTutorial[indexPointer].lineToObjectTransform);
+            //for (int i = 0; i < pointerTutorial.Count; i++)
+            //{
+            //    pointerTutorial[i].transform.GetChild(0).gameObject.SetActive(false);
+            //}
+            //pointerTutorial[indexPointer].transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 }

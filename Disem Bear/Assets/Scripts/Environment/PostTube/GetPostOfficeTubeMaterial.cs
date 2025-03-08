@@ -22,6 +22,11 @@ namespace Game.Environment
 
         private GameObject getMaterial;
 
+        private void Start()
+        {
+            //GetMaterial("DocumentBluePackage");
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(1) && getMaterial != null)
