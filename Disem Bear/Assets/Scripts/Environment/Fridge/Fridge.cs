@@ -12,7 +12,6 @@ namespace Game.Environment.Fridge
     [RequireComponent(typeof(ScaleChooseObject))]
     public class Fridge : MonoBehaviour
     {
-        [SerializeField] private GameObject handler;
         [SerializeField] private GameObject content;
         [SerializeField] private GameObject prefabMagnet;
 
@@ -45,7 +44,7 @@ namespace Game.Environment.Fridge
 
             for (int i = 0; i < magnets.Count; i++)
             {
-                magnets[i].Init(this, saveManager, null, handler);
+                magnets[i].Init(this, saveManager, null);
             }
 
             content.GetComponent<Collider>().enabled = false;
@@ -129,7 +128,7 @@ namespace Game.Environment.Fridge
                 if (saveManager.fileMagnets.magnets[i].typeMagnet == typeMagnet)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-                    magnet.Init(this, saveManager, saveManager.fileMagnets.magnets[i], handler);
+                    magnet.Init(this, saveManager, saveManager.fileMagnets.magnets[i]);
                     magnets.Add(magnet);
 
                     MagnetSave magnetSave = new MagnetSave();

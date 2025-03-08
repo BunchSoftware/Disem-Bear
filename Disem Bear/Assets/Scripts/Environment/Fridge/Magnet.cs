@@ -20,9 +20,6 @@ namespace Game.Environment.Fridge
         private Collider contentColider;
         private Bounds dragBounds;
 
-        private Collider handlerColider;
-        private Bounds handlerBounds;
-
         private Collider magnetCollider;
         private Bounds magnetBounds;
 
@@ -32,16 +29,13 @@ namespace Game.Environment.Fridge
         private Fridge fridge;
         private SaveManager saveManager;
 
-        public void Init(Fridge fridge, SaveManager saveManager, MagnetInfo magnet, GameObject handler)
+        public void Init(Fridge fridge, SaveManager saveManager, MagnetInfo magnet)
         {
            this.saveManager = saveManager;
            this.fridge = fridge;
 
            contentColider = transform.parent.GetComponent<Collider>();
            dragBounds = contentColider.bounds;
-
-           handlerColider = transform.GetComponent<Collider>();
-           handlerBounds = handlerColider.bounds;
 
            magnetCollider = transform.GetComponent<Collider>();
            magnetBounds = magnetCollider.bounds;
@@ -75,19 +69,10 @@ namespace Game.Environment.Fridge
 
                 Vector3 position = new Vector3();
 
-                Vector3 hadnlerPosition = 
-                    new Vector3(
-                        Math.Clamp(positionCursor.x, handlerBounds.min.x + magnetBounds.size.x / 2, handlerBounds.max.x - magnetBounds.size.x / 2),
-                        Math.Clamp(positionCursor.y, handlerBounds.min.y + magnetBounds.size.y / 2, handlerBounds.max.y - magnetBounds.size.y / 2),
-                        Math.Clamp(positionCursor.z, handlerBounds.min.z + magnetBounds.size.z / 2, handlerBounds.max.z - magnetBounds.size.z / 2)
-                        );
+                position.x = Math.Clamp(positionCursor.x, dragBounds.min.x + magnetBounds.size.x / 2, dragBounds.max.x - magnetBounds.size.x / 2);
+                position.y = Math.Clamp(positionCursor.y, dragBounds.min.y + magnetBounds.size.y / 2, dragBounds.max.y - magnetBounds.size.y / 2);
+                position.z = Math.Clamp(positionCursor.z, dragBounds.min.z + magnetBounds.size.z / 2, dragBounds.max.z - magnetBounds.size.z / 2);
 
-                Debug.Log(hadnlerPosition);
-
-                    position.x = Math.Clamp(positionCursor.x, dragBounds.min.x + magnetBounds.size.x / 2, dragBounds.max.x - magnetBounds.size.x / 2);
-                    position.y = Math.Clamp(positionCursor.y, dragBounds.min.y + magnetBounds.size.y / 2, dragBounds.max.y - magnetBounds.size.y / 2);
-                    position.z = Math.Clamp(positionCursor.z, dragBounds.min.z + magnetBounds.size.z / 2, dragBounds.max.z - magnetBounds.size.z / 2);
-               
 
                 transform.position = position;
 

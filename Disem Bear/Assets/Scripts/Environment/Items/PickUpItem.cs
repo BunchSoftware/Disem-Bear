@@ -25,8 +25,7 @@ namespace Game.Environment.Item
         public TypePickUpItem TypeItem => typeItem;
         [SerializeField] private TypePickUpItem typeItem = TypePickUpItem.None;
 
-        public string NameItem => nameItem;
-        [SerializeField] private string nameItem;
+        public string NameItem;
 
         private Quaternion rotation;
 

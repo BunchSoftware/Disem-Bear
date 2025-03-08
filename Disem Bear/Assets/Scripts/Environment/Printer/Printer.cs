@@ -53,7 +53,7 @@ namespace Game.Environment.Printer
                     {
                         for (int i = 0; i < printerObjectInfos.Count; i++)
                         {
-                            if (printerObjectInfos[i].nameItemForPrint == player.GetPickUpItem().NameItem)
+                            if (printerObjectInfos[i].inputItem.NameItem == player.GetPickUpItem().NameItem)
                             {
                                 isPrinterWork = true;
 
@@ -117,7 +117,7 @@ namespace Game.Environment.Printer
         [System.Serializable]
         public class PrinterObjectInfo
         {
-            public string nameItemForPrint;
+            public PickUpItem inputItem;
             public float timePrint;
             public PickUpItem outItem;
         }
