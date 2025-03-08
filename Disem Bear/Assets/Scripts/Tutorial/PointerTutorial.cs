@@ -18,6 +18,8 @@ namespace Game.Tutorial
         [Header("Condition Pointer")]
         [SerializeField] private string conditionSkipDialog;
         [SerializeField] private PickUpItem pickUpItemPlayer;
+        [Header("LineToObjectTransform")]
+        public Transform lineToObjectTransform;
 
         public UnityEvent OnStartDialog;
         public UnityEvent SendInputFieldText;
@@ -52,7 +54,9 @@ namespace Game.Tutorial
         public void SetPointer(Dialog dialog)
         {
             if (conditionSkipDialog.Length == 0 && dialogManager.GetCurrentIndexDialogPoint() == indexDialogPoint && dialogManager.GetCurrentIndexDialog() == indexDialog)
+            {
                 StartCoroutine(DelayPointer());
+            }
         }
 
         private IEnumerator DelayPointer()

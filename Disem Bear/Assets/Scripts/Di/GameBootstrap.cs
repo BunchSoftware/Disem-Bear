@@ -98,6 +98,7 @@ namespace External.DI
             updateListeners.Add(environmentRoot);
             environmentRoot.Init(player, playerMouseMove, saveManager, soundManager);
 
+            updateListeners.Add(tutorialRoot);
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player, saveManager);
 
             updateListeners.Add(uiGameRoot);
