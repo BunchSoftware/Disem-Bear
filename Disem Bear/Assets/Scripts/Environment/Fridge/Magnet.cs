@@ -1,8 +1,5 @@
 using External.Storage;
-using Game.Environment.LMixTable;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -24,13 +21,14 @@ namespace Game.Environment.Fridge
         private Bounds magnetBounds;
 
         private SpriteRenderer spriteRenderer;
-        private MagnetInfo magnet;
+        private MagnetInfo magnetInfo;
 
         private Fridge fridge;
         private SaveManager saveManager;
 
-        public void Init(Fridge fridge, SaveManager saveManager, MagnetInfo magnet)
+        public void Init(Fridge fridge, SaveManager saveManager, MagnetInfo magnetInfo)
         {
+           this.magnetInfo = magnetInfo;
            this.saveManager = saveManager;
            this.fridge = fridge;
 
@@ -40,11 +38,10 @@ namespace Game.Environment.Fridge
            magnetCollider = transform.GetComponent<Collider>();
            magnetBounds = magnetCollider.bounds;
 
-           //this.magnet = magnet;
-           //spriteRenderer = GetComponent<SpriteRenderer>();
-           //spriteRenderer.sprite = magnet.iconMagnet;
+           spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = this.magnetInfo.iconMagnet;
 
-           //transform.localPosition = new Vector3(magnet.x, magnet.y, magnet.z);
+            transform.localPosition = new Vector3(this.magnetInfo.x, this.magnetInfo.y, this.magnetInfo.z);
         }
 
 
@@ -76,13 +73,13 @@ namespace Game.Environment.Fridge
 
                 transform.position = position;
 
-                //MagnetSave magnetSave = new MagnetSave();
-                //magnetSave.typeMagnet = GetMagnet().typeMagnet;
-                //magnetSave.x = transform.localPosition.x;
-                //magnetSave.y = transform.localPosition.y;
-                //magnetSave.z = transform.localPosition.z;
+                MagnetSave magnetSave = new MagnetSave();
+                magnetSave.typeMagnet = magnetInfo.typeMagnet;
+                magnetSave.x = transform.localPosition.x;
+                magnetSave.y = transform.localPosition.y;
+                magnetSave.z = transform.localPosition.z;
 
-                //saveManager.ChangeMagnetSave(magnetSave);
+                saveManager.ChangeMagnetSave(magnetSave);
             }
         }
 
@@ -98,7 +95,7 @@ namespace Game.Environment.Fridge
 
         public MagnetInfo GetMagnet()
         {
-            return magnet;
+            return magnetInfo;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace UI.PlaneTablet.Shop
         [SerializeField] private GameObject content;
         [SerializeField] private FileProducts fileProducts;
         [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
-        [SerializeField] private SaveManager saveManager;
+        private SaveManager saveManager;
         private List<ProductGUI> productsGUI = new List<ProductGUI>();
         public Action<Product> OnBuyProduct;
 
@@ -142,7 +142,6 @@ namespace UI.PlaneTablet.Shop
                                 if (saveManager.filePlayer.JSONPlayer.resources.products[j].typeProduct == product.reward.typeReward)
                                 {
                                     saveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
-                                    saveManager.UpdatePlayerFile();
                                     GiveProduct(product);
                                     OnBuyProduct?.Invoke(product);
 
@@ -160,7 +159,6 @@ namespace UI.PlaneTablet.Shop
 
                             Debug.Log($"{product.reward.typeReward} был куплен");
 
-                            saveManager.UpdatePlayerFile();
                             OnBuyProduct?.Invoke(product);
 
                             return true;

@@ -47,8 +47,6 @@ namespace UI.PlaneTablet.Exercise
                             typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone,
                         });
                     }
-
-                    saveManager.UpdatePlayerFile();
                 }
             }
 

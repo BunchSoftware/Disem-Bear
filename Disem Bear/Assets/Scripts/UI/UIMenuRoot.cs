@@ -26,10 +26,7 @@ namespace UI
             settingsController.Init();
 
             fade.FadeWhite();
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
             if (saveManager.filePlayer.JSONPlayer.resources != null && saveManager.filePlayer.JSONPlayer.resources.isPlayerRegistration)
             {
                 startButton.gameObject.SetActive(false);
