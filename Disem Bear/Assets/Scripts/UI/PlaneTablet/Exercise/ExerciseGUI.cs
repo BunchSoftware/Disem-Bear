@@ -89,7 +89,6 @@ namespace UI.PlaneTablet.Exercise
                 givePackage.interactable = false;
 
                 saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[indexExercise].isGetPackage = true;
-                saveManager.UpdatePlayerFile();
             });
 
             this.exercise = exercise;
@@ -126,7 +125,6 @@ namespace UI.PlaneTablet.Exercise
         {
             currentExerciseCompletion = exerciseCompletion;
             saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[indexExercise].typeOfExerciseCompletion = exerciseCompletion;
-            saveManager.UpdatePlayerFile();
 
             switch (exerciseCompletion)
             {

@@ -29,7 +29,7 @@ namespace External.DI
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
         [Header("Save System")]
-        [SerializeField] private FileMagnets fileMagnets;
+        [SerializeField] private bool isTest = true;
         [SerializeField] private FilePlayer defaultFilePlayer;
         [SerializeField] private FileShop defaultFileShop;
         [SerializeField] private FilePlayer filePlayer;
@@ -71,12 +71,6 @@ namespace External.DI
                 return;
             }
 
-            if (!fileMagnets)
-            {
-                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FileMagnets");
-                return;
-            }
-
             if (!filePlayer)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FilePlayer");
@@ -92,7 +86,7 @@ namespace External.DI
 
             apiManager.Init();
 
-            saveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
+            saveManager.Init(apiManager, isTest, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
 
             musicManager.Init(this);
             soundManager.Init(this);

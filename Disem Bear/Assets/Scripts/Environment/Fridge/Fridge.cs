@@ -15,6 +15,7 @@ namespace Game.Environment.Fridge
     {
         [SerializeField] private GameObject content;
         [SerializeField] private GameObject prefabMagnet;
+        [SerializeField] private FileMagnets fileMagnets;
 
         public UnityEvent OnFridgeOpen;
         public UnityEvent OnFridgeClose;
@@ -22,7 +23,7 @@ namespace Game.Environment.Fridge
         public bool IsOpen => isOpen;
         private bool isOpen = false;
 
-        public List<Magnet> magnets = new List<Magnet>();
+        private List<Magnet> magnets = new List<Magnet>();
 
         private SaveManager saveManager;
         private Player player;
@@ -43,9 +44,31 @@ namespace Game.Environment.Fridge
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
 
-            for (int i = 0; i < magnets.Count; i++)
+            if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)
             {
-                magnets[i].Init(this, saveManager, null);
+                for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
+                {
+                    prefabMagnet.name = $"Magnet {i}";
+                    Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
+
+                    for (int j = 0; j < fileMagnets.magnets.Count; j++)
+                    {
+                        if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
+                        {
+                            MagnetInfo magnetInfo = new MagnetInfo()
+                            {
+                                x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
+                                y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
+                                z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
+                                typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
+                                iconMagnet = fileMagnets.magnets[j].iconMagnet,
+                            };
+                            magnet.Init(this, saveManager, magnetInfo);
+                            break;
+                        }
+                    }
+                    magnets.Add(magnet);
+                }
             }
 
             content.GetComponent<Collider>().enabled = false;
@@ -85,36 +108,7 @@ namespace Game.Environment.Fridge
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
-            Debug.Log("Fridge: Успешно иницилизирован");
-
-            //FrontFridge = transform.Find("FrontFridge").gameObject;
-
-            //if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves != null)
-            //{
-            //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.magnetSaves.Count; i++)
-            //    {
-            //        prefabMagnet.name = $"Magnet {i}";
-            //        MagnetGUI magnetGUI = Instantiate(prefabMagnet, transform).GetComponent<MagnetGUI>();
-
-            //        for (int j = 0; j < fileMagnets.magnets.Count; j++)
-            //        {
-            //            if (saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
-            //            {
-            //                Magnet magnet = new Magnet()
-            //                {
-            //                    x = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].x,
-            //                    y = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].y,
-            //                    z = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].z,
-            //                    typeMagnet = saveManager.filePlayer.JSONPlayer.resources.magnetSaves[i].typeMagnet,
-            //                    iconMagnet = fileMagnets.magnets[j].iconMagnet,
-            //                };
-            //                magnetGUI.Init(magnet);
-            //                break;
-            //            }
-            //        }
-            //        magnetsGUI.Add(magnetGUI);
-            //    }
-            //}      
+            Debug.Log("Fridge: Успешно иницилизирован");          
         }
 
         public void OnUpdate(float deltatime)

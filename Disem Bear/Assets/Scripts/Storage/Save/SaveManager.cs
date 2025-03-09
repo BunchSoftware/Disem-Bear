@@ -11,18 +11,44 @@ namespace External.Storage
     public class SaveManager
     {
         private APIManager apiManager;
-        private SaveManagerIO saveManagerIO;
+        private SaveManagerIO saveManagerIO = new SaveManagerIO();
 
-        public FilePlayer defaultFilePlayer;
-        public FileShop defaultFileShop;
+        private FilePlayer defaultFilePlayer;
+        private FileShop defaultFileShop;
 
-        public FilePlayer filePlayer; 
-        public FileShop fileShop;
+
+        private FilePlayer _filePlayer;
+        public FilePlayer filePlayer 
+        {
+            get
+            {
+                return _filePlayer;
+            }
+            set 
+            {
+                _filePlayer = value;
+                UpdatePlayerFile();
+            }
+        }
+
+        private FileShop _fileShop;
+        public FileShop fileShop 
+        {
+            get
+            {
+                return _fileShop;
+            }
+            set
+            {
+                _fileShop = value;
+                UpdateShopFile();
+            }
+        }
 
         private string pathToFileResourcePlayer;
         private string pathToFileResourceShop;
 
-        public void Init(APIManager apiManager, FilePlayer filePlayer, FileShop fileShop, FilePlayer defaultFilePlayer, FileShop defaultFileShop)
+        public void Init(APIManager apiManager, bool isTest, FilePlayer filePlayer, FileShop fileShop, FilePlayer defaultFilePlayer, FileShop defaultFileShop)
         {
             this.apiManager = apiManager;
             this.filePlayer = filePlayer;
@@ -30,67 +56,55 @@ namespace External.Storage
             this.defaultFilePlayer = defaultFilePlayer;
             this.defaultFileShop = defaultFileShop;
 
-#if UNITY_EDITOR
-            this.filePlayer = this.defaultFilePlayer;
-            this.fileShop = this.defaultFileShop;
-#else
-            
-#endif
-
-
-            try
+            if(isTest)
             {
-                saveManagerIO = new SaveManagerIO();
-
-                pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
-                pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
-
-                if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
-                    filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
-
-                if (filePlayer.JSONPlayer == null)
+                this.filePlayer.JSONPlayer = this.defaultFilePlayer.Clone();
+                this.fileShop.JSONShop = this.defaultFileShop.Clone();
+                Debug.Log("SaveManager: Успешно иницилизирован");
+            }
+            else
+            {
+                if (PlayerPrefs.GetInt("isDefault", 1) == 1)
                 {
-                    filePlayer.JSONPlayer = new JSONPlayer();
-                    filePlayer.JSONPlayer.resources = new ResourcePlayer();
-                    saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                    this.filePlayer.JSONPlayer = this.defaultFilePlayer.Clone();
+                    this.fileShop.JSONShop = this.defaultFileShop.Clone();
+                    PlayerPrefs.SetInt("isDefault", 0);
                 }
 
-                if (fileShop.JSONShop.nameShop == "")
-                    fileShop.JSONShop = saveManagerIO.LoadJSONShop(pathToFileResourceShop);
-
-                if (fileShop.JSONShop == null)
+                try
                 {
-                    fileShop.JSONShop = new JSONShop();
-                    fileShop.JSONShop.resources = new ResourceShop();
-                    saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+                    saveManagerIO = new SaveManagerIO();
+
+                    pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
+                    pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
+
+                    if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
+                        filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
+
+                    if (filePlayer.JSONPlayer == null)
+                    {
+                        filePlayer.JSONPlayer = new JSONPlayer();
+                        filePlayer.JSONPlayer.resources = new ResourcePlayer();
+                        saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                    }
+
+                    if (fileShop.JSONShop.nameShop == "")
+                        fileShop.JSONShop = saveManagerIO.LoadJSONShop(pathToFileResourceShop);
+
+                    if (fileShop.JSONShop == null)
+                    {
+                        fileShop.JSONShop = new JSONShop();
+                        fileShop.JSONShop.resources = new ResourceShop();
+                        saveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+                    }
+
+
+                    Debug.Log("SaveManager: Успешно иницилизирован");
                 }
-            }
-            catch
-            {
-                Debug.LogError("SaveManager: Ошибка иницилизации");
-            }
-
-            Debug.Log("SaveManager: Успешно иницилизирован");
-        }
-
-        public void Init(APIManager apiManager, FilePlayer filePlayer)
-        {
-            this.filePlayer = filePlayer;
-            this.apiManager = apiManager;
-
-            saveManagerIO = new SaveManagerIO();
-
-            pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
-            pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
-
-            if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
-                filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
-
-            if (filePlayer.JSONPlayer == null)
-            {
-                filePlayer.JSONPlayer = new JSONPlayer();
-                filePlayer.JSONPlayer.resources = new ResourcePlayer();
-                saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                catch
+                {
+                    Debug.LogError("SaveManager: Ошибка иницилизации");
+                }
             }
         }
 
@@ -178,7 +192,7 @@ namespace External.Storage
             });
         }
 
-        public async void UpdatePlayerFile()
+        private async void UpdatePlayerFile()
         {
             await Task.Run(() =>
             {
@@ -212,7 +226,7 @@ namespace External.Storage
             });
         }
 
-        public async void ChangeSaveTypeProduct(SaveTypeProduct saveTypeProduct)
+        private async void ChangeSaveTypeProduct(SaveTypeProduct saveTypeProduct)
         {
             await Task.Run(() =>
             {
@@ -349,9 +363,14 @@ namespace External.Storage
             }
         }
 
-        public JSONPlayer GetJSONPlayer()
+        public void ResetFilePlayer()
         {
-            return filePlayer.JSONPlayer;
+            filePlayer.JSONPlayer = defaultFilePlayer.Clone();
+        }
+
+        public void ResetFileShop()
+        {
+            fileShop.JSONShop = defaultFileShop.Clone();
         }
     }
 }

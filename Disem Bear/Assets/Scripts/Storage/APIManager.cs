@@ -74,6 +74,7 @@ namespace External.API
     // Игрок с именем и ресурсами
     public class JSONPlayer
     {
+        public bool isTest = false;
         public string nameUser;
         public ResourcePlayer resources;
     }
@@ -82,6 +83,7 @@ namespace External.API
     // Магазин у игрока с именем магазином и его ресурсами
     public class JSONShop
     {
+        public bool isTest = false;
         public string nameShop;
         public ResourceShop resources;
     }
@@ -188,7 +190,7 @@ namespace External.API
 
         public async void RegistrationPlayer(string userName, ResourcePlayer resourcePlayer)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -230,7 +232,7 @@ namespace External.API
 
         public async Task<ResourcePlayer> GetResourcePlayer(string userName)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
@@ -258,7 +260,7 @@ namespace External.API
 
         public async Task<bool> HasPlayerInServer(string userName)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return false;
             if (UUID.Length != 0)
             {
@@ -282,7 +284,7 @@ namespace External.API
 
         public async void SetResourcePlayer(string userName, ResourcePlayer resourcePlayer)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -317,7 +319,7 @@ namespace External.API
 
         public async void DeletePlayer(string userName)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -347,7 +349,7 @@ namespace External.API
 
         public async Task<List<JSONPlayer>> GetListPlayers()
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
@@ -375,7 +377,7 @@ namespace External.API
         #region LogPlayer
         public async void CreateLogPlayer(string userName, string comment, ResourceChangedPlayer resourceChangedPlayer)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -413,7 +415,7 @@ namespace External.API
 
         public async Task<List<LogPlayer>> GetListLogsPlayer(string userName)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
@@ -441,7 +443,7 @@ namespace External.API
         #region Shop
         public async void RegistrationShop(string userName, string nameShop, ResourceShop resourceShop)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -470,7 +472,7 @@ namespace External.API
 
         public async Task<ResourceShop> GetResourceShopPlayer(string userName, string nameShop)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
@@ -500,7 +502,7 @@ namespace External.API
 
         public async void SetResourceShopPlayer(string userName, string nameShop, ResourceShop resourceShop)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -535,7 +537,7 @@ namespace External.API
 
         public async Task<List<JSONShop>> GetListShopPlayer(string userName)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
@@ -563,7 +565,7 @@ namespace External.API
 
         public async void DeleteShop(string userName, string nameShop)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -595,7 +597,7 @@ namespace External.API
 
         public async void CreateLogShop(string userName, string shopName, string comment, ResourceChangedShop resourceChangedShop)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -633,7 +635,7 @@ namespace External.API
 
         public async Task<List<LogShop>> GetListLogsShop(string userName, string shopName)
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
@@ -662,7 +664,7 @@ namespace External.API
 
         public async void GetLogsGame()
         {
-            if (CheckInternetConnection("https://2025.nti-gamedev.ru/") == false)
+            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
@@ -687,7 +689,7 @@ namespace External.API
                     return reply.Status == IPStatus.Success;
                 }
             }
-            catch
+            catch(Exception exc)
             {
                 Debug.LogWarning("Нет подключения к серверу или нет интернета !");
                 OnNotInternet?.Invoke();
