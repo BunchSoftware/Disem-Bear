@@ -24,7 +24,11 @@ public class MenuBootstrap : MonoBehaviour
     [SerializeField] private FilePlayer defaultFilePlayer;
     [SerializeField] private FileShop defaultFileShop;
     [SerializeField] private FilePlayer filePlayer;
+<<<<<<< Updated upstream
     [SerializeField] private FileShop fileShop;
+=======
+    [SerializeField] private FilePlayer defaultFilePlayer;
+>>>>>>> Stashed changes
     [SerializeField] private APIManager apiManager;
 
     [SerializeField] private PlayerInput playerInput = new();
@@ -36,7 +40,11 @@ public class MenuBootstrap : MonoBehaviour
 
     private void Awake()
     {
+<<<<<<< Updated upstream
         saveManager.Init(apiManager, isTest, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
+=======
+        saveManager.Init(apiManager, filePlayer, defaultFilePlayer);
+>>>>>>> Stashed changes
 
         musicManager.Init(this);
         soundManager.Init(this);

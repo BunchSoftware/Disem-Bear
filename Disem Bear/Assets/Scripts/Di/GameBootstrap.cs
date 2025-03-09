@@ -29,7 +29,10 @@ namespace External.DI
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
         [Header("Save System")]
+<<<<<<< Updated upstream
         [SerializeField] private bool isTest = true;
+=======
+>>>>>>> Stashed changes
         [SerializeField] private FilePlayer defaultFilePlayer;
         [SerializeField] private FileShop defaultFileShop;
         [SerializeField] private FilePlayer filePlayer;

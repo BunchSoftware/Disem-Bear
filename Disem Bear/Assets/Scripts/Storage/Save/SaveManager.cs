@@ -56,7 +56,24 @@ namespace External.Storage
             this.defaultFilePlayer = defaultFilePlayer;
             this.defaultFileShop = defaultFileShop;
 
+<<<<<<< Updated upstream
             if(isTest)
+=======
+#if UNITY_EDITOR
+            this.filePlayer = this.defaultFilePlayer;
+            this.fileShop = this.defaultFileShop;
+#else
+            if(PlayerPrefs.GetInt("isDefault", 1) == 1)
+            {
+                this.filePlayer = this.defaultFilePlayer;
+                this.fileShop = this.defaultFileShop;
+                PlayerPrefs.SetInt("isDefault", 0);
+            }
+#endif
+
+
+            try
+>>>>>>> Stashed changes
             {
                 this.filePlayer.JSONPlayer = this.defaultFilePlayer.Clone();
                 this.fileShop.JSONShop = this.defaultFileShop.Clone();
@@ -105,7 +122,58 @@ namespace External.Storage
                 {
                     Debug.LogError("SaveManager: Ошибка иницилизации");
                 }
+<<<<<<< Updated upstream
+=======
             }
+            catch
+            {
+                Debug.LogError("SaveManager: Ошибка иницилизации");
+            }
+
+            Debug.Log("SaveManager: Успешно иницилизирован");
+        }
+
+        public void Init(APIManager apiManager, FilePlayer filePlayer, FilePlayer defaultFilePlayer)
+        {
+            this.filePlayer = filePlayer;
+            this.apiManager = apiManager;
+            this.defaultFilePlayer = defaultFilePlayer;
+
+#if UNITY_EDITOR
+            this.filePlayer = this.defaultFilePlayer;
+#else
+            if(PlayerPrefs.GetInt("isDefault", 1) == 1)
+            {
+                this.filePlayer = this.defaultFilePlayer;
+                this.fileShop = this.defaultFileShop;
+                PlayerPrefs.SetInt("isDefault", 0);
+>>>>>>> Stashed changes
+            }
+#endif
+
+            try
+            {
+                saveManagerIO = new SaveManagerIO();
+
+                pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
+                pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
+
+                if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
+                    filePlayer.JSONPlayer = saveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
+
+                if (filePlayer.JSONPlayer == null)
+                {
+                    filePlayer.JSONPlayer = new JSONPlayer();
+                    filePlayer.JSONPlayer.resources = new ResourcePlayer();
+                    saveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                }
+            }
+            catch
+            {
+                Debug.LogError("SaveManager: Ошибка иницилизации");
+            }
+
+            Debug.Log("SaveManager: Успешно иницилизирован");
         }
 
         public async void RegistrationShop(string nameShop)
@@ -365,12 +433,20 @@ namespace External.Storage
 
         public void ResetFilePlayer()
         {
+<<<<<<< Updated upstream
             filePlayer.JSONPlayer = defaultFilePlayer.Clone();
+=======
+            filePlayer.JSONPlayer = new JSONPlayer();
+>>>>>>> Stashed changes
         }
 
         public void ResetFileShop()
         {
+<<<<<<< Updated upstream
             fileShop.JSONShop = defaultFileShop.Clone();
+=======
+            fileShop.JSONShop = new JSONShop();
+>>>>>>> Stashed changes
         }
     }
 }
