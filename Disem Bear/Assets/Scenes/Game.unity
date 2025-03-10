@@ -589,17 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   makePathToObject: {fileID: 1560337221}
-  pointers:
-  - indexDialogPoint: 3
-    indexDialog: 1
-    needTargetFullEndDialog: 0
-    offPointer: 0
-    lineToObjectTransform: {fileID: 1605940979}
-  - indexDialogPoint: 3
-    indexDialog: 2
-    needTargetFullEndDialog: 0
-    offPointer: 0
-    lineToObjectTransform: {fileID: 1009302873}
+  pointers: []
 --- !u!1 &264418249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,7 +1449,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2323,34 +2313,7 @@ MonoBehaviour:
   PrinterBlock: {fileID: 941917450}
   TVBlock: {fileID: 656981623}
   ModelBoardBlock: {fileID: 1602364834}
-  tutorialBlocks:
-  - indexDialogPoint: 3
-    indexDialog: 0
-    needTargetFullEndDialog: 0
-    WorkbenchBlock: 1
-    AquariumBlock: 1
-    FridgeBlock: 1
-    PrinterBlock: 1
-    TVBlock: 1
-    ModelBoardBlock: 1
-  - indexDialogPoint: 3
-    indexDialog: 1
-    needTargetFullEndDialog: 0
-    WorkbenchBlock: 1
-    AquariumBlock: 0
-    FridgeBlock: 1
-    PrinterBlock: 1
-    TVBlock: 1
-    ModelBoardBlock: 1
-  - indexDialogPoint: 3
-    indexDialog: 2
-    needTargetFullEndDialog: 0
-    WorkbenchBlock: 0
-    AquariumBlock: 0
-    FridgeBlock: 0
-    PrinterBlock: 0
-    TVBlock: 0
-    ModelBoardBlock: 0
+  tutorialBlocks: []
 --- !u!1 &900895251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,7 +2494,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.5472913, y: 1.6292207, z: 1.8642745}
   m_Center: {x: 0.07276845, y: 0.011371255, z: 0.43213975}
@@ -4132,6 +4095,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointerTutorialManager: {fileID: 244494542}
   blockTutorialManager: {fileID: 854850602}
+  mainConditionManager: {fileID: 1833872764}
   postTube: {fileID: 1402415644}
   modelBoard: {fileID: 0}
 --- !u!4 &1451648182
@@ -4899,7 +4863,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 10.000002, y: 1.6442987, z: 10.000006}
   m_Center: {x: 1.0314549e-15, y: 0.3578993, z: 0}
@@ -5113,7 +5077,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.02, y: 0.02, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
@@ -5638,8 +5602,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1833872762}
+  - component: {fileID: 1833872764}
+  - component: {fileID: 1833872763}
   m_Layer: 0
-  m_Name: ConditionsDialogManager
+  m_Name: ConditionsDialogManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5660,6 +5626,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 385524268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1833872763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833872761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ee00c2c968f8245b74d4352afab1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditions:
+  - headerOrder: "\u0421\u0432\u0435\u0442\u043B\u0430\u043D\u0430"
+    condition: "\u0421\u0432\u0435\u0442\u043B\u0430\u043D\u0430"
+--- !u!114 &1833872764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833872761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a877fcbbd385ee4ea9a911d0f43e826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uIGameRoot: {fileID: 1356396023}
 --- !u!114 &1858827800 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8902528361274274020, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}

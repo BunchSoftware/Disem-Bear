@@ -93,5 +93,9 @@ namespace UI
         {
             return dialogManager;
         }
+        public ExerciseManager GetExerciseManager()
+        {
+            return exerciseManager;
+        }
     }
 }

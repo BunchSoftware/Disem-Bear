@@ -7,6 +7,7 @@ using System.IO;
 using UI.PlaneTablet.Shop;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UI.PlaneTablet.Exercise
@@ -14,6 +15,8 @@ namespace UI.PlaneTablet.Exercise
     [Serializable]
     public class ExerciseManager : IUpdateListener
     {
+        public UnityEvent<Exercise> PlayerGetExercise;
+
         [SerializeField] private SaveManager saveManager;
         [SerializeField] private GameObject prefab;
         [SerializeField] private GameObject content;
@@ -64,6 +67,8 @@ namespace UI.PlaneTablet.Exercise
                 {
                     exercise.Init(this, (exercise, isExpandExercise) =>
                     {
+                        PlayerGetExercise?.Invoke(exercise.GetExercise());
+
                         currentExerciseGUI = exercise;
                         GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
 

@@ -14,6 +14,7 @@ namespace Game.Tutorial
     {
         [SerializeField] private PointerTutorialManager pointerTutorialManager;
         [SerializeField] private BlockTutorialManager blockTutorialManager;
+        [SerializeField] private MainConditionManager mainConditionManager;
         [SerializeField] private PostTube postTube;
         [SerializeField] private ModelBoard modelBoard;
 
@@ -28,6 +29,8 @@ namespace Game.Tutorial
             pointerTutorialManager.Init(dialogManager, player);
 
             blockTutorialManager.Init(dialogManager);
+
+            mainConditionManager.Init(dialogManager);
 
             Debug.Log("TutorialRoot: Успешно иницилизирован");
         }
