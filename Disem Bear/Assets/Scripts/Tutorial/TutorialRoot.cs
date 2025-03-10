@@ -16,7 +16,6 @@ namespace Game.Tutorial
         [SerializeField] private BlockTutorialManager blockTutorialManager;
         [SerializeField] private PostTube postTube;
         [SerializeField] private ModelBoard modelBoard;
-        [SerializeField] private MakePathToObject makePathToObject;
 
         private DialogManager dialogManager;
         private Player player;
@@ -26,9 +25,7 @@ namespace Game.Tutorial
             this.dialogManager = dialogManager;
             this.player = player;
 
-            makePathToObject.Init(player);
-
-            pointerTutorialManager.Init(dialogManager, player, makePathToObject);
+            pointerTutorialManager.Init(dialogManager, player);
 
             blockTutorialManager.Init(dialogManager);
 
@@ -37,7 +34,7 @@ namespace Game.Tutorial
 
         public void OnUpdate(float deltaTime)
         {
-            makePathToObject.OnUpdate(deltaTime);
+            pointerTutorialManager.OnUpdate(deltaTime);
             blockTutorialManager.OnUpdate(deltaTime);
         }
     }

@@ -82,9 +82,9 @@ public class BlockTutorialManager : MonoBehaviour
                     PrinterBlock.OffOnCollider(tutorialBlocks[i].PrinterBlock);
                     TVBlock.OffOnCollider(tutorialBlocks[i].TVBlock);
                     ModelBoardBlock.OffOnCollider(tutorialBlocks[i].ModelBoardBlock);
+                    break;
                 }
                 //“ут5
-                break;
             }
         }
     }

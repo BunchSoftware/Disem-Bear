@@ -1,5 +1,6 @@
 using Game.LDialog;
 using Game.LPlayer;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,35 +10,83 @@ namespace Game.Tutorial
     public class PointerTutorialManager : MonoBehaviour
     {
         private DialogManager dialogManager;
-        private Player player;
-        private List<PointerTutorial> pointerTutorial = new List<PointerTutorial>();
-        private MakePathToObject makePathToObject;
+        [SerializeField] private MakePathToObject makePathToObject;
 
-        public void Init(DialogManager dialogManager, Player player, MakePathToObject makePathToObject)
+        [SerializeField] private List<Pointer> pointers = new();
+
+        public void Init(DialogManager dialogManager, Player player)
         {
+            makePathToObject.Init(player);
+
             this.dialogManager = dialogManager;
-            this.player = player;
-            this.makePathToObject = makePathToObject;
+            this.dialogManager.OnStartDialog.AddListener(SetPointerStartDialog);
+            this.dialogManager.OnFullEndDialog.AddListener(SetPointerFullEndDialog);
 
-            for (int i = 0; i < transform.childCount; i++)
+        }
+
+        public void OnUpdate(float deltaTime)
+        {
+            makePathToObject.OnUpdate(deltaTime);
+        }
+
+        public void SetPointerStartDialog(Dialog dialog)
+        {
+            for (int i = 0; i < pointers.Count; i++)
             {
-                PointerTutorial pointerTutorial;
-
-                if (transform.GetChild(i).TryGetComponent<PointerTutorial>(out pointerTutorial))
+                if (pointers[i].indexDialogPoint == dialogManager.GetCurrentIndexDialogPoint() && pointers[i].indexDialog == dialogManager.GetCurrentIndexDialog())
                 {
-                    pointerTutorial.Init(player, dialogManager, this);
-                    this.pointerTutorial.Add(pointerTutorial);
+                    if (pointers[i].needTargetFullEndDialog == false)
+                    {
+                        if (pointers[i].offPointer)
+                        {
+                            makePathToObject.ClearTarget();
+                        }
+                        else
+                        {
+                            makePathToObject.SetTarget(pointers[i].lineToObjectTransform);
+                        }
+                        return;
+                    }
                 }
             }
+            makePathToObject.ClearTarget();
         }
-        public void SetPointer(int indexPointer)
+
+        public void SetPointerFullEndDialog(Dialog dialog)
         {
-            makePathToObject.SetTarget(pointerTutorial[indexPointer].lineToObjectTransform);
-            //for (int i = 0; i < pointerTutorial.Count; i++)
-            //{
-            //    pointerTutorial[i].transform.GetChild(0).gameObject.SetActive(false);
-            //}
-            //pointerTutorial[indexPointer].transform.GetChild(0).gameObject.SetActive(true);
+            for (int i = 0; i < pointers.Count; i++)
+            {
+                if (pointers[i].indexDialogPoint == dialogManager.GetCurrentIndexDialogPoint() && pointers[i].indexDialog == dialogManager.GetCurrentIndexDialog())
+                {
+                    if (pointers[i].needTargetFullEndDialog)
+                    {
+                        if (pointers[i].offPointer)
+                        {
+                            makePathToObject.ClearTarget();
+                        }
+                        else
+                        {
+                            makePathToObject.SetTarget(pointers[i].lineToObjectTransform);
+                        }
+                        return;
+                    }
+                }
+            }
+            makePathToObject.ClearTarget();
+        }
+
+        [Serializable]
+        public class Pointer
+        {
+            public int indexDialogPoint = 0;
+            public int indexDialog = 0;
+            [Space]
+            public bool needTargetFullEndDialog = false;
+            [Space]
+            [Space]
+            public bool offPointer = false;
+            [Space]
+            public Transform lineToObjectTransform;
         }
     }
 }
