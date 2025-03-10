@@ -21,6 +21,7 @@ namespace Game.LDialog
         [SerializeField] private FileDialog fileDialog;
         public UnityEvent<Dialog> OnStartDialog;
         public UnityEvent<Dialog> OnEndDialog;
+        public UnityEvent<Dialog> OnFullEndDialog;
         public UnityEvent<string> SendInputFieldText;
 
         private List<DialogPoint> dialogPoints = new List<DialogPoint>();
@@ -78,6 +79,7 @@ namespace Game.LDialog
                     if (isDialogLast == true)
                     {
                         isDialogLast = false;
+                        OnFullEndDialog?.Invoke(dialog);
                         ExitDrop(dialog);
                     }
                     else if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
@@ -139,6 +141,7 @@ namespace Game.LDialog
                     if (dialogPoint.dialog[i].skipDialog == false)
                     {
                         yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
+                        OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
                         ExitDrop(dialogPoint.dialog[i]);
                     }
                     break;
@@ -146,6 +149,7 @@ namespace Game.LDialog
                 else
                     yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
 
+                OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
                 ExitDrop(dialogPoint.dialog[i]);
 
                 isCanSkipDialog = false;

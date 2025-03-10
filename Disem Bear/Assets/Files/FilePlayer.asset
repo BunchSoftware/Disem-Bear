@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
+    isTest: 0
     nameUser: Denis
     resources:
-      isPlayerRegistration: 0
-      currentIndexDialogPoint: 0
-      currentIndexDialog: 0
+      isPlayerRegistration: 1
+      currentIndexDialogPoint: 3
+      currentIndexDialog: 2
       exerciseSaves:
       - indexExercise: 0
         typeOfExerciseCompletion: 2
@@ -50,10 +51,14 @@ MonoBehaviour:
       - typeModelBoard: DocumentPackage
       itemFromTableSaves: []
       magnetSaves:
-      - typeMagnet: sota
-        x: -0.01113781
-        y: -0.00297
-        z: 0.00316
+      - typeMagnet: altay
+        x: 0
+        y: 0
+        z: 0
+      - typeMagnet: altay
+        x: 0
+        y: -0.00515
+        z: 0
       products:
       - typeProduct: sigmaCell
         countProduct: 0

@@ -13,6 +13,7 @@ namespace Game.Tutorial
     public class TutorialRoot : MonoBehaviour, IUpdateListener
     {
         [SerializeField] private PointerTutorialManager pointerTutorialManager;
+        [SerializeField] private BlockTutorialManager blockTutorialManager;
         [SerializeField] private PostTube postTube;
         [SerializeField] private ModelBoard modelBoard;
         [SerializeField] private MakePathToObject makePathToObject;
@@ -29,12 +30,15 @@ namespace Game.Tutorial
 
             pointerTutorialManager.Init(dialogManager, player, makePathToObject);
 
+            blockTutorialManager.Init(dialogManager);
+
             Debug.Log("TutorialRoot: Успешно иницилизирован");
         }
 
         public void OnUpdate(float deltaTime)
         {
             makePathToObject.OnUpdate(deltaTime);
+            blockTutorialManager.OnUpdate(deltaTime);
         }
     }
 }
