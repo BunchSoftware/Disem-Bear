@@ -589,7 +589,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   makePathToObject: {fileID: 1560337221}
-  pointers: []
+  pointers:
+  - indexDialogPoint: 3
+    indexDialog: 0
+    needTargetFullEndDialog: 0
+    offPointer: 0
+    lineToObjectTransform: {fileID: 1391067367}
+  - indexDialogPoint: 3
+    indexDialog: 1
+    needTargetFullEndDialog: 0
+    offPointer: 0
+    lineToObjectTransform: {fileID: 1605940979}
+  - indexDialogPoint: 3
+    indexDialog: 2
+    needTargetFullEndDialog: 0
+    offPointer: 0
+    lineToObjectTransform: {fileID: 1009302873}
 --- !u!1 &264418249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,6 +1781,10 @@ PrefabInstance:
       value: Aquarium (4)
       objectReference: {fileID: 0}
     - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: materialForAquarium
+      value: 
+      objectReference: {fileID: 8688015039957210573, guid: 6c6d2ca616cbefb46a5da95a54e61800, type: 3}
+    - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: 'InspectorSpawners.Array.data[0]'
       value: 
       objectReference: {fileID: 7011096796303665594}
@@ -2313,7 +2332,43 @@ MonoBehaviour:
   PrinterBlock: {fileID: 941917450}
   TVBlock: {fileID: 656981623}
   ModelBoardBlock: {fileID: 1602364834}
-  tutorialBlocks: []
+  tutorialBlocks:
+  - indexDialogPoint: 3
+    indexDialog: 0
+    needTargetFullEndDialog: 0
+    WorkbenchBlock: 1
+    AquariumBlock: 1
+    FridgeBlock: 1
+    PrinterBlock: 1
+    TVBlock: 0
+    ModelBoardBlock: 1
+  - indexDialogPoint: 3
+    indexDialog: 1
+    needTargetFullEndDialog: 0
+    WorkbenchBlock: 1
+    AquariumBlock: 0
+    FridgeBlock: 1
+    PrinterBlock: 1
+    TVBlock: 0
+    ModelBoardBlock: 1
+  - indexDialogPoint: 3
+    indexDialog: 2
+    needTargetFullEndDialog: 0
+    WorkbenchBlock: 0
+    AquariumBlock: 0
+    FridgeBlock: 1
+    PrinterBlock: 1
+    TVBlock: 0
+    ModelBoardBlock: 1
+  - indexDialogPoint: 3
+    indexDialog: 4
+    needTargetFullEndDialog: 1
+    WorkbenchBlock: 0
+    AquariumBlock: 0
+    FridgeBlock: 0
+    PrinterBlock: 0
+    TVBlock: 0
+    ModelBoardBlock: 0
 --- !u!1 &900895251
 GameObject:
   m_ObjectHideFlags: 0
@@ -5604,6 +5659,8 @@ GameObject:
   - component: {fileID: 1833872762}
   - component: {fileID: 1833872764}
   - component: {fileID: 1833872763}
+  - component: {fileID: 1833872765}
+  - component: {fileID: 1833872766}
   m_Layer: 0
   m_Name: ConditionsDialogManagers
   m_TagString: Untagged
@@ -5654,6 +5711,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uIGameRoot: {fileID: 1356396023}
+  aquarium: {fileID: 2131828490}
+  workbench: {fileID: 1009302872}
+--- !u!114 &1833872765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833872761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff038d19795f7446a2463da352405ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditions:
+  - nameCell: stem
+    condition: Get2Stem
+--- !u!114 &1833872766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833872761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10656490c9480049b3d452145fddea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditions:
+  - craftObject: 0
+    name: metabolism
+    condition: craftMetabolism
 --- !u!114 &1858827800 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8902528361274274020, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -6380,6 +6470,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3933690519876170411, guid: ea87b18915506a748ac5f5494a1373d6, type: 3}
   m_PrefabInstance: {fileID: 4164501875147781362}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2131828490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+  m_PrefabInstance: {fileID: 774231207}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848072dd53638bd4784444145bcc616e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &117523939470114519
 PrefabInstance:
   m_ObjectHideFlags: 0

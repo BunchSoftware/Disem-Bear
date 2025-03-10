@@ -518,7 +518,7 @@ MonoBehaviour:
       conditionSkipDialog: "\u0421\u0432\u0435\u0442\u043B\u0430\u043D\u0430"
       stopTheEndDialog: 1
       waitSecond: 0
-      colorText: {r: 0.62352943, g: 0.6784314, b: 0.77254903, a: 1}
+      colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
       fontStyleText: 0
       fontText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
       fontSizeText: 40
@@ -542,15 +542,44 @@ MonoBehaviour:
       exitDrop: 4
       speedText: 0.05
       skipDialog: 1
-      conditionSkipDialog: 
+      conditionSkipDialog: Get2Stem
       stopTheEndDialog: 1
       waitSecond: 0
-      colorText: {r: 0.62352943, g: 0.6784314, b: 0.77254903, a: 1}
+      colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
       fontStyleText: 0
       fontText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
       fontSizeText: 40
       avatar: {fileID: 1277154410, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
-      textDialog: "\u0420\u0435\u0430\u043B\u044C\u043D\u043E \u0432\u0437\u044F\u043B..."
+      textDialog: "\u0412\u043E\u0437\u044C\u043C\u0438 2 \u043A\u043B\u0435\u0442\u043A\u0438
+        \u0432 \u0430\u043A\u0432\u0430\u0440\u0438\u0443\u043C\u0435"
+      dialogChoices: []
+      isActiveInputField: 0
+      colorTextInputField: {r: 0, g: 0, b: 0, a: 1}
+      fontStyleTextInputField: 0
+      fontTextInputField: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizeTextInputField: 30
+      colorPlaceHolderText: {r: 0, g: 0, b: 0, a: 1}
+      fontStylePlaceHolderText: 0
+      fontPlaceHolderText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizePlaceHolderText: 30
+      textPlaceHolderText: "\u041F\u0440\u0438\u0434\u0443\u043C\u0430\u0439\u0442\u0435
+        \u0438 \u0432\u0432\u0435\u0434\u0438\u0442\u0435 \u0441\u0432\u043E\u0439
+        \u043D\u0438\u043A"
+      imageClickButtonForSkip: {fileID: 0}
+    - enterDrop: 3
+      exitDrop: 4
+      speedText: 0.05
+      skipDialog: 1
+      conditionSkipDialog: craftMetabolism
+      stopTheEndDialog: 1
+      waitSecond: 0
+      colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
+      fontStyleText: 0
+      fontText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizeText: 40
+      avatar: {fileID: 1277154410, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+      textDialog: "\u0421\u043A\u0440\u0430\u0444\u0442\u0438 \u0438\u0437 \u043D\u0438\u0445
+        \u043D\u043E\u0432\u0443\u044E \u043A\u043B\u0435\u0442\u043A\u0443"
       dialogChoices: []
       isActiveInputField: 0
       colorTextInputField: {r: 0, g: 0, b: 0, a: 1}
@@ -572,13 +601,40 @@ MonoBehaviour:
       conditionSkipDialog: 
       stopTheEndDialog: 1
       waitSecond: 0
-      colorText: {r: 0.62352943, g: 0.6784314, b: 0.77254903, a: 1}
+      colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
       fontStyleText: 0
       fontText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
       fontSizeText: 40
       avatar: {fileID: 1277154410, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
-      textDialog: "\u0412\u0441\u0435 \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043E,
-        \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C \u043A \u0441\u0442\u043E\u043B\u0443"
+      textDialog: "\u0420\u0435\u0430\u043B\u044C\u043D\u043E \u0432\u0441\u0435
+        \u0441\u0434\u0435\u043B\u0430\u043B..."
+      dialogChoices: []
+      isActiveInputField: 0
+      colorTextInputField: {r: 0, g: 0, b: 0, a: 1}
+      fontStyleTextInputField: 0
+      fontTextInputField: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizeTextInputField: 30
+      colorPlaceHolderText: {r: 0, g: 0, b: 0, a: 1}
+      fontStylePlaceHolderText: 0
+      fontPlaceHolderText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizePlaceHolderText: 30
+      textPlaceHolderText: "\u041F\u0440\u0438\u0434\u0443\u043C\u0430\u0439\u0442\u0435
+        \u0438 \u0432\u0432\u0435\u0434\u0438\u0442\u0435 \u0441\u0432\u043E\u0439
+        \u043D\u0438\u043A"
+      imageClickButtonForSkip: {fileID: 0}
+    - enterDrop: 3
+      exitDrop: 4
+      speedText: 0.05
+      skipDialog: 1
+      conditionSkipDialog: 
+      stopTheEndDialog: 1
+      waitSecond: 0
+      colorText: {r: 0.8117647, g: 0.93333334, b: 1, a: 1}
+      fontStyleText: 0
+      fontText: {fileID: 12800000, guid: b0f1b4aa506733447966b919063b73d1, type: 3}
+      fontSizeText: 40
+      avatar: {fileID: 1277154410, guid: e5f4c383529e6b547896a075b193f8c9, type: 3}
+      textDialog: "\u0420\u0435\u0441\u043F\u0435\u043A\u0442!"
       dialogChoices: []
       isActiveInputField: 0
       colorTextInputField: {r: 0, g: 0, b: 0, a: 1}

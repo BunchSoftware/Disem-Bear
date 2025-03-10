@@ -44,6 +44,8 @@ namespace Game.Environment.LMixTable
 
         public UnityEvent OnMixIngradients;
         public UnityEvent OnClearIngradients;
+        public UnityEvent<Ingradient> OnCreatIngradient;
+        public UnityEvent<PickUpItem> OnCreatPickUpItem;
 
         public UnityEvent<Ingradient> OnDragIngradient;
         public UnityEvent<Ingradient> OnDropIngradient;
@@ -606,6 +608,7 @@ namespace Game.Environment.LMixTable
 
             for (int i = 0; i < outIngradients.Count; i++)
             {
+                OnCreatIngradient?.Invoke(outIngradients[i]);
                 IngradientSpawner ingradientSpawner = GetIngradientSpawnerOfTypeIngradient(outIngradients[i].typeIngradient);
                 IngradientDragBase ingradientCell = InstantiatePointer(ingradientSpawner);
 
@@ -628,6 +631,7 @@ namespace Game.Environment.LMixTable
 
             for (int i = 0; i < outPickUpItems.Count; i++)
             {
+                OnCreatPickUpItem?.Invoke(outPickUpItems[i]);
                 PickUpItem pickUpItem = Instantiate(outPickUpItems[i], mixTable.transform);
                 pickUpItem.GetComponent<Rigidbody>().isKinematic = true;
                 pickUpItem.GetComponent<PickUpItem>().enabled = false;

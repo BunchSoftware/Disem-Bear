@@ -6,11 +6,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Environment.Aquarium
 {
     public class Aquarium : MonoBehaviour
     {
+        public UnityEvent<string, int> GetAquariumCells;
+
         public MaterialForAquarium materialForAquarium;
         private List<string> currentCells = new();
         private string colorMaterial = "none";
@@ -169,6 +172,7 @@ namespace Game.Environment.Aquarium
 
         private void GetAllCells()
         {
+            GetAquariumCells?.Invoke(currentCells[NumCell], CountCells);
             if (CountCells != 0)
             {
                 particleSystem.Play();

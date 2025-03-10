@@ -25,6 +25,7 @@ public class TakeExerciseConditions : MonoBehaviour
             if (conditions[i].headerOrder == exercise.header)
             {
                 dialogManager.RunConditionSkip(conditions[i].condition);
+                break;
             }
         }
     }
