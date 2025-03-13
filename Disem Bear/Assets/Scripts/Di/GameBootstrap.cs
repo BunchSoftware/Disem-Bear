@@ -79,7 +79,7 @@ namespace External.DI
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FilePlayer");
                 return;
-            }
+            }   
 
             if (!fileShop)
             {
