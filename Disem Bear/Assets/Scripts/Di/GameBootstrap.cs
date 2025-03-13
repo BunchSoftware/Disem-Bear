@@ -29,6 +29,7 @@ namespace External.DI
         [SerializeField] private SoundManager musicManager;
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
+        [SerializeField] private ToastManager toastManager;
         [SerializeField] private FilePrefabsPickUpItems filePrefabsPickUpItems;
         private static FilePrefabsPickUpItems FilePrefabsPickUpItems;
         [Header("Save System")]
@@ -93,6 +94,8 @@ namespace External.DI
 
             musicManager.Init(this);
             soundManager.Init(this);
+            toastManager.Init(soundManager);
+
 
             player.Init();
 
@@ -112,6 +115,7 @@ namespace External.DI
             playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
 
             updateListeners.Add(playerInput);
+
         }
 
         private void Update()

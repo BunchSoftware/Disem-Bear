@@ -2195,6 +2195,10 @@ MonoBehaviour:
     MinDB: -40
     MaxDB: 10
   uiGameRoot: {fileID: 1356396023}
+  toastManager:
+    container: {fileID: 853073749}
+    toastPrefab: {fileID: 468515054413923269, guid: 29362c0c09e83c746896da339bc56970, type: 3}
+    toastSound: {fileID: 8300000, guid: 00a3404146035884c88879f621c9073a, type: 3}
   filePrefabsPickUpItems: {fileID: 11400000, guid: 22f0cc56366f5cd47a83e9b40488623a, type: 2}
   defaultFilePlayer: {fileID: 11400000, guid: ddba387ca8c791c47b3f7d60773e53e5, type: 2}
   defaultFileShop: {fileID: 11400000, guid: a86d2327b443dc14b8d93af7905b28bd, type: 2}
@@ -2527,6 +2531,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845198639}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &853073748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 853073749}
+  - component: {fileID: 853073750}
+  m_Layer: 5
+  m_Name: ToastContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &853073749
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853073748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1356396024}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -415, y: -300}
+  m_SizeDelta: {x: 830, y: 600}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &853073750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853073748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 15
+    m_Right: 15
+    m_Top: 15
+    m_Bottom: 15
+  m_ChildAlignment: 0
+  m_Spacing: 15
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &854850600
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,9 +3341,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0002015233
+    x: 0
     y: 0
-    width: 0.99959695
+    width: 1
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
@@ -4445,6 +4511,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6253b29cb949d7418646383a2619909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1356396024 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4426454996095277506, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+  m_PrefabInstance: {fileID: 2292938179353360474}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1391067367 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4328520326089366441, guid: 5c1c54b464d943045a0d562b661697a3, type: 3}
@@ -7084,9 +7155,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0002015233
+    x: 0
     y: 0
-    width: 0.99959695
+    width: 1
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
@@ -7671,7 +7742,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4426454996095277506, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 853073749}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
 --- !u!1001 &3955827405845984958
