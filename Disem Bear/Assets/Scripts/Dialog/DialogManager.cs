@@ -33,22 +33,19 @@ namespace Game.LDialog
         private bool isCanSkipDialog = false;
         private bool isDialogLast = false;
         private bool isActiveInputField = false;
-
-        private SaveManager saveManager;
         private MonoBehaviour context;
 
-        public void Init(SaveManager saveManager, MonoBehaviour context)
+        public void Init(MonoBehaviour context)
         {
             this.context = context;
-            this.saveManager = saveManager;
 
             dialogPoints = fileDialog.dialogPoints;
             dialogueWindow.Init(this);
 
-            if (saveManager.filePlayer.JSONPlayer.nameUser != null)
+            if (SaveManager.filePlayer.JSONPlayer.nameUser != null)
             {
-                currentIndexDialogPoint = saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
-                TypeLine(dialogPoints[currentIndexDialogPoint], saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
+                currentIndexDialogPoint = SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
+                TypeLine(dialogPoints[currentIndexDialogPoint], SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
             }
         }
 
@@ -57,7 +54,7 @@ namespace Game.LDialog
             if (indexDialogPoint >= currentIndexDialogPoint)
             {
                 currentIndexDialogPoint = indexDialogPoint;
-                saveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+                SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
                 TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
             }
         }
@@ -90,7 +87,7 @@ namespace Game.LDialog
                     else
                     {
                         currentIndexDialog++;
-                        saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                        SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
                         TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
                     }
 
@@ -119,7 +116,7 @@ namespace Game.LDialog
                 OnStartDialog?.Invoke(dialogPoint.dialog[i]);
 
                 currentIndexDialog = i;
-                saveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
 
                 if (dialogPoint.dialog[i].isActiveInputField == false)
                     isCanSkipDialog = true;

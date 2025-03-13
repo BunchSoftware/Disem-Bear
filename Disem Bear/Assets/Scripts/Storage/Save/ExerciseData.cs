@@ -7,7 +7,7 @@ using UnityEngine;
 namespace External.Storage
 {
     [Serializable]
-    public class ExerciseSave
+    public class ExerciseData
     {
         public int indexExercise;
         public TypeOfExerciseCompletion typeOfExerciseCompletion;

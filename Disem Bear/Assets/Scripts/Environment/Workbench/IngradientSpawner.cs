@@ -1,3 +1,4 @@
+using External.Storage;
 using Game.Environment.LModelBoard;
 using System;
 using UnityEngine;
@@ -9,10 +10,11 @@ namespace Game.Environment.LMixTable
 {
     public class IngradientSpawner : MonoBehaviour, ILeftMouseUpClickable, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
-        [SerializeField] private Ingradient ingradient;
+        [SerializeField] private string typeIngradient;
+        private IngradientData ingradient;
 
-        public UnityEvent<Ingradient> OnPickUpIngradient;
-        public UnityEvent<Ingradient> OnPutIngradient;
+        public UnityEvent<IngradientData> OnPickUpIngradient;
+        public UnityEvent<IngradientData> OnPutIngradient;
 
         private SpriteRenderer spriteRenderer;
         private Workbench workbench;
@@ -42,8 +44,11 @@ namespace Game.Environment.LMixTable
 
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-            if (ingradient.typeIngradient == string.Empty)
-                Debug.LogError($"Не задан тип ингредиента {name}");
+            for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; i++)
+            {
+                if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient == typeIngradient)
+                    ingradient = SaveManager.filePlayer.JSONPlayer.resources.ingradients[i];
+            }
 
             CheckCountIngradient();
 
@@ -68,17 +73,18 @@ namespace Game.Environment.LMixTable
             }
         }
 
-        public Ingradient PickUpIngradient(int countIngradient)
+        public IngradientData PickUpIngradient(int countIngradient)
         {
-            Ingradient ingradientOut = null;
+            IngradientData ingradientOut = null;
 
             if (this.ingradient.countIngradient > 0)
             {
-                ingradientOut = new Ingradient();
+                ingradientOut = new IngradientData();
                 ingradientOut.typeIngradient = ingradient.typeIngradient;
                 ingradientOut.countIngradient = countIngradient;
 
                 ingradient.countIngradient = (int)Mathf.Clamp(ingradient.countIngradient - countIngradient, 0, int.MaxValue);
+                Workbench.ReplaceIngradientData(ingradient);
 
                 CheckCountIngradient();
 
@@ -90,11 +96,12 @@ namespace Game.Environment.LMixTable
 
         public void PutIngradient(int countIngradient)
         {
-            Ingradient ingradientOut = new Ingradient();
+            IngradientData ingradientOut = new IngradientData();
             ingradientOut.typeIngradient = ingradient.typeIngradient;
             ingradientOut.countIngradient = countIngradient;
 
             ingradient.countIngradient = (int)Mathf.Clamp(ingradient.countIngradient + countIngradient, 0, int.MaxValue);
+            Workbench.ReplaceIngradientData(ingradient);
 
             CheckCountIngradient();
 
@@ -161,7 +168,7 @@ namespace Game.Environment.LMixTable
         }
 
 
-        public Ingradient GetIngradient()
+        public IngradientData GetIngradient()
         {
             return ingradient;
         }

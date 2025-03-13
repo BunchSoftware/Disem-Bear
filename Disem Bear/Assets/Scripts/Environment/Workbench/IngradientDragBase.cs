@@ -1,14 +1,13 @@
+using External.Storage;
 using Game.Environment;
 using Game.Environment.LMixTable;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class IngradientDragBase : MonoBehaviour, ILeftMouseUpClickable, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     protected Workbench workbench;
-    protected string typeIngradient;
+    protected string nameeIngradient;
 
     protected Collider dragCollider;
     protected Bounds dragBounds;
@@ -16,7 +15,7 @@ public class IngradientDragBase : MonoBehaviour, ILeftMouseUpClickable, IDragHan
     protected Collider dragFreeCollider;
     protected Bounds dragFreeBounds;
 
-    public void Init(Ingradient ingradient, Workbench workbench, Collider dragFreeCollider)
+    public void Init(IngradientData ingradient, Workbench workbench, Collider dragFreeCollider)
     {
         this.workbench = workbench;
         this.dragFreeCollider = dragFreeCollider;
@@ -25,7 +24,7 @@ public class IngradientDragBase : MonoBehaviour, ILeftMouseUpClickable, IDragHan
         dragCollider = GetComponent<Collider>();
         dragBounds = dragCollider.bounds;
 
-        typeIngradient = ingradient.typeIngradient;
+        nameeIngradient = ingradient.typeIngradient;
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData) { }
@@ -34,9 +33,9 @@ public class IngradientDragBase : MonoBehaviour, ILeftMouseUpClickable, IDragHan
 
     public virtual void OnEndDrag(PointerEventData eventData) { }
 
-    public string GetTypeIngradient()
+    public string GetNameIngradient()
     {
-        return typeIngradient;
+        return nameeIngradient;
     }
 
     public virtual void OnMouseLeftClickUpObject() { }

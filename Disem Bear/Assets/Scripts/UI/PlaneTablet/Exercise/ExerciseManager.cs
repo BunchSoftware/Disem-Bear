@@ -16,8 +16,6 @@ namespace UI.PlaneTablet.Exercise
     public class ExerciseManager : IUpdateListener
     {
         public UnityEvent<Exercise> PlayerGetExercise;
-
-        [SerializeField] private SaveManager saveManager;
         [SerializeField] private GameObject prefab;
         [SerializeField] private GameObject content;
         [SerializeField] private FileExercise fileExercise;
@@ -29,21 +27,20 @@ namespace UI.PlaneTablet.Exercise
 
         private ExerciseGUI currentExerciseGUI;
 
-        public void Init(SaveManager saveManager)
+        public void Init()
         {
-            this.saveManager = saveManager;
             List<Exercise> exercises = fileExercise.exercises;
 
 
-            if (saveManager.filePlayer.JSONPlayer.resources.exerciseSaves != null)
+            if (SaveManager.filePlayer.JSONPlayer.resources.exercises != null)
             {
-                if (saveManager.filePlayer.JSONPlayer.resources.exerciseSaves.Count == 0)
+                if (SaveManager.filePlayer.JSONPlayer.resources.exercises.Count == 0)
                 {
-                    saveManager.filePlayer.JSONPlayer.resources.exerciseSaves = new List<ExerciseSave>();
+                    SaveManager.filePlayer.JSONPlayer.resources.exercises = new List<ExerciseData>();
 
                     for (int j = 0; j < exercises.Count; j++)
                     {
-                        saveManager.filePlayer.JSONPlayer.resources.exerciseSaves.Add(new ExerciseSave()
+                        SaveManager.filePlayer.JSONPlayer.resources.exercises.Add(new ExerciseData()
                         {
                             indexExercise = j,
                             isGetPackage = false,
@@ -82,7 +79,7 @@ namespace UI.PlaneTablet.Exercise
                         }
                         else
                             Sort(exercise);
-                    }, exercises[i], i, saveManager);
+                    }, exercises[i], i);
                     exercise.ExpandExercise(false);
 
                     exercisesGUI.Add(exercise);

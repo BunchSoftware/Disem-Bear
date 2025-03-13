@@ -34,13 +34,9 @@ namespace Game.Environment
         [Header("Printer")]
         [SerializeField] private Printer.Printer printer;
 
-        private SaveManager saveManager;
-
-        public void Init(Player player, PlayerMouseMove playerMouseMove, SaveManager saveManager, SoundManager soundManager)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager)
         {
-            this.saveManager = saveManager;
-
-            workbench.Init(saveManager, player, playerMouseMove);
+            workbench.Init(player, playerMouseMove);
             for (int i = 0; i < nextRooms.Count; i++)
             {
                 nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
@@ -48,20 +44,20 @@ namespace Game.Environment
 
             for (int i = 0; i < tablesWithItems.Count; i++)
             {
-                tablesWithItems[i].Init(saveManager, player);
+                tablesWithItems[i].Init(player);
             }
 
             for (int i = 0; i < aquariumOpens.Count; i++)
             {
-                aquariumOpens[i].Init(saveManager, player, playerMouseMove);
+                aquariumOpens[i].Init(player, playerMouseMove);
             }
             for (int i = 0; i < fridges.Count; i++)
             {
-                fridges[i].Init(saveManager, player, playerMouseMove);
+                fridges[i].Init(player, playerMouseMove);
             }
             for (int i = 0; i < modelBoards.Count; i++)
             {
-                modelBoards[i].Init(saveManager, workbench, player, playerMouseMove);
+                modelBoards[i].Init(workbench, player, playerMouseMove);
             }
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Game.LDialog;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,29 +40,35 @@ public class ToolTipManager : MonoBehaviour
 
     public void ToolTipOn(string message)
     {
-        ToolTipText.text = message;
-        ToolTipImage.DOFade(1f, timeOfAppearanceToolTip);
-        ToolTipText.DOFade(1f, timeOfAppearanceToolTip);
+        ToolTipOn(message, timeOfAppearanceToolTip);
     }
 
     public void ToolTipOn(string message, float timeOfAppearanceToolTip)
     {
+        StopAllCoroutines();
         ToolTipText.text = message;
         ToolTipImage.DOFade(1f, timeOfAppearanceToolTip);
         ToolTipText.DOFade(1f, timeOfAppearanceToolTip);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
+    }
+
+
+    public void ToolTipOff()
+    {
+        ToolTipOff(timeOfDissaperenceToolTip);
     }
 
     public void ToolTipOff(float timeOfDissaperenceToolTip)
     {
         ToolTipImage.DOFade(0f, timeOfDissaperenceToolTip);
         ToolTipText.DOFade(0f, timeOfDissaperenceToolTip);
-        ToolTipText.text = string.Empty;
+        StartCoroutine(ITextEmpty(timeOfDissaperenceToolTip));
+        LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
     }
 
-    public void ToolTipOff()
+    private IEnumerator ITextEmpty(float time)
     {
-        ToolTipImage.DOFade(0f, timeOfDissaperenceToolTip);
-        ToolTipText.DOFade(0f, timeOfDissaperenceToolTip);
+        yield return new WaitForSeconds(time);
         ToolTipText.text = string.Empty;
     }
 }

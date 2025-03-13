@@ -20,7 +20,6 @@ public class MenuBootstrap : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UIMenuRoot uiGameRoot;
     [Header("Save System")]
-    [SerializeField] private bool isTest = true;
     [SerializeField] private FilePlayer defaultFilePlayer;
     [SerializeField] private FileShop defaultFileShop;
     [SerializeField] private FilePlayer filePlayer;
@@ -29,20 +28,20 @@ public class MenuBootstrap : MonoBehaviour
 
     [SerializeField] private PlayerInput playerInput = new();
 
-    private SaveManager saveManager = new SaveManager();
-
     private List<IUpdateListener> updateListeners = new();
     private List<IFixedUpdateListener> fixedUpdateListeners = new();
 
     private void Awake()
     {
-        saveManager.Init(apiManager, isTest, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
+        Time.timeScale = 1;
+
+        SaveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
 
         musicManager.Init(this);
         soundManager.Init(this);
 
         updateListeners.Add(uiGameRoot);
-        uiGameRoot.Init(saveManager, soundManager);
+        uiGameRoot.Init(soundManager);
 
         updateListeners.Add(playerInput);
     }

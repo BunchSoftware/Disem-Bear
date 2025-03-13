@@ -28,7 +28,7 @@ public class CraftSomethingConditions : MonoBehaviour
         workbench.OnCreatPickUpItem.AddListener(CheckPickUpItem);
     }
 
-    public void CheckIngradient(Ingradient ingradient)
+    public void CheckIngradient(IngradientData ingradient)
     {
         for (int i = 0; i < conditions.Count; i++)
         {

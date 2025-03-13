@@ -10,11 +10,5 @@ namespace External.Storage
     public class FileShop : ScriptableObject
     {
         public JSONShop JSONShop;
-
-        public JSONShop Clone()
-        {
-            var serialized = JsonConvert.SerializeObject(this);
-            return JsonConvert.DeserializeObject<FileShop>(serialized).JSONShop;
-        }
     }
 }

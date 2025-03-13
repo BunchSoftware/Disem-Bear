@@ -10,11 +10,5 @@ namespace External.Storage
     public class FilePlayer : ScriptableObject
     {
         public JSONPlayer JSONPlayer;
-
-        public JSONPlayer Clone()
-        {
-            var serialized = JsonConvert.SerializeObject(this);
-            return JsonConvert.DeserializeObject<FilePlayer>(serialized).JSONPlayer;
-        }
     }
 }

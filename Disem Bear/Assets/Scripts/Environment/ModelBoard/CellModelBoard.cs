@@ -1,3 +1,4 @@
+using External.DI;
 using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
@@ -34,16 +35,34 @@ namespace Game.Environment.LModelBoard
 
         // Drag&Drop
         private Transform draggingParent;
+        private int indexCellModelBoard = 0;
 
-        public void Init(ModelBoard modelBoard, Workbench workbench, Player player, TriggerObject triggerObject, 
-            Transform draggingParent)
+        public void Init(ModelBoard modelBoard, Workbench workbench, Player player, TriggerObject triggerObject, Transform draggingParent, int indexCellModelBoard)
         {
             this.workbench = workbench;
             this.triggerObject = triggerObject;
             this.modelBoard = modelBoard;
             this.player = player;
+            this.indexCellModelBoard = indexCellModelBoard;
 
             this.draggingParent = draggingParent;
+
+            if(SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards != null
+                && SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count >= 1 
+                && SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count >= indexCellModelBoard)
+            {
+                PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards[indexCellModelBoard].namePickUpItem);
+
+                if (condition!= null)
+                { 
+                    PickUpItem pickUpItem = Instantiate(condition, transform);
+                    pickUpItem.GetComponent<BoxCollider>().enabled = false;
+
+                    currentItemInCell = pickUpItem;
+                    scaleChooseObject = pickUpItem.AddComponent<ScaleChooseObject>();
+                    print("win");
+                }
+            }
 
             modelBoard.OnEndModelBoardOpen.AddListener(() =>
             {
@@ -168,6 +187,13 @@ namespace Game.Environment.LModelBoard
                             pickUpItem.transform.position = transform.position;
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
+                            if (SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards != null
+                                && SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count >= 1
+                                && SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count >= indexCellModelBoard)
+                            {
+                                SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards[indexCellModelBoard].namePickUpItem = currentItemInCell.NameItem;
+                            }
+
                             currentItemInCell = pickUpItem;
                             OnPutItem?.Invoke(currentItemInCell);
 
@@ -189,6 +215,13 @@ namespace Game.Environment.LModelBoard
                             }
 
                             PickUpItem item = Instantiate(packageItem.itemInPackage, transform);
+
+                            if (SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards != null
+                               && SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count >= 1
+                               && SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count >= indexCellModelBoard)
+                            {
+                                SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards[indexCellModelBoard].namePickUpItem = packageItem.itemInPackage.NameItem;
+                            }
 
                             item.transform.parent = transform;
                             item.transform.position = transform.position;

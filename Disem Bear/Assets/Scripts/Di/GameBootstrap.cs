@@ -2,6 +2,7 @@ using External.API;
 using External.Storage;
 using Game.Environment;
 using Game.Environment.Fridge;
+using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Music;
 using Game.Tutorial;
@@ -28,8 +29,9 @@ namespace External.DI
         [SerializeField] private SoundManager musicManager;
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
+        [SerializeField] private FilePrefabsPickUpItems filePrefabsPickUpItems;
+        private static FilePrefabsPickUpItems FilePrefabsPickUpItems;
         [Header("Save System")]
-        [SerializeField] private bool isTest = true;
         [SerializeField] private FilePlayer defaultFilePlayer;
         [SerializeField] private FileShop defaultFileShop;
         [SerializeField] private FilePlayer filePlayer;
@@ -38,13 +40,14 @@ namespace External.DI
 
         [SerializeField] private PlayerInput playerInput = new();
 
-        private SaveManager saveManager = new SaveManager();
-
         private List<IUpdateListener> updateListeners = new();
         private List<IFixedUpdateListener> fixedUpdateListeners = new();
 
         private void Awake()
         {
+            Time.timeScale = 1;
+
+            FilePrefabsPickUpItems = filePrefabsPickUpItems;
             PlayerPrefs.DeleteAll();
             #region Init
             if (!player)
@@ -86,19 +89,21 @@ namespace External.DI
 
             apiManager.Init();
 
-            saveManager.Init(apiManager, isTest, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
+            SaveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
 
             musicManager.Init(this);
             soundManager.Init(this);
 
+            player.Init();
+
             updateListeners.Add(environmentRoot);
-            environmentRoot.Init(player, playerMouseMove, saveManager, soundManager);
+            environmentRoot.Init(player, playerMouseMove, soundManager);
 
             updateListeners.Add(tutorialRoot);
-            tutorialRoot.Init(uiGameRoot.GetDialogManager(), player, saveManager);
+            tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);
 
             updateListeners.Add(uiGameRoot);
-            uiGameRoot.Init(saveManager);
+            uiGameRoot.Init();
 
             playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
             playerMouseMove.OnMove += playerChangeImage.Update;
@@ -147,6 +152,17 @@ namespace External.DI
         public void RemoveFixedUpdateListener(IFixedUpdateListener fixedUpdateListener)
         {
             fixedUpdateListeners.Remove(fixedUpdateListener);
+        }
+
+        public static PickUpItem FindPickUpItemToPrefabs(string nameItem)
+        {
+            for (int i = 0; i < FilePrefabsPickUpItems.pickUpItems.Count; i++)
+            {
+                if (FilePrefabsPickUpItems.pickUpItems[i].NameItem == nameItem && nameItem.Length >= 1)
+                    return FilePrefabsPickUpItems.pickUpItems[i];
+            }
+
+            return null;
         }
     }
 }

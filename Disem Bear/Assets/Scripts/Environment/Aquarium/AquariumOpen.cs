@@ -23,7 +23,6 @@ namespace Game.Environment.Aquarium
         public UnityEvent OnAquariumOpen;
         public UnityEvent OnAquariumClose;
 
-        private SaveManager saveManager;
         private Player player;
         private PlayerMouseMove playerMouseMove;
         private MovePointToPoint spriteMovePointToPoint;
@@ -34,9 +33,8 @@ namespace Game.Environment.Aquarium
 
 
 
-        public void Init(SaveManager saveManager, Player player, PlayerMouseMove playerMouseMove)
+        public void Init(Player player, PlayerMouseMove playerMouseMove)
         {
-            this.saveManager = saveManager;
             this.player = player;
             this.playerMouseMove = playerMouseMove;
 
@@ -71,7 +69,7 @@ namespace Game.Environment.Aquarium
                 OnAquariumClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
-            aquarium.Init(saveManager, player);
+            aquarium.Init(player);
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {

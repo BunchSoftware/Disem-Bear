@@ -21,7 +21,7 @@ namespace Game.Tutorial
         private DialogManager dialogManager;
         private Player player;
 
-        public void Init(DialogManager dialogManager, Player player, SaveManager saveManager)
+        public void Init(DialogManager dialogManager, Player player)
         {
             this.dialogManager = dialogManager;
             this.player = player;

@@ -23,22 +23,18 @@ namespace UI
         [SerializeField] private ExerciseManager exerciseManager;
         [SerializeField] private SettingsController settingsController;
 
-        private SaveManager saveManager;
-
         private bool isActivePause = false;
 
-        public void Init(SaveManager saveManager)
+        public void Init()
         {
-            this.saveManager = saveManager;
-
             settingsController.Init();
 
             fade.FadeWhite();
 
-            shopManager.Init(saveManager);
-            exerciseManager.Init(saveManager);
+            shopManager.Init();
+            exerciseManager.Init();
             dialogChat.Init(this);
-            dialogManager.Init(saveManager, this);
+            dialogManager.Init(this);
 
             Debug.Log("UIGameRoot: Успешно иницилизирован");
         }

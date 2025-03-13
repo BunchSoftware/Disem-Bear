@@ -20,13 +20,13 @@ namespace External.API
         public bool isPlayerRegistration = false;
         public int currentIndexDialogPoint = 0;
         public int currentIndexDialog = 0;
-        public List<ExerciseSave> exerciseSaves;
-        public List<Ingradient> ingradientSaves;
-        public ItemFromTableSave currentItemFromTableSave;
-        public List<ModelBoardSave> modelBoardSaves;
-        public List<ItemFromTableSave> itemFromTableSaves;
-        public List<MagnetSave> magnetSaves;
-        public List<SaveTypeProduct> products;
+        public List<ExerciseData> exercises = new List<ExerciseData>();
+        public List<IngradientData> ingradients = new List<IngradientData>();
+        public PickUpItemData currentPickUpItem = new PickUpItemData();
+        public List<PickUpItemData> cellModelBoards = new List<PickUpItemData>();
+        public List<PickUpItemData> сellTableWithItems = new List<PickUpItemData>();
+        public List<MagnetData> magnets = new List<MagnetData>();
+        public List<ProductData> products = new List<ProductData>();
     }
 
     [Serializable]
@@ -72,9 +72,8 @@ namespace External.API
 
     [Serializable]
     // Игрок с именем и ресурсами
-    public class JSONPlayer
+    public class JSONPlayer 
     {
-        public bool isTest = false;
         public string nameUser;
         public ResourcePlayer resources;
     }
@@ -83,7 +82,6 @@ namespace External.API
     // Магазин у игрока с именем магазином и его ресурсами
     public class JSONShop
     {
-        public bool isTest = false;
         public string nameShop;
         public ResourceShop resources;
     }

@@ -24,12 +24,10 @@ namespace Game.Environment.Fridge
         private MagnetInfo magnetInfo;
 
         private Fridge fridge;
-        private SaveManager saveManager;
 
-        public void Init(Fridge fridge, SaveManager saveManager, MagnetInfo magnetInfo)
+        public void Init(Fridge fridge, MagnetInfo magnetInfo)
         {
            this.magnetInfo = magnetInfo;
-           this.saveManager = saveManager;
            this.fridge = fridge;
 
            contentColider = transform.parent.GetComponent<Collider>();
@@ -73,13 +71,13 @@ namespace Game.Environment.Fridge
 
                 transform.position = position;
 
-                MagnetSave magnetSave = new MagnetSave();
+                MagnetData magnetSave = new MagnetData();
                 magnetSave.typeMagnet = magnetInfo.typeMagnet;
                 magnetSave.x = transform.localPosition.x;
                 magnetSave.y = transform.localPosition.y;
                 magnetSave.z = transform.localPosition.z;
 
-                saveManager.ChangeMagnetSave(magnetSave);
+                SaveManager.ChangeMagnetSave(magnetSave);
             }
         }
 

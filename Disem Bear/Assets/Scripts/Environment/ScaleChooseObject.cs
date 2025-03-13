@@ -17,7 +17,7 @@ namespace Game.Environment
         private Vector3 minScale;
         private bool increaseScale = false;
 
-        private void Start()
+        private void Awake()
         {
             minScale = transform.localScale;
             maxScale = new Vector3(minScale.x * coefficient, minScale.y * coefficient, minScale.z * coefficient);

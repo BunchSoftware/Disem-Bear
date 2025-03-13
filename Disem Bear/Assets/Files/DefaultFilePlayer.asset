@@ -13,51 +13,60 @@ MonoBehaviour:
   m_Name: DefaultFilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    isTest: 0
     nameUser: Denis
     resources:
       isPlayerRegistration: 1
       currentIndexDialogPoint: 0
       currentIndexDialog: 0
-      exerciseSaves:
+      exercises:
       - indexExercise: 0
         typeOfExerciseCompletion: 2
-        isGetPackage: 1
-      ingradientSaves:
+        isGetPackage: 0
+      ingradients:
       - typeIngradient: stem
-        countIngradient: 80
+        countIngradient: 2
       - typeIngradient: detoxification
-        countIngradient: 0
+        countIngradient: 2
       - typeIngradient: digestion
-        countIngradient: 0
+        countIngradient: 2
       - typeIngradient: adaptation
-        countIngradient: 0
+        countIngradient: 3
       - typeIngradient: metabolism
-        countIngradient: 0
+        countIngradient: 3
       - typeIngradient: filtering
-        countIngradient: 0
+        countIngradient: 1
       - typeIngradient: gas
-        countIngradient: 0
+        countIngradient: 2
       - typeIngradient: regulation
-        countIngradient: 0
+        countIngradient: 2
       - typeIngradient: reduction
-        countIngradient: 0
-      - typeIngradient: Blue
-        countIngradient: 0
-      currentItemFromTableSave:
-        typeItemFromTable: 
-        indexPoint: 0
-      modelBoardSaves:
-      - typeModelBoard: DocumentPackage
-      itemFromTableSaves: []
-      magnetSaves:
-      - typeMagnet: altay
+        countIngradient: 1
+      - typeIngradient: blue
+        countIngradient: 2
+      - typeIngradient: red
+        countIngradient: 2
+      - typeIngradient: yellow
+        countIngradient: 2
+      - typeIngradient: orange
+        countIngradient: 2
+      - typeIngradient: green
+        countIngradient: 2
+      currentPickUpItem:
+        namePickUpItem: 
+      cellModelBoards:
+      - namePickUpItem: InItem
+      - namePickUpItem: InItem
+      - namePickUpItem: InItem
+      - namePickUpItem: InItem
+      "\u0441ellTableWithItems": []
+      magnets:
+      - typeMagnet: sigmaBear
+        x: 0.00022003427
+        y: 0.001465289
+        z: -0.001165265
+      - typeMagnet: sigmaBear
         x: 0
         y: 0
-        z: 0
-      - typeMagnet: altay
-        x: 0
-        y: -0.00515
         z: 0
       products:
       - typeProduct: sigmaCell

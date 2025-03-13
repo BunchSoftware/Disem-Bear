@@ -48,15 +48,13 @@ namespace UI.PlaneTablet.Exercise
 
         public bool isGetPackage = false;
         private int indexExercise = 0;
-        private SaveManager saveManager;
 
-        public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise, SaveManager saveManager)
+        public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
         {
             this.indexExercise = indexExercise;
-            this.saveManager = saveManager;
 
-            SetExerciseCompletion(this.saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[this.indexExercise].typeOfExerciseCompletion);
-            isGetPackage = this.saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[this.indexExercise].isGetPackage;
+            SetExerciseCompletion(SaveManager.filePlayer.JSONPlayer.resources.exercises[this.indexExercise].typeOfExerciseCompletion);
+            isGetPackage = SaveManager.filePlayer.JSONPlayer.resources.exercises[this.indexExercise].isGetPackage;
 
             if (isGetPackage)
                 givePackage.interactable = false;
@@ -89,7 +87,7 @@ namespace UI.PlaneTablet.Exercise
                 exerciseManager.GivePackage(exercise);
                 givePackage.interactable = false;
 
-                saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[indexExercise].isGetPackage = true;
+                SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetPackage = true;
             });
 
             this.exercise = exercise;
@@ -125,7 +123,7 @@ namespace UI.PlaneTablet.Exercise
         public void SetExerciseCompletion(TypeOfExerciseCompletion exerciseCompletion)
         {
             currentExerciseCompletion = exerciseCompletion;
-            saveManager.filePlayer.JSONPlayer.resources.exerciseSaves[indexExercise].typeOfExerciseCompletion = exerciseCompletion;
+            SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion = exerciseCompletion;
 
             switch (exerciseCompletion)
             {

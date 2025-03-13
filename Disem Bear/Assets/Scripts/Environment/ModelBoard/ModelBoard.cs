@@ -41,7 +41,6 @@ namespace Game.Environment.LModelBoard
         public UnityEvent<PickUpItem> OnFocusItem;
         public UnityEvent<PickUpItem> OnDefocusItem;
 
-        private SaveManager saveManager;
         private Player player;
         private PlayerMouseMove playerMouseMove;
 
@@ -57,9 +56,8 @@ namespace Game.Environment.LModelBoard
         public bool IsEndDrag => isEndDrag;
         private bool isEndDrag = false;
 
-        public void Init(SaveManager saveManager, Workbench workbench, Player player, PlayerMouseMove playerMouseMove)
+        public void Init(Workbench workbench, Player player, PlayerMouseMove playerMouseMove)
         {
-            this.saveManager = saveManager;
             this.player = player;
             this.playerMouseMove = playerMouseMove;
 
@@ -88,30 +86,31 @@ namespace Game.Environment.LModelBoard
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
+            if (SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards == null)
+            {
+                SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards = new List<PickUpItemData>();
+
+                Debug.Log(1);
+
+                for (int i = 0; i < cellBoards.Count; i++)
+                {
+                    SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Add(new PickUpItemData());
+                }
+            }
+            else if (SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count == 0)
+            {
+                for (int i = 0; i < cellBoards.Count; i++)
+                {
+                    SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Add(new PickUpItemData());
+                }
+            }
+
             for (int i = 0; i < cellBoards.Count; i++)
             {
-                cellBoards[i].Init(this, workbench, player, triggerObject, transform);
+                cellBoards[i].Init(this, workbench, player, triggerObject, transform, i);
             }
 
             Debug.Log("APIManager: Успешно иницилизирован");
-
-            //if (saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves != null)
-            //{
-            //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves.Count; i++)
-            //    {
-            //        for (int j = 0; j < getItemFromTables.Count; j++)
-            //        {
-            //            if (getItemFromTables[j].typeItemFromTable == saveManager.filePlayer.JSONPlayer.resources.modelBoardSaves[i].typeModelBoard)
-            //            {
-            //                GameObject item = Instantiate(getItemFromTables[j].gameObject.GetComponent<PackageInfo>().ItemInPackage);
-            //                items.Add(item);
-            //                items[items.Count - 1].transform.parent = transform;
-            //                items[items.Count - 1].transform.localPosition = points[items.Count - 1].transform.localPosition;
-            //                items[items.Count - 1].SetActive(true);
-            //            }
-            //        }
-            //    }
-            //}
         }
 
         public void FocusItem(CellModelBoard cellModelBoard)

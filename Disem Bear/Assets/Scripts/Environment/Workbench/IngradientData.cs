@@ -4,7 +4,7 @@
 namespace Game.Environment.LMixTable
 {
     [Serializable]
-    public class Ingradient
+    public class IngradientData
     {
         public string typeIngradient;
         public int countIngradient;

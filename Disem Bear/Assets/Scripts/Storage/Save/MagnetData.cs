@@ -6,8 +6,12 @@ using UnityEngine;
 namespace External.Storage
 {
     [Serializable]
-    public class ModelBoardSave
+    public class MagnetData
     {
-        public string typeModelBoard;
+        public string typeMagnet;
+
+        public float x;
+        public float y;
+        public float z;
     }
 }

@@ -13,54 +13,16 @@ MonoBehaviour:
   m_Name: FilePlayer
   m_EditorClassIdentifier: 
   JSONPlayer:
-    isTest: 0
-    nameUser: Denis
+    nameUser: 
     resources:
-      isPlayerRegistration: 1
+      isPlayerRegistration: 0
       currentIndexDialogPoint: 0
-      currentIndexDialog: 1
-      exerciseSaves:
-      - indexExercise: 0
-        typeOfExerciseCompletion: 2
-        isGetPackage: 1
-      ingradientSaves:
-      - typeIngradient: stem
-        countIngradient: 80
-      - typeIngradient: detoxification
-        countIngradient: 0
-      - typeIngradient: digestion
-        countIngradient: 0
-      - typeIngradient: adaptation
-        countIngradient: 0
-      - typeIngradient: metabolism
-        countIngradient: 0
-      - typeIngradient: filtering
-        countIngradient: 0
-      - typeIngradient: gas
-        countIngradient: 0
-      - typeIngradient: regulation
-        countIngradient: 0
-      - typeIngradient: reduction
-        countIngradient: 0
-      - typeIngradient: Blue
-        countIngradient: 0
-      currentItemFromTableSave:
-        typeItemFromTable: 
-        indexPoint: 0
-      modelBoardSaves:
-      - typeModelBoard: DocumentPackage
-      itemFromTableSaves: []
-      magnetSaves:
-      - typeMagnet: altay
-        x: 0
-        y: 0
-        z: 0
-      - typeMagnet: altay
-        x: 0
-        y: -0.00515
-        z: 0
-      products:
-      - typeProduct: sigmaCell
-        countProduct: 0
-      - typeProduct: sota
-        countProduct: 1
+      currentIndexDialog: 0
+      exercises: []
+      ingradients: []
+      currentPickUpItem:
+        namePickUpItem: 
+      cellModelBoards: []
+      "\u0441ellTableWithItems": []
+      magnets: []
+      products: []

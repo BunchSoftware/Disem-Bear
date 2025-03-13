@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1702154175882706298}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.683, y: -1.393, z: 0.342}
+  m_LocalPosition: {x: -1.683, y: -1.468, z: 0.342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4963,6 +4963,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925c14d0ca0879d4cb41494a44983c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ejectionPosition: {x: -3.76, y: 5.6, z: -9.009}
-  exitPoint: {fileID: 1702154175882706298}
+  startPointObject: {fileID: 3801838419484520929}
+  downPointObject: {fileID: 8744480111118549116}
   particleSystem: {fileID: 5242666169087470191}
+  timeFall: 1
+  packageIfTriggerEnter: {fileID: 5610431095258980298, guid: 6703e687f8d97b94b930126970729ba3, type: 3}
+  postTubeObjects: []
+  OnGetPostTubeObject:
+    m_PersistentCalls:
+      m_Calls: []

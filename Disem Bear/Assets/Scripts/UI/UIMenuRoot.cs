@@ -15,19 +15,16 @@ namespace UI
         [SerializeField] private Button continueButton;
         [SerializeField] private Button newGameButton;
         [SerializeField] private SettingsController settingsController;
-
-        private SaveManager saveManager;
         private SoundManager soundManager;
 
-        public void Init(SaveManager saveManager, SoundManager soundManager)
+        public void Init(SoundManager soundManager)
         {
-            this.saveManager = saveManager;
             this.soundManager = soundManager;
             settingsController.Init();
 
             fade.FadeWhite();
 
-            if (saveManager.filePlayer.JSONPlayer.resources != null && saveManager.filePlayer.JSONPlayer.resources.isPlayerRegistration)
+            if (SaveManager.filePlayer.JSONPlayer.resources != null && SaveManager.filePlayer.JSONPlayer.resources.isPlayerRegistration)
             {
                 startButton.gameObject.SetActive(false);
                 continueButton.gameObject.SetActive(true);
@@ -60,8 +57,8 @@ namespace UI
         public void NewGame()
         {
             PlayerPrefs.SetInt("isDefault", 1);
-            saveManager.ResetFilePlayer();
-            saveManager.ResetFileShop();
+            SaveManager.ResetFilePlayer();
+            SaveManager.ResetFileShop();
         }
 
         public void OnUpdate(float deltaTime)

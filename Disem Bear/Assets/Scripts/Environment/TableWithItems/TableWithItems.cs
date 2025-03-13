@@ -16,12 +16,10 @@ namespace Game.Environment.LTableWithItems
         [Tooltip("Список предметов, которые будут на полке в начале")]
         [SerializeField] private List<PickUpItem> itemsPutInStart = new(); 
 
-        private SaveManager saveManager;
         private Player player;
 
-        public void Init(SaveManager saveManager, Player player)
+        public void Init(Player player)
         {
-            this.saveManager = saveManager;
             this.player = player;
 
             for (int i = 0; i < cellTables.Count; i++)
@@ -52,28 +50,28 @@ namespace Game.Environment.LTableWithItems
             //    isTrigger = false;
             //});
 
-            //if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves != null)
+            //if (SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves != null)
             //{
-            //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
+            //    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
             //    {
             //        for (int j = 0; j < getItemFromTables.Count; j++)
             //        {
-            //            if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
+            //            if (SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
             //            {
             //                GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-            //                getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
+            //                getItemFromTable.indexPoint = SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
             //            }
             //        }
             //    }
-            //    if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave != null
-            //        && saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != "")
+            //    if (SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave != null
+            //        && SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != "")
             //    {
             //        for (int j = 0; j < getItemFromTables.Count; j++)
             //        {
-            //            if (saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
+            //            if (SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
             //            {
             //                GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-            //                getItemFromTable.indexPoint = saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.indexPoint;
+            //                getItemFromTable.indexPoint = SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.indexPoint;
             //            }
             //        }
             //    }
@@ -82,17 +80,17 @@ namespace Game.Environment.LTableWithItems
 
         //public bool TakeObject(ItemFromTableSave itemFromTableSave)
         //{
-        //    for (int i = 0; i < saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
+        //    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
         //    {
-        //        if (saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint == itemFromTableSave.indexPoint)
+        //        if (SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint == itemFromTableSave.indexPoint)
         //        {
-        //            saveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.RemoveAt(i);
-        //            saveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = new ItemFromTableSave() 
+        //            SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.RemoveAt(i);
+        //            SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = new ItemFromTableSave() 
         //            { 
         //                typeItemFromTable = itemFromTableSave.typeItemFromTable,
         //                indexPoint = itemFromTableSave.indexPoint,
         //            };
-        //            saveManager.UpdatePlayerFile();
+        //            SaveManager.UpdatePlayerFile();
         //            return true;
         //        }
         //    }

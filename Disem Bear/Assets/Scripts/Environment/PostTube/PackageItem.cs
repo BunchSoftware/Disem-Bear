@@ -9,6 +9,6 @@ namespace Game.Environment.LPostTube
     public class PackageItem : MonoBehaviour
     {
         public PickUpItem itemInPackage;
-        public List<Ingradient> ingradients;
+        public List<IngradientData> ingradients;
     }
 }

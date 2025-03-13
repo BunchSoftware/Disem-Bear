@@ -38,7 +38,7 @@ namespace Game.Environment.Aquarium
 
 
 
-        public void Init(SaveManager saveManager, Player player)
+        public void Init(Player player)
         {
             for (int i = 0; i < InspectorSpawners.Count; i++)
             {

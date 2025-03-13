@@ -6,7 +6,7 @@ using UnityEngine;
 namespace External.Storage
 {
     [Serializable]
-    public class SaveTypeProduct
+    public class ProductData
     {
         public string typeProduct;
         public int countProduct;

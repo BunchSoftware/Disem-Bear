@@ -6,9 +6,8 @@ using UnityEngine;
 namespace External.Storage
 {
     [Serializable]
-    public class ItemFromTableSave
+    public class CellModelBoardData
     {
-        public string typeItemFromTable;
-        public int indexPoint;
+        public string typeModelBoard;
     }
 }

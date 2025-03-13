@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aquarium: {fileID: 4314196002913402049}
+  triggerObject: {fileID: 8005615908522796165}
   OnAquariumOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -5316,7 +5317,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848072dd53638bd4784444145bcc616e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialForAquarium: {fileID: 8688015039957210573, guid: d5099b405a8a40a48a9de7991710106f, type: 3}
+  GetAquariumCells:
+    m_PersistentCalls:
+      m_Calls: []
+  materialForAquarium: {fileID: 8688015039957210573, guid: 6c6d2ca616cbefb46a5da95a54e61800, type: 3}
   InspectorPhasesAquariums:
   - nameColor: blue
     phasesAquarium:
@@ -5753,6 +5757,10 @@ PrefabInstance:
       value: 0.85882354
       objectReference: {fileID: 0}
     - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346602957058903847, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
@@ -5826,6 +5834,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7062369710034626204, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466465690851802567, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
+      propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8466465690851802567, guid: 46e022cdaba90984290b79d656e8e0fc, type: 3}
@@ -5944,6 +5956,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8054770960052085468, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
   m_PrefabInstance: {fileID: 6174967075574281240}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8005615908522796165 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4226710260219498653, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
+  m_PrefabInstance: {fileID: 6174967075574281240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c6b547e3f0b90489a5c3dc1b2573b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9212404379172060067
 PrefabInstance:
   m_ObjectHideFlags: 0

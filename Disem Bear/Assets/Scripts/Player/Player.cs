@@ -1,3 +1,4 @@
+using External.DI;
 using External.Storage;
 using Game.Environment;
 using Game.Environment.Item;
@@ -5,6 +6,7 @@ using Game.Environment.LMixTable;
 using Game.Environment.LPostTube;
 using Game.Environment.LTableWithItems;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -43,6 +45,26 @@ namespace Game.LPlayer
         public GameObject PointItemForward => pointItemForward;
 
 
+        public void Init()
+        {
+            PickUpItem pickUpItem = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem);
+
+            if (pickUpItem != null)
+            {
+                this.pickUpItem = Instantiate(pickUpItem);
+
+                if (this.pickUpItem.TryGetComponent(out ScaleChooseObject scaleChooseObject))
+                    scaleChooseObject.RemoveComponent();
+
+                this.pickUpItem.transform.parent = transform;
+
+                playerPickUpItem = true;
+                this.pickUpItem.CanTakeByCollisionPlayer = false;
+
+                typePickUpItem = this.pickUpItem.TypeItem;
+            }
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (playerPickUpItem == false)
@@ -68,7 +90,9 @@ namespace Game.LPlayer
                     scaleChooseObject.RemoveComponent();
                 this.pickUpItem.transform.parent = transform;
 
-                typePickUpItem = pickUpItem.TypeItem;
+                SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem = this.pickUpItem.NameItem;
+
+               typePickUpItem = pickUpItem.TypeItem;
                 OnPickUpItem?.Invoke(pickUpItem);
             }
         }
@@ -85,6 +109,8 @@ namespace Game.LPlayer
 
                 temp = pickUpItem;
                 pickUpItem = null;
+
+                SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem = null;
 
                 typePickUpItem = TypePickUpItem.None;
             }
