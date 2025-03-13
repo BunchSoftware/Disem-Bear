@@ -4072,6 +4072,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1320880257574859696, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2717801891848199396, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.2
@@ -4115,6 +4119,10 @@ PrefabInstance:
     - target: {fileID: 3385654443814897246, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
       propertyPath: m_Name
       value: Minitable
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385654443814897246, guid: bce9a62047c8371408ecfdccc3d7c50d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4996,9 +5004,9 @@ MonoBehaviour:
   tv: {fileID: 1033088069}
   workbench: {fileID: 1009302872}
   tablesWithItems:
-  - {fileID: 1193471370}
-  - {fileID: 815632890}
   - {fileID: 1512732070}
+  - {fileID: 815632890}
+  - {fileID: 1193471370}
   modelBoards:
   - {fileID: 2131093810}
   aquariumOpens:

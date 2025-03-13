@@ -23,8 +23,8 @@ namespace External.API
         public List<ExerciseData> exercises = new List<ExerciseData>();
         public List<IngradientData> ingradients = new List<IngradientData>();
         public PickUpItemData currentPickUpItem = new PickUpItemData();
-        public List<PickUpItemData> cellModelBoards = new List<PickUpItemData>();
-        public List<PickUpItemData> ñellTableWithItems = new List<PickUpItemData>();
+        public List<CellsData> modelBoards = new List<CellsData>();
+        public List<CellsData> tableWithItems = new List<CellsData>();
         public List<MagnetData> magnets = new List<MagnetData>();
         public List<ProductData> products = new List<ProductData>();
     }

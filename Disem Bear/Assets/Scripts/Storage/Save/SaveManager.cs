@@ -242,8 +242,8 @@ namespace External.Storage
                             changedResources.Add($"changedMagnetSaves", filePlayer.JSONPlayer.resources.magnets.Count.ToString());
                         if (filePlayer.JSONPlayer.resources.products != null)
                             changedResources.Add($"changedProductSaves", filePlayer.JSONPlayer.resources.products.Count.ToString());
-                        if (filePlayer.JSONPlayer.resources.cellModelBoards != null)
-                            changedResources.Add($"changedModelBoardSaves", filePlayer.JSONPlayer.resources.cellModelBoards.Count.ToString());
+                        //if (filePlayer.JSONPlayer.resources.cellModelBoards != null)
+                        //    changedResources.Add($"changedModelBoardSaves", filePlayer.JSONPlayer.resources.cellModelBoards.Count.ToString());
                         if (filePlayer.JSONPlayer.resources.exercises != null)
                             changedResources.Add($"changedExerciseSaves", filePlayer.JSONPlayer.resources.exercises.Count.ToString());
                         if (filePlayer.JSONPlayer.resources.ingradients != null)

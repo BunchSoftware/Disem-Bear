@@ -86,22 +86,51 @@ namespace Game.Environment.LModelBoard
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards == null)
+            if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards == null)
             {
-                SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards = new List<PickUpItemData>();
+                SaveManager.filePlayer.JSONPlayer.resources.modelBoards = new List<CellsData>();
 
-                Debug.Log(1);
+                CellsData cellsData = new CellsData();
+                cellsData.nameMasterCells = name;
+
+                List<PickUpItemData> data = new List<PickUpItemData>();
 
                 for (int i = 0; i < cellBoards.Count; i++)
                 {
-                    SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Add(new PickUpItemData());
+                    data.Add(new PickUpItemData());
                 }
+
+                cellsData.pickUpItems = data;
+
+                SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Add(cellsData);
             }
-            else if (SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Count == 0)
+            else
             {
-                for (int i = 0; i < cellBoards.Count; i++)
+                bool condition = true;
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
                 {
-                    SaveManager.filePlayer.JSONPlayer.resources.cellModelBoards.Add(new PickUpItemData());
+                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == name)
+                    {
+                        condition = false;
+                        break;
+                    }
+                }
+
+                if (condition)
+                {
+                    CellsData cellsData = new CellsData();
+                    cellsData.nameMasterCells = name;
+
+                    List<PickUpItemData> data = new List<PickUpItemData>();
+
+                    for (int i = 0; i < cellBoards.Count; i++)
+                    {
+                        data.Add(new PickUpItemData());
+                    }
+
+                    cellsData.pickUpItems = data;
+
+                    SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Add(cellsData);
                 }
             }
 

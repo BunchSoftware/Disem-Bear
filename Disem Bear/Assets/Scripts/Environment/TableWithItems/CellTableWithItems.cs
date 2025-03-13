@@ -1,4 +1,7 @@
+using External.DI;
+using External.Storage;
 using Game.Environment.Item;
+using Game.Environment.LModelBoard;
 using Game.LPlayer;
 using System;
 using System.Collections;
@@ -25,14 +28,36 @@ namespace Game.Environment.LTableWithItems
         private Player player;
 
         private bool isClick = false;
+        private int indexCellTableWithItems = 0;
 
-        public void Init(TableWithItems tableWithItems, Player player)
+        public void Init(TableWithItems tableWithItems, Player player, int indexCellModelBoard)
         {
             triggerObject = transform.Find("TriggerObject").GetComponent<TriggerObject>();
             boxCollider = GetComponent<BoxCollider>();
 
             this.tableWithItems = tableWithItems;
             this.player = player;
+            this.indexCellTableWithItems = indexCellModelBoard;
+
+            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+            {
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                {
+                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                        && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellModelBoard)
+                    {
+                        PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellModelBoard].namePickUpItem);
+
+                        if (condition != null)
+                        {
+                            PickUpItem pickUpItem = Instantiate(condition, transform);
+                            pickUpItem.GetComponent<BoxCollider>().enabled = false;
+
+                            currentItemInCell = pickUpItem;
+                        }
+                    }
+                }
+            }
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
@@ -78,6 +103,18 @@ namespace Game.Environment.LTableWithItems
 
             OnPickUpItem?.Invoke(currentItemInCell);
 
+            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+            {
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                {
+                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                        && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
+                    {
+                        SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = "";
+                    }
+                }
+            }
+
             currentItemInCell = null;
 
             return item;
@@ -100,6 +137,18 @@ namespace Game.Environment.LTableWithItems
                 {
                     ScaleChooseObject scaleChooseObject = currentItemInCell.AddComponent<ScaleChooseObject>();
                     scaleChooseObject.coefficient = 1.15f;
+                }
+
+                if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+                {
+                    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                    {
+                        if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                            && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
+                        {
+                            SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = pickUpItem.NameItem;
+                        }
+                    }
                 }
 
                 return true;

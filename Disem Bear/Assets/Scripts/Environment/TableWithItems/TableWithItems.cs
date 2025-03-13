@@ -24,7 +24,7 @@ namespace Game.Environment.LTableWithItems
 
             for (int i = 0; i < cellTables.Count; i++)
             {
-                cellTables[i].Init(this, player);
+                cellTables[i].Init(this, player, i);
                 if (i < itemsPutInStart.Count)
                 {
                     if (PrefabUtility.IsPartOfPrefabAsset(itemsPutInStart[i]))
@@ -50,51 +50,53 @@ namespace Game.Environment.LTableWithItems
             //    isTrigger = false;
             //});
 
-            //if (SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves != null)
-            //{
-            //    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
-            //    {
-            //        for (int j = 0; j < getItemFromTables.Count; j++)
-            //        {
-            //            if (SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].typeItemFromTable == getItemFromTables[j].typeItemFromTable)
-            //            {
-            //                GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-            //                getItemFromTable.indexPoint = SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint;
-            //            }
-            //        }
-            //    }
-            //    if (SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave != null
-            //        && SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable != "")
-            //    {
-            //        for (int j = 0; j < getItemFromTables.Count; j++)
-            //        {
-            //            if (SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.typeItemFromTable == getItemFromTables[j].typeItemFromTable)
-            //            {
-            //                GetItemFromTable getItemFromTable = Instantiate(getItemFromTables[j]);
-            //                getItemFromTable.indexPoint = SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave.indexPoint;
-            //            }
-            //        }
-            //    }
-            //}
-        }
+            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems == null)
+            {
+                SaveManager.filePlayer.JSONPlayer.resources.tableWithItems = new List<CellsData>();
 
-        //public bool TakeObject(ItemFromTableSave itemFromTableSave)
-        //{
-        //    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.Count; i++)
-        //    {
-        //        if (SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves[i].indexPoint == itemFromTableSave.indexPoint)
-        //        {
-        //            SaveManager.filePlayer.JSONPlayer.resources.itemFromTableSaves.RemoveAt(i);
-        //            SaveManager.filePlayer.JSONPlayer.resources.currentItemFromTableSave = new ItemFromTableSave() 
-        //            { 
-        //                typeItemFromTable = itemFromTableSave.typeItemFromTable,
-        //                indexPoint = itemFromTableSave.indexPoint,
-        //            };
-        //            SaveManager.UpdatePlayerFile();
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
+                CellsData cellsData = new CellsData();
+                cellsData.nameMasterCells = name;
+
+                List<PickUpItemData> data = new List<PickUpItemData>();
+
+                for (int i = 0; i < cellTables.Count; i++)
+                {
+                    data.Add(new PickUpItemData());
+                }
+
+                cellsData.pickUpItems = data;
+
+                SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Add(cellsData);
+            }
+            else
+            {
+                bool condition = true;
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                {
+                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == name)
+                    {
+                        condition = false;
+                        break;
+                    }
+                }
+
+                if (condition)
+                {
+                    CellsData cellsData = new CellsData();
+                    cellsData.nameMasterCells = name;
+
+                    List<PickUpItemData> data = new List<PickUpItemData>();
+
+                    for (int i = 0; i < cellTables.Count; i++)
+                    {
+                        data.Add(new PickUpItemData());
+                    }
+
+                    cellsData.pickUpItems = data;
+
+                    SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Add(cellsData);
+                }
+            }
+        }
     }
 }
