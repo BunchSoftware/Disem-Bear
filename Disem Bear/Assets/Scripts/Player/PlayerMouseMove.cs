@@ -5,6 +5,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 namespace Game.LPlayer
@@ -48,6 +49,9 @@ namespace Game.LPlayer
                 int layermask = -1;
                 if (Physics.Raycast(movePosition, out var hitinfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
                 {
+                    if (EventSystem.current.currentSelectedGameObject?.GetComponent<InputField>())
+                        return;
+
                     MovePlayer(hitinfo.point);
                 }
             }

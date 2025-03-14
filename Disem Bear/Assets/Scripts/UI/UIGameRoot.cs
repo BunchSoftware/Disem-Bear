@@ -1,6 +1,7 @@
 using External.DI;
 using External.Storage;
 using Game.LDialog;
+using Game.Music;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,16 +26,14 @@ namespace UI
 
         private bool isActivePause = false;
 
-        public void Init()
+        public void Init(SoundManager soundManager)
         {
             settingsController.Init();
-
-            fade.FadeWhite();
 
             shopManager.Init();
             exerciseManager.Init();
             dialogChat.Init(this);
-            dialogManager.Init(this);
+            dialogManager.Init(this, soundManager);
 
             Debug.Log("UIGameRoot: Успешно иницилизирован");
         }

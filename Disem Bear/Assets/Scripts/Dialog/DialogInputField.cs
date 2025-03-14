@@ -18,6 +18,7 @@ namespace Game.LDialog
         public void Init(DialogManager dialogManager)
         {
             standartInputFont = inputText.font;
+            standartPlaceholderFont = placeHolderText.font;
             sendButton.onClick.RemoveAllListeners();
             sendButton.onClick.AddListener(() =>
             {

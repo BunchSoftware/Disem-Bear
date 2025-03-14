@@ -6,6 +6,7 @@ using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Music;
 using Game.Tutorial;
+using System.Collections;
 using System.Collections.Generic;
 using UI;
 using Unity.VisualScripting;
@@ -16,6 +17,7 @@ namespace External.DI
 {
     public class GameBootstrap : MonoBehaviour
     {
+        [SerializeField] private Fade fade;
         [Header("Player")]
         [SerializeField] private Player player;
         [SerializeField] private PlayerChangeImage playerChangeImage = new();
@@ -46,7 +48,15 @@ namespace External.DI
 
         private void Awake()
         {
-            Time.timeScale = 1;
+            fade.FadeWhite();
+            StartCoroutine(IWaitFadePanel(0.7f));
+        }
+
+        IEnumerator IWaitFadePanel( float time)
+        {
+           yield return new WaitForSeconds(time);
+
+           Time.timeScale = 1;
 
             FilePrefabsPickUpItems = filePrefabsPickUpItems;
             PlayerPrefs.DeleteAll();
@@ -54,37 +64,37 @@ namespace External.DI
             if (!player)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной Player");
-                return;
+                yield return null;
             }
 
             if (!tutorialRoot)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной TutorialRoot");
-                return;
+                yield return null;
             }
 
             if (!environmentRoot)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной EnvironmentRoot");
-                return;
+                yield return null;
             }
 
             if (!uiGameRoot)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной UIGameRoot");
-                return;
+                yield return null;
             }
 
             if (!filePlayer)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FilePlayer");
-                return;
-            }   
+                yield return null;
+            }
 
             if (!fileShop)
             {
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FileShop");
-                return;
+                yield return null;
             }
             #endregion
 
@@ -106,7 +116,7 @@ namespace External.DI
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);
 
             updateListeners.Add(uiGameRoot);
-            uiGameRoot.Init();
+            uiGameRoot.Init(soundManager);
 
             playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
             playerMouseMove.OnMove += playerChangeImage.Update;
@@ -115,7 +125,6 @@ namespace External.DI
             playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
 
             updateListeners.Add(playerInput);
-
         }
 
         private void Update()

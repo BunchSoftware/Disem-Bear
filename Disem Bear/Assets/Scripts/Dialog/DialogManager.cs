@@ -1,4 +1,5 @@
 using External.Storage;
+using Game.Music;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -30,17 +31,22 @@ namespace Game.LDialog
 
         private string currentConditionSkip = "";
 
+        private bool isDialogRun = false;
         private bool isCanSkipDialog = false;
         private bool isDialogLast = false;
         private bool isActiveInputField = false;
         private MonoBehaviour context;
+        private SoundManager soundManager;
 
-        public void Init(MonoBehaviour context)
+        private Coroutine typeLineCoroutine;
+
+        public void Init(MonoBehaviour context, SoundManager soundManager)
         {
             this.context = context;
+            this.soundManager = soundManager;
 
             dialogPoints = fileDialog.dialogPoints;
-            dialogueWindow.Init(this);
+            dialogueWindow.Init(this, soundManager);
 
             if (SaveManager.filePlayer.JSONPlayer.nameUser != null)
             {
@@ -81,7 +87,7 @@ namespace Game.LDialog
                     }
                     else if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
                     {
-                        dialogueWindow.DialogLast(dialog);
+                        dialogueWindow.ShowFullDialog(dialog);
                         isDialogLast = true;
                     }
                     else
@@ -92,6 +98,29 @@ namespace Game.LDialog
                     }
 
                     currentConditionSkip = "";
+
+                    isDialogRun = false;
+                    isCanSkipDialog = false;
+                    isActiveInputField = false;
+                }
+            }
+        }
+
+        public void SkipDialogWithFinish()
+        {
+            if (isCanSkipDialog || isDialogLast && isActiveInputField == false)
+            {
+                Dialog dialog = null;
+
+                if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
+                    dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
+
+                if (dialog != null && dialog.skipDialog == true)
+                {
+                    isDialogRun = false;
+                    dialogueWindow.StopTypeLine();
+                    dialogueWindow.ShowFullDialog(dialog);
+                    OnFullEndDialog?.Invoke(dialog);
                 }
             }
         }
@@ -102,10 +131,11 @@ namespace Game.LDialog
             SkipDialog();
         }
 
-        public void TypeLine(DialogPoint dialogPoint, int indexDialog)
+        private void TypeLine(DialogPoint dialogPoint, int indexDialog)
         {
-            context.StopAllCoroutines();
-            context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
+            if(typeLineCoroutine != null)
+                context.StopCoroutine(typeLineCoroutine);
+            typeLineCoroutine = context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
         }
 
         IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
@@ -156,10 +186,14 @@ namespace Game.LDialog
 
         private void StopTypeLine()
         {
-            context.StopAllCoroutines();
+            isDialogRun = false;
+            if (typeLineCoroutine != null)
+                context.StopCoroutine(typeLineCoroutine);
             dialogueWindow.StopTypeLine();
             isCanSkipDialog = false;
             isActiveInputField = false;
+
+            OnEndDialog?.Invoke(dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog]);
         }
 
         private void EnterDrop(Dialog dialog)
@@ -226,6 +260,11 @@ namespace Game.LDialog
                 isCanSkipDialog = true;
                 SkipDialog();
             }
+        }
+
+        public bool IsDialogRun()
+        {
+            return isDialogRun;
         }
 
         public int GetCurrentIndexDialog()

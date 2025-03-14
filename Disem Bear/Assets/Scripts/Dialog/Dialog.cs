@@ -16,6 +16,7 @@ namespace Game.LDialog
         public DropEnum enterDrop = DropEnum.DropRight;
         public DropEnum exitDrop = DropEnum.DropLeft;
         public float speedText = 0.05f;
+        public AudioClip soundText;
         public bool skipDialog = false;
         public string conditionSkipDialog;
         public bool stopTheEndDialog = false;

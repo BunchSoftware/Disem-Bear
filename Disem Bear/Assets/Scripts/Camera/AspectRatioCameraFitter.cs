@@ -11,7 +11,7 @@ public class AspectRatioCameraFitter : MonoBehaviour
 
     private Vector2 lastResolution;
 
-    [HideInInspector][SerializeField] private Camera m_camera;
+    [SerializeField] private Camera m_camera;
 
     public void OnValidate()
     {

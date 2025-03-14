@@ -1,3 +1,4 @@
+using Game.Music;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,16 +17,31 @@ namespace Game.LDialog
         [SerializeField] private Image imageClickButtonForSkip;
         [HideInInspector] public Animator animator;
 
+        private SoundManager soundManager;
         private Font standartFont;
+        private bool skipDialog = false;
+        private bool oneTap = false;
+        private Coroutine typeLineCoroutine;
 
-        public void Init(DialogManager dialogManager)
+        public void Init(DialogManager dialogManager, SoundManager soundManager)
         {
+            this.soundManager = soundManager;
+
             animator = GetComponentInChildren<Animator>();
             standartFont = textDialog.font;
             skipButton.onClick.RemoveAllListeners();
             skipButton.onClick.AddListener(() =>
             {
-                dialogManager.RunConditionSkip("");
+                if(skipDialog && !oneTap)
+                {
+                    oneTap = true;
+                    dialogManager.SkipDialogWithFinish();
+                }
+                else if(oneTap)
+                {
+                    oneTap = false;
+                    dialogManager.RunConditionSkip("");
+                }
             });
 
             dialogInputField.Init(dialogManager);
@@ -33,13 +49,15 @@ namespace Game.LDialog
 
         public void StartTypeLine(Dialog dialog)
         {
-            StopAllCoroutines();
-            StartCoroutine(TypeLineIE(dialog));
+            if(typeLineCoroutine != null) 
+                StopCoroutine(typeLineCoroutine);
+            typeLineCoroutine = StartCoroutine(TypeLineIE(dialog));
         }
 
         public void StopTypeLine()
         {
-            StopAllCoroutines();
+            if (typeLineCoroutine != null)
+                StopCoroutine(typeLineCoroutine);
         }
 
         IEnumerator TypeLineIE(Dialog dialog)
@@ -49,16 +67,25 @@ namespace Game.LDialog
             dialogInputField.SetParametres(dialog);
             for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
             {
+                if (dialog.soundText != null)
+                    soundManager.OnPlayOneShot(dialog.soundText);
+
                 textDialog.text += dialog.textDialog[j];
                 yield return new WaitForSeconds(dialog.speedText);
             }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
         }
 
-        public void DialogLast(Dialog dialog)
+        public void ShowFullDialog(Dialog dialog)
         {
+            if (typeLineCoroutine != null)
+                StopCoroutine(typeLineCoroutine);
             SetParametres(dialog);
             dialogInputField.SetParametres(dialog);
             textDialog.text = dialog.textDialog;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
         }
 
         private void SetParametres(Dialog dialog)
@@ -67,6 +94,9 @@ namespace Game.LDialog
                 textDialog.font = dialog.fontText;
             else
                 textDialog.font = standartFont;
+
+            skipDialog = dialog.skipDialog;
+
             textDialog.fontStyle = dialog.fontStyleText;
             textDialog.fontSize = dialog.fontSizeText;
             textDialog.color = dialog.colorText;

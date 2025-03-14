@@ -50,7 +50,13 @@ namespace Game.Environment.LTableWithItems
 
                         if (condition != null)
                         {
-                            PickUpItem pickUpItem = Instantiate(condition, transform);
+                            PickUpItem pickUpItem = Instantiate(condition);
+
+                            pickUpItem.transform.parent = transform;
+                            pickUpItem.transform.parent = transform;
+                            pickUpItem.transform.position =
+                                new Vector3(transform.position.x, transform.position.y + pickUpItem.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);
+
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
                             currentItemInCell = pickUpItem;
