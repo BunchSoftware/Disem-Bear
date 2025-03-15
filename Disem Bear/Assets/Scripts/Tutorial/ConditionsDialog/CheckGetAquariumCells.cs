@@ -36,6 +36,7 @@ public class CheckGetAquariumCells : MonoBehaviour
             if (startDialogs[i].nameCell == nameCell && countCells > 0 && !dialogManager.IsDialogRun())
             {
                 dialogManager.StartDialog(startDialogs[i].indexDialog);
+                startDialogs.Remove(startDialogs[i]);
                 break;
             }
         }

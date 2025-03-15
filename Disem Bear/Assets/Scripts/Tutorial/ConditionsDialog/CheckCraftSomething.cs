@@ -44,6 +44,7 @@ public class CheckCraftSomething : MonoBehaviour
             if (startDialogs[i].craftObject == TypeCraftObject.Ingradient && startDialogs[i].name == ingradient.typeIngradient)
             {
                 dialogManager.StartDialog(startDialogs[i].indexDialog);
+                startDialogs.Remove(startDialogs[i]);
                 break;
             }
         }
@@ -64,6 +65,7 @@ public class CheckCraftSomething : MonoBehaviour
             if (startDialogs[i].craftObject == TypeCraftObject.PickUpItem && startDialogs[i].name == pickUpItem.NameItem)
             {
                 dialogManager.StartDialog(startDialogs[i].indexDialog);
+                startDialogs.Remove(startDialogs[i]);
                 break;
             }
         }

@@ -57,12 +57,15 @@ namespace Game.LDialog
 
         public void StartDialog(int indexDialogPoint)
         {
-            if (indexDialogPoint >= currentIndexDialogPoint)
-            {
-                currentIndexDialogPoint = indexDialogPoint;
-                SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
-                TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
-            }
+            currentIndexDialogPoint = indexDialogPoint;
+            SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+            TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
+            //if (indexDialogPoint >= currentIndexDialogPoint)
+            //{
+            //    currentIndexDialogPoint = indexDialogPoint;
+            //    SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+            //    TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
+            //}
         }
         public void SkipDialog()
         {
@@ -72,7 +75,6 @@ namespace Game.LDialog
 
                 if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
                     dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
-
                 if (dialog != null
                     && dialog.skipDialog == true
                     && currentConditionSkip == dialog.conditionSkipDialog)
@@ -100,7 +102,7 @@ namespace Game.LDialog
                     currentConditionSkip = "";
 
                     isDialogRun = false;
-                    isCanSkipDialog = false;
+                    //isCanSkipDialog = false;
                     isActiveInputField = false;
                 }
             }
@@ -120,7 +122,7 @@ namespace Game.LDialog
                     isDialogRun = false;
                     dialogueWindow.StopTypeLine();
                     dialogueWindow.ShowFullDialog(dialog);
-                    OnFullEndDialog?.Invoke(dialog);
+                    //OnFullEndDialog?.Invoke(dialog);
                 }
             }
         }

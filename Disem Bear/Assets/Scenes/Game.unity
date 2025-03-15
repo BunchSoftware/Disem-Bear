@@ -658,17 +658,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   makePathToObject: {fileID: 1560337221}
   pointers:
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 0
     needTargetFullEndDialog: 0
     offPointer: 0
     lineToObjectTransform: {fileID: 1391067367}
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 1
     needTargetFullEndDialog: 0
     offPointer: 0
     lineToObjectTransform: {fileID: 1605940979}
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 2
     needTargetFullEndDialog: 0
     offPointer: 0
@@ -2627,7 +2627,7 @@ MonoBehaviour:
   TVBlock: {fileID: 656981623}
   ModelBoardBlock: {fileID: 1602364834}
   tutorialBlocks:
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 0
     needTargetFullEndDialog: 0
     WorkbenchBlock: 1
@@ -2636,7 +2636,7 @@ MonoBehaviour:
     PrinterBlock: 1
     TVBlock: 0
     ModelBoardBlock: 1
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 1
     needTargetFullEndDialog: 0
     WorkbenchBlock: 1
@@ -2645,7 +2645,7 @@ MonoBehaviour:
     PrinterBlock: 1
     TVBlock: 0
     ModelBoardBlock: 1
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 2
     needTargetFullEndDialog: 0
     WorkbenchBlock: 0
@@ -2654,7 +2654,7 @@ MonoBehaviour:
     PrinterBlock: 1
     TVBlock: 0
     ModelBoardBlock: 1
-  - indexDialogPoint: 3
+  - indexDialogPoint: 4
     indexDialog: 4
     needTargetFullEndDialog: 1
     WorkbenchBlock: 0
@@ -6250,7 +6250,7 @@ GameObject:
   - component: {fileID: 1833872765}
   - component: {fileID: 1833872766}
   m_Layer: 0
-  m_Name: ConditionsDialogManagers
+  m_Name: StartAndSkipDialogManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6284,8 +6284,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   conditions:
-  - headerOrder: "\u0421\u0432\u0435\u0442\u043B\u0430\u043D\u0430"
+  - headerOrder: "\u043E\u0442 sosisochki@bee.con"
     condition: "\u0421\u0432\u0435\u0442\u043B\u0430\u043D\u0430"
+  startDialogs: []
 --- !u!114 &1833872764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6316,6 +6317,7 @@ MonoBehaviour:
   conditions:
   - nameCell: stem
     condition: Get2Stem
+  startDialogs: []
 --- !u!114 &1833872766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6332,6 +6334,7 @@ MonoBehaviour:
   - craftObject: 0
     name: metabolism
     condition: craftMetabolism
+  startDialogs: []
 --- !u!114 &1858827800 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8902528361274274020, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
@@ -7614,7 +7617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4813487085863515753, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00012207031
+      value: 0.00024414062
       objectReference: {fileID: 0}
     - target: {fileID: 5088225232906741577, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_Value

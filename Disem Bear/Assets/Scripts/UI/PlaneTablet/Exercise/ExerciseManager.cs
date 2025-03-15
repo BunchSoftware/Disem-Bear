@@ -64,7 +64,7 @@ namespace UI.PlaneTablet.Exercise
                 {
                     exercise.Init(this, (exercise, isExpandExercise) =>
                     {
-                        PlayerGetExercise?.Invoke(exercise.GetExercise());
+                        
 
                         currentExerciseGUI = exercise;
                         GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
@@ -78,7 +78,10 @@ namespace UI.PlaneTablet.Exercise
                             }
                         }
                         else
+                        {
+                            PlayerGetExercise?.Invoke(exercise.GetExercise());
                             Sort(exercise);
+                        } 
                     }, exercises[i], i);
                     exercise.ExpandExercise(false);
 

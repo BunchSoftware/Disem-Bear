@@ -34,6 +34,7 @@ public class CheckTakeExercise : MonoBehaviour
             if (startDialogs[i].headerOrder == exercise.header && !dialogManager.IsDialogRun())
             {
                 dialogManager.StartDialog(startDialogs[i].indexDialog);
+                startDialogs.Remove(startDialogs[i]);
                 break;
             }
         }
