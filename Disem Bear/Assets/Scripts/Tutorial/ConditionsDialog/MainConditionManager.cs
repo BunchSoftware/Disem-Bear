@@ -13,9 +13,9 @@ public class MainConditionManager : MonoBehaviour
     [SerializeField] private Aquarium aquarium;
     [SerializeField] private Workbench workbench;
     private ExerciseManager exerciseManager;
-    private TakeExerciseConditions takeExerciseConditions;
-    private GetAquariumCellsConditions getAquariumCellsConditions;
-    private CraftSomethingConditions craftSomethingConditions;
+    private CheckTakeExercise takeExerciseConditions;
+    private CheckGetAquariumCells getAquariumCellsConditions;
+    private CheckCraftSomething craftSomethingConditions;
 
 
     private DialogManager dialogManager;
@@ -25,9 +25,9 @@ public class MainConditionManager : MonoBehaviour
         this.dialogManager = dialogManager;
 
         exerciseManager = uIGameRoot.GetExerciseManager();
-        takeExerciseConditions = GetComponent<TakeExerciseConditions>();
-        getAquariumCellsConditions = GetComponent<GetAquariumCellsConditions>();
-        craftSomethingConditions = GetComponent<CraftSomethingConditions>();
+        takeExerciseConditions = GetComponent<CheckTakeExercise>();
+        getAquariumCellsConditions = GetComponent<CheckGetAquariumCells>();
+        craftSomethingConditions = GetComponent<CheckCraftSomething>();
 
         takeExerciseConditions.Init(dialogManager, exerciseManager);
         getAquariumCellsConditions.Init(dialogManager, aquarium);

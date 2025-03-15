@@ -5,9 +5,10 @@ using Game.LDialog;
 using UI.PlaneTablet.Exercise;
 using UnityEngine;
 
-public class TakeExerciseConditions : MonoBehaviour
+public class CheckTakeExercise : MonoBehaviour
 {
     [SerializeField] private List<TakeExerciseCondition> conditions = new();
+    [SerializeField] private List<TakeExerciseStartDialog> startDialogs = new();
 
     private DialogManager dialogManager;
     private ExerciseManager exerciseManager;
@@ -15,7 +16,7 @@ public class TakeExerciseConditions : MonoBehaviour
     {
         this.dialogManager = dialogManager;
         this.exerciseManager = exerciseManager;
-        exerciseManager.PlayerGetExercise.AddListener(CheckOrder);
+        this.exerciseManager.PlayerGetExercise.AddListener(CheckOrder);
     }
 
     public void CheckOrder(Exercise exercise)
@@ -28,6 +29,14 @@ public class TakeExerciseConditions : MonoBehaviour
                 break;
             }
         }
+        for (int i = 0; i < startDialogs.Count; i++)
+        {
+            if (startDialogs[i].headerOrder == exercise.header && !dialogManager.IsDialogRun())
+            {
+                dialogManager.StartDialog(startDialogs[i].indexDialog);
+                break;
+            }
+        }
     }
 
     [Serializable]
@@ -36,5 +45,13 @@ public class TakeExerciseConditions : MonoBehaviour
         public string headerOrder = "None";
         [Space]
         public string condition = "None";
+    }
+
+    [Serializable]
+    public class TakeExerciseStartDialog
+    {
+        public string headerOrder = "None";
+        [Space]
+        public int indexDialog = 0;
     }
 }

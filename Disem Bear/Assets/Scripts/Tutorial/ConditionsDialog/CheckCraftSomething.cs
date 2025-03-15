@@ -6,7 +6,7 @@ using Game.Environment.LMixTable;
 using Game.LDialog;
 using UnityEngine;
 
-public class CraftSomethingConditions : MonoBehaviour
+public class CheckCraftSomething : MonoBehaviour
 {
     public enum TypeCraftObject
     {
@@ -15,6 +15,7 @@ public class CraftSomethingConditions : MonoBehaviour
     }
 
     [SerializeField] List<CraftSomethingCondition> conditions = new();
+    [SerializeField] List<CraftSomethingStartDialog> startDialogs = new();
 
     private DialogManager dialogManager;
     private Workbench workbench;
@@ -38,6 +39,14 @@ public class CraftSomethingConditions : MonoBehaviour
                 break;
             }
         }
+        for (int i = 0; i < startDialogs.Count; i++)
+        {
+            if (startDialogs[i].craftObject == TypeCraftObject.Ingradient && startDialogs[i].name == ingradient.typeIngradient)
+            {
+                dialogManager.StartDialog(startDialogs[i].indexDialog);
+                break;
+            }
+        }
     }
 
     public void CheckPickUpItem(PickUpItem pickUpItem)
@@ -50,6 +59,14 @@ public class CraftSomethingConditions : MonoBehaviour
                 break;
             }
         }
+        for (int i = 0; i < startDialogs.Count; i++)
+        {
+            if (startDialogs[i].craftObject == TypeCraftObject.PickUpItem && startDialogs[i].name == pickUpItem.NameItem)
+            {
+                dialogManager.StartDialog(startDialogs[i].indexDialog);
+                break;
+            }
+        }
     }
 
     [Serializable]
@@ -59,5 +76,14 @@ public class CraftSomethingConditions : MonoBehaviour
         public string name;
         [Space]
         public string condition = "None";
+    }
+
+    [Serializable]
+    public class CraftSomethingStartDialog
+    {
+        public TypeCraftObject craftObject;
+        public string name;
+        [Space]
+        public int indexDialog = 0;
     }
 }

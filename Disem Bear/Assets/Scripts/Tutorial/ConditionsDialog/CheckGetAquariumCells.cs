@@ -5,9 +5,10 @@ using Game.Environment.Aquarium;
 using Game.LDialog;
 using UnityEngine;
 
-public class GetAquariumCellsConditions : MonoBehaviour
+public class CheckGetAquariumCells : MonoBehaviour
 {
     [SerializeField] private List<GetAquariumCellsCondition> conditions;
+    [SerializeField] private List<GetAquariumCellsStartDialog> startDialogs;
 
     private DialogManager dialogManager;
     private Aquarium aquarium;
@@ -17,7 +18,7 @@ public class GetAquariumCellsConditions : MonoBehaviour
         this.dialogManager = dialogManager;
         this.aquarium = aquarium;
 
-        aquarium.GetAquariumCells.AddListener(CheckGetCells);
+        this.aquarium.GetAquariumCells.AddListener(CheckGetCells);
     }
 
     public void CheckGetCells(string nameCell, int countCells)
@@ -30,6 +31,14 @@ public class GetAquariumCellsConditions : MonoBehaviour
                 break;
             }
         }
+        for (int i = 0; i < startDialogs.Count; i++)
+        {
+            if (startDialogs[i].nameCell == nameCell && countCells > 0 && !dialogManager.IsDialogRun())
+            {
+                dialogManager.StartDialog(startDialogs[i].indexDialog);
+                break;
+            }
+        }
     }
 
     [Serializable]
@@ -38,5 +47,13 @@ public class GetAquariumCellsConditions : MonoBehaviour
         public string nameCell;
         [Space]
         public string condition = "None";
+    }
+
+    [Serializable]
+    public class GetAquariumCellsStartDialog
+    {
+        public string nameCell;
+        [Space]
+        public int indexDialog = 0;
     }
 }
