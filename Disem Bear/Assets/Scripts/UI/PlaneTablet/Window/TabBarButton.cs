@@ -12,14 +12,18 @@ namespace UI.PlaneTablet.Window
         [SerializeField] private Color colorDefaultButton;
         [SerializeField] private int indexTab;
 
+        [SerializeField] private List<Image> activateSelectedObjects;
+        [SerializeField] private List<Image> colorActivatedSelectedObjetcs;
+
         private Button button;
-        private Image image;
         private bool isSelected = false;
 
         public void Init(Action<int> actionSelectTab)
         {
-            image = GetComponent<Image>();
-            image.color = colorDefaultButton;
+            for (int i = 0; i < colorActivatedSelectedObjetcs.Count; i++)
+            {
+                colorActivatedSelectedObjetcs[i].color = colorDefaultButton;
+            }
             isSelected = false;
 
             button = GetComponent<Button>();
@@ -35,10 +39,21 @@ namespace UI.PlaneTablet.Window
         {
             this.isSelected = isSelected;
 
-            if (isSelected)
-                image.color = colorSelectedButton;
-            else
-                image.color = colorDefaultButton;
+            for (int i = 0; i < colorActivatedSelectedObjetcs.Count; i++)
+            {
+                if (isSelected)
+                    colorActivatedSelectedObjetcs[i].color = colorSelectedButton;
+                else
+                    colorActivatedSelectedObjetcs[i].color = colorDefaultButton;
+            }
+
+            for (int i = 0; i < activateSelectedObjects.Count; i++)
+            {
+                if (isSelected)
+                    activateSelectedObjects[i].enabled = true;
+                else
+                    activateSelectedObjects[i].enabled = false;
+            }
         }
 
         public bool GetIsSelected()
