@@ -165,7 +165,7 @@ namespace External.Storage
                     {
                         for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
                         {
-                            changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].reward.typeReward.ToString());
+                            //changedResources.Add($"changedCountProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].reward.typeReward.ToString());
                         }
                     }
 
@@ -240,8 +240,8 @@ namespace External.Storage
                     {
                         if (filePlayer.JSONPlayer.resources.magnets != null)
                             changedResources.Add($"changedMagnetSaves", filePlayer.JSONPlayer.resources.magnets.Count.ToString());
-                        if (filePlayer.JSONPlayer.resources.products != null)
-                            changedResources.Add($"changedProductSaves", filePlayer.JSONPlayer.resources.products.Count.ToString());
+                        //if (filePlayer.JSONPlayer.resources.products != null)
+                        //    changedResources.Add($"changedProductSaves", filePlayer.JSONPlayer.resources.products.Count.ToString());
                         //if (filePlayer.JSONPlayer.resources.cellModelBoards != null)
                         //    changedResources.Add($"changedModelBoardSaves", filePlayer.JSONPlayer.resources.cellModelBoards.Count.ToString());
                         if (filePlayer.JSONPlayer.resources.exercises != null)
@@ -255,53 +255,6 @@ namespace External.Storage
                     }
 
                     apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
-                    SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
-                }
-            });
-        }
-
-        private static async void ChangeSaveTypeProduct(ProductData saveTypeProduct)
-        {
-            await Task.Run(() =>
-            {
-                if (filePlayer.JSONPlayer.nameUser != "")
-                {
-                    for (int j = 0; j < filePlayer.JSONPlayer.resources.products.Count; j++)
-                    {
-                        if (filePlayer.JSONPlayer.resources.products[j].typeProduct == saveTypeProduct.typeProduct)
-                        {
-                            filePlayer.JSONPlayer.resources.products[j].countProduct += saveTypeProduct.countProduct;
-                            UpdatePlayerFile();
-
-                            apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
-                            ResourceChangedPlayer resourceChangedPlayer1 = new ResourceChangedPlayer();
-                            Dictionary<string, string> changedResources1 = new Dictionary<string, string>();
-
-                            apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer1);
-                            SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
-
-                            return;
-                        }
-                    }
-
-                    ProductData saveType = new ProductData();
-                    saveType.typeProduct = saveTypeProduct.typeProduct;
-                    saveType.countProduct += saveTypeProduct.countProduct;
-
-                    filePlayer.JSONPlayer.resources.products.Add(saveType);
-                    apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
-                    ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
-                    Dictionary<string, string> changedResources = new Dictionary<string, string>();
-
-                    if (fileShop.JSONShop.resources.productSaves != null)
-                    {
-                        for (int i = 0; i < fileShop.JSONShop.resources.productSaves.Count; i++)
-                        {
-                            changedResources.Add($"changedCountChangeProduct_Product{i}", fileShop.JSONShop.resources.productSaves[i].reward.typeReward.ToString());
-                        }
-                    }
-
-                    apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока о покупках были изменены", resourceChangedPlayer);
                     SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
                 }
             });

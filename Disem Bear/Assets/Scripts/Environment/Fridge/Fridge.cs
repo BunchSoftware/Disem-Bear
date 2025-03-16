@@ -46,9 +46,8 @@ namespace Game.Environment.Fridge
             {
                 for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.magnets.Count; i++)
                 {
-                    prefabMagnet.name = $"Magnet {i}";
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-
+                    magnet.name = $"Magnet {content.transform.childCount + 1}";
                     for (int j = 0; j < fileMagnets.magnets.Count; j++)
                     {
                         if (SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
@@ -116,17 +115,18 @@ namespace Game.Environment.Fridge
 
         public void CreateMagnet(string typeMagnet)
         {
-            for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.magnets.Count; i++)
+            for (int i = 0; i < fileMagnets.magnets.Count; i++)
             {
-                if (SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet == typeMagnet)
+                if (fileMagnets.magnets[i].typeMagnet == typeMagnet)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-
+                    magnet.name = $"Magnet {content.transform.childCount+1}";
                     MagnetInfo magnetInfo = new MagnetInfo();
-                    magnetInfo.typeMagnet = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet;
-                    magnetInfo.x = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].x;
-                    magnetInfo.y = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].y;
-                    magnetInfo.z = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].z;
+                    magnetInfo.iconMagnet = fileMagnets.magnets[i].iconMagnet;
+                    magnetInfo.typeMagnet = fileMagnets.magnets[i].typeMagnet;
+                    magnetInfo.x = 0;
+                    magnetInfo.y = 0;
+                    magnetInfo.z = 0;
 
                     magnet.Init(this, magnetInfo);
                     magnets.Add(magnet);
@@ -138,6 +138,7 @@ namespace Game.Environment.Fridge
                     magnetSave.z = magnet.transform.localPosition.z;
 
                     SaveManager.ChangeMagnetSave(magnetSave);
+                    Debug.Log($"Магнит {typeMagnet} создан");
 
                     return;
                 }

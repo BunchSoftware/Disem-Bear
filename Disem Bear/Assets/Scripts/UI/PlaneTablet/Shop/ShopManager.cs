@@ -1,4 +1,5 @@
 using External.Storage;
+using Game.Environment.Item;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,74 +28,57 @@ namespace UI.PlaneTablet.Shop
 
         public void Init()
         {
-            List<Product> products = fileProducts.products;
+            List<Product> products = new List<Product>();
 
-
-            //if (SaveManager.fileShop.JSONShop != null)
-            //{
-            //    if (SaveManager.fileShop.JSONShop.resources.productSaves == null || SaveManager.fileShop.JSONShop.resources.productSaves.Count == 0)
-            //    {
-            //        List<ProductSave> productSaves = new List<ProductSave>();
-            //        for (int i = 0; i < fileProducts.products.Count; i++)
-            //        {
-            //            productSaves.Add(new ProductSave()
-            //            {
-            //                reward = fileProducts.products[i].reward,
-            //                countPriceChange = fileProducts.products[i].countPriceChange,
-            //                typePriceChangeProduct = fileProducts.products[i].typePriceChangeProduct,
-            //            });
-            //        }
-            //        SaveManager.fileShop.JSONShop.resources.productSaves = productSaves;
-            //    }
-            //}
-
-            //for (int i = 0; i < fileProducts.products.Count; i++)
-            //{
-            //    Product product = new Product()
-            //    {
-            //        indexProduct = i,
-            //        typePriceChangeProduct = SaveManager.fileShop.JSONShop.resources.productSaves[i].typePriceChangeProduct,
-            //        reward = SaveManager.fileShop.JSONShop.resources.productSaves[i].reward,
-            //        countPriceChange = SaveManager.fileShop.JSONShop.resources.productSaves[i].countPriceChange,
-            //        header = fileProducts.products[i].header,
-            //        avatarPriceChange = fileProducts.products[i].avatarPriceChange,
-            //    };
-            //    if (SaveManager.fileShop.JSONShop.resources.productSaves[i].reward.countReward != 0)
-            //        products.Add(product);
-            //}
-
-            for (int i = 0; i < products.Count; i++)
+            if(SaveManager.fileShop.JSONShop.resources.productSaves != null)
             {
-                prefab.name = $"Product {i}";
-                ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
-                productsGUI.Add(productGUI);
+                for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
+                {
+                    prefab.name = $"Product {i}";
+                    ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
+                    productsGUI.Add(productGUI);
+
+                    Product product = FindProductToFileProducts(SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward);
+                    if(product != null)
+                    {
+                        product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
+                        products.Add(product);
+                    }
+                }
             }
 
-            for (int i = 0; i < content.transform.childCount; i++)
+            for (int i = 0; i < productsGUI.Count; i++)
             {
-                ProductGUI productGUI;
-
-                if (content.transform.GetChild(i).TryGetComponent<ProductGUI>(out productGUI))
+                ProductGUI productGUI = productsGUI[i];
+                productGUI.Init(
+                (product) =>
                 {
-                    productGUI.Init(
-                    (product) =>
+                    if (Buy(product) && product.reward.countReward - 1 >= 0)
                     {
-                        if (Buy(product) && product.reward.countReward - 1 >= 0)
-                        {
-                            product.reward.countReward--;
-                            SaveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].reward = product.reward;
-                            SaveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countPriceChange = product.price;
+                        product.reward.countReward--;
+                        SaveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].typeReward = product.reward.typeReward;
+                        SaveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countReward = product.reward.countReward;
 
-                            productGUI.UpdateData(product);
-                        }
-                    },
-                    () =>
-                    {
-                        Remove(productGUI);
-                    }, products[i]);
-                };
+                        productGUI.UpdateData(product);
+                    }
+                },
+                () =>
+                {
+                    Remove(productGUI);
+                }, products[i]);
             }
             Sort();
+        }
+
+        private Product FindProductToFileProducts(string typeReward)
+        {
+            for (int i = 0; i < fileProducts.products.Count; i++)
+            {
+                if (fileProducts.products[i].reward.typeReward == typeReward && typeReward.Length >= 1)
+                    return fileProducts.products[i];
+            }
+
+            return null;
         }
 
         private void Sort()
@@ -125,40 +109,28 @@ namespace UI.PlaneTablet.Shop
 
         private bool Buy(Product product)
         {
-            if (SaveManager.filePlayer.JSONPlayer.resources.products != null)
+            if (SaveManager.fileShop.JSONShop.resources.productSaves != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.products.Count; i++)
+                Debug.Log(52);
+                for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.products[i].typeProduct == product.typePriceProduct)
+                    Debug.Log(52);
+                    if (SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward == product.reward.typeReward)
                     {
-                        if (SaveManager.filePlayer.JSONPlayer.resources.products[i].countProduct - product.price >= 0)
+                        Debug.Log(52);
+                        for (int j = 0; j < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; j++)
                         {
-                            SaveManager.filePlayer.JSONPlayer.resources.products[i].countProduct -= product.price;
-                            for (int j = 0; j < SaveManager.filePlayer.JSONPlayer.resources.products.Count; j++)
+                            Debug.Log(52);
+                            if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].typeIngradient == product.typePriceProduct &&
+                               SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].countIngradient - product.price >= 0)
                             {
-                                if (SaveManager.filePlayer.JSONPlayer.resources.products[j].typeProduct == product.reward.typeReward)
-                                {
-                                    SaveManager.filePlayer.JSONPlayer.resources.products[j].countProduct += 1;
-                                    GiveProduct(product);
-                                    OnBuyProduct?.Invoke(product);
+                                SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].countIngradient -= product.price;
+                                GiveProduct(product);
+                                OnBuyProduct?.Invoke(product);
 
-                                    return true;
-                                }
+                                Debug.Log($"{product.reward.typeReward} был куплен");
+                                return true;
                             }
-
-                            SaveManager.filePlayer.JSONPlayer.resources.products.Add(new ProductData()
-                            {
-                                countProduct = 1,
-                                typeProduct = product.reward.typeReward,
-                            });
-
-                            GiveProduct(product);
-
-                            Debug.Log($"{product.reward.typeReward} был куплен");
-
-                            OnBuyProduct?.Invoke(product);
-
-                            return true;
                         }
                     }
                 }

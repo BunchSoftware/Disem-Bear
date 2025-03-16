@@ -26,7 +26,6 @@ namespace External.API
         public List<CellsData> modelBoards = new List<CellsData>();
         public List<CellsData> tableWithItems = new List<CellsData>();
         public List<MagnetData> magnets = new List<MagnetData>();
-        public List<ProductData> products = new List<ProductData>();
     }
 
     [Serializable]

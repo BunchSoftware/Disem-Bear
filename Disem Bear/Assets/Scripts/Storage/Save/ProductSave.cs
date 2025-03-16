@@ -9,8 +9,7 @@ namespace External.Storage
     [Serializable]
     public class ProductSave
     {
-        public Reward reward;
-        public string typePriceChangeProduct;
-        public int countPriceChange;
+        public string typeReward;
+        public int countReward;
     }
 }
