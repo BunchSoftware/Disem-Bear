@@ -16,6 +16,7 @@ namespace Game.LDialog
         [SerializeField] private DialogInputField dialogInputField;
         [SerializeField] private Image imageClickButtonForSkip;
         [HideInInspector] public Animator animator;
+        private bool isDialogRun = false;
 
         private SoundManager soundManager;
         private Font standartFont;
@@ -32,14 +33,21 @@ namespace Game.LDialog
             skipButton.onClick.RemoveAllListeners();
             skipButton.onClick.AddListener(() =>
             {
-                if(skipDialog && !oneTap)
+                if (dialogManager.IsDialogRun())
                 {
-                    oneTap = true;
-                    dialogManager.SkipDialogWithFinish();
+                    if (skipDialog && !oneTap)
+                    {
+                        oneTap = true;
+                        dialogManager.SkipDialogWithFinish();
+                    }
+                    else if (oneTap)
+                    {
+                        oneTap = false;
+                        dialogManager.RunConditionSkip("");
+                    }
                 }
-                else if(oneTap)
+                else
                 {
-                    oneTap = false;
                     dialogManager.RunConditionSkip("");
                 }
             });
@@ -49,7 +57,7 @@ namespace Game.LDialog
 
         public void StartTypeLine(Dialog dialog)
         {
-            if(typeLineCoroutine != null) 
+            if (typeLineCoroutine != null)
                 StopCoroutine(typeLineCoroutine);
             typeLineCoroutine = StartCoroutine(TypeLineIE(dialog));
         }
@@ -58,6 +66,7 @@ namespace Game.LDialog
         {
             if (typeLineCoroutine != null)
                 StopCoroutine(typeLineCoroutine);
+            isDialogRun = false;
         }
 
         IEnumerator TypeLineIE(Dialog dialog)
@@ -65,16 +74,19 @@ namespace Game.LDialog
             textDialog.text = "";
             SetParametres(dialog);
             dialogInputField.SetParametres(dialog);
+
+            isDialogRun = true;
+
             for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
             {
+                yield return new WaitForSeconds(dialog.speedText);
                 if (dialog.soundText != null)
                     soundManager.OnPlayOneShot(dialog.soundText);
 
                 textDialog.text += dialog.textDialog[j];
-                yield return new WaitForSeconds(dialog.speedText);
             }
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
+            isDialogRun = false;
         }
 
         public void ShowFullDialog(Dialog dialog)
@@ -84,6 +96,7 @@ namespace Game.LDialog
             SetParametres(dialog);
             dialogInputField.SetParametres(dialog);
             textDialog.text = dialog.textDialog;
+            isDialogRun = true;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
         }
@@ -113,6 +126,12 @@ namespace Game.LDialog
                 imageClickButtonForSkip.gameObject.SetActive(false);
 
             dialogInputField.gameObject.SetActive(dialog.isActiveInputField);
+        }
+
+
+        public bool IsDialogRun()
+        {
+            return isDialogRun;
         }
     }
 }

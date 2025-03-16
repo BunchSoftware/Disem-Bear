@@ -34,6 +34,9 @@ namespace UI.PlaneTablet.Exercise
         [SerializeField] private Text headerText;
         [SerializeField] private Text descriptionText;
         [SerializeField] private Image avatar;
+        [SerializeField] private Image arrowUp;
+        [SerializeField] private Image arrowDown;
+        [SerializeField] private GameObject contentRewards;
 
         [Header("Цветовой бортик с цветами")]
         [SerializeField] private Image background;
@@ -96,10 +99,9 @@ namespace UI.PlaneTablet.Exercise
 
             for (int i = 0; i < exercise.exerciseRewards.Count; i++)
             {
-                ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, exerciseButton.transform).GetComponent<ExerciseRewardGUI>();
+                ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
                 exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
                 exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
-
                 exerciseRewardGUIs.Add(exerciseRewardGUI);
             }
 
@@ -112,6 +114,8 @@ namespace UI.PlaneTablet.Exercise
         public void ExpandExercise(bool isExpandExercise)
         {
             this.isExpandExercise = isExpandExercise;
+            arrowDown.gameObject.SetActive(isExpandExercise);
+            arrowUp.gameObject.SetActive(!isExpandExercise);
             if (description != null)
             {
                 description.gameObject.SetActive(isExpandExercise);

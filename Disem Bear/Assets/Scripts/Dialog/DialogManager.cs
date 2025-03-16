@@ -31,7 +31,6 @@ namespace Game.LDialog
 
         private string currentConditionSkip = "";
 
-        private bool isDialogRun = false;
         private bool isCanSkipDialog = false;
         private bool isDialogLast = false;
         private bool isActiveInputField = false;
@@ -100,8 +99,6 @@ namespace Game.LDialog
                     }
 
                     currentConditionSkip = "";
-
-                    isDialogRun = false;
                     //isCanSkipDialog = false;
                     isActiveInputField = false;
                 }
@@ -119,7 +116,6 @@ namespace Game.LDialog
 
                 if (dialog != null && dialog.skipDialog == true)
                 {
-                    isDialogRun = false;
                     dialogueWindow.StopTypeLine();
                     dialogueWindow.ShowFullDialog(dialog);
                     //OnFullEndDialog?.Invoke(dialog);
@@ -156,11 +152,9 @@ namespace Game.LDialog
                 isDialogLast = false;
                 isActiveInputField = dialogPoint.dialog[i].isActiveInputField;
 
-                EnterDrop(dialogPoint.dialog[i]);
                 dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueWindow.gameObject.GetComponent<RectTransform>());
-                yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
-
+                EnterDrop(dialogPoint.dialog[i]);
+                yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.ToCharArray().Length);
                 OnEndDialog?.Invoke(dialogPoint.dialog[i]);
 
                 if (dialogPoint.dialog[i].stopTheEndDialog == true)
@@ -187,8 +181,7 @@ namespace Game.LDialog
         }
 
         private void StopTypeLine()
-        {
-            isDialogRun = false;
+        {;
             if (typeLineCoroutine != null)
                 context.StopCoroutine(typeLineCoroutine);
             dialogueWindow.StopTypeLine();
@@ -266,7 +259,7 @@ namespace Game.LDialog
 
         public bool IsDialogRun()
         {
-            return isDialogRun;
+            return dialogueWindow.IsDialogRun();
         }
 
         public int GetCurrentIndexDialog()
