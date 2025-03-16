@@ -141,6 +141,19 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
             StartCoroutine(IObjectWaitBeforeClosing(timeWaitBeforeClosing));
         }
     }
+
+    public void Open()
+    {
+        OnMouseLeftClickDownObject();
+    }
+    public void Close()
+    {
+        if (isOpen && moveCamera.IsMove() == false && on)
+        {
+            OnStartObjectClose?.Invoke();
+            StartCoroutine(IObjectWaitBeforeClosing(timeWaitBeforeClosing));
+        }
+    }
 }
 [Serializable]
 public class CameraMoveToPosition

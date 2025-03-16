@@ -29,11 +29,10 @@ namespace UI
         public void Init(SoundManager soundManager)
         {
             settingsController.Init();
-
+            dialogManager.Init(this, soundManager);
             shopManager.Init();
             exerciseManager.Init();
             dialogChat.Init(this);
-            dialogManager.Init(this, soundManager);
 
             Debug.Log("UIGameRoot: Успешно иницилизирован");
         }

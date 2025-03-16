@@ -15,7 +15,6 @@ namespace UI.PlaneTablet.Shop
         [SerializeField] private Text countProductText;
         [SerializeField] private Image avatarReward;
         [SerializeField] private Image avatarPrice;
-        [SerializeField] private Image background;
         private Product product;
         private Action ActionRemove;
 
