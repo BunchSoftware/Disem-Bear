@@ -16,6 +16,8 @@ namespace Game.Environment.LPostTube
 
     public class PostTube : MonoBehaviour
     {
+        [SerializeField] private PostBox postBox;
+        
         [SerializeField] private Transform startPointObject;
         [SerializeField] private Transform downPointObject;
         [SerializeField] private ParticleSystem particleSystem;
@@ -28,6 +30,7 @@ namespace Game.Environment.LPostTube
 
         public void ObjectFall(GameObject prefab)
         {
+            
             GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
 
             Collider colliderCurrentFallObject;
