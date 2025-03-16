@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
+public class PutSeal : MonoBehaviour, IPointerDownHandler
+{
+    [SerializeField] private GameObject Medved;
+    [SerializeField] private GameObject Fader;
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Medved.SetActive(true);
+        StartCoroutine(NextScene());
+    }
+    IEnumerator NextScene()
+    {
+        yield return new WaitForSeconds(1f);
+        Fader.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(3);
+    }
+}
