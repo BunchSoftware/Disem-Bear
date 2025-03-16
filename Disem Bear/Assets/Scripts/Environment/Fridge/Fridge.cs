@@ -31,12 +31,14 @@ namespace Game.Environment.Fridge
         private OpenObject openObject;
         private ScaleChooseObject scaleChooseObject;
         private TriggerObject triggerObject;
-
+        private Bounds dragBounds;
 
         public void Init(Player player, PlayerMouseMove playerMouseMove)
         {
             this.player = player;
             this.playerMouseMove = playerMouseMove;
+
+            dragBounds = content.GetComponent<Collider>().bounds;
 
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
@@ -47,7 +49,7 @@ namespace Game.Environment.Fridge
                 for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.magnets.Count; i++)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-                    magnet.name = $"Magnet {content.transform.childCount + 1}";
+                    magnet.name = $"Magnet {content.transform.childCount - 1}";
                     for (int j = 0; j < fileMagnets.magnets.Count; j++)
                     {
                         if (SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
@@ -60,7 +62,7 @@ namespace Game.Environment.Fridge
                                 typeMagnet = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet,
                                 iconMagnet = fileMagnets.magnets[j].iconMagnet,
                             };
-                            magnet.Init(this, magnetInfo);
+                            magnet.Init(this, magnetInfo, dragBounds);
                             break;
                         }
                     }
@@ -120,15 +122,22 @@ namespace Game.Environment.Fridge
                 if (fileMagnets.magnets[i].typeMagnet == typeMagnet)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
-                    magnet.name = $"Magnet {content.transform.childCount+1}";
+                    magnet.name = $"Magnet {content.transform.childCount - 1}";
+
                     MagnetInfo magnetInfo = new MagnetInfo();
                     magnetInfo.iconMagnet = fileMagnets.magnets[i].iconMagnet;
                     magnetInfo.typeMagnet = fileMagnets.magnets[i].typeMagnet;
-                    magnetInfo.x = 0;
-                    magnetInfo.y = 0;
-                    magnetInfo.z = 0;
 
-                    magnet.Init(this, magnetInfo);
+                    Bounds boundsMagnet = magnet.GetComponent<Collider>().bounds;
+
+                    float y = Random.Range(dragBounds.min.y, dragBounds.max.y);
+                    float z = 0;
+
+                    magnetInfo.x = 0;
+                    magnetInfo.y = y;
+                    magnetInfo.z = z;
+
+                    magnet.Init(this, magnetInfo, dragBounds);
                     magnets.Add(magnet);
 
                     MagnetData magnetSave = new MagnetData();

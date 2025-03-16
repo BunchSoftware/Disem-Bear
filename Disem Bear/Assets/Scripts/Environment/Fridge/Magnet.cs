@@ -25,13 +25,13 @@ namespace Game.Environment.Fridge
 
         private Fridge fridge;
 
-        public void Init(Fridge fridge, MagnetInfo magnetInfo)
+        public void Init(Fridge fridge, MagnetInfo magnetInfo, Bounds dragBounds)
         {
            this.magnetInfo = magnetInfo;
            this.fridge = fridge;
+           this.dragBounds = dragBounds;
 
            contentColider = transform.parent.GetComponent<Collider>();
-           dragBounds = contentColider.bounds;
 
            magnetCollider = transform.GetComponent<Collider>();
            magnetBounds = magnetCollider.bounds;

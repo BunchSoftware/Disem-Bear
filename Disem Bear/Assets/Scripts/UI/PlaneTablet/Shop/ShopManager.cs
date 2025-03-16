@@ -34,14 +34,13 @@ namespace UI.PlaneTablet.Shop
             {
                 for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
-                    prefab.name = $"Product {i}";
-                    ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
-                    productsGUI.Add(productGUI);
-
                     Product product = FindProductToFileProducts(SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward);
-                    if(product != null)
+                    product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
+                    if (product != null && product.reward.countReward != 0)
                     {
-                        product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
+                        prefab.name = $"Product {i}";
+                        ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
+                        productsGUI.Add(productGUI);
                         products.Add(product);
                     }
                 }
@@ -56,9 +55,6 @@ namespace UI.PlaneTablet.Shop
                     if (Buy(product) && product.reward.countReward - 1 >= 0)
                     {
                         product.reward.countReward--;
-                        SaveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].typeReward = product.reward.typeReward;
-                        SaveManager.fileShop.JSONShop.resources.productSaves[product.indexProduct].countReward = product.reward.countReward;
-
                         productGUI.UpdateData(product);
                     }
                 },
@@ -111,20 +107,17 @@ namespace UI.PlaneTablet.Shop
         {
             if (SaveManager.fileShop.JSONShop.resources.productSaves != null)
             {
-                Debug.Log(52);
                 for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
-                    Debug.Log(52);
                     if (SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward == product.reward.typeReward)
                     {
-                        Debug.Log(52);
                         for (int j = 0; j < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; j++)
                         {
-                            Debug.Log(52);
                             if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].typeIngradient == product.typePriceProduct &&
                                SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].countIngradient - product.price >= 0)
                             {
                                 SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].countIngradient -= product.price;
+                                SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward -= 1;
                                 GiveProduct(product);
                                 OnBuyProduct?.Invoke(product);
 
