@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UI.PlaneTablet.Shop;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class ResourceManager
@@ -15,6 +16,10 @@ public class ResourceManager
 
     public void Init()
     {
+        float width = content.GetComponent<RectTransform>().rect.width;
+        Vector2 contentSize = new Vector2((width - content.GetComponent<GridLayoutGroup>().spacing.x * content.GetComponent<GridLayoutGroup>().constraintCount) / content.GetComponent<GridLayoutGroup>().constraintCount, content.GetComponent<GridLayoutGroup>().cellSize.y);
+        content.GetComponent<GridLayoutGroup>().cellSize = contentSize;
+
         if (SaveManager.filePlayer.JSONPlayer.resources.ingradients != null)
         {
             for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; i++)
