@@ -30,7 +30,7 @@ namespace UI
         {
             settingsController.Init();
             dialogManager.Init(this, soundManager);
-            shopManager.Init();
+            shopManager.Init(this);
             exerciseManager.Init();
             dialogChat.Init(this);
 

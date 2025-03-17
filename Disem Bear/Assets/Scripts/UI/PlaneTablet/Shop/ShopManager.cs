@@ -3,6 +3,7 @@ using Game.Environment.Item;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -23,11 +24,13 @@ namespace UI.PlaneTablet.Shop
         [SerializeField] private GameObject content;
         [SerializeField] private FileProducts fileProducts;
         [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
-        private List<ProductGUI> productsGUI = new List<ProductGUI>();
+        private MonoBehaviour context;
+        private List<ProductGUI> productsGUIs = new List<ProductGUI>();
         public Action<Product> OnBuyProduct;
 
-        public void Init()
+        public void Init(MonoBehaviour context)
         {
+            this.context = context;
             List<Product> products = new List<Product>();
 
             if(SaveManager.fileShop.JSONShop.resources.productSaves != null)
@@ -36,19 +39,20 @@ namespace UI.PlaneTablet.Shop
                 {
                     Product product = FindProductToFileProducts(SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward);
                     product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
+                    product.isVisible = SaveManager.fileShop.JSONShop.resources.productSaves[i].isVisible;
                     if (product != null && product.reward.countReward != 0)
                     {
                         prefab.name = $"Product {i}";
                         ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
-                        productsGUI.Add(productGUI);
+                        productsGUIs.Add(productGUI);
                         products.Add(product);
                     }
                 }
             }
 
-            for (int i = 0; i < productsGUI.Count; i++)
+            for (int i = 0; i < productsGUIs.Count; i++)
             {
-                ProductGUI productGUI = productsGUI[i];
+                ProductGUI productGUI = productsGUIs[i];
                 productGUI.Init(
                 (product) =>
                 {
@@ -79,23 +83,23 @@ namespace UI.PlaneTablet.Shop
 
         private void Sort()
         {
-            for (int j = 0; j < productsGUI.Count; j++)
+            for (int j = 0; j < productsGUIs.Count; j++)
             {
-                if (productsGUI[j].GetProduct().reward.countReward == -1)
+                if (productsGUIs[j].GetProduct().reward.countReward == -1)
                 {
                     content.transform.GetChild(j).SetAsFirstSibling();
                 }
             }
 
-            for (var i = 1; i < productsGUI.Count; i++)
+            for (var i = 1; i < productsGUIs.Count; i++)
             {
-                for (var j = 0; j < productsGUI.Count - i; j++)
+                for (var j = 0; j < productsGUIs.Count - i; j++)
                 {
-                    if (productsGUI[j].GetProduct().reward.countReward != -1)
+                    if (productsGUIs[j].GetProduct().reward.countReward != -1)
                     {
-                        var temp = productsGUI[j];
-                        productsGUI[j] = productsGUI[j + 1];
-                        productsGUI[j + 1] = temp;
+                        var temp = productsGUIs[j];
+                        productsGUIs[j] = productsGUIs[j + 1];
+                        productsGUIs[j + 1] = temp;
                     }
                 }
             }
@@ -145,9 +149,57 @@ namespace UI.PlaneTablet.Shop
             }
         }
 
+        public void SetVisibleProduct(string typeReward,  bool isVisible)
+        {
+            for (int i = 0; i < productsGUIs.Count; i++)
+            {
+                Product product = productsGUIs[i].GetProduct();
+                if (product.reward.typeReward == typeReward)
+                {
+                    product.isVisible = isVisible;
+                    productsGUIs[i].UpdateData(product);
+
+                    for (int j = 0; j < SaveManager.fileShop.JSONShop.resources.productSaves.Count; j++)
+                    {
+                        if (SaveManager.fileShop.JSONShop.resources.productSaves[j].typeReward == typeReward)
+                            SaveManager.fileShop.JSONShop.resources.productSaves[j].isVisible = isVisible;
+                    }
+
+                    return;
+                }    
+            }
+        }
+
+        public void SetVisibleProductInDuration(string typeReward, bool isVisible)
+        {
+            for (int i = 0; i < productsGUIs.Count; i++)
+            {
+                Product product = productsGUIs[i].GetProduct();
+                if (product.reward.typeReward == typeReward)
+                {
+                    context.StartCoroutine(IVisibleProductTime(productsGUIs[i], product.durationOfAppearance, isVisible));
+                    return;
+                }
+            }
+        }
+
+        IEnumerator IVisibleProductTime(ProductGUI productGUI, float time, bool isVisible)
+        {
+            yield return new WaitForSeconds(time);
+            Product product = productGUI.GetProduct();
+            product.isVisible = isVisible;
+            productGUI.UpdateData(product);
+
+            for (int j = 0; j < SaveManager.fileShop.JSONShop.resources.productSaves.Count; j++)
+            {
+                if (SaveManager.fileShop.JSONShop.resources.productSaves[j].typeReward == product.reward.typeReward)
+                    SaveManager.fileShop.JSONShop.resources.productSaves[j].isVisible = isVisible;
+            }
+        }
+
         private void Remove(ProductGUI productGUI)
         {
-            productsGUI.Remove(productGUI);
+            productsGUIs.Remove(productGUI);
             GameObject.Destroy(productGUI.gameObject);
             Sort();
         }

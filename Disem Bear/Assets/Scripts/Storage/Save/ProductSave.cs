@@ -11,5 +11,6 @@ namespace External.Storage
     {
         public string typeReward;
         public int countReward;
+        public bool isVisible = true;
     }
 }

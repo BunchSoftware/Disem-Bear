@@ -24,13 +24,14 @@ namespace Game.Environment.Fridge
         private MagnetInfo magnetInfo;
 
         private Fridge fridge;
+        private int indexMagnet = 0;
 
-        public void Init(Fridge fridge, MagnetInfo magnetInfo, Bounds dragBounds)
+        public void Init(Fridge fridge, int indexMagnet, MagnetInfo magnetInfo, Bounds dragBounds)
         {
            this.magnetInfo = magnetInfo;
            this.fridge = fridge;
            this.dragBounds = dragBounds;
-
+           this.indexMagnet = indexMagnet;
            contentColider = transform.parent.GetComponent<Collider>();
 
            magnetCollider = transform.GetComponent<Collider>();
@@ -49,6 +50,7 @@ namespace Game.Environment.Fridge
             {
                 isDrag = true;
                 OnDragMagnet?.Invoke();
+                fridge.SortOrderMagnets(indexMagnet);
             }
         }
 
@@ -70,6 +72,7 @@ namespace Game.Environment.Fridge
 
 
                 transform.position = position;
+                transform.localPosition = new Vector3(0, transform.localPosition.y, transform.localPosition.z);
 
                 MagnetData magnetSave = new MagnetData();
                 magnetSave.typeMagnet = magnetInfo.typeMagnet;

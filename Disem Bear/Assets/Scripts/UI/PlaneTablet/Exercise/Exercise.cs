@@ -13,6 +13,7 @@ namespace UI.PlaneTablet.Exercise
 
         public List<Reward> exerciseRewards;
         public string header;
+        public bool isVisibleButtonRunExercise = true;
         [TextArea(10, 100)]
         public string description;
         public Sprite avatar;

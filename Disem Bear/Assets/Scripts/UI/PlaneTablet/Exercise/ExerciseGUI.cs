@@ -54,6 +54,7 @@ namespace UI.PlaneTablet.Exercise
 
         public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
         {
+            this.exercise = exercise;
             this.indexExercise = indexExercise;
 
             SetExerciseCompletion(SaveManager.filePlayer.JSONPlayer.resources.exercises[this.indexExercise].typeOfExerciseCompletion);
@@ -75,6 +76,8 @@ namespace UI.PlaneTablet.Exercise
                 else
                     ExpandExercise(true);
             });
+
+            runButton.gameObject.SetActive(exercise.isVisibleButtonRunExercise);
 
             runButton.onClick.RemoveAllListeners();
 
@@ -134,27 +137,36 @@ namespace UI.PlaneTablet.Exercise
                 case TypeOfExerciseCompletion.NotDone:
                     {
                         background.color = colorNotDoneExerciseBackground;
-                        runButton.gameObject.SetActive(true);
-                        doneButton.gameObject.SetActive(false);
-                        executionButton.gameObject.SetActive(false);
+                        if (exercise.isVisibleButtonRunExercise)
+                        {
+                            runButton.gameObject.SetActive(true);
+                            doneButton.gameObject.SetActive(false);
+                            executionButton.gameObject.SetActive(false);
+                        }
                         checkMark.gameObject.SetActive(false);
                         break;
                     }
                 case TypeOfExerciseCompletion.Run:
                     {
                         background.color = colorRunExerciseBackground;
-                        runButton.gameObject.SetActive(false);
-                        doneButton.gameObject.SetActive(false);
-                        executionButton.gameObject.SetActive(true);
+                        if (exercise.isVisibleButtonRunExercise)
+                        {
+                            runButton.gameObject.SetActive(false);
+                            doneButton.gameObject.SetActive(false);
+                            executionButton.gameObject.SetActive(true);
+                        }
                         checkMark.gameObject.SetActive(false);
                         break;
                     }
                 case TypeOfExerciseCompletion.Done:
                     {
                         background.color = colorDoneExerciseBackground;
-                        runButton.gameObject.SetActive(false);
-                        doneButton.gameObject.SetActive(true);
-                        executionButton.gameObject.SetActive(false);
+                        if (exercise.isVisibleButtonRunExercise)
+                        {
+                            runButton.gameObject.SetActive(false);
+                            doneButton.gameObject.SetActive(true);
+                            executionButton.gameObject.SetActive(false);
+                        }
                         checkMark.gameObject.SetActive(true);
                         break;
                     }

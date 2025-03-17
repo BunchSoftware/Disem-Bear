@@ -8,8 +8,9 @@ namespace UI.PlaneTablet.Shop
     [Serializable]
     public class Product
     {
-        [HideInInspector] public int indexProduct;
         public string header;
+        public float durationOfAppearance = -1;
+        [HideInInspector] public bool isVisible = true;
         public Reward reward;
         [Header("PriceProduct")]
         public string typePriceProduct;

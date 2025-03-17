@@ -2,6 +2,7 @@ using External.Storage;
 using Game.LPlayer;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UI.PlaneTablet;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -39,7 +40,8 @@ namespace Game.Environment.Fridge
             this.playerMouseMove = playerMouseMove;
 
             dragBounds = content.GetComponent<Collider>().bounds;
-
+            print(dragBounds.max.y);
+            print(dragBounds.min.y);
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
@@ -62,7 +64,7 @@ namespace Game.Environment.Fridge
                                 typeMagnet = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet,
                                 iconMagnet = fileMagnets.magnets[j].iconMagnet,
                             };
-                            magnet.Init(this, magnetInfo, dragBounds);
+                            magnet.Init(this, i, magnetInfo, dragBounds);
                             break;
                         }
                     }
@@ -128,16 +130,19 @@ namespace Game.Environment.Fridge
                     magnetInfo.iconMagnet = fileMagnets.magnets[i].iconMagnet;
                     magnetInfo.typeMagnet = fileMagnets.magnets[i].typeMagnet;
 
-                    Bounds boundsMagnet = magnet.GetComponent<Collider>().bounds;
+                    Bounds magnetBounds = magnet.GetComponent<Collider>().bounds;
 
-                    float y = Random.Range(dragBounds.min.y, dragBounds.max.y);
-                    float z = 0;
+                    float x = Random.Range(dragBounds.min.x + magnetBounds.size.x / 2, dragBounds.max.x - magnetBounds.size.x / 2);
+                    float y = Random.Range(dragBounds.min.y + magnetBounds.size.y / 2, dragBounds.max.y - magnetBounds.size.y / 2);
+                    float z = Random.Range(dragBounds.min.z + magnetBounds.size.z / 2, dragBounds.max.z - magnetBounds.size.z / 2);
+
+                    Vector3 position = content.transform.InverseTransformPoint(new Vector3(x, y, z));
 
                     magnetInfo.x = 0;
-                    magnetInfo.y = y;
-                    magnetInfo.z = z;
+                    magnetInfo.y = position.y;
+                    magnetInfo.z = position.z;
 
-                    magnet.Init(this, magnetInfo, dragBounds);
+                    magnet.Init(this, magnets.Count, magnetInfo, dragBounds);
                     magnets.Add(magnet);
 
                     MagnetData magnetSave = new MagnetData();
@@ -152,6 +157,15 @@ namespace Game.Environment.Fridge
                     return;
                 }
             }
+        }
+        
+        public void SortOrderMagnets(int indexMagnet)
+        {
+            for (int i = 0; i < magnets.Count; i++)
+            {
+               magnets[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+            }
+            magnets[indexMagnet].GetComponent<SpriteRenderer>().sortingOrder = 1;
         }
 
         public void CreateMagnet(Reward reward)

@@ -20,6 +20,7 @@ namespace UI.PlaneTablet.Shop
 
         public void Init(Action<Product> ActionBuy, Action ActionRemove, Product product)
         {
+            this.product = product;
             UpdateData(product);
 
             buyButton.onClick.RemoveAllListeners();
@@ -47,6 +48,8 @@ namespace UI.PlaneTablet.Shop
                     return;
                 }
             }
+
+            gameObject.SetActive(product.isVisible);
 
             countProductText.text = $"{product.reward.countReward}x";
             priceText.gameObject.SetActive(true);
