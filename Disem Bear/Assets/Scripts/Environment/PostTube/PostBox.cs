@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Game.Environment;
 using Game.Environment.Item;
 using Game.LPlayer;
+using UI;
 using UI.PlaneTablet.Exercise;
 using UnityEngine;
 
 public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 {
+    [SerializeField] private TV TV;
     [SerializeField] private TriggerObject triggerObject;
     [SerializeField] private Transform startPointObject;
     [SerializeField] private float timeBoxFallDown = 0.3f;
@@ -17,6 +19,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private Player player;
     private ExerciseManager exerciseManager;
     private MovePointToPoint movePointToPoint;
+    private ToastManager toastManager;
 
     private bool itemInBox = false;
     private PickUpItem pickUpItemInBox;
@@ -27,9 +30,17 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private bool isClick = false;
 
 
-    public void Init(Player player, ExerciseManager exerciseManager)
+    public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager)
     {
+        TV.OnTVClose.AddListener(() =>
+        {
+            if (itemInBox)
+            {
+                CheckItemInBox(pickUpItemInBox);
+            }
+        });
         movePointToPoint = GetComponent<MovePointToPoint>();
+        this.toastManager = toastManager;
         this.player = player;
         this.exerciseManager = exerciseManager;
         exerciseManager.PlayerGetExercise.AddListener((exercise) =>
@@ -66,14 +77,20 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         pickUpItemInBox.transform.parent = transform;
         pickUpItemInBox.transform.position = transform.position;
 
+        CheckItemInBox(pickUpItem);
+    }
+
+    private void CheckItemInBox(PickUpItem pickUpItem)
+    {
         for (int i = 0; i < nameRequirements.Count; i++)
         {
             if (pickUpItem.NameItem == nameRequirements[i])
             {
                 //отправить имя полученного ингредиента ExerciseManager
+                toastManager.ShowToast($"Отправлен объект: {nameRequirements[i]}");
                 nameRequirements.Remove(nameRequirements[i]);
                 StartCoroutine(WaitObjectFallDown(timeLukeOpen));
-                
+
                 if (nameRequirements.Count == 0)
                 {
                     exerciseManager.DoneCurrentExercise(conditionExercise);
