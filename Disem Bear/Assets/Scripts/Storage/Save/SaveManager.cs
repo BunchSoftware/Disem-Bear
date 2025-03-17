@@ -51,6 +51,9 @@ namespace External.Storage
             }
         }
 
+        public static Action OnUpdateShopFile;
+        public static Action OnUpdatePlayerFile;
+
         private static string pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
         private static string pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
 
@@ -222,6 +225,8 @@ namespace External.Storage
 
                     apiManager.CreateLogShop(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
                     SaveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+
+                    OnUpdateShopFile?.Invoke();
                 }
             });
         }
@@ -256,6 +261,8 @@ namespace External.Storage
 
                     apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
                     SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+
+                    OnUpdatePlayerFile?.Invoke();
                 }
             });
         }
