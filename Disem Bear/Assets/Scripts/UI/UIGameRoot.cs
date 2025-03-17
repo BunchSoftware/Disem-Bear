@@ -22,17 +22,19 @@ namespace UI
         [SerializeField] private DialogChat dialogChat;
         [SerializeField] private ShopManager shopManager;
         [SerializeField] private ExerciseManager exerciseManager;
+        [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private SettingsController settingsController;
 
         private bool isActivePause = false;
 
-        public void Init(SoundManager soundManager)
+        public void Init(SoundManager soundManager, ToastManager toastManager)
         {
             settingsController.Init();
             dialogManager.Init(this, soundManager);
-            shopManager.Init(this);
+            shopManager.Init(this, toastManager);
             exerciseManager.Init();
             dialogChat.Init(this);
+            resourceManager.Init();
 
             Debug.Log("UIGameRoot: Успешно иницилизирован");
         }

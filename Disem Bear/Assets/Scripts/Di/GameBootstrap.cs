@@ -116,7 +116,7 @@ namespace External.DI
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);
 
             updateListeners.Add(uiGameRoot);
-            uiGameRoot.Init(soundManager);
+            uiGameRoot.Init(soundManager, toastManager);
 
             playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
             playerMouseMove.OnMove += playerChangeImage.Update;

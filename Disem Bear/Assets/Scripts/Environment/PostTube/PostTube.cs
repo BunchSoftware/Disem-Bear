@@ -30,6 +30,7 @@ namespace Game.Environment.LPostTube
         [SerializeField] private List<PostTubeObject> postTubeObjects;
         public UnityEvent<PostTubeObject> OnGetPostTubeObject;
 
+        private bool itemFlies = false;
 
         public void Init(Player player)
         {
@@ -48,6 +49,8 @@ namespace Game.Environment.LPostTube
                 {
                     downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + colliderCurrentFallObject.bounds.size.y / 2, downPointObject.position.z);
                 }
+
+                itemFlies = true;
 
                 StartCoroutine(PostBoxGetPackage(timeFall, currentFallObject.GetComponent<PickUpItem>()));
                 MovePointToPoint movePointToPoint;
@@ -79,6 +82,7 @@ namespace Game.Environment.LPostTube
             {
                 if (postTubeObjects[i].typeObject == typeObject)
                 {
+                    Debug.Log(typeObject);
                     ObjectFall(postTubeObjects[i].prefabObject);
                     OnGetPostTubeObject?.Invoke(postTubeObjects[i]);
 
@@ -108,6 +112,12 @@ namespace Game.Environment.LPostTube
         {
             yield return new WaitForSeconds(t);
             postBox.PutItemInBox(pickUpItem);
+            itemFlies = false;
+        }
+
+        public bool IsItemFlies()
+        {
+            return itemFlies;
         }
 
         private void OnTriggerEnter(Collider other)

@@ -19,9 +19,9 @@ namespace UI
 
         private SoundManager soundManager;
 
-        public void Init(SoundManager sm)
+        public void Init(SoundManager soundManager)
         {
-            soundManager = sm;
+            this.soundManager = soundManager;
         }
 
         public void ShowToast(string message)   

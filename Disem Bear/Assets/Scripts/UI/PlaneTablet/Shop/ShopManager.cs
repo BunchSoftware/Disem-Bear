@@ -1,5 +1,6 @@
 using External.Storage;
 using Game.Environment.Item;
+using Game.Environment.LPostTube;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,14 +23,19 @@ namespace UI.PlaneTablet.Shop
     {
         [SerializeField] private GameObject prefab;
         [SerializeField] private GameObject content;
+        [SerializeField] private PostBox postBox;
+        [SerializeField] private PostTube postTube;
         [SerializeField] private FileProducts fileProducts;
         [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
+
+        private ToastManager toastManager;
         private MonoBehaviour context;
         private List<ProductGUI> productsGUIs = new List<ProductGUI>();
         public Action<Product> OnBuyProduct;
 
-        public void Init(MonoBehaviour context)
+        public void Init(MonoBehaviour context, ToastManager toastManager)
         {
+            this.toastManager = toastManager;
             this.context = context;
             List<Product> products = new List<Product>();
 
@@ -38,14 +44,18 @@ namespace UI.PlaneTablet.Shop
                 for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
                     Product product = FindProductToFileProducts(SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward);
-                    product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
-                    product.isVisible = SaveManager.fileShop.JSONShop.resources.productSaves[i].isVisible;
-                    if (product != null && product.reward.countReward != 0)
+                    if (product != null)
                     {
-                        prefab.name = $"Product {i}";
-                        ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
-                        productsGUIs.Add(productGUI);
-                        products.Add(product);
+                        product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
+                        product.isVisible = SaveManager.fileShop.JSONShop.resources.productSaves[i].isVisible;
+
+                        if(product.reward.countReward != 0)
+                        {
+                            prefab.name = $"Product {i}";
+                            ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
+                            productsGUIs.Add(productGUI);
+                            products.Add(product);
+                        }
                     }
                 }
             }
@@ -56,10 +66,23 @@ namespace UI.PlaneTablet.Shop
                 productGUI.Init(
                 (product) =>
                 {
-                    if (Buy(product) && product.reward.countReward - 1 >= 0)
+                    if (postBox.ItemInbox() == false && postTube.IsItemFlies() == false)
                     {
-                        product.reward.countReward--;
-                        productGUI.UpdateData(product);
+                        if (Buy(product))
+                        {
+                            if (product.reward.countReward != -1)
+                                product.reward.countReward--;
+                            productGUI.UpdateData(product);
+                            toastManager.ShowToast("Товар был куплен, посмотрите в доставке");
+                        }
+                        else
+                        {
+                            toastManager.ShowToast("Недостаточно средств для обмена !");
+                        }
+                    }
+                    else
+                    {
+                        toastManager.ShowToast("Доставка занята другим предметом, заберите его, а потом закажите новый");
                     }
                 },
                 () =>
@@ -143,6 +166,7 @@ namespace UI.PlaneTablet.Shop
                 {
                     if (typeGiveProducts[i].typeMachineDispensingProduct == product.reward.typeMachineDispensingReward)
                     {
+                        Debug.Log(product.reward.typeReward);
                         typeGiveProducts[i].OnGetReward?.Invoke(product.reward);
                     }
                 }

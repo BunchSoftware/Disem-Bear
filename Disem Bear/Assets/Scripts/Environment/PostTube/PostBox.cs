@@ -43,9 +43,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         pickUpItemInBox = pickUpItem;
         itemInBox = true;
         pickUpItemInBox.transform.parent = transform;
-        pickUpItemInBox.transform.position = transform.position;
-        
-        
+        pickUpItemInBox.transform.position = transform.position;             
     }
 
     public PickUpItem PickUpItemInBox()
