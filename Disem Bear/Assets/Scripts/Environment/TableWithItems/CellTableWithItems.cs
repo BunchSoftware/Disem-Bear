@@ -83,8 +83,12 @@ namespace Game.Environment.LTableWithItems
 
                     if (player.PlayerPickUpItem == false)
                     {
-                        player.PickUpItem(PickUpItem());
+                        player.PickUpItem(PickUpItemInCell());
                         Debug.Log("Я поднял предмет из Table");
+                    }
+                    else
+                    {
+                        ChangeItems(player.GetPickUpItem(), currentItemInCell);
                     }
                 }
             });
@@ -100,8 +104,38 @@ namespace Game.Environment.LTableWithItems
             isClick = false;
         }
 
+        public void ChangeItems(PickUpItem playerItem, PickUpItem cellItem)
+        {
+            PickUpItem tempItemInCell = cellItem;
+            currentItemInCell = playerItem;
+            OnPutItem?.Invoke(currentItemInCell);
+            currentItemInCell.transform.parent = transform;
+            currentItemInCell.transform.position =
+                new Vector3(transform.position.x, transform.position.y + currentItemInCell.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);
+            if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
+            {
+                ScaleChooseObject scaleChooseObject = currentItemInCell.AddComponent<ScaleChooseObject>();
+                scaleChooseObject.coefficient = 1.15f;
+            }
+            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+            {
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                {
+                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                        && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
+                    {
+                        SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = currentItemInCell.NameItem;
+                    }
+                }
+            }
+            OnPickUpItem?.Invoke(tempItemInCell);
+            player.PutItem();
+            player.PickUpItem(tempItemInCell);
+            Debug.Log("Я поменял объекты местами!");
+        }
 
-        public PickUpItem PickUpItem()
+
+        public PickUpItem PickUpItemInCell()
         {
             boxCollider.enabled = true;
             PickUpItem item = null;
@@ -130,11 +164,12 @@ namespace Game.Environment.LTableWithItems
         {
             if (currentItemInCell == null)
             {
-                OnPutItem?.Invoke(currentItemInCell);
+                
 
                 pickUpItem.CanTakeByCollisionPlayer = false;
                 boxCollider.enabled = false;
                 currentItemInCell = pickUpItem;
+                OnPutItem?.Invoke(currentItemInCell);
                 currentItemInCell.transform.parent = transform;
                 currentItemInCell.transform.position = 
                     new Vector3(transform.position.x, transform.position.y + currentItemInCell.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);

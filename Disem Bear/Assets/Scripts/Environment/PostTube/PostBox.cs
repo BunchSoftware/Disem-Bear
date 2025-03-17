@@ -57,7 +57,14 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
             if (isClick)
             {
                 isClick = false;
-                if (this.player.PlayerPickUpItem && itemInBox == false)
+                if (this.player.PlayerPickUpItem && itemInBox)
+                {
+                    PickUpItem playerPickUpItem = player.GetPickUpItem();
+                    player.PutItem();
+                    player.PickUpItem(PickUpItemInBox());
+                    PutItemInBox(playerPickUpItem);
+                }
+                else if (this.player.PlayerPickUpItem && itemInBox == false)
                 {
                     PutItemInBox(player.GetPickUpItem());
                     player.PutItem();
@@ -120,7 +127,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         return pickUpItemInBox;
     }
 
-    public bool ItemInbox()
+    public bool ItemInBox()
     {
         return itemInBox;
     }

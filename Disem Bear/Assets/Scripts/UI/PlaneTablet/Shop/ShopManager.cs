@@ -66,7 +66,7 @@ namespace UI.PlaneTablet.Shop
                 productGUI.Init(
                 (product) =>
                 {
-                    if (postBox.ItemInbox() == false && postTube.IsItemFlies() == false)
+                    if (postBox.ItemInBox() == false && postTube.IsItemFlies() == false)
                     {
                         if (Buy(product))
                         {
