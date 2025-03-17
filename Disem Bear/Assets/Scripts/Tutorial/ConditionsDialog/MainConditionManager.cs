@@ -12,6 +12,7 @@ public class MainConditionManager : MonoBehaviour
     [SerializeField] private UIGameRoot uIGameRoot;
     [SerializeField] private Aquarium aquarium;
     [SerializeField] private Workbench workbench;
+    [SerializeField] private TV TV;
     private ExerciseManager exerciseManager;
     private CheckTakeExercise takeExerciseConditions;
     private CheckGetAquariumCells getAquariumCellsConditions;
@@ -29,7 +30,7 @@ public class MainConditionManager : MonoBehaviour
         getAquariumCellsConditions = GetComponent<CheckGetAquariumCells>();
         craftSomethingConditions = GetComponent<CheckCraftSomething>();
 
-        takeExerciseConditions.Init(dialogManager, exerciseManager);
+        takeExerciseConditions.Init(dialogManager, exerciseManager, TV);
         getAquariumCellsConditions.Init(dialogManager, aquarium);
         craftSomethingConditions.Init(dialogManager, workbench);
     }

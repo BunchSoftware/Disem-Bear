@@ -13,6 +13,7 @@ public class TV : MonoBehaviour, IUpdateListener
     public UnityEvent OnTVOpen;
     public UnityEvent OnTVClose;
 
+
     private OpenObject openObject;
 
     public void Init(PlayerMouseMove playerMouseMove, Player player)

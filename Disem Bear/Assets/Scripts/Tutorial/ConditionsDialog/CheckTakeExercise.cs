@@ -12,8 +12,17 @@ public class CheckTakeExercise : MonoBehaviour
 
     private DialogManager dialogManager;
     private ExerciseManager exerciseManager;
-    public void Init(DialogManager dialogManager, ExerciseManager exerciseManager)
+    private TV TV;
+
+    private bool orderTaken = false;
+    private bool orderStartDialog = false;
+    private string conditionOrder = "None";
+    private int indexDialogPoint = 0;
+
+    public void Init(DialogManager dialogManager, ExerciseManager exerciseManager, TV TV)
     {
+        this.TV = TV;
+        this.TV.OnTVClose.AddListener(CheckOrderOnExitTV);
         this.dialogManager = dialogManager;
         this.exerciseManager = exerciseManager;
         this.exerciseManager.PlayerGetExercise.AddListener(CheckOrder);
@@ -21,21 +30,41 @@ public class CheckTakeExercise : MonoBehaviour
 
     public void CheckOrder(Exercise exercise)
     {
-        for (int i = 0; i < conditions.Count; i++)
-        {
-            if (conditions[i].headerOrder == exercise.header)
-            {
-                dialogManager.RunConditionSkip(conditions[i].condition);
-                break;
-            }
-        }
         for (int i = 0; i < startDialogs.Count; i++)
         {
             if (startDialogs[i].headerOrder == exercise.header && !dialogManager.IsDialogRun())
             {
-                dialogManager.StartDialog(startDialogs[i].indexDialog);
+                orderTaken = true;
+                orderStartDialog = true;
+                indexDialogPoint = startDialogs[i].indexDialog;
                 startDialogs.Remove(startDialogs[i]);
+                return;
+            }
+        }
+        for (int i = 0; i < conditions.Count; i++)
+        {
+            if (conditions[i].headerOrder == exercise.header)
+            {
+                orderTaken = true;
+                orderStartDialog = false;
+                conditionOrder = conditions[i].condition;
                 break;
+            }
+        }
+    }
+
+    public void CheckOrderOnExitTV()
+    {
+        if (orderTaken)
+        {
+            orderTaken = false;
+            if (orderStartDialog)
+            {
+                dialogManager.StartDialog(indexDialogPoint);
+            }
+            else
+            {
+                dialogManager.RunConditionSkip(conditionOrder);
             }
         }
     }
