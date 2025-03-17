@@ -41,7 +41,7 @@ namespace Game.Environment.LPostTube
 
         public bool ObjectFall(GameObject prefab)
         {
-            if (postBox.ItemInbox() == false)
+            if (postBox.ItemInBox() == false)
             {
                 GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
 
