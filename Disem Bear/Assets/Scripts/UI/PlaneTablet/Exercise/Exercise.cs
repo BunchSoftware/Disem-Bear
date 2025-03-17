@@ -7,11 +7,22 @@ using UnityEngine;
 namespace UI.PlaneTablet.Exercise
 {
     [Serializable]
+    public class Requirement
+    {
+        public string nameRequirement;
+        public int countRequirement = 1;
+        public Sprite avatarRequirement;
+    }
+
+    [Serializable]
     public class Exercise
     {
         private bool isCompletedExercise = false;
 
         public List<Reward> exerciseRewards;
+        public List<Requirement> exerciseRequirements;
+
+
         public string header;
         public bool isVisibleButtonRunExercise = true;
         [TextArea(10, 100)]

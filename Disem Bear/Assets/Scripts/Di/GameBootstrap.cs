@@ -110,7 +110,7 @@ namespace External.DI
             player.Init();
 
             updateListeners.Add(environmentRoot);
-            environmentRoot.Init(player, playerMouseMove, soundManager);
+            environmentRoot.Init(player, playerMouseMove, soundManager, uiGameRoot.GetExerciseManager());
 
             updateListeners.Add(tutorialRoot);
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);

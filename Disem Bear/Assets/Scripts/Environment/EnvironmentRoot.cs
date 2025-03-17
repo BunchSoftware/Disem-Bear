@@ -11,6 +11,7 @@ using Game.LPlayer;
 using Game.Music;
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet.Exercise;
 using UnityEngine;
 
 namespace Game.Environment
@@ -37,7 +38,7 @@ namespace Game.Environment
         [Header("PostTube")]
         [SerializeField] private PostTube postTube;
 
-        public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager, ExerciseManager exerciseManager)
         {
             workbench.Init(player, playerMouseMove);
             for (int i = 0; i < nextRooms.Count; i++)
@@ -64,7 +65,7 @@ namespace Game.Environment
             }
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);
-            postTube.Init(player);
+            postTube.Init(player, exerciseManager);
 
             Debug.Log("EnvironmentRoot: Успешно иницилизирован");
         }

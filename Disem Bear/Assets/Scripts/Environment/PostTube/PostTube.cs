@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.Environment.Item;
 using Game.LPlayer;
 using UI.PlaneTablet;
+using UI.PlaneTablet.Exercise;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,9 +33,9 @@ namespace Game.Environment.LPostTube
 
         private bool itemFlies = false;
 
-        public void Init(Player player)
+        public void Init(Player player, ExerciseManager exerciseManager)
         {
-            postBox.Init(player);
+            postBox.Init(player, exerciseManager);
         }
 
         public bool ObjectFall(GameObject prefab)
