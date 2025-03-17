@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Environment.Item;
+using Game.LPlayer;
 using UI.PlaneTablet;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,34 +30,47 @@ namespace Game.Environment.LPostTube
         [SerializeField] private List<PostTubeObject> postTubeObjects;
         public UnityEvent<PostTubeObject> OnGetPostTubeObject;
 
-        public void ObjectFall(GameObject prefab)
+
+        public void Init(Player player)
         {
-            
-            GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
+            postBox.Init(player);
+        }
 
-            Collider colliderCurrentFallObject;
-            Vector3 lastDownPointPosition = downPointObject.position;
-            if (currentFallObject.TryGetComponent(out colliderCurrentFallObject))
+        public bool ObjectFall(GameObject prefab)
+        {
+            if (postBox.ItemInbox() == false)
             {
-                downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + colliderCurrentFallObject.bounds.size.y / 2, downPointObject.position.z);
-            }
+                GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
 
-            MovePointToPoint movePointToPoint;
-            if (currentFallObject.TryGetComponent(out movePointToPoint))
-            {
-                movePointToPoint.point1 = startPointObject;
-                movePointToPoint.point2 = downPointObject;
-                movePointToPoint.StartMoveTo(timeFall);
+                Collider colliderCurrentFallObject;
+                Vector3 lastDownPointPosition = downPointObject.position;
+                if (currentFallObject.TryGetComponent(out colliderCurrentFallObject))
+                {
+                    downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + colliderCurrentFallObject.bounds.size.y / 2, downPointObject.position.z);
+                }
 
-                StartCoroutine(ParticleFall(timeFall));
-                StartCoroutine(TimeReturnDownPointPos(timeFall, lastDownPointPosition));
+                StartCoroutine(PostBoxGetPackage(timeFall, currentFallObject.GetComponent<PickUpItem>()));
+                MovePointToPoint movePointToPoint;
+                if (currentFallObject.TryGetComponent(out movePointToPoint))
+                {
+                    movePointToPoint.point1 = startPointObject;
+                    movePointToPoint.point2 = downPointObject;
+                    movePointToPoint.StartMoveTo(timeFall);
+
+                    StartCoroutine(ParticleFall(timeFall));
+                    StartCoroutine(TimeReturnDownPointPos(timeFall, lastDownPointPosition));
+                }
+                else
+                {
+                    Debug.LogError("На объекте в трубе нет скрипта движения, например MovePointToPoint");
+                    downPointObject.position = lastDownPointPosition;
+                }
+                return true;
             }
             else
             {
-                Debug.LogError("На объекте в трубе нет скрипта движения, например MovePointToPoint");
-                downPointObject.position = lastDownPointPosition;
+                return false;
             }
-            
         }
 
         public void ObjectFall(string typeObject)
@@ -88,6 +103,11 @@ namespace Game.Environment.LPostTube
         {
             yield return new WaitForSeconds(t);
             downPointObject.position = lastDownPointPosition;
+        }
+        IEnumerator PostBoxGetPackage(float t, PickUpItem pickUpItem)
+        {
+            yield return new WaitForSeconds(t);
+            postBox.PutItemInBox(pickUpItem);
         }
 
         private void OnTriggerEnter(Collider other)

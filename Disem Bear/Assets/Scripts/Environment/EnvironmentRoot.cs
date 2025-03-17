@@ -5,6 +5,7 @@ using Game.Environment.Aquarium;
 using Game.Environment.Fridge;
 using Game.Environment.LMixTable;
 using Game.Environment.LModelBoard;
+using Game.Environment.LPostTube;
 using Game.Environment.LTableWithItems;
 using Game.LPlayer;
 using Game.Music;
@@ -33,6 +34,8 @@ namespace Game.Environment
         [SerializeField] private List<Fridge.Fridge> fridges;
         [Header("Printer")]
         [SerializeField] private Printer.Printer printer;
+        [Header("PostTube")]
+        [SerializeField] private PostTube postTube;
 
         public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager)
         {
@@ -61,6 +64,7 @@ namespace Game.Environment
             }
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);
+            postTube.Init(player);
 
             Debug.Log("EnvironmentRoot: Успешно иницилизирован");
         }
