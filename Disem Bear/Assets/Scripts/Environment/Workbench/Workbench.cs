@@ -192,6 +192,8 @@ namespace Game.Environment.LMixTable
                 if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient == ingradientData.typeIngradient)
                     SaveManager.filePlayer.JSONPlayer.resources.ingradients[i] = ingradientData;
             }
+
+            SaveManager.UpdatePlayerFile();
         }
 
         /// <summary>

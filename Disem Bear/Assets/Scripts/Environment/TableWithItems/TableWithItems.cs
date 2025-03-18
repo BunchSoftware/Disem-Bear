@@ -70,33 +70,23 @@ namespace Game.Environment.LTableWithItems
                     SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Add(cellsData);
                 }
 
-            for (int i = 0; i < cellTables.Count; i++)
-            {
-                cellTables[i].Init(this, player, i);
-                if (i < itemsPutInStart.Count)
-                {
-                    if (PrefabUtility.IsPartOfPrefabAsset(itemsPutInStart[i]))
-                    {
-                        itemsPutInStart[i] = Instantiate(itemsPutInStart[i]);
-                    }
-                    cellTables[i].PutItem(itemsPutInStart[i]);
-                }
-            }
+            //for (int i = 0; i < cellTables.Count; i++)
+            //{
+            //    cellTables[i].Init(this, player, i);
+            //    if (i < itemsPutInStart.Count)
+            //    {
+            //        if (PrefabUtility.IsPartOfPrefabAsset(itemsPutInStart[i]))
+            //        {
+            //            itemsPutInStart[i] = Instantiate(itemsPutInStart[i]);
+            //        }
+            //        cellTables[i].PutItem(itemsPutInStart[i]);
+            //    }
+            //}
             itemsPutInStart.Clear();
 
             
 
             Debug.Log("TableWithItems: Успешно иницилизирован");
-
-            //triggerObject.OnTriggerEnterEvent.AddListener((collider) =>
-            //{
-            //    isTrigger = true;
-            //});
-
-            //triggerObject.OnTriggerExitEvent.AddListener((collider) =>
-            //{
-            //    isTrigger = false;
-            //});
             }
         }
     }

@@ -43,15 +43,17 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         this.toastManager = toastManager;
         this.player = player;
         this.exerciseManager = exerciseManager;
+
         exerciseManager.PlayerGetExercise.AddListener((exercise) =>
         {
             nameRequirements.Clear();
             for (int i = 0; i < exercise.exerciseRequirements.Count; i++)
             {
-                nameRequirements.Add(exercise.exerciseRequirements[i].nameRequirement);
+                nameRequirements.Add(exercise.exerciseRequirements[i].typeRequirement);
             }
             conditionExercise = exercise.conditionExercise;
         });
+
         triggerObject.OnTriggerStayEvent.AddListener((collider) =>
         {
             if (isClick)

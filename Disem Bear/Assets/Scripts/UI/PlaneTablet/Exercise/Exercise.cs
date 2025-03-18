@@ -9,7 +9,7 @@ namespace UI.PlaneTablet.Exercise
     [Serializable]
     public class Requirement
     {
-        public string nameRequirement;
+        public string typeRequirement;
         public int countRequirement = 1;
         public Sprite avatarRequirement;
     }
@@ -24,10 +24,12 @@ namespace UI.PlaneTablet.Exercise
 
 
         public string header;
-        public bool isVisibleButtonRunExercise = true;
+        public bool isMail = false;
         [TextArea(10, 100)]
         public string description;
         public Sprite avatar;
+
+        [HideInInspector] public bool isVisible = true;
 
         public string conditionExercise;
 

@@ -184,6 +184,8 @@ namespace Game.Environment.LModelBoard
                     }
                 }
 
+                SaveManager.UpdatePlayerFile();
+
                 currentItemInCell = null;
                 scaleChooseObject = null;
             }
@@ -223,6 +225,8 @@ namespace Game.Environment.LModelBoard
                             if(pickUpItem.GetComponent<ScaleChooseObject>() == null)
                                 scaleChooseObject = pickUpItem.AddComponent<ScaleChooseObject>();
 
+                            SaveManager.UpdatePlayerFile();
+
                             return true;
                         }
                     case TypePickUpItem.Package:
@@ -259,6 +263,8 @@ namespace Game.Environment.LModelBoard
 
                             if (item.GetComponent<ScaleChooseObject>() == null)
                                 scaleChooseObject = item.AddComponent<ScaleChooseObject>();
+
+                            SaveManager.UpdatePlayerFile();
 
                             Destroy(pickUpItem.gameObject);
                         }

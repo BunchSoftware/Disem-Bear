@@ -60,6 +60,8 @@ namespace UI.PlaneTablet.Shop
                 }
             }
 
+            SaveManager.UpdateShopFile();
+
             for (int i = 0; i < productsGUIs.Count; i++)
             {
                 ProductGUI productGUI = productsGUIs[i];
@@ -149,6 +151,8 @@ namespace UI.PlaneTablet.Shop
                                 OnBuyProduct?.Invoke(product);
 
                                 Debug.Log($"{product.reward.typeReward} был куплен");
+                                SaveManager.UpdateShopFile();
+                                SaveManager.UpdatePlayerFile();
                                 return true;
                             }
                         }
@@ -166,7 +170,6 @@ namespace UI.PlaneTablet.Shop
                 {
                     if (typeGiveProducts[i].typeMachineDispensingProduct == product.reward.typeMachineDispensingReward)
                     {
-                        Debug.Log(product.reward.typeReward);
                         typeGiveProducts[i].OnGetReward?.Invoke(product.reward);
                     }
                 }
@@ -188,6 +191,8 @@ namespace UI.PlaneTablet.Shop
                         if (SaveManager.fileShop.JSONShop.resources.productSaves[j].typeReward == typeReward)
                             SaveManager.fileShop.JSONShop.resources.productSaves[j].isVisible = isVisible;
                     }
+
+                    SaveManager.UpdateShopFile();
 
                     return;
                 }    
@@ -219,6 +224,8 @@ namespace UI.PlaneTablet.Shop
                 if (SaveManager.fileShop.JSONShop.resources.productSaves[j].typeReward == product.reward.typeReward)
                     SaveManager.fileShop.JSONShop.resources.productSaves[j].isVisible = isVisible;
             }
+
+            SaveManager.UpdateShopFile();
         }
 
         private void Remove(ProductGUI productGUI)

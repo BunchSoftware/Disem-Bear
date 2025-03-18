@@ -57,13 +57,7 @@ namespace UI.PlaneTablet.Exercise
             this.exercise = exercise;
             this.indexExercise = indexExercise;
 
-            SetExerciseCompletion(SaveManager.filePlayer.JSONPlayer.resources.exercises[this.indexExercise].typeOfExerciseCompletion);
-            isGetPackage = SaveManager.filePlayer.JSONPlayer.resources.exercises[this.indexExercise].isGetPackage;
-
-            if (isGetPackage)
-                givePackage.interactable = false;
-            else
-                givePackage.interactable = true;
+            SetExerciseCompletion(SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion);
 
             executionButton.onClick.RemoveAllListeners();
 
@@ -76,8 +70,6 @@ namespace UI.PlaneTablet.Exercise
                 else
                     ExpandExercise(true);
             });
-
-            runButton.gameObject.SetActive(exercise.isVisibleButtonRunExercise);
 
             runButton.onClick.RemoveAllListeners();
 
@@ -94,23 +86,57 @@ namespace UI.PlaneTablet.Exercise
                 givePackage.interactable = false;
 
                 SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetPackage = true;
+                SaveManager.UpdatePlayerFile();
             });
 
-            this.exercise = exercise;
 
-            headerText.text = exercise.header;
 
-            for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+            UpdateData(exercise);
+        }
+
+        public void UpdateData(Exercise exercise)
+        {
+            gameObject.SetActive(exercise.isVisible);
+            isGetPackage = SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetPackage;
+
+            if (isGetPackage)
+                givePackage.interactable = false;
+            else
+                givePackage.interactable = true;
+
+            runButton.gameObject.SetActive(!exercise.isMail);
+            givePackage.gameObject.SetActive(!exercise.isMail);
+
+            if (exerciseRewardGUIs.Count == 0)
             {
-                ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
-                exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
-                exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
-                exerciseRewardGUIs.Add(exerciseRewardGUI);
+                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+                {
+                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
+                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
+                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
+                    exerciseRewardGUIs.Add(exerciseRewardGUI);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < exerciseRewardGUIs.Count; i++)
+                {
+                    Destroy(exerciseRewardGUIs[i].gameObject);
+                }
+                exerciseRewardGUIs.Clear();
+                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+                {
+                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
+                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
+                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
+                    exerciseRewardGUIs.Add(exerciseRewardGUI);
+                }
             }
 
+
+            headerText.text = exercise.header;
             descriptionText.text = exercise.description;
             avatar.sprite = exercise.avatar;
-            avatar.preserveAspect = true;
             avatar.preserveAspect = true;
         }
 
@@ -131,13 +157,13 @@ namespace UI.PlaneTablet.Exercise
         {
             currentExerciseCompletion = exerciseCompletion;
             SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion = exerciseCompletion;
-
+            SaveManager.UpdatePlayerFile();
             switch (exerciseCompletion)
             {
                 case TypeOfExerciseCompletion.NotDone:
                     {
                         background.color = colorNotDoneExerciseBackground;
-                        if (exercise.isVisibleButtonRunExercise)
+                        if (!exercise.isMail)
                         {
                             runButton.gameObject.SetActive(true);
                             doneButton.gameObject.SetActive(false);
@@ -149,7 +175,7 @@ namespace UI.PlaneTablet.Exercise
                 case TypeOfExerciseCompletion.Run:
                     {
                         background.color = colorRunExerciseBackground;
-                        if (exercise.isVisibleButtonRunExercise)
+                        if (!exercise.isMail)
                         {
                             runButton.gameObject.SetActive(false);
                             doneButton.gameObject.SetActive(false);
@@ -161,7 +187,7 @@ namespace UI.PlaneTablet.Exercise
                 case TypeOfExerciseCompletion.Done:
                     {
                         background.color = colorDoneExerciseBackground;
-                        if (exercise.isVisibleButtonRunExercise)
+                        if (!exercise.isMail)
                         {
                             runButton.gameObject.SetActive(false);
                             doneButton.gameObject.SetActive(true);

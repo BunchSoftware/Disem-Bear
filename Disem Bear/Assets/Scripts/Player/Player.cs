@@ -94,6 +94,8 @@ namespace Game.LPlayer
 
                typePickUpItem = pickUpItem.TypeItem;
                 OnPickUpItem?.Invoke(pickUpItem);
+
+                SaveManager.UpdatePlayerFile();
             }
         }
 
@@ -111,7 +113,7 @@ namespace Game.LPlayer
                 pickUpItem = null;
 
                 SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem = null;
-
+                SaveManager.UpdatePlayerFile();
                 typePickUpItem = TypePickUpItem.None;
             }
 

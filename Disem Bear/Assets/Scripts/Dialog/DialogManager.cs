@@ -58,6 +58,7 @@ namespace Game.LDialog
         {
             currentIndexDialogPoint = indexDialogPoint;
             SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+            SaveManager.UpdatePlayerFile();
             TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
             //if (indexDialogPoint >= currentIndexDialogPoint)
             //{
@@ -145,7 +146,7 @@ namespace Game.LDialog
 
                 currentIndexDialog = i;
                 SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
-
+                SaveManager.UpdatePlayerFile();
                 if (dialogPoint.dialog[i].isActiveInputField == false)
                     isCanSkipDialog = true;
 

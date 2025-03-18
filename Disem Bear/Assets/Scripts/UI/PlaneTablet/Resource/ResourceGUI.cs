@@ -9,11 +9,18 @@ public class ResourceGUI : MonoBehaviour
     [SerializeField] private Text headerText;
     [SerializeField] private Text countResourceText;
     [SerializeField] private Image avatar;
+    private ResourceData resourceData;
 
     public void UpdateData(ResourceData resourceData)
     {
+        this.resourceData = resourceData;
         headerText.text = resourceData.headerResource;
         countResourceText.text = resourceData.countResource.ToString() + " רע.";
         avatar.sprite = resourceData.iconResource;
+    }
+
+    public ResourceData GetResourceData()
+    {
+        return resourceData;
     }
 }

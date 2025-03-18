@@ -128,6 +128,9 @@ namespace Game.Environment.LTableWithItems
                     }
                 }
             }
+
+            SaveManager.UpdatePlayerFile();
+
             OnPickUpItem?.Invoke(tempItemInCell);
             player.PutItem();
             player.PickUpItem(tempItemInCell);
@@ -154,6 +157,8 @@ namespace Game.Environment.LTableWithItems
                     }
                 }
             }
+
+            SaveManager.UpdatePlayerFile();
 
             currentItemInCell = null;
 
@@ -191,6 +196,8 @@ namespace Game.Environment.LTableWithItems
                         }
                     }
                 }
+
+                SaveManager.UpdatePlayerFile();
 
                 return true;
             }

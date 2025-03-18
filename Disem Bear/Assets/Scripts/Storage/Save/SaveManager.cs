@@ -98,6 +98,7 @@ namespace External.Storage
             {
                 SaveManager.filePlayer.JSONPlayer = Clone(SaveManager.defaultFilePlayer.JSONPlayer);
                 SaveManager.fileShop.JSONShop = Clone(SaveManager.defaultFileShop.JSONShop);
+#if UNITY_EDITOR
                 EditorApplication.playModeStateChanged += (state) =>
                 {
                     if (state == PlayModeStateChange.ExitingPlayMode)
@@ -107,6 +108,7 @@ namespace External.Storage
                         isInitialization = false;
                     }
                 };
+#endif
                 isInitialization = true;
                 Debug.Log("SaveManager: Успешно иницилизирован");
             }
@@ -205,7 +207,7 @@ namespace External.Storage
             });
         }
 
-        private static async void UpdateShopFile()
+        public static async void UpdateShopFile()
         {
             await Task.Run(() =>
             {
@@ -231,7 +233,7 @@ namespace External.Storage
             });
         }
 
-        private static async void UpdatePlayerFile()
+        public static async void UpdatePlayerFile()
         {
             await Task.Run(() =>
             {

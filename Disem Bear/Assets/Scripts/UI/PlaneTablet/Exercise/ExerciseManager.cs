@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UI.PlaneTablet.Shop;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,7 +21,7 @@ namespace UI.PlaneTablet.Exercise
         [SerializeField] private GameObject content;
         [SerializeField] private FileExercise fileExercise;
         [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
-        private List<ExerciseGUI> exercisesGUI = new List<ExerciseGUI>();
+        private List<ExerciseGUI> exerciseGUIs = new List<ExerciseGUI>();
 
         public Action<Exercise> GetCurrentExercise;
         public Action<List<Reward>> GetExerciseRewards;
@@ -29,31 +30,23 @@ namespace UI.PlaneTablet.Exercise
 
         public void Init()
         {
-            List<Exercise> exercises = fileExercise.exercises;
-
+            List<Exercise> exercises = new List<Exercise>();
 
             if (SaveManager.filePlayer.JSONPlayer.resources.exercises != null)
             {
-                if (SaveManager.filePlayer.JSONPlayer.resources.exercises.Count == 0)
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
                 {
-                    SaveManager.filePlayer.JSONPlayer.resources.exercises = new List<ExerciseData>();
-
-                    for (int j = 0; j < exercises.Count; j++)
+                    Exercise exercise = FindExerciseToFileExercise(SaveManager.filePlayer.JSONPlayer.resources.exercises[i].indexExercise);
+                    if (exercise != null)
                     {
-                        SaveManager.filePlayer.JSONPlayer.resources.exercises.Add(new ExerciseData()
-                        {
-                            indexExercise = j,
-                            isGetPackage = false,
-                            typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone,
-                        });
+                        exercise.isVisible = SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible;
+
+                        prefab.name = $"Product {i}";
+                        ExerciseGUI exerciseGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ExerciseGUI>();
+                        exerciseGUIs.Add(exerciseGUI);
+                        exercises.Add(exercise);
                     }
                 }
-            }
-
-            for (int i = 0; i < exercises.Count; i++)
-            {
-                prefab.name = $"Exercise {i}";
-                GameObject.Instantiate(prefab, content.transform);
             }
 
             for (int i = 0; i < exercises.Count; i++)
@@ -73,8 +66,8 @@ namespace UI.PlaneTablet.Exercise
                         {
                             for (int j = 0; j < exercises.Count; j++)
                             {
-                                if (exercisesGUI[j] != exercise)
-                                    exercisesGUI[j].ExpandExercise(false);
+                                if (exerciseGUIs[j] != exercise)
+                                    exerciseGUIs[j].ExpandExercise(false);
                             }
                         }
                         else
@@ -85,8 +78,34 @@ namespace UI.PlaneTablet.Exercise
                     }, exercises[i], i);
                     exercise.ExpandExercise(false);
 
-                    exercisesGUI.Add(exercise);
+                    exerciseGUIs.Add(exercise);
                 };
+            }
+        }
+
+
+        private Exercise FindExerciseToFileExercise(int indexExercise)
+        {
+            return fileExercise.exercises[indexExercise];
+        }
+
+        public void SetVisibleExercies(int indexExercise, bool isVisible)
+        {
+            Exercise exercise = exerciseGUIs[indexExercise].GetExercise();
+            if (exercise != null)
+            {
+                exercise.isVisible = isVisible;
+                exerciseGUIs[indexExercise].UpdateData(exercise);
+
+                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                {
+                    if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].indexExercise == indexExercise)
+                        SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible = isVisible;
+                }
+
+                SaveManager.UpdatePlayerFile();
+
+                return;
             }
         }
 
@@ -139,25 +158,25 @@ namespace UI.PlaneTablet.Exercise
 
         private void Sort(ExerciseGUI exercise)
         {
-            for (int j = 0; j < exercisesGUI.Count; j++)
+            for (int j = 0; j < exerciseGUIs.Count; j++)
             {
-                if (exercisesGUI[j] != exercise && exercisesGUI[j].GetExerciseCompletion() != TypeOfExerciseCompletion.Done)
-                    exercisesGUI[j].SetExerciseCompletion(TypeOfExerciseCompletion.NotDone);
-                else if (exercisesGUI[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Run)
+                if (exerciseGUIs[j] != exercise && exerciseGUIs[j].GetExerciseCompletion() != TypeOfExerciseCompletion.Done)
+                    exerciseGUIs[j].SetExerciseCompletion(TypeOfExerciseCompletion.NotDone);
+                else if (exerciseGUIs[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Run)
                     content.transform.GetChild(j).SetAsFirstSibling();
-                else if (exercisesGUI[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Done)
+                else if (exerciseGUIs[j].GetExerciseCompletion() == TypeOfExerciseCompletion.Done)
                     content.transform.GetChild(j).SetAsLastSibling();
             }
 
-            for (var i = 1; i < exercisesGUI.Count; i++)
+            for (var i = 1; i < exerciseGUIs.Count; i++)
             {
-                for (var j = 0; j < exercisesGUI.Count - i; j++)
+                for (var j = 0; j < exerciseGUIs.Count - i; j++)
                 {
-                    if (exercisesGUI[j].GetExerciseCompletion() < exercisesGUI[j + 1].GetExerciseCompletion())
+                    if (exerciseGUIs[j].GetExerciseCompletion() < exerciseGUIs[j + 1].GetExerciseCompletion())
                     {
-                        var temp = exercisesGUI[j];
-                        exercisesGUI[j] = exercisesGUI[j + 1];
-                        exercisesGUI[j + 1] = temp;
+                        var temp = exerciseGUIs[j];
+                        exerciseGUIs[j] = exerciseGUIs[j + 1];
+                        exerciseGUIs[j + 1] = temp;
                     }
                 }
             }
