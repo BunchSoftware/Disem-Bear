@@ -114,7 +114,8 @@ namespace Game.Environment.Fridge
 
         public void OnUpdate(float deltatime)
         {
-            openObject.OnUpdate(deltatime);
+            if (openObject != null)
+                openObject.OnUpdate(deltatime);
         }
 
         public void CreateMagnet(string typeMagnet)

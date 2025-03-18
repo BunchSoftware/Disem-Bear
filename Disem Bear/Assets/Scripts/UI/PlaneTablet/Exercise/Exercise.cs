@@ -14,6 +14,16 @@ namespace UI.PlaneTablet.Exercise
         public Sprite avatarRequirement;
     }
 
+
+    [Serializable]
+    public class ExerciseItem
+    {
+        public string typeItem;
+        public int countItem = 1;
+        public string typeMachineDispensingItem;
+        public Sprite avatarItem;
+    }
+
     [Serializable]
     public class Exercise
     {
@@ -21,10 +31,11 @@ namespace UI.PlaneTablet.Exercise
 
         public List<Reward> exerciseRewards;
         public List<Requirement> exerciseRequirements;
-
+        public List<ExerciseItem> exerciseItems;
 
         public string header;
         public bool isMail = false;
+        public bool isRandomMail = false;
         [TextArea(10, 100)]
         public string description;
         public Sprite avatar;

@@ -59,7 +59,6 @@ namespace External.DI
            Time.timeScale = 1;
 
             FilePrefabsPickUpItems = filePrefabsPickUpItems;
-            PlayerPrefs.DeleteAll();
             #region Init
             if (!player)
             {
@@ -108,6 +107,11 @@ namespace External.DI
 
 
             player.Init();
+            playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
+            playerMouseMove.OnMove += playerChangeImage.Update;
+
+            updateListeners.Add(playerMouseMove);
+            playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
 
             updateListeners.Add(environmentRoot);
             environmentRoot.Init(player, playerMouseMove, soundManager, uiGameRoot.GetExerciseManager(), toastManager);
@@ -116,13 +120,7 @@ namespace External.DI
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);
 
             updateListeners.Add(uiGameRoot);
-            uiGameRoot.Init(soundManager, toastManager);
-
-            playerChangeImage.Init(player.gameObject.GetComponent<Animator>(), player);
-            playerMouseMove.OnMove += playerChangeImage.Update;
-
-            updateListeners.Add(playerMouseMove);
-            playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
+            uiGameRoot.Init(environmentRoot.tv, soundManager, toastManager);
 
             updateListeners.Add(playerInput);
         }

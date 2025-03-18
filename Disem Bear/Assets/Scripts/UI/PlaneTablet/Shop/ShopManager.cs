@@ -4,6 +4,7 @@ using Game.Environment.LPostTube;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet.Exercise;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,7 @@ namespace UI.PlaneTablet.Shop
     {
         public string typeMachineDispensingProduct;
         public UnityEvent<Reward> OnGetReward;
+        public UnityEvent<ExerciseItem> OnGetExerciseItem;
     }
 
     [Serializable]

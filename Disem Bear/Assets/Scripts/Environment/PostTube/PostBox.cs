@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.Environment;
@@ -22,6 +23,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private ToastManager toastManager;
 
     private bool itemInBox = false;
+    public Action<bool> OnItemInBox;
     private PickUpItem pickUpItemInBox;
 
     public List<string> nameRequirements;
@@ -83,6 +85,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     {
         pickUpItemInBox = pickUpItem;
         itemInBox = true;
+        OnItemInBox?.Invoke(itemInBox);
         pickUpItemInBox.transform.parent = transform;
         pickUpItemInBox.transform.position = transform.position;
 
@@ -118,6 +121,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         yield return new WaitForSeconds(timeBoxFallDown + 0.5f);
         Destroy(pickUpItemInBox.gameObject);
         itemInBox = false;
+        OnItemInBox?.Invoke(itemInBox);
         pickUpItemInBox = null;
         transform.position = startPointObject.position;
         movePointToPoint.StartMoveTo(timeBoxFallUp);
@@ -126,7 +130,10 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     public PickUpItem PickUpItemInBox()
     {
         itemInBox = false;
-        return pickUpItemInBox;
+        OnItemInBox?.Invoke(itemInBox);
+        PickUpItem temp = pickUpItemInBox;
+        pickUpItemInBox = null;
+        return temp;
     }
 
     public bool ItemInBox()

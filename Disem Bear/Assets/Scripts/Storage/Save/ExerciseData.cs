@@ -12,6 +12,6 @@ namespace External.Storage
         public int indexExercise;
         public TypeOfExerciseCompletion typeOfExerciseCompletion;
         public bool isVisible = true;
-        public bool isGetPackage;
+        public bool isGetExerciesItems;
     }
 }

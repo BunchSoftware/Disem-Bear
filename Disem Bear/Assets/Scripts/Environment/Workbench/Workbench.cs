@@ -786,7 +786,8 @@ namespace Game.Environment.LMixTable
 
         public void OnUpdate(float deltaTime)
         {
-            openObject.OnUpdate(deltaTime);
+            if (openObject != null)
+                openObject.OnUpdate(deltaTime);
         }
 
         public void AddIngradient(IngradientData ingradient)

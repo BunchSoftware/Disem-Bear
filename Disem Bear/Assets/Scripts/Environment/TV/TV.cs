@@ -36,6 +36,7 @@ public class TV : MonoBehaviour, IUpdateListener
 
     public void OnUpdate(float deltaTime)
     {
-        openObject.OnUpdate(deltaTime);
+        if (openObject != null)
+            openObject.OnUpdate(deltaTime);
     }
 }

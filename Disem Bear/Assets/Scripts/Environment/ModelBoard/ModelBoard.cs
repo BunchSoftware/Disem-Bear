@@ -226,7 +226,8 @@ namespace Game.Environment.LModelBoard
 
         public void OnUpdate(float deltaTime)
         {
-            openObject.OnUpdate(deltaTime);
+            if(openObject != null)
+                openObject.OnUpdate(deltaTime);
         }
 
         public void DragItem(CellModelBoard cellModelBoard)

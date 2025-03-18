@@ -23,7 +23,7 @@ namespace Game.Environment
         [SerializeField] private List<NextRoom> nextRooms;
         [SerializeField] private GameObject invisibleWallBetweenRooms;
         [Header("TV")]
-        [SerializeField] private TV tv;
+        public TV tv;
         [Header("Table")]
         [SerializeField] private Workbench workbench;
         [Header("Table")]

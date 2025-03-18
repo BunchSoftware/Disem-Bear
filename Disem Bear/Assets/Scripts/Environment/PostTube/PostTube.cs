@@ -96,6 +96,11 @@ namespace Game.Environment.LPostTube
         public void ObjectFall(Reward reward)
         {
             ObjectFall(reward.typeReward);
+            Debug.Log(reward.typeReward);
+        }
+        public void ObjectFall(ExerciseItem exerciseItem)
+        {
+            ObjectFall(exerciseItem.typeItem);
         }
 
         IEnumerator ParticleFall(float t)

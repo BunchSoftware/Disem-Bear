@@ -27,12 +27,12 @@ namespace UI
 
         private bool isActivePause = false;
 
-        public void Init(SoundManager soundManager, ToastManager toastManager)
+        public void Init(TV tv, SoundManager soundManager, ToastManager toastManager)
         {
             settingsController.Init();
             dialogManager.Init(this, soundManager);
             shopManager.Init(this, toastManager);
-            exerciseManager.Init();
+            exerciseManager.Init(tv, toastManager, this);
             dialogChat.Init(this);
             resourceManager.Init();
 

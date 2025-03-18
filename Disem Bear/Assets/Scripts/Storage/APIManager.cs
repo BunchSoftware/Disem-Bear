@@ -21,6 +21,7 @@ namespace External.API
         public int currentIndexDialogPoint = 0;
         public int currentIndexDialog = 0;
         public List<ExerciseData> exercises = new List<ExerciseData>();
+        public int countMail = 0;
         public List<IngradientData> ingradients = new List<IngradientData>();
         public PickUpItemData currentPickUpItem = new PickUpItemData();
         public List<CellsData> modelBoards = new List<CellsData>();

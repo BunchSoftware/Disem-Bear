@@ -37,8 +37,10 @@ namespace Game.Tutorial
 
         public void OnUpdate(float deltaTime)
         {
-            pointerTutorialManager.OnUpdate(deltaTime);
-            blockTutorialManager.OnUpdate(deltaTime);
+            if(pointerTutorialManager != null)
+                pointerTutorialManager.OnUpdate(deltaTime);
+            if(blockTutorialManager != null)
+                blockTutorialManager.OnUpdate(deltaTime);
         }
     }
 }

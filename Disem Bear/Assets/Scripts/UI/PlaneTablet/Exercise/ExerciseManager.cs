@@ -2,6 +2,7 @@ using External.DI;
 using External.Storage;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UI.PlaneTablet.Shop;
@@ -21,6 +22,13 @@ namespace UI.PlaneTablet.Exercise
         [SerializeField] private GameObject content;
         [SerializeField] private FileExercise fileExercise;
         [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
+        [SerializeField] private int maxMail = 3;
+        [SerializeField] private float minTimeAppearanceMail = 0;
+        [SerializeField] private float maxTimeAppearanceMail = 60;
+        [SerializeField] private float intervalTimeAppearanceMail = 120;
+
+        private int countMail = 0;
+
         private List<ExerciseGUI> exerciseGUIs = new List<ExerciseGUI>();
 
         public Action<Exercise> GetCurrentExercise;
@@ -28,8 +36,17 @@ namespace UI.PlaneTablet.Exercise
 
         private ExerciseGUI currentExerciseGUI;
 
-        public void Init()
+        private MonoBehaviour context;
+        private ToastManager toastManager;
+        private TV tv;
+        private Coroutine randomMail;
+
+        public void Init(TV tv, ToastManager toastManager, MonoBehaviour context)
         {
+            countMail = SaveManager.filePlayer.JSONPlayer.resources.countMail;
+            this.toastManager = toastManager;
+            this.context = context;
+            this.tv = tv;
             List<Exercise> exercises = new List<Exercise>();
 
             if (SaveManager.filePlayer.JSONPlayer.resources.exercises != null)
@@ -41,8 +58,11 @@ namespace UI.PlaneTablet.Exercise
                     {
                         exercise.isVisible = SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible;
 
-                        prefab.name = $"Product {i}";
+                        if (exercise.isMail)
+                            SaveManager.filePlayer.JSONPlayer.resources.exercises[i].typeOfExerciseCompletion = TypeOfExerciseCompletion.Run;
+
                         ExerciseGUI exerciseGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ExerciseGUI>();
+                        exerciseGUI.name = $"Exercise {i}";
                         exerciseGUIs.Add(exerciseGUI);
                         exercises.Add(exercise);
                     }
@@ -56,9 +76,7 @@ namespace UI.PlaneTablet.Exercise
                 if (content.gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exercise))
                 {
                     exercise.Init(this, (exercise, isExpandExercise) =>
-                    {
-                        
-
+                    {                    
                         currentExerciseGUI = exercise;
                         GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
 
@@ -77,10 +95,14 @@ namespace UI.PlaneTablet.Exercise
                         } 
                     }, exercises[i], i);
                     exercise.ExpandExercise(false);
-
-                    exerciseGUIs.Add(exercise);
                 };
             }
+
+            tv.OnTVClose.AddListener(() =>
+            {
+                if (randomMail == null)
+                    randomMail = context.StartCoroutine(IRandomMail());
+            });
         }
 
 
@@ -119,6 +141,7 @@ namespace UI.PlaneTablet.Exercise
             List<Reward> exerciseRewards = currentExerciseGUI.DoneExercise(messageExercise);
             GetExerciseRewards?.Invoke(exerciseRewards);
             GiveRewards(exerciseRewards);
+            Debug.LogError(exerciseRewards.Count);
             Sort(currentExerciseGUI);
         }
 
@@ -133,25 +156,120 @@ namespace UI.PlaneTablet.Exercise
                         if (typeGiveProducts[i].typeMachineDispensingProduct == exerciseRewards[j].typeMachineDispensingReward)
                         {
                             typeGiveProducts[i].OnGetReward.Invoke(exerciseRewards[j]);
+                            Debug.Log("Игрок получил награду за квест");
+                            toastManager.ShowToast("Пожалуйста, заберите награду за квест");
                         }
                     }
                 }
             }
         }
 
-        public void GivePackage(Exercise exercise)
+        public void GiveExerciseItem(Exercise exercise)
         {
             if (typeGiveProducts != null)
             {
                 for (int i = 0; i < typeGiveProducts.Count; i++)
                 {
-                    for (int j = 0; j < exercise.exerciseRewards.Count; j++)
+                    for (int j = 0; j < exercise.exerciseItems.Count; j++)
                     {
-                        if (typeGiveProducts[i].typeMachineDispensingProduct == exercise.exerciseRewards[j].typeMachineDispensingReward)
+                        if (typeGiveProducts[i].typeMachineDispensingProduct == exercise.exerciseItems[j].typeMachineDispensingItem)
                         {
-                            typeGiveProducts[i].OnGetReward?.Invoke(exercise.exerciseRewards[j]);
+                            toastManager.ShowToast("Пожалуйста, заберите квестовый предмет");
+                            Debug.Log("Игрок получил квестовый предмет");
+                            typeGiveProducts[i].OnGetExerciseItem?.Invoke(exercise.exerciseItems[j]);
                         }
                     }
+                }
+            }
+        }
+
+        IEnumerator IRandomMail()
+        {
+            Debug.Log("Вам сейчас прилетит письмо !");
+            yield return new WaitForSeconds(intervalTimeAppearanceMail);
+            if (countMail < maxMail)
+            {
+                yield return new WaitForSeconds(UnityEngine.Random.Range(minTimeAppearanceMail, maxTimeAppearanceMail));
+
+                List<Exercise> mailExercises = new List<Exercise>();
+
+                for (int i = 0; i < fileExercise.exercises.Count; i++)
+                {
+                    if (fileExercise.exercises[i].isMail && fileExercise.exercises[i].isRandomMail)
+                        mailExercises.Add(fileExercise.exercises[i]);
+                }
+
+                int indexRandom = 0;
+                bool isExit = false;
+                while (!isExit)
+                {
+                    indexRandom = UnityEngine.Random.Range(0, mailExercises.Count);
+                    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                    {
+                        if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].indexExercise == indexRandom)
+                            break;
+
+                        isExit = true;
+                        break;
+                    }
+                }
+                Exercise exercise = mailExercises[indexRandom];
+
+                if (exercise.isMail)
+                {
+                    countMail++;
+                    SaveManager.filePlayer.JSONPlayer.resources.countMail = countMail;
+                }
+
+                if (exercise != null && exercise.isMail)
+                {
+                    ExerciseGUI exerciseGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ExerciseGUI>();
+                    exerciseGUI.name = $"Exercise {exerciseGUIs.Count}";
+
+                    ExerciseData exerciseData = new ExerciseData();
+
+                    for (int i = 0; i < fileExercise.exercises.Count; i++)
+                    {
+                        if (fileExercise.exercises[i] == exercise)
+                        {
+                            exerciseData.indexExercise = i;
+                            Debug.Log(152);
+                            break;
+                        }
+                    }
+                    exerciseData.isVisible = true;
+                    exerciseData.isGetExerciesItems = false;
+                    exerciseData.typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone;
+
+                    SaveManager.filePlayer.JSONPlayer.resources.exercises.Add(exerciseData);
+
+                    exerciseGUI.Init(this, (exercise, isExpandExercise) =>
+                    {
+                        currentExerciseGUI = exercise;
+                        GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
+
+                        if (isExpandExercise)
+                        {
+                            for (int j = 0; j < exerciseGUIs.Count; j++)
+                            {
+                                if (exerciseGUIs[j] != exercise)
+                                    exerciseGUIs[j].ExpandExercise(false);
+                            }
+                        }
+                        else
+                        {
+                            PlayerGetExercise?.Invoke(exercise.GetExercise());
+                            Sort(exercise);
+                        }
+                    }, exercise, exerciseGUIs.Count);
+
+                    exerciseGUI.ExpandExercise(false);
+                    exerciseGUIs.Add(exerciseGUI);
+
+                    randomMail = null;
+
+                    toastManager.ShowToast("Вам пришло новое письмо, пожалуйста проверьте почтовый ящик");
+                    SaveManager.UpdatePlayerFile();
                 }
             }
         }

@@ -93,8 +93,10 @@ namespace Game.Environment.Aquarium
 
         public void OnUpdate(float deltaTime)
         {
-            openObject.OnUpdate(deltaTime);
-            aquarium.OnUpdate(deltaTime);
+            if (openObject != null)
+                openObject.OnUpdate(deltaTime);
+            if (aquarium != null)
+                aquarium.OnUpdate(deltaTime);
         }
 
         private bool TryGetMaterial(PickUpItem pickUpItem)
