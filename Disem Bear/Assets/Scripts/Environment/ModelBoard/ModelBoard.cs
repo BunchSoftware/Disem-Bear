@@ -20,6 +20,7 @@ namespace Game.Environment.LModelBoard
     {
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
+        [SerializeField] private PlaceBoard placeBoard;
 
         [Header("Focus Item")]
         public float coefficientScaleItem = 1.08f;
@@ -85,6 +86,7 @@ namespace Game.Environment.LModelBoard
                 OnEndModelBoardClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
+            placeBoard.Init(player);
 
             if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards == null)
             {
@@ -139,7 +141,7 @@ namespace Game.Environment.LModelBoard
                 cellBoards[i].Init(this, workbench, player, triggerObject, transform, i);
             }
 
-            Debug.Log("APIManager: Успешно иницилизирован");
+            Debug.Log("ModelBoard: Успешно иницилизирован");
         }
 
         public void FocusItem(CellModelBoard cellModelBoard)

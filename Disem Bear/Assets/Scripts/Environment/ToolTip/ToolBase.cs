@@ -1,17 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Environment;
 using UnityEngine;
 
-public class ToolBase : MonoBehaviour
+public class ToolBase : MonoBehaviour, IMouseOver
 {
-    [SerializeField] private string toolTipText;
+    public string toolTipText;
+    public bool on = true;
+    private bool mouseOver = false;
 
-    private void OnMouseEnter()
+    public void OnMouseEnterObject()
     {
-        ToolTipManager._instance.ToolTipOn(toolTipText);
+        mouseOver = true;
+        if (on)
+        {
+            ToolTipManager._instance.ToolTipOn(toolTipText);
+        }
     }
-    private void OnMouseExit()
+
+    public void OnMouseExitObject()
     {
+        mouseOver = false;
         ToolTipManager._instance.ToolTipOff();
     }
+
+    public void OnToolTip()
+    {
+        if (on && mouseOver)
+        {
+            ToolTipManager._instance.ToolTipOn(toolTipText);
+        }
+    }
+
+    public void OffToolTip()
+    {
+        if (mouseOver)
+            ToolTipManager._instance.ToolTipOff();
+    }
+
 }

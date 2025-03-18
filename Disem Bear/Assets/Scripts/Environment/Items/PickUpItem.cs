@@ -16,6 +16,7 @@ namespace Game.Environment.Item
         Package = 3,
         AquariumMaterial = 4
     }
+    [RequireComponent(typeof(ToolBase))]
     public class PickUpItem : MonoBehaviour, IRightMouseDownClickable, ILeftMouseDownClickable
     {
         public bool IsClickedLeftMouseButton = false;
@@ -28,10 +29,13 @@ namespace Game.Environment.Item
         public string NameItem;
 
         private Quaternion rotation;
+        private ToolBase toolBase;
 
         private void Awake()
         {
             rotation = transform.rotation;
+            toolBase = GetComponent<ToolBase>();
+            toolBase.toolTipText = NameItem;
         }
 
         public void OnMouseLeftClickDownObject()

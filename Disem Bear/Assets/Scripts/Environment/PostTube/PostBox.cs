@@ -21,6 +21,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private ExerciseManager exerciseManager;
     private MovePointToPoint movePointToPoint;
     private ToastManager toastManager;
+    private ToolBase toolBase;
 
     private bool itemInBox = false;
     public Action<bool> OnItemInBox;
@@ -34,6 +35,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 
     public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager)
     {
+        toolBase = GetComponent<ToolBase>();
         TV.OnTVClose.AddListener(() =>
         {
             if (itemInBox)
@@ -79,6 +81,15 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 }
             }
         });
+        if (itemInBox)
+        {
+            toolBase.on = true;
+            toolBase.toolTipText = pickUpItemInBox.NameItem;
+        }
+        else
+        {
+            toolBase.on = false;
+        }
     }
 
     public void PutItemInBox(PickUpItem pickUpItem)
@@ -88,6 +99,10 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         OnItemInBox?.Invoke(itemInBox);
         pickUpItemInBox.transform.parent = transform;
         pickUpItemInBox.transform.position = transform.position;
+
+        toolBase.on = true;
+        toolBase.toolTipText = pickUpItemInBox.NameItem;
+        toolBase.OnToolTip();
 
         CheckItemInBox(pickUpItem);
     }
@@ -133,6 +148,8 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         OnItemInBox?.Invoke(itemInBox);
         PickUpItem temp = pickUpItemInBox;
         pickUpItemInBox = null;
+        toolBase.on = false;
+        toolBase.OffToolTip();
         return temp;
     }
 
