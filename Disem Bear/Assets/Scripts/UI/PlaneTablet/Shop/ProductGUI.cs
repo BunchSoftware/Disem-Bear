@@ -36,7 +36,7 @@ namespace UI.PlaneTablet.Shop
         {
             this.product = product;
             headerText.text = product.header;
-            toolTipTrigger.message = product.header;
+            toolTipTrigger.message = product.description;
             avatarReward.sprite = product.reward.avatarReward;
             avatarPrice.sprite = product.avatarPriceProduct;
 

@@ -16,5 +16,6 @@ namespace UI.PlaneTablet.Shop
         public string typePriceProduct;
         public int price = 1;
         public Sprite avatarPriceProduct;
+        public string description = "";
     }
 }
