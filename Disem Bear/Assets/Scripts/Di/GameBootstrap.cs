@@ -12,6 +12,7 @@ using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.InputManagerEntry;
 
 namespace External.DI
 {
@@ -175,5 +176,56 @@ namespace External.DI
 
             return null;
         }
+
+        #region Sound
+        public void OnPlayOneShotSound(int indexSound)
+        {
+            soundManager.OnPlayOneShot(indexSound);
+        }
+
+        public void OnPlayOneShotSound(AudioClip audioClip)
+        {
+            soundManager.OnPlayOneShot(audioClip);
+        }
+        public void OnPlayLoopSound(int indexSound)
+        {
+            soundManager.OnPlayLoop(indexSound);
+        }
+        public void OnPlayLoopSound(AudioClip audioClip)
+        {
+            soundManager.OnPlayLoop(audioClip);
+        }
+
+        public void PlaySound(int indexSound)
+        {
+            soundManager.PlaySound(indexSound);
+        }
+        #endregion
+        #region Music
+
+        public void OnPlayOneShotMusic(int indexSound)
+        {
+            musicManager.OnPlayOneShot(indexSound);
+        }
+
+        public void OnPlayOneShotMusic(AudioClip audioClip)
+        {
+            musicManager.OnPlayOneShot(audioClip);
+        }
+        public void OnPlayLoopMusic(int indexSound)
+        {
+            musicManager.OnPlayLoop(indexSound);
+        }
+        public void OnPlayLoopMusic(AudioClip audioClip)
+        {
+            musicManager.OnPlayLoop(audioClip);
+        }
+
+        public void PlayMusic(int indexSound)
+        {
+            musicManager.PlaySound(indexSound);
+        }
+
+        #endregion
     }
 }
