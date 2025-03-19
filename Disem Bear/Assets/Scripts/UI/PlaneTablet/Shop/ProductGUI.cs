@@ -15,6 +15,7 @@ namespace UI.PlaneTablet.Shop
         [SerializeField] private Text countProductText;
         [SerializeField] private Image avatarReward;
         [SerializeField] private Image avatarPrice;
+        [SerializeField] private ToolTipTrigger toolTipTrigger;
         private Product product;
         private Action ActionRemove;
 
@@ -35,6 +36,7 @@ namespace UI.PlaneTablet.Shop
         {
             this.product = product;
             headerText.text = product.header;
+            toolTipTrigger.message = product.header;
             avatarReward.sprite = product.reward.avatarReward;
             avatarPrice.sprite = product.avatarPriceProduct;
 
