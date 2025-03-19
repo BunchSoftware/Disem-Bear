@@ -903,7 +903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &385524268
 Transform:
   m_ObjectHideFlags: 0
@@ -1841,6 +1841,18 @@ PrefabInstance:
       value: Aquarium (4)
       objectReference: {fileID: 0}
     - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: getCellsSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: 'getCellsSounds.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 45ed248fce8795d49a8868d71cba648d, type: 3}
+    - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: 'getCellsSounds.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 314a216a287dc11418cd28bd448c49a4, type: 3}
+    - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: 'InspectorSpawners.Array.data[0]'
       value: 
       objectReference: {fileID: 7011096796303665594}
@@ -1957,6 +1969,7 @@ MonoBehaviour:
   player: {fileID: 1712871990}
   playerMouseMove:
     navMeshAgent: {fileID: 1712871983}
+    makePathToObject: {fileID: 1560337221}
   tutorialRoot: {fileID: 1451648181}
   environmentRoot: {fileID: 1526206802}
   soundManager:
@@ -1969,7 +1982,7 @@ MonoBehaviour:
       isLoop: 0
     soundClips: []
     MinDB: -40
-    MaxDB: 10
+    MaxDB: 10.4
   musicManager:
     prefabAudioSource: {fileID: 7751074802334589094, guid: b3f75a24b8297fa4d895a32f9ff544b8, type: 3}
     mixer: {fileID: -2342996771716774877, guid: 360cebffc71bd224e97e49564dc0dd23, type: 2}
@@ -1980,7 +1993,7 @@ MonoBehaviour:
       isLoop: 1
     soundClips: []
     MinDB: -40
-    MaxDB: 10
+    MaxDB: -13.2
   uiGameRoot: {fileID: 1356396023}
   toastManager:
     container: {fileID: 853073749}
@@ -6803,6 +6816,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 89cfc98ba1cbefa448c1ff09ebf1d853, type: 2}
+    - target: {fileID: 8872580582023554435, guid: 2b9b25bd6e4cd934783c269084440753, type: 3}
+      propertyPath: water
+      value: 
+      objectReference: {fileID: 8300000, guid: 067741bc57b9fd747b55629a2ae69b9b, type: 3}
+    - target: {fileID: 8872580582023554435, guid: 2b9b25bd6e4cd934783c269084440753, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 067741bc57b9fd747b55629a2ae69b9b, type: 3}
+    - target: {fileID: 8872580582023554435, guid: 2b9b25bd6e4cd934783c269084440753, type: 3}
+      propertyPath: gameBootstrap
+      value: 
+      objectReference: {fileID: 787923205}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7769,6 +7794,14 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5160604906221618183, guid: 107f7a5b4cf4d084eaac6dd3fb78523f, type: 3}
+      propertyPath: soundsPackageCrash.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160604906221618183, guid: 107f7a5b4cf4d084eaac6dd3fb78523f, type: 3}
+      propertyPath: 'soundsPackageCrash.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 80c60900c37b3ad4a9b9b6776ee06e8e, type: 3}
+    - target: {fileID: 5160604906221618183, guid: 107f7a5b4cf4d084eaac6dd3fb78523f, type: 3}
       propertyPath: postTubeObjects.Array.data[5].typeObject
       value: flower
       objectReference: {fileID: 0}
@@ -7784,6 +7817,14 @@ PrefabInstance:
       propertyPath: TV
       value: 
       objectReference: {fileID: 1033088069}
+    - target: {fileID: 6357667688480262667, guid: 107f7a5b4cf4d084eaac6dd3fb78523f, type: 3}
+      propertyPath: soundsLuke.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6357667688480262667, guid: 107f7a5b4cf4d084eaac6dd3fb78523f, type: 3}
+      propertyPath: 'soundsLuke.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d1fad1dcd827f3429b8f83629be1e21, type: 3}
     - target: {fileID: 7033013696729248889, guid: 107f7a5b4cf4d084eaac6dd3fb78523f, type: 3}
       propertyPath: m_Size.y
       value: 0.8005262
@@ -8196,6 +8237,22 @@ PrefabInstance:
       propertyPath: typeIngradient
       value: metabolism
       objectReference: {fileID: 0}
+    - target: {fileID: 2092230602269116999, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
+      propertyPath: soundsCraftCells.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092230602269116999, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
+      propertyPath: 'soundsCraftCells.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b37bc1ce29f8db14ab02b54af398bf33, type: 3}
+    - target: {fileID: 2092230602269116999, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
+      propertyPath: 'soundsCraftCells.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7ee4bf99bcacd264ebc8daa489a65827, type: 3}
+    - target: {fileID: 2092230602269116999, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
+      propertyPath: 'soundsCraftCells.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 394bc83edd2c8f64f8b114b15304b637, type: 3}
     - target: {fileID: 2212222645882964654, guid: 392b22beb77cc3047b82ed3c36fb0407, type: 3}
       propertyPath: typeIngradient
       value: regulation

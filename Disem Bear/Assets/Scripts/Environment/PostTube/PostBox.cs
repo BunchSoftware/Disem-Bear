@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using External.DI;
 using Game.Environment;
 using Game.Environment.Item;
 using Game.LPlayer;
@@ -31,10 +32,15 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private string conditionExercise = "None";
 
     private bool isClick = false;
+    private GameBootstrap gameBootstrap;
+
+    [Header("soundsLuke")]
+    [SerializeField] private List<AudioClip> soundsLuke = new();
 
 
-    public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager)
+    public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
     {
+        this.gameBootstrap = gameBootstrap;
         toolBase = GetComponent<ToolBase>();
         TV.OnTVClose.AddListener(() =>
         {
@@ -131,6 +137,9 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     {
         lukeAnimator.StopPlayback();
         lukeAnimator.Play("LukeOpen");
+        if (soundsLuke.Count > 0) {
+            gameBootstrap.OnPlayOneShotSound(soundsLuke[(int)(Time.deltaTime % soundsLuke.Count)]);
+        }
         yield return new WaitForSeconds(t);
         movePointToPoint.StartMoveTo(timeBoxFallDown);
         yield return new WaitForSeconds(timeBoxFallDown + 0.5f);

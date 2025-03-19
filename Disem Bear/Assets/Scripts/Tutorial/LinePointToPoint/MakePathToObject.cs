@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using External.DI;
 using Game.LPlayer;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,8 +10,10 @@ public class MakePathToObject : MonoBehaviour
     private Transform Player;
     private Transform Target;
     private LineRenderer lineRenderer;
+    public GameBootstrap gameBootstrap;
+    public AudioClip water;
 
-    private bool On = false;
+    public bool On = false;
 
     public float maxHeightObject = 5f;
 

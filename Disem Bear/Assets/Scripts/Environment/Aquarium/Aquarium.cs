@@ -1,3 +1,4 @@
+using External.DI;
 using External.Storage;
 using Game.Environment.LMixTable;
 using Game.LPlayer;
@@ -33,12 +34,14 @@ namespace Game.Environment.Aquarium
         private GameObject DisplayCount;
         [SerializeField] private ChangeCell buttonLeft;
         [SerializeField] private ChangeCell buttonRight;
+        [Header("GetCellsSounds")]
+        [SerializeField] private List<AudioClip> getCellsSounds = new();
 
         private int CountCells = 0;
 
 
 
-        public void Init(Player player)
+        public void Init(Player player, GameBootstrap gameBootstrap)
         {
             for (int i = 0; i < InspectorSpawners.Count; i++)
             {
@@ -56,6 +59,12 @@ namespace Game.Environment.Aquarium
             spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
             DisplayCount = transform.Find("DisplayCount").gameObject;
+
+            GetAquariumCells.AddListener((nameCell, countCell) =>
+            {
+                if (getCellsSounds.Count > 0)
+                    gameBootstrap.OnPlayOneShotSound(getCellsSounds[(int)(Time.deltaTime % getCellsSounds.Count)]);
+            });
 
             UpdateMaterial(materialForAquarium);
 

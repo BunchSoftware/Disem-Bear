@@ -26,6 +26,7 @@ namespace Game.LPlayer
     {
         [HideInInspector] public Action<Move> OnMove;
         [SerializeField] private NavMeshAgent navMeshAgent;
+        [SerializeField] private MakePathToObject makePathToObject;
         private bool isMove = true;
         private Move move = new Move();
 
@@ -51,7 +52,10 @@ namespace Game.LPlayer
                 {
                     if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<InputField>() != null)
                         return;
-
+                    //if (makePathToObject.On)
+                    //{
+                    //    makePathToObject.gameBootstrap.OnPlayOneShotSound(makePathToObject.water); –¿— ŒÃ≈Õ“»“‹ ¬  –¿…Õ≈Ã —À”◊¿≈
+                    //}
                     MovePlayer(hitinfo.point);
                 }
             }

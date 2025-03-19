@@ -115,7 +115,7 @@ namespace External.DI
             playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
 
             updateListeners.Add(environmentRoot);
-            environmentRoot.Init(player, playerMouseMove, soundManager, uiGameRoot.GetExerciseManager(), toastManager);
+            environmentRoot.Init(player, playerMouseMove, soundManager, uiGameRoot.GetExerciseManager(), toastManager, this);
 
             updateListeners.Add(tutorialRoot);
             tutorialRoot.Init(uiGameRoot.GetDialogManager(), player);

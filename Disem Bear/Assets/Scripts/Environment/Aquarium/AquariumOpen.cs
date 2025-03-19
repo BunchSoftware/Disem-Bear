@@ -1,3 +1,4 @@
+using External.DI;
 using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LPostTube;
@@ -33,7 +34,7 @@ namespace Game.Environment.Aquarium
 
 
 
-        public void Init(Player player, PlayerMouseMove playerMouseMove)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
             this.player = player;
             this.playerMouseMove = playerMouseMove;
@@ -69,7 +70,7 @@ namespace Game.Environment.Aquarium
                 OnAquariumClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
-            aquarium.Init(player);
+            aquarium.Init(player, gameBootstrap);
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {

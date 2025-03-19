@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using External.DI;
 using Game.Environment.Item;
 using Game.LPlayer;
 using UI;
@@ -32,11 +33,16 @@ namespace Game.Environment.LPostTube
         [SerializeField] private List<PostTubeObject> postTubeObjects;
         public UnityEvent<PostTubeObject> OnGetPostTubeObject;
 
+        private GameBootstrap gameBootstrap;
+        [Header("SoundsPackageCrash")]
+        [SerializeField] private List<AudioClip> soundsPackageCrash = new();
+
         private bool itemFlies = false;
 
-        public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager)
+        public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
         {
-            postBox.Init(player, exerciseManager, toastManager);
+            this.gameBootstrap = gameBootstrap;
+            postBox.Init(player, exerciseManager, toastManager, gameBootstrap);
         }
 
         public bool ObjectFall(GameObject prefab)
@@ -118,6 +124,10 @@ namespace Game.Environment.LPostTube
         IEnumerator PostBoxGetPackage(float t, PickUpItem pickUpItem)
         {
             yield return new WaitForSeconds(t);
+            if (soundsPackageCrash.Count > 0)
+            {
+                gameBootstrap.OnPlayOneShotSound(soundsPackageCrash[(int)(Time.deltaTime % soundsPackageCrash.Count)]);
+            }
             postBox.PutItemInBox(pickUpItem);
             itemFlies = false;
         }

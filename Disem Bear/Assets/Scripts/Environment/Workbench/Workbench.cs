@@ -4,6 +4,7 @@ using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LModelBoard;
 using Game.LPlayer;
+using Game.Music;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace Game.Environment.LMixTable
         [SerializeField] private ClearButton clearButton;
         [Header("Recieps Craft")]
         [SerializeField] private List<CraftRecipe> recipes = new List<CraftRecipe>();
+        [Header("SoundsCraftCells")]
+        [SerializeField] private List<AudioClip> soundsCraftCells = new List<AudioClip>();
 
         public float timeIngradientMoveToMixTable = 0.5f;
         public float timeIngradientPickUpPlayer = 1.5f;
@@ -51,6 +54,7 @@ namespace Game.Environment.LMixTable
         public UnityEvent<IngradientData> OnDropIngradient;
         private Player player;
         private PlayerMouseMove playerMouseMove;
+        private GameBootstrap gameBootstrap;
 
         private Collider colliderWorkbench;
         private OpenObject openObject;
@@ -76,8 +80,9 @@ namespace Game.Environment.LMixTable
         public const int countIngradiensTaken = 1;
 
 
-        public void Init(Player player, PlayerMouseMove playerMouseMove)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
+            this.gameBootstrap = gameBootstrap;
             this.player = player;
             this.playerMouseMove = playerMouseMove;
 
@@ -180,6 +185,12 @@ namespace Game.Environment.LMixTable
                 OnEndWorkbenchClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
+
+            OnMixIngradients.AddListener(() =>
+            {
+                if (soundsCraftCells.Count > 0)
+                    this.gameBootstrap.OnPlayOneShotSound(soundsCraftCells[(int)(Time.deltaTime % soundsCraftCells.Count)]);
+            });
 
             Debug.Log("Workbench: Успешно иницилизирован");
         

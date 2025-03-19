@@ -39,9 +39,9 @@ namespace Game.Environment
         [Header("PostTube")]
         [SerializeField] private PostTube postTube;
 
-        public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager, ExerciseManager exerciseManager, ToastManager toastManager)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
         {
-            workbench.Init(player, playerMouseMove);
+            workbench.Init(player, playerMouseMove, gameBootstrap);
             for (int i = 0; i < nextRooms.Count; i++)
             {
                 nextRooms[i].Init(playerMouseMove, invisibleWallBetweenRooms);
@@ -54,7 +54,7 @@ namespace Game.Environment
 
             for (int i = 0; i < aquariumOpens.Count; i++)
             {
-                aquariumOpens[i].Init(player, playerMouseMove);
+                aquariumOpens[i].Init(player, playerMouseMove, gameBootstrap);
             }
             for (int i = 0; i < fridges.Count; i++)
             {
@@ -66,7 +66,7 @@ namespace Game.Environment
             }
             tv.Init(playerMouseMove, player);
             printer.Init(soundManager, player);
-            postTube.Init(player, exerciseManager, toastManager);
+            postTube.Init(player, exerciseManager, toastManager, gameBootstrap);
 
             Debug.Log("EnvironmentRoot: Успешно иницилизирован");
         }
