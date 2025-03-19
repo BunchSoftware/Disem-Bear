@@ -141,7 +141,6 @@ namespace UI.PlaneTablet.Exercise
             List<Reward> exerciseRewards = currentExerciseGUI.DoneExercise(messageExercise);
             GetExerciseRewards?.Invoke(exerciseRewards);
             GiveRewards(exerciseRewards);
-            Debug.LogError(exerciseRewards.Count);
             Sort(currentExerciseGUI);
         }
 

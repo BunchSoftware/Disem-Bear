@@ -264,9 +264,14 @@ namespace External.Storage
                     apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
                     SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
 
-                    OnUpdatePlayerFile?.Invoke();
+                    A();
                 }
             });
+        }
+
+        public static void A()
+        {
+            OnUpdatePlayerFile?.Invoke();
         }
 
         public static async void ChangeMagnetSave(MagnetData magnetSave)
