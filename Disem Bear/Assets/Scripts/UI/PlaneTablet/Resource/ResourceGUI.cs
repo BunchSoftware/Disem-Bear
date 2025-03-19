@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class ResourceGUI : MonoBehaviour
 {
     [Header("Основные элементы ресурсного меню")]
-    [SerializeField] private Text headerText;
     [SerializeField] private Text countResourceText;
     [SerializeField] private Image avatar;
+    [SerializeField] private ToolTipTrigger toolTipTrigger;
     private ResourceData resourceData;
 
     public void UpdateData(ResourceData resourceData)
     {
         this.resourceData = resourceData;
-        headerText.text = resourceData.headerResource;
+        toolTipTrigger.message = resourceData.headerResource;
         countResourceText.text = resourceData.countResource.ToString() + " шт.";
         avatar.sprite = resourceData.iconResource;
     }

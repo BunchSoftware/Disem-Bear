@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class ToolTipManager : MonoBehaviour
 {
     public static ToolTipManager _instance;
+    [SerializeField] private Camera uiCamera;
     [SerializeField] private TextMeshProUGUI ToolTipText;
     [Tooltip("Time Fade ToolTip")]
     [SerializeField] private float timeOfAppearanceToolTip = 0.5f;
@@ -35,7 +36,9 @@ public class ToolTipManager : MonoBehaviour
     }
     private void Update()
     {
-        transform.position = Input.mousePosition;
+        Vector2 localPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), Input.mousePosition, uiCamera, out localPosition);
+        transform.localPosition = localPosition;
     }
 
     public void ToolTipOn(string message)

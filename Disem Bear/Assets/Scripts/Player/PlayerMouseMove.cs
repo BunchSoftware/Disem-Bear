@@ -49,7 +49,7 @@ namespace Game.LPlayer
                 int layermask = -1;
                 if (Physics.Raycast(movePosition, out var hitinfo, maxdistance, layermask, QueryTriggerInteraction.Ignore))
                 {
-                    if (EventSystem.current.currentSelectedGameObject?.GetComponent<InputField>())
+                    if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<InputField>() != null)
                         return;
 
                     MovePlayer(hitinfo.point);
