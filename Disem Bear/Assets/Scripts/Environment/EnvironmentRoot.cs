@@ -62,9 +62,9 @@ namespace Game.Environment
             }
             for (int i = 0; i < modelBoards.Count; i++)
             {
-                modelBoards[i].Init(workbench, player, playerMouseMove);
+                modelBoards[i].Init(workbench, player, playerMouseMove, gameBootstrap);
             }
-            tv.Init(playerMouseMove, player);
+            tv.Init(playerMouseMove, player, gameBootstrap);
             printer.Init(soundManager, player);
             postTube.Init(player, exerciseManager, toastManager, gameBootstrap);
 

@@ -6,6 +6,7 @@ using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Music;
 using Game.Tutorial;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UI;
@@ -27,6 +28,7 @@ namespace External.DI
         [SerializeField] private TutorialRoot tutorialRoot;
         [Header("Environment")]
         [SerializeField] private EnvironmentRoot environmentRoot;
+        public AudioClip scaleChooseObjectSound;
         [Header("Sound")]
         [SerializeField] private SoundManager soundManager;
         [SerializeField] private SoundManager musicManager;
@@ -112,7 +114,7 @@ namespace External.DI
             playerMouseMove.OnMove += playerChangeImage.Update;
 
             updateListeners.Add(playerMouseMove);
-            playerMouseMove.Init(player.gameObject.GetComponent<NavMeshAgent>());
+            playerMouseMove.Init(this, player.gameObject.GetComponent<NavMeshAgent>(), this);
 
             updateListeners.Add(environmentRoot);
             environmentRoot.Init(player, playerMouseMove, soundManager, uiGameRoot.GetExerciseManager(), toastManager, this);
@@ -178,22 +180,59 @@ namespace External.DI
         }
 
         #region Sound
-        public void OnPlayOneShotSound(int indexSound)
+        public AudioSource OnPlayOneShotRandomSound(List <AudioClip> sounds)
         {
-            soundManager.OnPlayOneShot(indexSound);
+            if (sounds.Count > 0)
+            {
+                AudioSource audio = OnPlayOneShotSound(sounds[DateTime.Now.Second % sounds.Count]);
+                return audio;
+            }
+            else
+            {
+                Debug.Log("Не указан звук");
+                return null;
+            }
         }
 
-        public void OnPlayOneShotSound(AudioClip audioClip)
+        public AudioSource OnPlayOneShotSound(int indexSound)
         {
-            soundManager.OnPlayOneShot(audioClip);
+            AudioSource audio = soundManager.OnPlayOneShot(indexSound);
+            return audio;
         }
-        public void OnPlayLoopSound(int indexSound)
+
+        public AudioSource OnPlayOneShotSound(AudioClip audioClip)
         {
-            soundManager.OnPlayLoop(indexSound);
+            AudioSource audio = null;
+            if (audioClip != null)
+                audio = soundManager.OnPlayOneShot(audioClip);
+            else
+                Debug.Log("Не указан звук");
+            return audio;
         }
-        public void OnPlayLoopSound(AudioClip audioClip)
+        public AudioSource OnPlayLoopSound(int indexSound)
         {
-            soundManager.OnPlayLoop(audioClip);
+            AudioSource audio = soundManager.OnPlayLoop(indexSound);
+            return audio;
+        }
+        public AudioSource OnPlayLoopSound(AudioClip audioClip)
+        {
+            AudioSource audio = null;
+            if (audioClip != null)
+                soundManager.OnPlayLoop(audioClip);
+            else
+                Debug.Log("Не указан звук");
+            return audio;
+        }
+        public void OnEndPlayOneSHotSound(AudioSource audioSource)
+        {
+            if (audioSource != null)
+            {
+                soundManager.OnEndPlayOneShot(audioSource);
+            }
+            else
+            {
+                Debug.Log("Не указан проигрыватель");
+            }
         }
 
         public void PlaySound(int indexSound)

@@ -27,10 +27,15 @@ namespace Game.Environment.LModelBoard
         private PickUpItem currentItemInCell;
         private ScaleChooseObject scaleChooseObject;
         private TriggerObject triggerObject;
+        private GameBootstrap gameBootstrap;
+        private AudioClip shh;
+        private float timerShh = 10.19f;
+        private float timeShh = 10.19f;
 
         private Workbench workbench;
         private ModelBoard modelBoard;
         private Player player;
+        private AudioSource audioSourceShh;
 
         private bool isClick = false;
 
@@ -38,8 +43,10 @@ namespace Game.Environment.LModelBoard
         private Transform draggingParent;
         private int indexCellModelBoard = 0;
 
-        public void Init(ModelBoard modelBoard, Workbench workbench, Player player, TriggerObject triggerObject, Transform draggingParent, int indexCellModelBoard)
+        public void Init(ModelBoard modelBoard, Workbench workbench, Player player, TriggerObject triggerObject, Transform draggingParent, int indexCellModelBoard, GameBootstrap gameBootstrap, AudioClip shh)
         {
+            this.shh = shh;
+            this.gameBootstrap = gameBootstrap;
             this.workbench = workbench;
             this.triggerObject = triggerObject;
             this.modelBoard = modelBoard;
@@ -117,6 +124,14 @@ namespace Game.Environment.LModelBoard
             });
         }
 
+        public void OnUpdate(float deltaTime)
+        {
+            if (timerShh < timeShh)
+            {
+                timerShh += deltaTime;
+            }
+        }
+
         public void OnMouseLeftClickUpObject()
         {
              if(!modelBoard.IsEndDrag)
@@ -132,13 +147,22 @@ namespace Game.Environment.LModelBoard
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left && currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
+            {
                 modelBoard.DragItem(this);
+                audioSourceShh = gameBootstrap.OnPlayOneShotSound(shh);
+                timerShh = 0;
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left && currentItemInCell != null && modelBoard.IsOpen && !modelBoard.IsFocus)
             {
+                if (timerShh >= timeShh)
+                {
+                    audioSourceShh = gameBootstrap.OnPlayOneShotSound(shh);
+                    timerShh = 0;
+                }
                 Vector3 position = ScreenPositionInWorldPosition.GetWorldPositionOnPlaneYZ(Input.mousePosition,  modelBoard.transform.position.x);
 
                 currentItemInCell.transform.position =
@@ -152,6 +176,7 @@ namespace Game.Environment.LModelBoard
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            gameBootstrap.OnEndPlayOneSHotSound(audioSourceShh);
             if (modelBoard.IsOpen && !modelBoard.IsFocus)
                 modelBoard.DropItem(this);
         }

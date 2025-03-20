@@ -1,5 +1,6 @@
 using External.DI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
@@ -27,23 +28,33 @@ namespace Game.LPlayer
         [HideInInspector] public Action<Move> OnMove;
         [SerializeField] private NavMeshAgent navMeshAgent;
         [SerializeField] private MakePathToObject makePathToObject;
-        private bool isMove = true;
+        [SerializeField] private AudioClip steps;
+        private GameBootstrap gameBootstrap;
+        private MonoBehaviour context;
+        private bool isCanMove = true;
+        private bool isMoveNow = false;
+        private float timeStep = 0.847f;
+        private float timerStepDuration = 0.847f;
         private Move move = new Move();
 
         private Vector3 preveiusPosition;
 
-        public void Init(NavMeshAgent navMeshAgent)
+        public void Init(MonoBehaviour context, NavMeshAgent navMeshAgent, GameBootstrap gameBootstrap)
         {
+            this.context = context;
             this.navMeshAgent = navMeshAgent;
+            this.gameBootstrap = gameBootstrap;
             move.transform = navMeshAgent.transform;
             preveiusPosition = move.transform.position;
 
             Debug.Log("PlayerMouseMove: Успешно иницилизирован");
         }
 
+
         public void OnUpdate(float deltaTime)
         {
-            if (isMove && Input.GetMouseButtonDown(0))
+            PlaySoundStep(deltaTime);
+            if (isCanMove && Input.GetMouseButtonDown(0))
             {
                 Ray movePosition = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float maxdistance = 100f;
@@ -71,30 +82,52 @@ namespace Game.LPlayer
                 && horizontalPosition > verticalPosition)
             {
                 move.directionMove = DirectionMove.Right;
+                isMoveNow = true;
             }
             else if (preveiusPosition.x > currentPosition.x
                  && horizontalPosition > verticalPosition)
             {
                 move.directionMove = DirectionMove.Left;
+                isMoveNow = true;
             }
             else if (preveiusPosition.z > currentPosition.z
                  && horizontalPosition < verticalPosition)
             {
                 move.directionMove = DirectionMove.Forward;
+                isMoveNow = true;
             }
             else if (preveiusPosition.z < currentPosition.z
                  && horizontalPosition < verticalPosition)
             {
                 move.directionMove = DirectionMove.Back;
+                isMoveNow = true;
             }
             else
             {
                 move.directionMove = DirectionMove.State;
+                isMoveNow = false;
             }
 
             OnMove(move);
 
             preveiusPosition = navMeshAgent.transform.position;
+        }
+
+        private void PlaySoundStep(float deltaTime)
+        {
+            if (isMoveNow)
+            {
+                if (timerStepDuration >= timeStep)
+                {
+                    gameBootstrap.OnPlayOneShotSound(steps);
+                    timerStepDuration = 0f;
+                }
+                timerStepDuration += deltaTime;
+            }
+            if (!isMoveNow && timerStepDuration < timeStep)
+            {
+                timerStepDuration += deltaTime;
+            }
         }
 
         public void MovePlayer(Vector3 position)
@@ -103,11 +136,11 @@ namespace Game.LPlayer
         }
         public void StopPlayerMove()
         {
-            isMove = false;
+            isCanMove = false;
         }
         public void ReturnPlayerMove()
         {
-            isMove = true;
+            isCanMove = true;
         }
     }
 }

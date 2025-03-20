@@ -132,18 +132,27 @@ namespace Game.Music
         {
             yield return new WaitForSeconds(audioSource.clip.length);
             audios.Remove(audioSource);
-            GameObject.Destroy(audioSource.gameObject);
+            if (audioSource != null)
+                GameObject.Destroy(audioSource.gameObject);
         }
 
         private IEnumerator EndAudioClip(AudioSource audioSource, AudioClip audioClip)
         {
             yield return new WaitForSeconds(audioClip.length);
             audios.Remove(audioSource);
-            GameObject.Destroy(audioSource.gameObject);
+            if (audioSource != null)
+                GameObject.Destroy(audioSource.gameObject);
+        }
+
+        public void OnEndPlayOneShot(AudioSource audioSource)
+        {
+            audios.Remove(audioSource);
+            if (audioSource != null)
+                GameObject.Destroy(audioSource.gameObject);
         }
 
         // Чтобы запускать звук один раз по индексу в списке звуков
-        public void OnPlayOneShot(int indexSound)
+        public AudioSource OnPlayOneShot(int indexSound)
         {
             if (indexSound >= 0 && indexSound <= soundClips.Count)
             {
@@ -154,13 +163,17 @@ namespace Game.Music
                 audio.PlayOneShot(soundClips[indexSound].audioClip);
 
                 context.StartCoroutine(EndAudioClip(audio, soundClips[indexSound].audioClip));
+                return audio;
             }
             else
+            {
                 Debug.LogError("Выход за рамки массива звуков");
+                return null;
+            }
         }
 
         // Чтобы запускать звук один раз по исходному файлу звука
-        public void OnPlayOneShot(AudioClip audioClip)
+        public AudioSource OnPlayOneShot(AudioClip audioClip)
         {
             AudioSource audio = GameObject.Instantiate(prefabAudioSource);
             audio.loop = false;
@@ -169,9 +182,10 @@ namespace Game.Music
             audio.PlayOneShot(audioClip);
 
             context.StartCoroutine(EndAudioClip(audio, audioClip));
+            return audio;
         }
         // Запуск звука с режимом бесконечного повторения
-        public void OnPlayLoop(int indexSound)
+        public AudioSource OnPlayLoop(int indexSound)
         {
             if (indexSound >= 0 && indexSound <= soundClips.Count)
             {
@@ -181,11 +195,15 @@ namespace Game.Music
                 audio.Play();
 
                 audios.Add(audio);
+                return audio;
             }
             else
+            {
                 Debug.LogError("Выход за рамки массива звуков");
+                return null;
+            }
         }
-        public void OnPlayLoop(AudioClip audioClip)
+        public AudioSource OnPlayLoop(AudioClip audioClip)
         {
             AudioSource audio = GameObject.Instantiate(prefabAudioSource);
             audio.loop = true;
@@ -193,9 +211,10 @@ namespace Game.Music
             audio.Play();
 
             audios.Add(audio);
+            return audio;
         }
 
-        public void PlaySound(int indexSound)
+        public AudioSource PlaySound(int indexSound)
         {
             if (indexSound >= 0 && indexSound <= soundClips.Count)
             {
@@ -206,11 +225,15 @@ namespace Game.Music
 
                 audios.Add(audio);
 
-                if(!audio.loop)
+                if (!audio.loop)
                     context.StartCoroutine(EndAudioClip(audio));
+                return audio;
             }
             else
+            {
                 Debug.LogError("Выход за рамки массива звуков");
+                return null;
+            }
         }
         // Остановить воспроизведение звуков
         public void Stop()

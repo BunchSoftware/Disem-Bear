@@ -31,11 +31,14 @@ namespace Game.Environment.Aquarium
         private SpriteRenderer ChoiceCellSprite;
         private SpriteRenderer spriteRenderer;
         private ParticleSystem particleSystem;
+        private GameBootstrap gameBootstrap;
         private GameObject DisplayCount;
         [SerializeField] private ChangeCell buttonLeft;
         [SerializeField] private ChangeCell buttonRight;
         [Header("GetCellsSounds")]
         [SerializeField] private List<AudioClip> getCellsSounds = new();
+        [Header("ChangeMaterialSounds")]
+        [SerializeField] private List<AudioClip> changeMaterialSounds = new();
 
         private int CountCells = 0;
 
@@ -43,6 +46,7 @@ namespace Game.Environment.Aquarium
 
         public void Init(Player player, GameBootstrap gameBootstrap)
         {
+            this.gameBootstrap = gameBootstrap;
             for (int i = 0; i < InspectorSpawners.Count; i++)
             {
                 Spawners[InspectorSpawners[i].GetIngradient().typeIngradient] = InspectorSpawners[i];
@@ -62,11 +66,10 @@ namespace Game.Environment.Aquarium
 
             GetAquariumCells.AddListener((nameCell, countCell) =>
             {
-                if (getCellsSounds.Count > 0)
-                    gameBootstrap.OnPlayOneShotSound(getCellsSounds[(int)(Time.deltaTime % getCellsSounds.Count)]);
+                gameBootstrap.OnPlayOneShotRandomSound(getCellsSounds);
             });
 
-            UpdateMaterial(materialForAquarium);
+            QuietUpdateMaterial(materialForAquarium);
 
             buttonLeft.Init(this);
             buttonRight.Init(this);
@@ -134,10 +137,35 @@ namespace Game.Environment.Aquarium
             }
         }
 
+        public void QuietUpdateMaterial(MaterialForAquarium materialForAquarium)
+        {
+            if (materialForAquarium != null)
+            {
+                currentCells = new List<string>(materialForAquarium.cells);
+                if (currentCells.Count > 1)
+                {
+                    buttonLeft.SetOn();
+                    buttonRight.SetOn();
+                }
+                else
+                {
+                    buttonLeft.SetOff();
+                    buttonRight.SetOff();
+                }
+                colorMaterial = materialForAquarium.colorMaterial;
+                timeMaterial = materialForAquarium.TimeMaterial;
+                CountCells = 0;
+                NumCell = 0;
+                ChoiceCellSprite.sprite = Spawners[currentCells[NumCell]].GetSpriteIngradient();
+                spendTimeCreateCell = 0;
+            }
+        }
+
         public void UpdateMaterial(MaterialForAquarium materialForAquarium)
         {
             if (materialForAquarium != null)
             {
+                gameBootstrap.OnPlayOneShotRandomSound(changeMaterialSounds);
                 currentCells = new List<string>(materialForAquarium.cells);
                 if (currentCells.Count > 1)
                 {
@@ -195,6 +223,7 @@ namespace Game.Environment.Aquarium
 
             CountCells = 0;
         }
+
 
         IEnumerator WaitParticleSystem(float f)
         {

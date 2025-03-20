@@ -12,20 +12,26 @@ public class TV : MonoBehaviour, IUpdateListener
     [SerializeField] private TriggerObject triggerObject;
     public UnityEvent OnTVOpen;
     public UnityEvent OnTVClose;
+    [SerializeField] private AudioClip TVOn;
+    [SerializeField] private AudioClip TVOff;
 
 
     private OpenObject openObject;
 
-    public void Init(PlayerMouseMove playerMouseMove, Player player)
+    public void Init(PlayerMouseMove playerMouseMove, Player player, GameBootstrap gameBootstrap)
     {
         openObject = GetComponent<OpenObject>();
-
+        openObject.OnStartObjectOpen.AddListener(() =>
+        {
+            gameBootstrap.OnPlayOneShotSound(TVOn);
+        });
         openObject.OnEndObjectOpen.AddListener(() =>
         {
             OnTVOpen.Invoke();
         });
         openObject.OnStartObjectClose.AddListener(() =>
         {
+            gameBootstrap.OnPlayOneShotSound(TVOff);
             OnTVClose.Invoke();
         });
 

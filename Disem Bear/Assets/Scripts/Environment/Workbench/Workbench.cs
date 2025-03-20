@@ -100,9 +100,9 @@ namespace Game.Environment.LMixTable
             if (clearButton == null)
                 Debug.LogError("Ошибка. Не добавлен ClearButton");
 
-            mixButton.Init(this);
-            pickUpButton.Init(this);
-            clearButton.Init(this);
+            mixButton.Init(this, gameBootstrap);
+            pickUpButton.Init(this, gameBootstrap);
+            clearButton.Init(this, gameBootstrap);
 
             mixButton.SetActive(false);
             pickUpButton.SetActive(false);
@@ -188,8 +188,7 @@ namespace Game.Environment.LMixTable
 
             OnMixIngradients.AddListener(() =>
             {
-                if (soundsCraftCells.Count > 0)
-                    this.gameBootstrap.OnPlayOneShotSound(soundsCraftCells[(int)(Time.deltaTime % soundsCraftCells.Count)]);
+                gameBootstrap.OnPlayOneShotRandomSound(soundsCraftCells);
             });
 
             Debug.Log("Workbench: Успешно иницилизирован");

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using External.DI;
+using UnityEngine;
 
 
 namespace Game.Environment.LMixTable
@@ -7,15 +8,18 @@ namespace Game.Environment.LMixTable
     {
         [SerializeField] private Material deactiveMaterial;
         [SerializeField] private MeshRenderer meshRendererBase;
+        [SerializeField] private AudioClip audioClip;
 
         private MeshRenderer meshRenderer;
         private Material activeMaterial;
         private Workbench workbench;
+        private GameBootstrap gameBootstrap;
 
         private bool isActive = true;
 
-        public void Init(Workbench workbench)
+        public void Init(Workbench workbench, GameBootstrap gameBootstrap)
         {
+            this.gameBootstrap = gameBootstrap;
             this.workbench = workbench;
             meshRenderer = GetComponent<MeshRenderer>();
             activeMaterial = meshRenderer.material;
@@ -41,6 +45,7 @@ namespace Game.Environment.LMixTable
         {
             if(isActive)
             {
+                gameBootstrap.OnPlayOneShotSound(audioClip);
                 workbench.PickUpItem();
                 transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
             }

@@ -21,6 +21,7 @@ namespace Game.Environment.LModelBoard
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
         [SerializeField] private PlaceBoard placeBoard;
+        [SerializeField] private AudioClip shh;
 
         [Header("Focus Item")]
         public float coefficientScaleItem = 1.08f;
@@ -57,7 +58,7 @@ namespace Game.Environment.LModelBoard
         public bool IsEndDrag => isEndDrag;
         private bool isEndDrag = false;
 
-        public void Init(Workbench workbench, Player player, PlayerMouseMove playerMouseMove)
+        public void Init(Workbench workbench, Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
             this.player = player;
             this.playerMouseMove = playerMouseMove;
@@ -138,7 +139,7 @@ namespace Game.Environment.LModelBoard
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
-                cellBoards[i].Init(this, workbench, player, triggerObject, transform, i);
+                cellBoards[i].Init(this, workbench, player, triggerObject, transform, i, gameBootstrap, shh);
             }
 
             Debug.Log("ModelBoard: Успешно иницилизирован");
@@ -230,6 +231,10 @@ namespace Game.Environment.LModelBoard
         {
             if(openObject != null)
                 openObject.OnUpdate(deltaTime);
+            for (int i = 0; i < cellBoards.Count; i++)
+            {
+                cellBoards[i].OnUpdate(deltaTime);
+            }
         }
 
         public void DragItem(CellModelBoard cellModelBoard)

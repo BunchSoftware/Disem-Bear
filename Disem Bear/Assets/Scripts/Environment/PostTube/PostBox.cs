@@ -137,9 +137,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     {
         lukeAnimator.StopPlayback();
         lukeAnimator.Play("LukeOpen");
-        if (soundsLuke.Count > 0) {
-            gameBootstrap.OnPlayOneShotSound(soundsLuke[(int)(Time.deltaTime % soundsLuke.Count)]);
-        }
+        gameBootstrap.OnPlayOneShotRandomSound(soundsLuke);
         yield return new WaitForSeconds(t);
         movePointToPoint.StartMoveTo(timeBoxFallDown);
         yield return new WaitForSeconds(timeBoxFallDown + 0.5f);
@@ -176,4 +174,5 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     {
         isClick = false;
     }
+
 }
