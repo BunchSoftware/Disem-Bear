@@ -209,9 +209,9 @@ namespace External.Storage
 
         public static async void UpdateShopFile()
         {
-            await Task.Run(() =>
+            if (filePlayer.JSONPlayer.nameUser != "" && fileShop.JSONShop.nameShop != "")
             {
-                if (filePlayer.JSONPlayer.nameUser != "" && fileShop.JSONShop.nameShop != "")
+                await Task.Run(() =>
                 {
                     apiManager.SetResourceShopPlayer(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, fileShop.JSONShop.resources);
 
@@ -228,16 +228,16 @@ namespace External.Storage
                     apiManager.CreateLogShop(filePlayer.JSONPlayer.nameUser, fileShop.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
                     SaveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
 
-                    OnUpdateShopFile?.Invoke();
-                }
-            });
+                });
+                OnUpdateShopFile?.Invoke();
+            }
         }
 
         public static async void UpdatePlayerFile()
         {
-            await Task.Run(() =>
+            if (filePlayer.JSONPlayer.nameUser != "")
             {
-                if (filePlayer.JSONPlayer.nameUser != "")
+                await Task.Run(() =>
                 {
                     apiManager.SetResourcePlayer(filePlayer.JSONPlayer.nameUser, filePlayer.JSONPlayer.resources);
                     ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
@@ -263,16 +263,11 @@ namespace External.Storage
 
                     apiManager.CreateLogPlayer(filePlayer.JSONPlayer.nameUser, "Данные игрока были изменены", resourceChangedPlayer);
                     SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
-
-                    A();
-                }
-            });
+                });
+                OnUpdatePlayerFile?.Invoke();
+            }
         }
 
-        public static void A()
-        {
-            OnUpdatePlayerFile?.Invoke();
-        }
 
         public static async void ChangeMagnetSave(MagnetData magnetSave)
         {

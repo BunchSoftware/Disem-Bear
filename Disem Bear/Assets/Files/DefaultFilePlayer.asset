@@ -20,10 +20,17 @@ MonoBehaviour:
       currentIndexDialog: 0
       exercises:
       - indexExercise: 0
-        typeOfExerciseCompletion: 2
-        isVisible: 1
+        internalExercisesData:
+        - indexExercise: 0
+          internalExercisesData: []
+          typeOfExerciseCompletion: 2
+          isVisible: 1
+          isGetExerciesItems: 0
+        typeOfExerciseCompletion: 1
+        isVisible: 0
         isGetExerciesItems: 0
       - indexExercise: 1
+        internalExercisesData: []
         typeOfExerciseCompletion: 2
         isVisible: 1
         isGetExerciesItems: 0

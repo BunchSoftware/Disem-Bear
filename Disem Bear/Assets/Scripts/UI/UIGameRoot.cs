@@ -93,5 +93,10 @@ namespace UI
         {
             return exerciseManager;
         }
+
+        public void OnDestroy()
+        {
+            resourceManager.Dispose();
+        }
     }
 }

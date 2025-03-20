@@ -10,6 +10,7 @@ namespace External.Storage
     public class ExerciseData
     {
         public int indexExercise;
+        public List<ExerciseData> internalExercisesData;
         public TypeOfExerciseCompletion typeOfExerciseCompletion;
         public bool isVisible = true;
         public bool isGetExerciesItems;
