@@ -15,7 +15,7 @@ public class PutSeal : MonoBehaviour, IPointerDownHandler
     }
     IEnumerator NextScene()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Fader.SetActive(true);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(3);
