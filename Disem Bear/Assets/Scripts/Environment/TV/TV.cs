@@ -21,12 +21,9 @@ public class TV : MonoBehaviour, IUpdateListener
     public void Init(PlayerMouseMove playerMouseMove, Player player, GameBootstrap gameBootstrap)
     {
         openObject = GetComponent<OpenObject>();
-        openObject.OnStartObjectOpen.AddListener(() =>
-        {
-            gameBootstrap.OnPlayOneShotSound(TVOn);
-        });
         openObject.OnEndObjectOpen.AddListener(() =>
         {
+            gameBootstrap.OnPlayOneShotSound(TVOn);
             OnTVOpen.Invoke();
         });
         openObject.OnStartObjectClose.AddListener(() =>
@@ -39,6 +36,7 @@ public class TV : MonoBehaviour, IUpdateListener
 
         Debug.Log("TV: Успешно иницилизирован");
     }
+
 
     public void OnUpdate(float deltaTime)
     {

@@ -12,6 +12,8 @@ namespace Game.Environment.LMixTable
         [SerializeField] private Material deactiveMaterial;
         [SerializeField] private MeshRenderer meshRendererBase;
         [SerializeField] private AudioClip audioClip;
+        private float timerPressButton = 25f / 60f;
+        private float timePressButton = 25f / 60f;
 
         private MeshRenderer meshRenderer;
         private Material activeMaterial;
@@ -27,7 +29,13 @@ namespace Game.Environment.LMixTable
             meshRenderer = GetComponent<MeshRenderer>();
             activeMaterial = meshRenderer.material;
         }
-
+        public void OnUpdate(float deltaTime)
+        {
+            if (timerPressButton < timePressButton)
+            {
+                timerPressButton += deltaTime;
+            }
+        }
         public void SetActive(bool isActive)
         {
             if(isActive)
@@ -48,7 +56,11 @@ namespace Game.Environment.LMixTable
         {
             if(isActive)
             {
-                gameBootstrap.OnPlayOneShotSound(audioClip);
+                if (timerPressButton >= timePressButton)
+                {
+                    gameBootstrap.OnPlayOneShotSound(audioClip);
+                    timerPressButton = 0;
+                }
                 workbench.MixIngradients();
                 transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
             }

@@ -195,6 +195,15 @@ namespace Game.Environment.LMixTable
         
         }
 
+        public void OnUpdate(float deltaTime)
+        {
+            if (openObject != null)
+                openObject.OnUpdate(deltaTime);
+            mixButton.OnUpdate(deltaTime);
+            pickUpButton.OnUpdate(deltaTime);
+            clearButton.OnUpdate(deltaTime);
+        }
+
         public static void ReplaceIngradientData(IngradientData ingradientData)
         {
             for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; i++)
@@ -794,11 +803,7 @@ namespace Game.Environment.LMixTable
         }
 
 
-        public void OnUpdate(float deltaTime)
-        {
-            if (openObject != null)
-                openObject.OnUpdate(deltaTime);
-        }
+        
 
         public void AddIngradient(IngradientData ingradient)
         {
