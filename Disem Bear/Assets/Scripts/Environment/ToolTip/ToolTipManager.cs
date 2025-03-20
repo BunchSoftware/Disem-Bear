@@ -39,6 +39,13 @@ public class ToolTipManager : MonoBehaviour
         Vector2 localPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponent<RectTransform>(), Input.mousePosition, uiCamera, out localPosition);
         transform.localPosition = localPosition;
+
+        Vector2 corner = new Vector2(
+            ((Input.mousePosition.x > (Screen.width / 2f)) ? 1f : 0f),
+            0f
+        );
+
+        (this.transform as RectTransform).pivot = corner;
     }
 
     public void ToolTipOn(string message)
