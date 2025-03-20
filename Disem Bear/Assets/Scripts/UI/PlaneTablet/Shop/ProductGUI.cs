@@ -13,7 +13,9 @@ namespace UI.PlaneTablet.Shop
         [SerializeField] private Text headerText;
         [SerializeField] private Text priceText;
         [SerializeField] private Text countProductText;
+        [SerializeField] private Image avatarRewardMask;
         [SerializeField] private Image avatarReward;
+        [SerializeField] private Image avatarPriceMask;
         [SerializeField] private Image avatarPrice;
         [SerializeField] private ToolTipTrigger toolTipTrigger;
         private Product product;
@@ -38,7 +40,17 @@ namespace UI.PlaneTablet.Shop
             headerText.text = product.header;
             toolTipTrigger.message = product.description;
             avatarReward.sprite = product.reward.avatarReward;
-            avatarPrice.sprite = product.avatarPriceProduct;
+           
+            if(product.price > 0)
+            {
+                avatarPriceMask.gameObject.SetActive(true);
+                avatarPrice.sprite = product.avatarPriceProduct;
+            }
+            else
+            {
+                avatarPriceMask.gameObject.SetActive(false);
+                avatarPrice.sprite = null;
+            }
 
             if (product.reward.countReward == -1)
                 countProductText.gameObject.SetActive(false);
@@ -55,7 +67,11 @@ namespace UI.PlaneTablet.Shop
 
             countProductText.text = $"{product.reward.countReward}x";
             priceText.gameObject.SetActive(true);
-            priceText.text = $"{product.price}x";
+
+            if(product.price > 0)
+                priceText.text = $"{product.price}x";
+            else
+                priceText.text = $"Бесплатно";
         }
 
         public Product GetProduct()

@@ -29,6 +29,8 @@ namespace UI.PlaneTablet.Exercise
     {
         private bool isCompletedExercise = false;
 
+        public List<Exercise> internalExercises;
+
         public List<Reward> exerciseRewards;
         public List<Requirement> exerciseRequirements;
         public List<ExerciseItem> exerciseItems;

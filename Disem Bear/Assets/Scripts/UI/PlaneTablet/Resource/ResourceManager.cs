@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public class ResourceManager
+public class ResourceManager : IDisposable
 {
     [SerializeField] private GameObject prefabeResourceGUI;
     [SerializeField] private GameObject content;
@@ -44,21 +44,28 @@ public class ResourceManager
             }
         }
 
-        SaveManager.OnUpdatePlayerFile += () =>
-        {
-            for (int i = 0; i < resourceGUIs.Count; i++)
-            {
-                if (resourceGUIs[i].GetResourceData().typeResource == SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient)
-                {
-                    ResourceData resourceData = new ResourceData();
-                    resourceData.headerResource = fileResources.resources[i].headerResource;
-                    resourceData.typeResource = fileResources.resources[i].typeResource;
-                    resourceData.countResource = SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].countIngradient;
-                    resourceData.iconResource = fileResources.resources[i].iconResource;
+        SaveManager.OnUpdatePlayerFile += UpdatePlayerFile;
+    }
 
-                    resourceGUIs[i].UpdateData(resourceData);
-                }
+    private void UpdatePlayerFile()
+    {
+        for (int i = 0; i < resourceGUIs.Count; i++)
+        {
+            if (resourceGUIs[i].GetResourceData().typeResource == SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient)
+            {
+                ResourceData resourceData = new ResourceData();
+                resourceData.headerResource = fileResources.resources[i].headerResource;
+                resourceData.typeResource = fileResources.resources[i].typeResource;
+                resourceData.countResource = SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].countIngradient;
+                resourceData.iconResource = fileResources.resources[i].iconResource;
+
+                resourceGUIs[i].UpdateData(resourceData);
             }
-        };
+        }
+    }
+
+    public void Dispose()
+    {
+        SaveManager.OnUpdatePlayerFile -= UpdatePlayerFile;
     }
 }

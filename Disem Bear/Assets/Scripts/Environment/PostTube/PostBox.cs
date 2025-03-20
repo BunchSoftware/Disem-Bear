@@ -18,6 +18,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     [SerializeField] private float timeBoxFallUp = 1f;
     [SerializeField] private float timeLukeOpen = 0.5f;
     [SerializeField] private Animator lukeAnimator;
+
     private Player player;
     private ExerciseManager exerciseManager;
     private MovePointToPoint movePointToPoint;
@@ -25,7 +26,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private ToolBase toolBase;
 
     private bool itemInBox = false;
-    public Action<bool> OnItemInBox;
+    public Action OnPostBoxEmpty;
     private PickUpItem pickUpItemInBox;
 
     public List<string> nameRequirements;
@@ -42,6 +43,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     {
         this.gameBootstrap = gameBootstrap;
         toolBase = GetComponent<ToolBase>();
+
         TV.OnTVClose.AddListener(() =>
         {
             if (itemInBox)
@@ -49,6 +51,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 CheckItemInBox(pickUpItemInBox);
             }
         });
+
         movePointToPoint = GetComponent<MovePointToPoint>();
         this.toastManager = toastManager;
         this.player = player;
@@ -87,6 +90,8 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 }
             }
         });
+
+
         if (itemInBox)
         {
             toolBase.on = true;
@@ -102,7 +107,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     {
         pickUpItemInBox = pickUpItem;
         itemInBox = true;
-        OnItemInBox?.Invoke(itemInBox);
         pickUpItemInBox.transform.parent = transform;
         pickUpItemInBox.transform.position = transform.position;
 
@@ -142,8 +146,9 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         movePointToPoint.StartMoveTo(timeBoxFallDown);
         yield return new WaitForSeconds(timeBoxFallDown + 0.5f);
         Destroy(pickUpItemInBox.gameObject);
+
         itemInBox = false;
-        OnItemInBox?.Invoke(itemInBox);
+        OnPostBoxEmpty?.Invoke();
         pickUpItemInBox = null;
         transform.position = startPointObject.position;
         movePointToPoint.StartMoveTo(timeBoxFallUp);
@@ -152,7 +157,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     public PickUpItem PickUpItemInBox()
     {
         itemInBox = false;
-        OnItemInBox?.Invoke(itemInBox);
+        OnPostBoxEmpty?.Invoke();
         PickUpItem temp = pickUpItemInBox;
         pickUpItemInBox = null;
         toolBase.on = false;
