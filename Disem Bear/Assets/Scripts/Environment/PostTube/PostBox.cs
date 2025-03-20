@@ -35,8 +35,10 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private bool isClick = false;
     private GameBootstrap gameBootstrap;
 
-    [Header("soundsLuke")]
     [SerializeField] private List<AudioClip> soundsLuke = new();
+    [SerializeField] private List<AudioClip> soundsDropItem = new();
+    [SerializeField] private List<AudioClip> soundsPickUpItem = new();
+    [SerializeField] private List<AudioClip> soundsBoxDropDown = new();
 
 
     public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
@@ -74,6 +76,8 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 isClick = false;
                 if (this.player.PlayerPickUpItem && itemInBox)
                 {
+                    gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
+                    gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                     PickUpItem playerPickUpItem = player.GetPickUpItem();
                     player.PutItem();
                     player.PickUpItem(PickUpItemInBox());
@@ -81,11 +85,13 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 }
                 else if (this.player.PlayerPickUpItem && itemInBox == false)
                 {
+                    gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
                     PutItemInBox(player.GetPickUpItem());
                     player.PutItem();
                 }
                 else if (this.player.PlayerPickUpItem == false && itemInBox)
                 {
+                    gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                     player.PickUpItem(PickUpItemInBox());
                 }
             }
@@ -152,6 +158,8 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         pickUpItemInBox = null;
         transform.position = startPointObject.position;
         movePointToPoint.StartMoveTo(timeBoxFallUp);
+        yield return new WaitForSeconds(timeBoxFallUp);
+        gameBootstrap.OnPlayOneShotRandomSound(soundsBoxDropDown);
     }
 
     public PickUpItem PickUpItemInBox()

@@ -40,6 +40,7 @@ namespace Game.Environment.LPostTube
         private GameBootstrap gameBootstrap;
         [Header("SoundsPackageCrash")]
         [SerializeField] private List<AudioClip> soundsPackageCrash = new();
+        [SerializeField] private List<AudioClip> soundsPackageFall = new();
 
         private bool itemFlies = false;
 
@@ -64,6 +65,7 @@ namespace Game.Environment.LPostTube
         {
 
             GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
+            gameBootstrap.OnPlayOneShotRandomSound(soundsPackageFall);
 
             Collider colliderCurrentFallObject;
             Vector3 lastDownPointPosition = downPointObject.position;
@@ -146,10 +148,7 @@ namespace Game.Environment.LPostTube
         IEnumerator PostBoxGetPackage(float t, PickUpItem pickUpItem)
         {
             yield return new WaitForSeconds(t);
-            if (soundsPackageCrash.Count > 0)
-            {
-                gameBootstrap.OnPlayOneShotSound(soundsPackageCrash[(int)(Time.deltaTime % soundsPackageCrash.Count)]);
-            }
+            gameBootstrap.OnPlayOneShotRandomSound(soundsPackageCrash);
             postBox.PutItemInBox(pickUpItem);
             itemFlies = false;
         }

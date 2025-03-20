@@ -49,7 +49,7 @@ namespace Game.Environment
 
             for (int i = 0; i < tablesWithItems.Count; i++)
             {
-                tablesWithItems[i].Init(player);
+                tablesWithItems[i].Init(player, gameBootstrap);
             }
 
             for (int i = 0; i < aquariumOpens.Count; i++)

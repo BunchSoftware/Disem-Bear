@@ -1,3 +1,4 @@
+using External.DI;
 using External.Storage;
 using Game.Environment.Item;
 using Game.LPlayer;
@@ -16,10 +17,9 @@ namespace Game.Environment.LTableWithItems
 
         private Player player;
 
-        public void Init(Player player)
+        public void Init(Player player, GameBootstrap gameBootstrap)
         {
             this.player = player;
-
 
             if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems == null)
             {
@@ -72,7 +72,7 @@ namespace Game.Environment.LTableWithItems
 
             for (int i = 0; i < cellTables.Count; i++)
             {
-                cellTables[i].Init(this, player, i);
+                cellTables[i].Init(this, player, i, gameBootstrap);
             }
         }
     }

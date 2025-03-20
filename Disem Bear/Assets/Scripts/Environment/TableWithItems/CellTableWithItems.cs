@@ -30,7 +30,10 @@ namespace Game.Environment.LTableWithItems
         private bool isClick = false;
         private int indexCellTableWithItems = 0;
 
-        public void Init(TableWithItems tableWithItems, Player player, int indexCellModelBoard)
+        [SerializeField] private List<AudioClip> soundsPutItem = new();
+        [SerializeField] private List<AudioClip> soundsPickUpItem = new();
+
+        public void Init(TableWithItems tableWithItems, Player player, int indexCellModelBoard, GameBootstrap gameBootstrap)
         {
             triggerObject = transform.Find("TriggerObject").GetComponent<TriggerObject>();
             boxCollider = GetComponent<BoxCollider>();
@@ -73,6 +76,7 @@ namespace Game.Environment.LTableWithItems
                     isClick = false;
                     if (player.PlayerPickUpItem && PutItem(player.GetPickUpItem()))
                     {
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsPutItem);
                         player.PutItem();
                         Debug.Log("Я положил предмет в Table");
                     }
@@ -83,11 +87,14 @@ namespace Game.Environment.LTableWithItems
 
                     if (player.PlayerPickUpItem == false)
                     {
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                         player.PickUpItem(PickUpItemInCell());
                         Debug.Log("Я поднял предмет из Table");
                     }
                     else
                     {
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsPutItem);
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                         ChangeItems(player.GetPickUpItem(), currentItemInCell);
                     }
                 }
