@@ -7,7 +7,11 @@ public class LetterTouch : MonoBehaviour, IPointerDownHandler
 {
     private Animator animator;
     [SerializeField] private GameObject Flare;
-    [SerializeField] private GameObject letterText;
+    //[SerializeField] private GameObject letterText;
+    [SerializeField] private Transform letterBG;
+    [SerializeField] private Transform letterText;
+    [SerializeField] private Transform letterDown;
+    [SerializeField] private Transform letterUp;
     private List<string> bools = new List<string>() { "First", "Second", "Third" };
     private int index = 0;
 
@@ -22,6 +26,13 @@ public class LetterTouch : MonoBehaviour, IPointerDownHandler
         index %= bools.Count;
     }
 
+    public void LetterMoveDown()
+    {
+        letterUp.SetSiblingIndex(1);
+        letterText.SetSiblingIndex(2);
+        letterDown.SetSiblingIndex(3);
+    }
+
     public void FlareOn()
     {
         Flare.SetActive(true);
@@ -31,7 +42,7 @@ public class LetterTouch : MonoBehaviour, IPointerDownHandler
     private IEnumerator OffLetter()
     {
         yield return new WaitForSeconds(0.8f);
-        letterText.SetActive(true);
+        //letterText.SetActive(true);
         Destroy(gameObject);
     }
 }
