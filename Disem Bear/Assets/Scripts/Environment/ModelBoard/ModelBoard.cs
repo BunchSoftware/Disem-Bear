@@ -84,7 +84,7 @@ namespace Game.Environment.LModelBoard
                 OnEndModelBoardClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
-            placeBoard.Init(player);
+            placeBoard.Init(player, gameBootstrap);
 
             if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards == null)
             {

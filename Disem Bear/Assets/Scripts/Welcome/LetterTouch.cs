@@ -7,6 +7,7 @@ public class LetterTouch : MonoBehaviour, IPointerDownHandler
 {
     private Animator animator;
     [SerializeField] private GameObject Flare;
+    [SerializeField] private GameObject letterText;
     private List<string> bools = new List<string>() { "First", "Second", "Third" };
     private int index = 0;
 
@@ -30,6 +31,7 @@ public class LetterTouch : MonoBehaviour, IPointerDownHandler
     private IEnumerator OffLetter()
     {
         yield return new WaitForSeconds(0.8f);
+        letterText.SetActive(true);
         Destroy(gameObject);
     }
 }

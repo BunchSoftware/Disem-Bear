@@ -1,3 +1,4 @@
+using System.Collections;
 using External.DI;
 using Game.Environment;
 using Game.LPlayer;
@@ -11,16 +12,18 @@ public class TV : MonoBehaviour, IUpdateListener
     public UnityEvent OnTVClose;
     [SerializeField] private AudioClip TVOn;
     [SerializeField] private AudioClip TVOff;
+    private GameBootstrap gameBootstrap;
 
 
     private OpenObject openObject;
 
     public void Init(PlayerMouseMove playerMouseMove, Player player, GameBootstrap gameBootstrap)
     {
+        this.gameBootstrap = gameBootstrap;
         openObject = GetComponent<OpenObject>();
         openObject.OnEndObjectOpen.AddListener(() =>
         {
-            gameBootstrap.OnPlayOneShotSound(TVOn);
+            StartCoroutine(TVSound());
             OnTVOpen.Invoke();
         });
         openObject.OnStartObjectClose.AddListener(() =>
@@ -34,6 +37,11 @@ public class TV : MonoBehaviour, IUpdateListener
         Debug.Log("TV: Успешно иницилизирован");
     }
 
+    IEnumerator TVSound()
+    {
+        yield return new WaitForSeconds(34f / 60f);
+        gameBootstrap.OnPlayOneShotSound(TVOn);
+    }
 
     public void OnUpdate(float deltaTime)
     {
