@@ -29,15 +29,19 @@ namespace UI.PlaneTablet.Exercise
     {
         private bool isCompletedExercise = false;
 
-        public List<Exercise> internalExercises;
-
+        public string nameExercise;
+        [Header("Награды, требования, квестовые предметы")]
         public List<Reward> exerciseRewards;
         public List<Requirement> exerciseRequirements;
         public List<ExerciseItem> exerciseItems;
 
+        [Header("Задания, которые откроятся после завершения этого задания")]
+        public List<FileExercise> newExercises;
+
+        [Header("Настройка графического соправождения")]
         public string header;
         public bool isMail = false;
-        public bool isRandomMail = false;
+        public bool isRandom = false;
         [TextArea(10, 100)]
         public string description;
         public Sprite avatar;

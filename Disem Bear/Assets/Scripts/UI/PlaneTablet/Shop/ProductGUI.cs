@@ -9,15 +9,19 @@ namespace UI.PlaneTablet.Shop
 {
     public class ProductGUI : MonoBehaviour
     {
+        [Header("General")]
         [SerializeField] private Button buyButton;
         [SerializeField] private Text headerText;
         [SerializeField] private Text priceText;
         [SerializeField] private Text countProductText;
+        [Header("Avatar")]
         [SerializeField] private Image avatarRewardMask;
         [SerializeField] private Image avatarReward;
         [SerializeField] private Image avatarPriceMask;
         [SerializeField] private Image avatarPrice;
+        [Header("Tooltip")]
         [SerializeField] private ToolTipTrigger toolTipTrigger;
+
         private Product product;
         private Action ActionRemove;
 

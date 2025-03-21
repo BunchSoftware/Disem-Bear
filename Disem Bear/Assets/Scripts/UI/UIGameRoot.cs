@@ -31,7 +31,7 @@ namespace UI
         {
             settingsController.Init();
             dialogManager.Init(this, soundManager);
-            shopManager.Init(this, toastManager);
+            shopManager.Init(this, tv, toastManager);
             exerciseManager.Init(tv, toastManager, this);
             dialogChat.Init(this);
             resourceManager.Init();

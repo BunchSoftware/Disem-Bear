@@ -63,7 +63,6 @@ namespace Game.Environment.LPostTube
 
         private void ObjectFallAction(GameObject prefab)
         {
-
             GameObject currentFallObject = Instantiate(prefab, startPointObject.position, prefab.transform.rotation);
             gameBootstrap.OnPlayOneShotRandomSound(soundsPackageFall);
 

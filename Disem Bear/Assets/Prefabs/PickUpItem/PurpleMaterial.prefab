@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8688015039957210573}
   - component: {fileID: -6294354169033900209}
   - component: {fileID: 3603904464398369686}
+  - component: {fileID: 9172642022863785659}
   m_Layer: 7
   m_Name: PurpleMaterial
   m_TagString: Untagged
@@ -75,7 +76,7 @@ MonoBehaviour:
   IsClickedRightMouseButton: 0
   CanTakeByCollisionPlayer: 1
   typeItem: 4
-  NameItem: PurpleMaterial
+  NameItem: purpleMaterial
 --- !u!54 &4036968444998537156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -149,6 +150,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point1: {fileID: 0}
   point2: {fileID: 0}
+--- !u!114 &9172642022863785659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522447525192828825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9ab426f04c5734599cb611eace5cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipText: 
+  on: 0
 --- !u!1 &8256711546220021766
 GameObject:
   m_ObjectHideFlags: 0

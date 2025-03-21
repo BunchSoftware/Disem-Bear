@@ -21,6 +21,14 @@ namespace UI.PlaneTablet.Shop
     }
 
     [Serializable]
+    public class DispensingTask
+    {
+        public TypeMachineDispensingProduct typeMachineDispensingProduct;
+        public Reward reward;
+        public ExerciseItem exerciseItem;
+    }
+
+    [Serializable]
     public class ShopManager
     {
         [SerializeField] private GameObject prefab;
@@ -35,7 +43,9 @@ namespace UI.PlaneTablet.Shop
         private List<ProductGUI> productsGUIs = new List<ProductGUI>();
         public Action<Product> OnBuyProduct;
 
-        public void Init(MonoBehaviour context, ToastManager toastManager)
+        private Queue<DispensingTask> dispensingTasks = new Queue<DispensingTask>();
+
+        public void Init(MonoBehaviour context, TV tv, ToastManager toastManager)
         {
             this.toastManager = toastManager;
             this.context = context;
@@ -95,6 +105,15 @@ namespace UI.PlaneTablet.Shop
                 }, products[i]);
             }
             Sort();
+
+            tv.OnTVClose.AddListener(() =>
+            {
+                if(dispensingTasks.Count > 0)
+                {
+                    DispensingTask dispensingTask = dispensingTasks.Dequeue();
+                    dispensingTask.typeMachineDispensingProduct.OnGetReward?.Invoke(dispensingTask.reward);
+                }
+            });
         }
 
         private Product FindProductToFileProducts(string typeReward)
@@ -172,7 +191,11 @@ namespace UI.PlaneTablet.Shop
                 {
                     if (typeGiveProducts[i].typeMachineDispensingProduct == product.reward.typeMachineDispensingReward)
                     {
-                        typeGiveProducts[i].OnGetReward?.Invoke(product.reward);
+                        DispensingTask dispensingTask = new DispensingTask();
+                        dispensingTask.typeMachineDispensingProduct = typeGiveProducts[i];
+                        dispensingTask.reward = product.reward;
+
+                        dispensingTasks.Enqueue(dispensingTask);
                     }
                 }
             }

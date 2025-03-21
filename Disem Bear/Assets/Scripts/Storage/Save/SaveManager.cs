@@ -265,6 +265,7 @@ namespace External.Storage
                     SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
                 });
                 OnUpdatePlayerFile?.Invoke();
+                
             }
         }
 

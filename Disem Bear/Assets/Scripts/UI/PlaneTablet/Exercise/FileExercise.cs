@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI.PlaneTablet.Exercise;
 using UnityEngine;
 
-namespace UI.PlaneTablet.Exercise
+[CreateAssetMenu(fileName = "Exercise", menuName = "Exercise/FileExercise")]
+public class FileExercise : ScriptableObject
 {
-    [CreateAssetMenu(fileName = "New Exercise", menuName = "Exercise")]
-    public class FileExercise : ScriptableObject
-    {
-        public List<Exercise> exercises;
-    }
+    public Exercise exercise;
 }

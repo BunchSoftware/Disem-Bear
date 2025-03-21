@@ -9,8 +9,7 @@ namespace External.Storage
     [Serializable]
     public class ExerciseData
     {
-        public int indexExercise;
-        public List<ExerciseData> internalExercisesData;
+        public string nameExercise;
         public TypeOfExerciseCompletion typeOfExerciseCompletion;
         public bool isVisible = true;
         public bool isGetExerciesItems;

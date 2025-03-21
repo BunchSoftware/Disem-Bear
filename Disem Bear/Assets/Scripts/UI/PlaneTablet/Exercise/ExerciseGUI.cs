@@ -44,17 +44,22 @@ namespace UI.PlaneTablet.Exercise
         [SerializeField] private Color colorDoneExerciseBackground;
         [SerializeField] private Color colorRunExerciseBackground;
 
+        [Header("Кнопка обновления квесьа")]
+        [SerializeField] private Button resetButton;
+
         private TypeOfExerciseCompletion currentExerciseCompletion = TypeOfExerciseCompletion.NotDone;
         private bool isExpandExercise = false;
         private Exercise exercise;
+        private ExerciseManager exerciseManager;
         private List<ExerciseRewardGUI> exerciseRewardGUIs = new List<ExerciseRewardGUI>();
         private List<ExerciseItemGUI> exerciseItemGUIs = new List<ExerciseItemGUI>();
 
-        public bool isGetPackage = false;
+        [HideInInspector] public bool isGetPackage = false;
         private int indexExercise = 0;
 
         public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
         {
+            this.exerciseManager = exerciseManager;
             this.exercise = exercise;
             this.indexExercise = indexExercise;
 
@@ -84,6 +89,12 @@ namespace UI.PlaneTablet.Exercise
                 SaveManager.UpdatePlayerFile();
             }));
 
+            resetButton.onClick.AddListener(() =>
+            {
+                exercise = exerciseManager.RandomExerciseWithoutRepeat(exercise);
+                UpdateData(exercise);
+            });
+
             UpdateData(exercise);
         }
 
@@ -91,6 +102,11 @@ namespace UI.PlaneTablet.Exercise
         {
             gameObject.SetActive(exercise.isVisible);
             runButton.gameObject.SetActive(!exercise.isMail);
+
+            if(exercise.isRandom && !exercise.isMail)
+                resetButton.gameObject.SetActive(true);
+            else
+                resetButton.gameObject.SetActive(false);
 
             if (exerciseRewardGUIs.Count == 0)
             {
@@ -173,7 +189,15 @@ namespace UI.PlaneTablet.Exercise
         public void SetExerciseCompletion(TypeOfExerciseCompletion exerciseCompletion)
         {
             currentExerciseCompletion = exerciseCompletion;
-            SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion = exerciseCompletion;
+
+            for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+            {
+                if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
+                {
+                    SaveManager.filePlayer.JSONPlayer.resources.exercises[i].typeOfExerciseCompletion = exerciseCompletion;
+                    break;
+                }
+            }
             switch (exerciseCompletion)
             {
                 case TypeOfExerciseCompletion.NotDone:
@@ -211,12 +235,17 @@ namespace UI.PlaneTablet.Exercise
                         }
                         checkMark.gameObject.SetActive(true);
                         exercise.isVisible = false;
-                        UpdateData(exercise);
 
+                        for (int i = 0; i < exercise.newExercises.Count; i++)
+                        {
+                            exerciseManager.AddExercise(exercise.newExercises[i].exercise);
+                        }
+
+                        UpdateData(exercise);
 
                         for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
                         {
-                            if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].indexExercise == indexExercise)
+                            if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
                                 SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible = false;
                         }
 

@@ -18,14 +18,21 @@ namespace External.API
     public class ResourcePlayer
     {
         public bool isPlayerRegistration = false;
+        [Header("Диалоговая система")]
         public int currentIndexDialogPoint = 0;
         public int currentIndexDialog = 0;
+        [Header("Квестовая система")]
         public List<ExerciseData> exercises = new List<ExerciseData>();
         public int countMail = 0;
+        [Header("Система игровых ресурсов")]
         public List<IngradientData> ingradients = new List<IngradientData>();
+        [Header("Предмет в руках")]
         public PickUpItemData currentPickUpItem = new PickUpItemData();
+        [Header("Система досок")]
         public List<CellsData> modelBoards = new List<CellsData>();
+        [Header("Полки и столы")]
         public List<CellsData> tableWithItems = new List<CellsData>();
+        [Header("Магниты на холодильнике")]
         public List<MagnetData> magnets = new List<MagnetData>();
     }
 
@@ -59,6 +66,7 @@ namespace External.API
     public class ResourceShop
     {
         public bool isShopRegistration = false;
+        [Header("Товары в магазине")]
         public List<ProductSave> productSaves;
     }
 
