@@ -34,16 +34,16 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
         }
         else if (numDialog == 1 && isDialogRun == false)
         {
-            inputField.gameObject.SetActive(true);
             Dialog firstdialog = new();
-            firstdialog.textDialog = "Я руми (`w`)";
+            firstdialog.textDialog = "Я Руми ( `w` )\r\n\r\nА я";
             firstdialog.speedText = 0.05f;
             StartCoroutine(TypeLineIE(firstdialog));
         }
         else if (numDialog == 1 && isDialogRun)
         {
+            inputField.gameObject.SetActive(true);
             StopAllCoroutines();
-            textDialog.text = "Я руми (`w`)";
+            textDialog.text = "Я Руми ( `w` )\r\n\r\nА я";
             numDialog = 2;
             isDialogRun = false;
         }
@@ -104,6 +104,10 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
         }
 
         isDialogRun = false;
+        if (numDialog == 1)
+        {
+            inputField.gameObject.SetActive(true);
+        }
         numDialog++;
     }
 }
