@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using System;
 
 
 namespace TMPro
@@ -96,7 +96,7 @@ namespace TMPro
         private int m_lastWordIndex = -1;
         private int m_lastLineIndex = -1;
 
-        void Awake()
+        private void Awake()
         {
             // Get a reference to the text component.
             m_TextComponent = gameObject.GetComponent<TMP_Text>();
@@ -107,10 +107,7 @@ namespace TMPro
                 m_Canvas = gameObject.GetComponentInParent<Canvas>();
                 if (m_Canvas != null)
                 {
-                    if (m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-                        m_Camera = null;
-                    else
-                        m_Camera = m_Canvas.worldCamera;
+                    m_Camera = m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : m_Canvas.worldCamera;
                 }
             }
             else
@@ -119,8 +116,7 @@ namespace TMPro
             }
         }
 
-
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (TMP_TextUtilities.IsIntersectingRectTransform(m_TextComponent.rectTransform, Input.mousePosition, m_Camera))
             {

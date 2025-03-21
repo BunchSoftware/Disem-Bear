@@ -1,8 +1,6 @@
 using External.Storage;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UI.PlaneTablet.Shop;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +15,7 @@ public class ResourceManager : IDisposable
     public void Init()
     {
         float width = content.GetComponent<RectTransform>().rect.width;
-        Vector2 contentSize = new Vector2((width - content.GetComponent<GridLayoutGroup>().spacing.x * content.GetComponent<GridLayoutGroup>().constraintCount) / content.GetComponent<GridLayoutGroup>().constraintCount, content.GetComponent<GridLayoutGroup>().cellSize.y);
+        Vector2 contentSize = new Vector2((width - (content.GetComponent<GridLayoutGroup>().spacing.x * content.GetComponent<GridLayoutGroup>().constraintCount)) / content.GetComponent<GridLayoutGroup>().constraintCount, content.GetComponent<GridLayoutGroup>().cellSize.y);
         content.GetComponent<GridLayoutGroup>().cellSize = contentSize;
 
         if (SaveManager.filePlayer.JSONPlayer.resources.ingradients != null)
@@ -29,7 +27,7 @@ public class ResourceManager : IDisposable
                     if (fileResources.resources[j].typeResource == SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient)
                     {
                         ResourceGUI resourceGUI = GameObject.Instantiate(prefabeResourceGUI, content.transform).GetComponent<ResourceGUI>();
-                        
+
                         ResourceData resourceData = new ResourceData();
                         resourceData.headerResource = fileResources.resources[j].headerResource;
                         resourceData.typeResource = fileResources.resources[j].typeResource;

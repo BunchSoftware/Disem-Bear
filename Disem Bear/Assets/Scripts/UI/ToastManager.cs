@@ -1,7 +1,6 @@
-using System;
 using DG.Tweening;
-using External.DI;
 using Game.Music;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ namespace UI
             this.soundManager = soundManager;
         }
 
-        public void ShowToast(string message)   
+        public void ShowToast(string message)
         {
             var toast = GameObject.Instantiate(toastPrefab, container);
             toast.transform.GetChild(0).GetComponent<TMP_Text>().text = message;

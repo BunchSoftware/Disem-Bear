@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UI.PlaneTablet.Exercise;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "FileResources", menuName = "FileResources")]

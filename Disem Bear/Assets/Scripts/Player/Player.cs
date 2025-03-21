@@ -2,11 +2,6 @@ using External.DI;
 using External.Storage;
 using Game.Environment;
 using Game.Environment.Item;
-using Game.Environment.LMixTable;
-using Game.Environment.LPostTube;
-using Game.Environment.LTableWithItems;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -92,7 +87,7 @@ namespace Game.LPlayer
 
                 SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem = this.pickUpItem.NameItem;
 
-               typePickUpItem = pickUpItem.TypeItem;
+                typePickUpItem = pickUpItem.TypeItem;
                 OnPickUpItem?.Invoke(pickUpItem);
 
                 SaveManager.UpdatePlayerFile();

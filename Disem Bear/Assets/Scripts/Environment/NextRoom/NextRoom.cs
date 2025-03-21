@@ -1,6 +1,5 @@
 using Game.LPlayer;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Environment
@@ -43,14 +42,16 @@ namespace Game.Environment
                 StartCoroutine(WaitAnimCamera(timeAnimationCamera));
             }
         }
-        IEnumerator WaitAnimCamera(float f)
+
+        private IEnumerator WaitAnimCamera(float f)
         {
             yield return new WaitForSeconds(f);
             playerMouseMove.ReturnPlayerMove();
             invisibleWallBetweenRooms.SetActive(true);
             oppositeArrow.enabled = true;
         }
-        IEnumerator WaitBakeMesh(float f)
+
+        private IEnumerator WaitBakeMesh(float f)
         {
             yield return new WaitForSeconds(f);
             playerMouseMove.MovePlayer(positionPlayer);

@@ -83,7 +83,8 @@ namespace UI.PlaneTablet.Exercise
             {
                 SetExerciseCompletion(TypeOfExerciseCompletion.Run);
                 ActionExercise.Invoke(this, false);
-                exerciseManager.GiveExerciseItem(exercise);
+                if (!SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems)
+                    exerciseManager.GiveExerciseItem(exercise);
 
                 SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems = true;
                 SaveManager.UpdatePlayerFile();
@@ -103,7 +104,7 @@ namespace UI.PlaneTablet.Exercise
             gameObject.SetActive(exercise.isVisible);
             runButton.gameObject.SetActive(!exercise.isMail);
 
-            if(exercise.isRandom && !exercise.isMail)
+            if (exercise.isRandom && !exercise.isMail)
                 resetButton.gameObject.SetActive(true);
             else
                 resetButton.gameObject.SetActive(false);

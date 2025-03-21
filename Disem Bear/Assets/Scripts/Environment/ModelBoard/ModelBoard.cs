@@ -3,14 +3,11 @@ using External.DI;
 using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
-using Game.Environment.LPostTube;
 using Game.LPlayer;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static Game.Environment.LTableWithItems.TableWithItems;
 
 namespace Game.Environment.LModelBoard
 {
@@ -181,8 +178,8 @@ namespace Game.Environment.LModelBoard
         }
 
         public void DefocusItem(CellModelBoard cellModelBoard)
-        { 
-            PickUpItem pickUpItem = cellModelBoard.GetCurrentItemInCell();        
+        {
+            PickUpItem pickUpItem = cellModelBoard.GetCurrentItemInCell();
             Vector3 position = pickUpItem.transform.parent.position;
 
             pickUpItem.transform.DOMove(position, timeFocusItem).SetEase(Ease.Linear);
@@ -229,7 +226,7 @@ namespace Game.Environment.LModelBoard
 
         public void OnUpdate(float deltaTime)
         {
-            if(openObject != null)
+            if (openObject != null)
                 openObject.OnUpdate(deltaTime);
             for (int i = 0; i < cellBoards.Count; i++)
             {
@@ -239,7 +236,7 @@ namespace Game.Environment.LModelBoard
 
         public void DragItem(CellModelBoard cellModelBoard)
         {
-            if(cellModelBoard.GetCurrentItemInCell())
+            if (cellModelBoard.GetCurrentItemInCell())
             {
                 isDrag = true;
                 OnDragItem?.Invoke(cellModelBoard.GetCurrentItemInCell());
@@ -297,7 +294,7 @@ namespace Game.Environment.LModelBoard
                     cellBoards[closesIndex].PutItem(currentPickUpItem);
                 }
             }
-            else if(currentPickUpItem != null)
+            else if (currentPickUpItem != null)
             {
                 currentPickUpItem.transform.parent = transform;
                 currentPickUpItem.transform.position = transform.position;

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UnscaledTimeWrapper : MonoBehaviour
 {
@@ -9,7 +6,6 @@ public class UnscaledTimeWrapper : MonoBehaviour
 
     private void Update()
     {
-       CustomRenderTexture.material.SetFloat("_UnscaledTime", Time.unscaledTime);
+        CustomRenderTexture.material.SetFloat("_UnscaledTime", Time.unscaledTime);
     }
 }
-//MEOW

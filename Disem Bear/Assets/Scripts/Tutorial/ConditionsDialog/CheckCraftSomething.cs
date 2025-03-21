@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
 using Game.LDialog;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckCraftSomething : MonoBehaviour
@@ -14,8 +13,8 @@ public class CheckCraftSomething : MonoBehaviour
         PickUpItem
     }
 
-    [SerializeField] List<CraftSomethingCondition> conditions = new();
-    [SerializeField] List<CraftSomethingStartDialog> startDialogs = new();
+    [SerializeField] private List<CraftSomethingCondition> conditions = new();
+    [SerializeField] private List<CraftSomethingStartDialog> startDialogs = new();
 
     private DialogManager dialogManager;
     private Workbench workbench;
@@ -35,7 +34,7 @@ public class CheckCraftSomething : MonoBehaviour
         {
             if (conditions[i].craftObject == TypeCraftObject.Ingradient && conditions[i].name == ingradient.typeIngradient)
             {
-                dialogManager.RunConditionSkip(conditions[i].condition);
+                dialogManager.SkipReplica();
                 break;
             }
         }
@@ -56,7 +55,7 @@ public class CheckCraftSomething : MonoBehaviour
         {
             if (conditions[i].craftObject == TypeCraftObject.PickUpItem && conditions[i].name == pickUpItem.NameItem)
             {
-                dialogManager.RunConditionSkip(conditions[i].condition);
+                dialogManager.SkipReplica();
                 break;
             }
         }

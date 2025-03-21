@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
-using Game.LDialog;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,7 +38,7 @@ public class ToolTipManager : MonoBehaviour
         transform.localPosition = localPosition;
 
         Vector2 corner = new Vector2(
-            ((Input.mousePosition.x > (Screen.width / 2f)) ? 1f : 0f),
+            (Input.mousePosition.x > (Screen.width / 2f)) ? 1f : 0f,
             0f
         );
 

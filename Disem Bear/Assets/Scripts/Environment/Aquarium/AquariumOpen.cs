@@ -1,10 +1,7 @@
 using External.DI;
-using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LPostTube;
 using Game.LPlayer;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -110,7 +107,7 @@ namespace Game.Environment.Aquarium
                     case TypePickUpItem.None:
                         break;
                     case TypePickUpItem.AquariumMaterial:
-                        
+
                         if (pickUpItem.TryGetComponent(out materialForAquarium))
                         {
                             aquarium.UpdateMaterial(materialForAquarium);

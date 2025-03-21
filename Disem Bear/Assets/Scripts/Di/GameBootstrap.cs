@@ -1,23 +1,16 @@
-using External.API;
 using External.Storage;
 using Game.Environment;
-using Game.Environment.Fridge;
 using Game.Environment.Item;
 using Game.LPlayer;
-using Game.Music;
 using Game.Tutorial;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.InputManagerEntry;
 
 namespace External.DI
 {
-    public class GameBootstrap : MonoBehaviour
+    public class GameBootstrap : Bootstrap
     {
         [SerializeField] private Fade fade;
         [Header("Player")]
@@ -28,40 +21,30 @@ namespace External.DI
         [SerializeField] private TutorialRoot tutorialRoot;
         [Header("Environment")]
         [SerializeField] private EnvironmentRoot environmentRoot;
-        public AudioClip scaleChooseObjectSound;
-        [Header("Sound")]
-        [SerializeField] private SoundManager soundManager;
-        [SerializeField] private SoundManager musicManager;
+        public AudioClip ScaleChooseObjectSound;
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
         [SerializeField] private ToastManager toastManager;
         [SerializeField] private FilePrefabsPickUpItems filePrefabsPickUpItems;
-        private static FilePrefabsPickUpItems FilePrefabsPickUpItems;
-        [Header("Save System")]
-        [SerializeField] private FilePlayer defaultFilePlayer;
-        [SerializeField] private FileShop defaultFileShop;
-        [SerializeField] private FilePlayer filePlayer;
-        [SerializeField] private FileShop fileShop;
-        [SerializeField] private APIManager apiManager;
+        private static FilePrefabsPickUpItems s_filePrefabsPickUpItems;
 
         [SerializeField] private PlayerInput playerInput = new();
 
-        private List<IUpdateListener> updateListeners = new();
-        private List<IFixedUpdateListener> fixedUpdateListeners = new();
+        private const float WaitTimePanel = 0.7f;
 
         private void Awake()
         {
             fade.FadeWhite();
-            StartCoroutine(IWaitFadePanel(0.7f));
+            StartCoroutine(IWaitFadePanel(WaitTimePanel));
         }
 
-        IEnumerator IWaitFadePanel( float time)
+        private IEnumerator IWaitFadePanel(float time)
         {
-           yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(time);
 
-           Time.timeScale = 1;
+            Time.timeScale = TimeScale;
 
-            FilePrefabsPickUpItems = filePrefabsPickUpItems;
+            s_filePrefabsPickUpItems = filePrefabsPickUpItems;
             #region Init
             if (!player)
             {
@@ -86,26 +69,8 @@ namespace External.DI
                 Debug.LogError("CriticError-Bootstrap: Не указано значение переменной UIGameRoot");
                 yield return null;
             }
-
-            if (!filePlayer)
-            {
-                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FilePlayer");
-                yield return null;
-            }
-
-            if (!fileShop)
-            {
-                Debug.LogError("CriticError-Bootstrap: Не указано значение переменной FileShop");
-                yield return null;
-            }
             #endregion
-
-            apiManager.Init();
-
-            SaveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
-
-            musicManager.Init(this);
-            soundManager.Init(this);
+            Init();
             toastManager.Init(soundManager);
 
 
@@ -128,143 +93,16 @@ namespace External.DI
             updateListeners.Add(playerInput);
         }
 
-        private void Update()
-        {
-            var deltaTime = Time.deltaTime;
-            for (int i = 0, count = updateListeners.Count; i < count; i++)
-            {
-                var listener = updateListeners[i];
-                listener.OnUpdate(deltaTime);
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            var fixedDeltaTime = Time.fixedDeltaTime;
-            for (int i = 0, count = fixedUpdateListeners.Count; i < count; i++)
-            {
-                var listener = fixedUpdateListeners[i];
-                listener.OnFixedUpdate(fixedDeltaTime);
-            }
-        }
-
-        public void AddUpdateListener(IUpdateListener updateListener)
-        {
-            updateListeners.Add(updateListener);
-        }
-
-        public void RemoveUpdateListener(IUpdateListener updateListener)
-        {
-            updateListeners.Remove(updateListener);
-        }
-
-        public void AddFixedUpdateListener(IFixedUpdateListener fixedUpdateListener)
-        {
-            fixedUpdateListeners.Add(fixedUpdateListener);
-        }
-
-        public void RemoveFixedUpdateListener(IFixedUpdateListener fixedUpdateListener)
-        {
-            fixedUpdateListeners.Remove(fixedUpdateListener);
-        }
 
         public static PickUpItem FindPickUpItemToPrefabs(string nameItem)
         {
-            for (int i = 0; i < FilePrefabsPickUpItems.pickUpItems.Count; i++)
+            for (int i = 0; i < s_filePrefabsPickUpItems.pickUpItems.Count; i++)
             {
-                if (FilePrefabsPickUpItems.pickUpItems[i].NameItem == nameItem && nameItem.Length >= 1)
-                    return FilePrefabsPickUpItems.pickUpItems[i];
+                if (s_filePrefabsPickUpItems.pickUpItems[i].NameItem == nameItem && nameItem.Length >= 1)
+                    return s_filePrefabsPickUpItems.pickUpItems[i];
             }
 
             return null;
         }
-
-        #region Sound
-        public AudioSource OnPlayOneShotRandomSound(List <AudioClip> sounds)
-        {
-            if (sounds.Count > 0)
-            {
-                AudioSource audio = OnPlayOneShotSound(sounds[DateTime.Now.Second % sounds.Count]);
-                return audio;
-            }
-            else
-            {
-                Debug.Log("Не указан звук");
-                return null;
-            }
-        }
-
-        public AudioSource OnPlayOneShotSound(int indexSound)
-        {
-            AudioSource audio = soundManager.OnPlayOneShot(indexSound);
-            return audio;
-        }
-
-        public AudioSource OnPlayOneShotSound(AudioClip audioClip)
-        {
-            AudioSource audio = null;
-            if (audioClip != null)
-                audio = soundManager.OnPlayOneShot(audioClip);
-            else
-                Debug.Log("Не указан звук");
-            return audio;
-        }
-        public AudioSource OnPlayLoopSound(int indexSound)
-        {
-            AudioSource audio = soundManager.OnPlayLoop(indexSound);
-            return audio;
-        }
-        public AudioSource OnPlayLoopSound(AudioClip audioClip)
-        {
-            AudioSource audio = null;
-            if (audioClip != null)
-                soundManager.OnPlayLoop(audioClip);
-            else
-                Debug.Log("Не указан звук");
-            return audio;
-        }
-        public void OnEndPlayOneSHotSound(AudioSource audioSource)
-        {
-            if (audioSource != null)
-            {
-                soundManager.OnEndPlayOneShot(audioSource);
-            }
-            else
-            {
-                Debug.Log("Не указан проигрыватель");
-            }
-        }
-
-        public void PlaySound(int indexSound)
-        {
-            soundManager.PlaySound(indexSound);
-        }
-        #endregion
-        #region Music
-
-        public void OnPlayOneShotMusic(int indexSound)
-        {
-            musicManager.OnPlayOneShot(indexSound);
-        }
-
-        public void OnPlayOneShotMusic(AudioClip audioClip)
-        {
-            musicManager.OnPlayOneShot(audioClip);
-        }
-        public void OnPlayLoopMusic(int indexSound)
-        {
-            musicManager.OnPlayLoop(indexSound);
-        }
-        public void OnPlayLoopMusic(AudioClip audioClip)
-        {
-            musicManager.OnPlayLoop(audioClip);
-        }
-
-        public void PlayMusic(int indexSound)
-        {
-            musicManager.PlaySound(indexSound);
-        }
-
-        #endregion
     }
 }

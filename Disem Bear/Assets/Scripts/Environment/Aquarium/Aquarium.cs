@@ -1,5 +1,4 @@
 using External.DI;
-using External.Storage;
 using Game.Environment.LMixTable;
 using Game.LPlayer;
 using System;
@@ -26,7 +25,7 @@ namespace Game.Environment.Aquarium
         [SerializeField] private List<TimeCell> InspectorTimeCells = new();
         private Dictionary<string, float> timeCells = new();
         [SerializeField] private List<IngradientSpawner> InspectorSpawners = new();
-        private Dictionary <string, IngradientSpawner> Spawners  = new();
+        private Dictionary<string, IngradientSpawner> Spawners = new();
         private int NumCell = 0;
         private SpriteRenderer ChoiceCellSprite;
         private SpriteRenderer spriteRenderer;
@@ -85,47 +84,19 @@ namespace Game.Environment.Aquarium
             {
                 if (CountCells == 0)
                 {
-                    if (timeMaterial <= 0f)
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].NullFaseDirty;
-                    }
-                    else
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].NullFase;
-                    }
+                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].NullFaseDirty : phasesAquariums[colorMaterial].NullFase;
                 }
                 else if (CountCells < 4)
                 {
-                    if (timeMaterial <= 0f)
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].FirstFaseDirty;
-                    }
-                    else
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].FirstFase;
-                    }
+                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].FirstFaseDirty : phasesAquariums[colorMaterial].FirstFase;
                 }
                 else if (CountCells < 9)
                 {
-                    if (timeMaterial <= 0f)
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].SecondFaseDirty;
-                    }
-                    else
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].SecondFase;
-                    }
+                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].SecondFaseDirty : phasesAquariums[colorMaterial].SecondFase;
                 }
                 else if (CountCells < 15)
                 {
-                    if (timeMaterial <= 0f)
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].ThirdFaseDirty;
-                    }
-                    else
-                    {
-                        spriteRenderer.sprite = phasesAquariums[colorMaterial].ThirdFase;
-                    }
+                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].ThirdFaseDirty : phasesAquariums[colorMaterial].ThirdFase;
                 }
             }
             if (timeMaterial > 0f) spendTimeCreateCell += Time.deltaTime;
@@ -224,14 +195,13 @@ namespace Game.Environment.Aquarium
             CountCells = 0;
         }
 
-
-        IEnumerator WaitParticleSystem(float f)
+        private IEnumerator WaitParticleSystem(float f)
         {
             yield return new WaitForSeconds(f);
             particleSystem.Stop();
         }
 
-        IEnumerator waitDisplayCount()
+        private IEnumerator waitDisplayCount()
         {
             yield return new WaitForSeconds(2);
             DisplayCount.GetComponent<Animator>().SetBool("On", false);
@@ -379,10 +349,10 @@ namespace Game.Environment.Aquarium
         public Sprite SecondFaseDirty;
         public Sprite ThirdFaseDirty;
     }
-    [Serializable] 
+    [Serializable]
     public class Ground
     {
         public float timeExist;
-        
+
     }
 }

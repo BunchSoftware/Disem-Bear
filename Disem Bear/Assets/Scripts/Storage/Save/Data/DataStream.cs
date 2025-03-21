@@ -1,15 +1,8 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine;
 
 namespace External.Storage
 {
@@ -28,7 +21,7 @@ namespace External.Storage
             return sha256.ComputeHash(Encoding.UTF8.GetBytes(key));
         }
 
-        static byte[] EncryptStringToBytes(string plainText, byte[] Key, byte[] IV)
+        private static byte[] EncryptStringToBytes(string plainText, byte[] Key, byte[] IV)
         {
             if (plainText == null || plainText.Length <= 0)
                 throw new ArgumentNullException("plainText");
@@ -61,7 +54,7 @@ namespace External.Storage
             return encrypted;
         }
 
-        static string DecryptStringFromBytes(byte[] cipherText, byte[] Key, byte[] IV)
+        private static string DecryptStringFromBytes(byte[] cipherText, byte[] Key, byte[] IV)
         {
             if (cipherText == null || cipherText.Length <= 0)
                 throw new ArgumentNullException("cipherText");
@@ -102,10 +95,7 @@ namespace External.Storage
         {
             if (data == null)
                 return;
-            if (IsCreateFileSave(path) == false)
-                stream = File.Create(path);
-            else
-                stream = File.Open(path, FileMode.Open);
+            stream = IsCreateFileSave(path) == false ? File.Create(path) : File.Open(path, FileMode.Open);
 
 
             string key = "93a1b87b-a4be-4ca8-8fdd-9d312af679a4"; // Ключ для шифрования
@@ -160,10 +150,7 @@ namespace External.Storage
 
         public int CountSymbolInFile(string path)
         {
-            if (IsCreateFileSave(path) == false)
-                return 0;
-
-            return File.ReadAllText(path).Length;
+            return IsCreateFileSave(path) == false ? 0 : File.ReadAllText(path).Length;
         }
 
         public bool IsCreateFileSave(string path)

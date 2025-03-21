@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,18 +40,12 @@ namespace UI.PlaneTablet.Window
 
             for (int i = 0; i < colorActivatedSelectedObjetcs.Count; i++)
             {
-                if (isSelected)
-                    colorActivatedSelectedObjetcs[i].color = colorSelectedButton;
-                else
-                    colorActivatedSelectedObjetcs[i].color = colorDefaultButton;
+                colorActivatedSelectedObjetcs[i].color = isSelected ? colorSelectedButton : colorDefaultButton;
             }
 
             for (int i = 0; i < activateSelectedObjects.Count; i++)
             {
-                if (isSelected)
-                    activateSelectedObjects[i].enabled = true;
-                else
-                    activateSelectedObjects[i].enabled = false;
+                activateSelectedObjects[i].enabled = isSelected;
             }
         }
 

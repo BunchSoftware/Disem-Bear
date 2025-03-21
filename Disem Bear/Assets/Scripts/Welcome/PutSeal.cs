@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -13,7 +12,8 @@ public class PutSeal : MonoBehaviour, IPointerDownHandler
         Medved.SetActive(true);
         StartCoroutine(NextScene());
     }
-    IEnumerator NextScene()
+
+    private IEnumerator NextScene()
     {
         yield return new WaitForSeconds(2f);
         Fader.SetActive(true);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using External.DI;
 using UnityEngine;
 
@@ -54,7 +52,7 @@ namespace Game.Environment.LMixTable
 
         private void OnMouseDown()
         {
-            if(isActive)
+            if (isActive)
             {
                 if (timerPressButton >= timePressButton)
                 {

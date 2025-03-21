@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LayoutElementMaxSize : MonoBehaviour
 {
@@ -22,7 +19,7 @@ public class LayoutElementMaxSize : MonoBehaviour
     {
         rect.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Horizontal,
-            Mathf.Min(textMeshPro.preferredWidth, (textMeshPro.preferredWidth/ textMeshPro.text.Length) *maxCountSymbolInLine)
+            Mathf.Min(textMeshPro.preferredWidth, textMeshPro.preferredWidth / textMeshPro.text.Length * maxCountSymbolInLine)
         );
     }
 }

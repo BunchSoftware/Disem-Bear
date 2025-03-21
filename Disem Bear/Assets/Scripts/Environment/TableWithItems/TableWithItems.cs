@@ -1,13 +1,8 @@
 using External.DI;
 using External.Storage;
-using Game.Environment.Item;
 using Game.LPlayer;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Game.Environment.LTableWithItems
 {
@@ -66,7 +61,7 @@ namespace Game.Environment.LTableWithItems
                     cellsData.pickUpItems = data;
 
                     SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Add(cellsData);
-                }         
+                }
                 Debug.Log("TableWithItems: Успешно иницилизирован");
             }
 

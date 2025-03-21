@@ -1,10 +1,9 @@
 using UnityEngine;
-using System.Collections;
 
 
 namespace TMPro.Examples
 {
-    
+
     public class CameraController : MonoBehaviour
     {
         public enum CameraModes { Follow, Isometric, Free }
@@ -49,13 +48,9 @@ namespace TMPro.Examples
         private const string event_SmoothingValue = "Slider - Smoothing Value";
         private const string event_FollowDistance = "Slider - Camera Zoom";
 
-
-        void Awake()
+        private void Awake()
         {
-            if (QualitySettings.vSyncCount > 0)
-                Application.targetFrameRate = 60;
-            else
-                Application.targetFrameRate = -1;
+            Application.targetFrameRate = QualitySettings.vSyncCount > 0 ? 60 : -1;
 
             if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
                 Input.simulateMouseWithTouches = false;
@@ -66,7 +61,7 @@ namespace TMPro.Examples
 
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             if (CameraTarget == null)
             {
@@ -77,7 +72,7 @@ namespace TMPro.Examples
         }
 
         // Update is called once per frame
-        void LateUpdate()
+        private void LateUpdate()
         {
             GetPlayerInput();
 
@@ -87,11 +82,11 @@ namespace TMPro.Examples
             {
                 if (CameraMode == CameraModes.Isometric)
                 {
-                    desiredPosition = CameraTarget.position + Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * new Vector3(0, 0, -FollowDistance);
+                    desiredPosition = CameraTarget.position + (Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * new Vector3(0, 0, -FollowDistance));
                 }
                 else if (CameraMode == CameraModes.Follow)
                 {
-                    desiredPosition = CameraTarget.position + CameraTarget.TransformDirection(Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * (new Vector3(0, 0, -FollowDistance)));
+                    desiredPosition = CameraTarget.position + CameraTarget.TransformDirection(Quaternion.Euler(ElevationAngle, OrbitalAngle, 0f) * new Vector3(0, 0, -FollowDistance));
                 }
                 else
                 {
@@ -121,9 +116,7 @@ namespace TMPro.Examples
 
         }
 
-
-
-        void GetPlayerInput()
+        private void GetPlayerInput()
         {
             moveVector = Vector3.zero;
 
@@ -201,7 +194,7 @@ namespace TMPro.Examples
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit, 300, 1 << 10 | 1 << 11 | 1 << 12 | 1 << 14))
+                    if (Physics.Raycast(ray, out hit, 300, (1 << 10) | (1 << 11) | (1 << 12) | (1 << 14)))
                     {
                         if (hit.transform == CameraTarget)
                         {

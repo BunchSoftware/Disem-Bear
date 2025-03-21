@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game.LPlayer
@@ -83,7 +79,7 @@ namespace Game.LPlayer
             {
                 player.GetPickUpItem().transform.position = position;
                 player.GetPickUpItem().transform.rotation = Quaternion.identity;
-            }    
+            }
         }
     }
 }

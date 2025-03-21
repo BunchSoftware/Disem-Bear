@@ -1,7 +1,5 @@
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

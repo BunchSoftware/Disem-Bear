@@ -1,5 +1,4 @@
 using External.Storage;
-using Game.Environment.LModelBoard;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -66,7 +65,7 @@ namespace Game.Environment.LMixTable
                 spawnerCollider.enabled = false;
                 spriteRenderer.enabled = false;
             }
-            else if(ingradient.countIngradient > 0)
+            else if (ingradient.countIngradient > 0)
             {
                 spawnerCollider.enabled = true;
                 spriteRenderer.enabled = true;
@@ -123,7 +122,7 @@ namespace Game.Environment.LMixTable
                     spriteRenderer.enabled = false;
                 }
                 else
-                { 
+                {
                     spawnerCollider.enabled = true;
                     spriteRenderer.enabled = true;
                 }
@@ -138,8 +137,8 @@ namespace Game.Environment.LMixTable
 
                 Vector3 position = new Vector3();
 
-                position.x = Math.Clamp(positionCursor.x, contentBounds.min.x + dragBounds.size.x / 2, contentBounds.max.x - dragBounds.size.x / 2);
-                position.z = Math.Clamp(positionCursor.z, contentBounds.min.z + dragBounds.size.z / 2, contentBounds.max.z - dragBounds.size.z / 2);
+                position.x = Math.Clamp(positionCursor.x, contentBounds.min.x + (dragBounds.size.x / 2), contentBounds.max.x - (dragBounds.size.x / 2));
+                position.z = Math.Clamp(positionCursor.z, contentBounds.min.z + (dragBounds.size.z / 2), contentBounds.max.z - (dragBounds.size.z / 2));
 
                 pointer.transform.position =
                     new Vector3(
@@ -184,7 +183,7 @@ namespace Game.Environment.LMixTable
 
         public void OnMouseLeftClickUpOtherObject()
         {
-            
+
         }
     }
 }

@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.LDialog;
+using System;
+using System.Collections.Generic;
 using UI.PlaneTablet.Exercise;
 using UnityEngine;
 
@@ -64,7 +63,7 @@ public class CheckTakeExercise : MonoBehaviour
             }
             else
             {
-                dialogManager.RunConditionSkip(conditionOrder);
+                dialogManager.SkipReplica();
             }
         }
     }

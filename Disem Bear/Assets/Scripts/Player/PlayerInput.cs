@@ -3,23 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Game.Environment
 {
-    interface ILeftMouseUpClickable
+    internal interface ILeftMouseUpClickable
     {
         void OnMouseLeftClickUpObject();
         void OnMouseLeftClickUpOtherObject();
     }
 
-    interface ILeftMouseClickable
+    internal interface ILeftMouseClickable
     {
         void OnMouseLeftClickObject();
         void OnMouseLeftClickOtherObject();
     }
 
-    interface ILeftMouseDownClickable
+    internal interface ILeftMouseDownClickable
     {
         void OnMouseLeftClickDownObject();
         void OnMouseLeftClickDownOtherObject();
@@ -351,7 +350,7 @@ namespace Game.Environment
                         obj.OnMouseEnterObject();
                     }
                 }
-                
+
                 if (overObject != null && overObject != hitInfo.collider.gameObject)
                 {
                     overObject = null;

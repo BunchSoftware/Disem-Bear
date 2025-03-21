@@ -2,14 +2,12 @@ using External.Storage;
 using Game.Environment.LMixTable;
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Networking;
 
 namespace External.API
 {
@@ -80,7 +78,7 @@ namespace External.API
 
     [Serializable]
     // Игрок с именем и ресурсами
-    public class JSONPlayer 
+    public class JSONPlayer
     {
         public string nameUser;
         public ResourcePlayer resources;
@@ -204,24 +202,16 @@ namespace External.API
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, URL);
-                FormUrlEncodedContent content;
-
-                if (resourcePlayer != null)
-                {
-                    content = new FormUrlEncodedContent(new[]
+                FormUrlEncodedContent content = resourcePlayer != null
+                    ? new FormUrlEncodedContent(new[]
                     {
                         new KeyValuePair<string, string>("name", userName),
                         new KeyValuePair<string, string>("resources", JsonConvert.SerializeObject(resourcePlayer))
-                    });
-                }
-                else
-                {
-                    content = new FormUrlEncodedContent(new[]
+                    })
+                    : new FormUrlEncodedContent(new[]
                     {
                         new KeyValuePair<string, string>("name", userName),
                     });
-                }
-
                 request.Content = content;
                 var response = await client.SendAsync(request);
                 try
@@ -252,7 +242,7 @@ namespace External.API
                     response.EnsureSuccessStatusCode();
                     string json = await response.Content.ReadAsStringAsync();
                     JSONPlayer JSONPlayer = JsonConvert.DeserializeObject<JSONPlayer>(json);
-                    if(JSONPlayer.resources == null)
+                    if (JSONPlayer.resources == null)
                         Debug.LogWarning($"Предупреждение об отсутствии ресурсов у игрока {JSONPlayer.nameUser}, возможны ошибки в реализации");
                     return JSONPlayer.resources;
                 }
@@ -635,7 +625,7 @@ namespace External.API
                     return;
                 }
 
-                Debug.Log(await response.Content.ReadAsStringAsync()); 
+                Debug.Log(await response.Content.ReadAsStringAsync());
             }
         }
 
@@ -695,7 +685,7 @@ namespace External.API
                     return reply.Status == IPStatus.Success;
                 }
             }
-            catch(Exception exc)
+            catch (Exception)
             {
                 Debug.LogWarning("Нет подключения к серверу или нет интернета !");
                 OnNotInternet?.Invoke();

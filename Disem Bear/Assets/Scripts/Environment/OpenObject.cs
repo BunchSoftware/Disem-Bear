@@ -3,10 +3,8 @@ using Game.Environment;
 using Game.LPlayer;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 [Serializable]
 public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickable
@@ -67,7 +65,7 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
                 isOpen = true;
                 isClick = false;
 
-                if(!activePlayerInput)
+                if (!activePlayerInput)
                     PlayerInput.isActive = false;
                 OnStartObjectOpen?.Invoke();
                 StartCoroutine(IObjectWaitBeforeOpening(timeWaitBeforeOpening));
@@ -106,7 +104,7 @@ public class OpenObject : MonoBehaviour, IUpdateListener, ILeftMouseDownClickabl
     {
         yield return new WaitForSeconds(time);
         player.ExitSomething(this);
-        if(!activePlayerInput)
+        if (!activePlayerInput)
             PlayerInput.isActive = true;
         OnEndObjectClose.Invoke();
     }

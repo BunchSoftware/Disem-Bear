@@ -1,4 +1,3 @@
-using External.Storage;
 using Game.Environment;
 using Game.Environment.LMixTable;
 using UnityEngine;

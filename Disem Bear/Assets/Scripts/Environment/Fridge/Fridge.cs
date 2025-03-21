@@ -1,10 +1,7 @@
 using External.Storage;
 using Game.LPlayer;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UI.PlaneTablet;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -109,7 +106,7 @@ namespace Game.Environment.Fridge
             });
             openObject.Init(triggerObject, playerMouseMove, player);
 
-            Debug.Log("Fridge: Успешно иницилизирован");          
+            Debug.Log("Fridge: Успешно иницилизирован");
         }
 
         public void OnUpdate(float deltatime)
@@ -133,9 +130,9 @@ namespace Game.Environment.Fridge
 
                     Bounds magnetBounds = magnet.GetComponent<Collider>().bounds;
 
-                    float x = Random.Range(dragBounds.min.x + magnetBounds.size.x / 2, dragBounds.max.x - magnetBounds.size.x / 2);
-                    float y = Random.Range(dragBounds.min.y + magnetBounds.size.y / 2, dragBounds.max.y - magnetBounds.size.y / 2);
-                    float z = Random.Range(dragBounds.min.z + magnetBounds.size.z / 2, dragBounds.max.z - magnetBounds.size.z / 2);
+                    float x = Random.Range(dragBounds.min.x + (magnetBounds.size.x / 2), dragBounds.max.x - (magnetBounds.size.x / 2));
+                    float y = Random.Range(dragBounds.min.y + (magnetBounds.size.y / 2), dragBounds.max.y - (magnetBounds.size.y / 2));
+                    float z = Random.Range(dragBounds.min.z + (magnetBounds.size.z / 2), dragBounds.max.z - (magnetBounds.size.z / 2));
 
                     Vector3 position = content.transform.InverseTransformPoint(new Vector3(x, y, z));
 
@@ -159,12 +156,12 @@ namespace Game.Environment.Fridge
                 }
             }
         }
-        
+
         public void SortOrderMagnets(int indexMagnet)
         {
             for (int i = 0; i < magnets.Count; i++)
             {
-               magnets[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+                magnets[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
             }
             magnets[indexMagnet].GetComponent<SpriteRenderer>().sortingOrder = 1;
         }

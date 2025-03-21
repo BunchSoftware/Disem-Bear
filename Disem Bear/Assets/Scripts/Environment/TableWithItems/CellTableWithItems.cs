@@ -1,16 +1,11 @@
 using External.DI;
 using External.Storage;
 using Game.Environment.Item;
-using Game.Environment.LModelBoard;
 using Game.LPlayer;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace Game.Environment.LTableWithItems
 {
@@ -58,7 +53,7 @@ namespace Game.Environment.LTableWithItems
                             pickUpItem.transform.parent = transform;
                             pickUpItem.transform.parent = transform;
                             pickUpItem.transform.position =
-                                new Vector3(transform.position.x, transform.position.y + pickUpItem.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);
+                                new Vector3(transform.position.x, transform.position.y + (pickUpItem.GetComponent<Collider>().bounds.size.y / 2), transform.position.z);
 
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
@@ -118,7 +113,7 @@ namespace Game.Environment.LTableWithItems
             OnPutItem?.Invoke(currentItemInCell);
             currentItemInCell.transform.parent = transform;
             currentItemInCell.transform.position =
-                new Vector3(transform.position.x, transform.position.y + currentItemInCell.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);
+                new Vector3(transform.position.x, transform.position.y + (currentItemInCell.GetComponent<Collider>().bounds.size.y / 2), transform.position.z);
             if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
             {
                 ScaleChooseObject scaleChooseObject = currentItemInCell.AddComponent<ScaleChooseObject>();
@@ -176,15 +171,15 @@ namespace Game.Environment.LTableWithItems
         {
             if (currentItemInCell == null)
             {
-                
+
 
                 pickUpItem.CanTakeByCollisionPlayer = false;
                 boxCollider.enabled = false;
                 currentItemInCell = pickUpItem;
                 OnPutItem?.Invoke(currentItemInCell);
                 currentItemInCell.transform.parent = transform;
-                currentItemInCell.transform.position = 
-                    new Vector3(transform.position.x, transform.position.y + currentItemInCell.GetComponent<Collider>().bounds.size.y / 2, transform.position.z);
+                currentItemInCell.transform.position =
+                    new Vector3(transform.position.x, transform.position.y + (currentItemInCell.GetComponent<Collider>().bounds.size.y / 2), transform.position.z);
 
                 if (currentItemInCell.GetComponent<ScaleChooseObject>() == null)
                 {

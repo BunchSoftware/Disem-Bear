@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.Environment.Aquarium;
 using Game.Environment.LMixTable;
 using Game.LDialog;
@@ -20,7 +18,7 @@ public class MainConditionManager : MonoBehaviour
 
 
     private DialogManager dialogManager;
-    
+
     public void Init(DialogManager dialogManager)
     {
         this.dialogManager = dialogManager;

@@ -1,11 +1,9 @@
 using External.Storage;
-using Game.Environment.Item;
 using Game.Environment.LPostTube;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UI.PlaneTablet.Exercise;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -51,7 +49,7 @@ namespace UI.PlaneTablet.Shop
             this.context = context;
             List<Product> products = new List<Product>();
 
-            if(SaveManager.fileShop.JSONShop.resources.productSaves != null)
+            if (SaveManager.fileShop.JSONShop.resources.productSaves != null)
             {
                 for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
                 {
@@ -61,7 +59,7 @@ namespace UI.PlaneTablet.Shop
                         product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
                         product.isVisible = SaveManager.fileShop.JSONShop.resources.productSaves[i].isVisible;
 
-                        if(product.reward.countReward != 0)
+                        if (product.reward.countReward != 0)
                         {
                             prefab.name = $"Product {i}";
                             ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
@@ -108,7 +106,7 @@ namespace UI.PlaneTablet.Shop
 
             tv.OnTVClose.AddListener(() =>
             {
-                if(dispensingTasks.Count > 0)
+                if (dispensingTasks.Count > 0)
                 {
                     DispensingTask dispensingTask = dispensingTasks.Dequeue();
                     dispensingTask.typeMachineDispensingProduct.OnGetReward?.Invoke(dispensingTask.reward);
@@ -201,7 +199,7 @@ namespace UI.PlaneTablet.Shop
             }
         }
 
-        public void SetVisibleProduct(string typeReward,  bool isVisible)
+        public void SetVisibleProduct(string typeReward, bool isVisible)
         {
             for (int i = 0; i < productsGUIs.Count; i++)
             {
@@ -220,7 +218,7 @@ namespace UI.PlaneTablet.Shop
                     SaveManager.UpdateShopFile();
 
                     return;
-                }    
+                }
             }
         }
 
@@ -237,7 +235,7 @@ namespace UI.PlaneTablet.Shop
             }
         }
 
-        IEnumerator IVisibleProductTime(ProductGUI productGUI, float time, bool isVisible)
+        private IEnumerator IVisibleProductTime(ProductGUI productGUI, float time, bool isVisible)
         {
             yield return new WaitForSeconds(time);
             Product product = productGUI.GetProduct();

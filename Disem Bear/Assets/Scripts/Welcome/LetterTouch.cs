@@ -27,7 +27,7 @@ public class LetterTouch : MonoBehaviour, IPointerDownHandler
         StartCoroutine(OffLetter());
     }
 
-    IEnumerator OffLetter()
+    private IEnumerator OffLetter()
     {
         yield return new WaitForSeconds(0.8f);
         Destroy(gameObject);

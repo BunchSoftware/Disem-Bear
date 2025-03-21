@@ -1978,15 +1978,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7216aeed9ff2807498c2208bc483130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fade: {fileID: 156341699}
-  player: {fileID: 1712871990}
-  playerMouseMove:
-    navMeshAgent: {fileID: 1712871983}
-    makePathToObject: {fileID: 1560337221}
-    steps: {fileID: 8300000, guid: 9783b6278e954ab418fffff8004406c4, type: 3}
-  tutorialRoot: {fileID: 1451648181}
-  environmentRoot: {fileID: 1526206802}
-  scaleChooseObjectSound: {fileID: 8300000, guid: a00ddcba6de310a41be033bcbdf0c708, type: 3}
+  defaultFilePlayer: {fileID: 11400000, guid: ddba387ca8c791c47b3f7d60773e53e5, type: 2}
+  defaultFileShop: {fileID: 11400000, guid: a86d2327b443dc14b8d93af7905b28bd, type: 2}
+  filePlayer: {fileID: 11400000, guid: 5dfa259764d6e4b4791359fbe8013357, type: 2}
+  fileShop: {fileID: 11400000, guid: 048061ccda2581645b35dbb3949079d3, type: 2}
+  apiManager:
+    UUID: 93a1b87b-a4be-4ca8-8fdd-9d312af679a4
+    OnNotInternet:
+      m_PersistentCalls:
+        m_Calls: []
   soundManager:
     prefabAudioSource: {fileID: 1765586730798302836, guid: 70b6d6f396a818548b7023da8e95a9f9, type: 3}
     mixer: {fileID: 1214126978491528561, guid: 360cebffc71bd224e97e49564dc0dd23, type: 2}
@@ -2009,21 +2009,21 @@ MonoBehaviour:
     soundClips: []
     MinDB: -40
     MaxDB: -13.2
+  fade: {fileID: 156341699}
+  player: {fileID: 1712871990}
+  playerMouseMove:
+    navMeshAgent: {fileID: 1712871983}
+    makePathToObject: {fileID: 1560337221}
+    steps: {fileID: 8300000, guid: 9783b6278e954ab418fffff8004406c4, type: 3}
+  tutorialRoot: {fileID: 1451648181}
+  environmentRoot: {fileID: 1526206802}
+  ScaleChooseObjectSound: {fileID: 8300000, guid: a00ddcba6de310a41be033bcbdf0c708, type: 3}
   uiGameRoot: {fileID: 1356396023}
   toastManager:
     container: {fileID: 853073749}
     toastPrefab: {fileID: 468515054413923269, guid: 29362c0c09e83c746896da339bc56970, type: 3}
     toastSound: {fileID: 8300000, guid: 0cff28b74f5bd044ebbf5bd915106058, type: 3}
   filePrefabsPickUpItems: {fileID: 11400000, guid: 22f0cc56366f5cd47a83e9b40488623a, type: 2}
-  defaultFilePlayer: {fileID: 11400000, guid: ddba387ca8c791c47b3f7d60773e53e5, type: 2}
-  defaultFileShop: {fileID: 11400000, guid: a86d2327b443dc14b8d93af7905b28bd, type: 2}
-  filePlayer: {fileID: 11400000, guid: 5dfa259764d6e4b4791359fbe8013357, type: 2}
-  fileShop: {fileID: 11400000, guid: 048061ccda2581645b35dbb3949079d3, type: 2}
-  apiManager:
-    UUID: 93a1b87b-a4be-4ca8-8fdd-9d312af679a4
-    OnNotInternet:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!4 &787923206
 Transform:
   m_ObjectHideFlags: 0

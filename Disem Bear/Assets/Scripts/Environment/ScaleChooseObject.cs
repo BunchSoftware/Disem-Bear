@@ -1,10 +1,5 @@
 using External.DI;
-using Game.Environment;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace Game.Environment
 {
@@ -23,7 +18,7 @@ namespace Game.Environment
         private void Awake()
         {
             gameBootstrap = GameObject.Find("Bootstrap").GetComponent<GameBootstrap>();
-            audioClip = gameBootstrap.scaleChooseObjectSound;
+            audioClip = gameBootstrap.ScaleChooseObjectSound;
             minScale = transform.localScale;
             maxScale = new Vector3(minScale.x * coefficient, minScale.y * coefficient, minScale.z * coefficient);
         }
@@ -37,7 +32,7 @@ namespace Game.Environment
             }
             if (on && increaseScale && transform.localScale.x < maxScale.x)
             {
-                Vector3 scale = new Vector3(transform.localScale.x + Time.deltaTime * minScale.x, transform.localScale.y + Time.deltaTime * minScale.y, transform.localScale.z + Time.deltaTime * minScale.z);
+                Vector3 scale = new Vector3(transform.localScale.x + (Time.deltaTime * minScale.x), transform.localScale.y + (Time.deltaTime * minScale.y), transform.localScale.z + (Time.deltaTime * minScale.z));
                 if (scale.x > maxScale.x)
                 {
                     scale = maxScale;
@@ -46,7 +41,7 @@ namespace Game.Environment
             }
             else if (transform.localScale.x > minScale.x && (!increaseScale || !on))
             {
-                Vector3 scale = new Vector3(transform.localScale.x - Time.deltaTime * minScale.x, transform.localScale.y - Time.deltaTime * minScale.y, transform.localScale.z - Time.deltaTime * minScale.z);
+                Vector3 scale = new Vector3(transform.localScale.x - (Time.deltaTime * minScale.x), transform.localScale.y - (Time.deltaTime * minScale.y), transform.localScale.z - (Time.deltaTime * minScale.z));
                 if (scale.x < minScale.x)
                 {
                     scale = minScale;

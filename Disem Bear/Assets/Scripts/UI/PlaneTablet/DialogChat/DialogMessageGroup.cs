@@ -1,9 +1,6 @@
 using Game.LDialog;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.PlaneTablet.DialogChat
 {
@@ -53,7 +50,7 @@ namespace UI.PlaneTablet.DialogChat
             StopAllCoroutines();
         }
 
-        IEnumerator TypeLineIE(Dialog dialog)
+        private IEnumerator TypeLineIE(Dialog dialog)
         {
             currentMessage.textMessage.text = "";
             SetParametres(dialog);

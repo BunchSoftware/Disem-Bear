@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace UI
 {
@@ -36,7 +34,7 @@ namespace UI
             {
                 Screen.SetResolution(screenResolutions[value].widthScreen, screenResolutions[value].heightScreen, Screen.fullScreenMode);
                 PlayerPrefs.SetInt("ScreenResolution", value);
-                
+
             });
 
             if (PlayerPrefs.HasKey("ScreenResolution"))

@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Game.Music
 {
-    [System.Serializable]
+    [Serializable]
     public class SoundClip
     {
         public AudioClip audioClip;

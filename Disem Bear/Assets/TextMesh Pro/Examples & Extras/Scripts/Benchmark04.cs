@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 
 namespace TMPro.Examples
@@ -15,11 +14,12 @@ namespace TMPro.Examples
         public int Steps = 4;
 
         private Transform m_Transform;
+
         //private TextMeshProFloatingText floatingText_Script;
         //public Material material;
 
 
-        void Start()
+        private void Start()
         {
             m_Transform = transform;
 
@@ -36,7 +36,7 @@ namespace TMPro.Examples
 
                     if (lineHeight > orthoSize * 2) return;
 
-                    go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, orthoSize * 0.975f - lineHeight, 0);
+                    go.transform.position = m_Transform.position + new Vector3(ratio * -orthoSize * 0.975f, (orthoSize * 0.975f) - lineHeight, 0);
 
                     TextMeshPro textMeshPro = go.AddComponent<TextMeshPro>();
 

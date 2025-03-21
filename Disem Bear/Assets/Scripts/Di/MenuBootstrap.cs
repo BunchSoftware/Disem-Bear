@@ -1,88 +1,22 @@
-using External.API;
-using External.DI;
-using External.Storage;
-using Game.Environment.Fridge;
 using Game.Environment;
-using Game.LPlayer;
-using Game.Music;
-using Game.Tutorial;
-using System.Collections;
-using System.Collections.Generic;
+using Game.LDialog;
 using UI;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class MenuBootstrap : MonoBehaviour
+public class MenuBootstrap : Bootstrap
 {
-    [Header("Sound")]
-    [SerializeField] private SoundManager soundManager;
-    [SerializeField] private SoundManager musicManager;
     [Header("UI")]
     [SerializeField] private UIMenuRoot uiGameRoot;
-    [Header("Save System")]
-    [SerializeField] private FilePlayer defaultFilePlayer;
-    [SerializeField] private FileShop defaultFileShop;
-    [SerializeField] private FilePlayer filePlayer;
-    [SerializeField] private FileShop fileShop;
-    [SerializeField] private APIManager apiManager;
-
     [SerializeField] private PlayerInput playerInput = new();
-
-    private List<IUpdateListener> updateListeners = new();
-    private List<IFixedUpdateListener> fixedUpdateListeners = new();
 
     private void Awake()
     {
-        Time.timeScale = 1;
-
-        SaveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
-
-        musicManager.Init(this);
-        soundManager.Init(this);
+        Time.timeScale = TimeScale;
+        Init();
 
         updateListeners.Add(uiGameRoot);
         uiGameRoot.Init(soundManager);
 
         updateListeners.Add(playerInput);
-    }
-
-    private void Update()
-    {
-        var deltaTime = Time.deltaTime;
-        for (int i = 0, count = updateListeners.Count; i < count; i++)
-        {
-            var listener = updateListeners[i];
-            listener.OnUpdate(deltaTime);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        var fixedDeltaTime = Time.fixedDeltaTime;
-        for (int i = 0, count = fixedUpdateListeners.Count; i < count; i++)
-        {
-            var listener = fixedUpdateListeners[i];
-            listener.OnFixedUpdate(fixedDeltaTime);
-        }
-    }
-
-    public void AddUpdateListener(IUpdateListener updateListener)
-    {
-        updateListeners.Add(updateListener);
-    }
-
-    public void RemoveUpdateListener(IUpdateListener updateListener)
-    {
-        updateListeners.Remove(updateListener);
-    }
-
-    public void AddFixedUpdateListener(IFixedUpdateListener fixedUpdateListener)
-    {
-        fixedUpdateListeners.Add(fixedUpdateListener);
-    }
-
-    public void RemoveFixedUpdateListener(IFixedUpdateListener fixedUpdateListener)
-    {
-        fixedUpdateListeners.Remove(fixedUpdateListener);
     }
 }

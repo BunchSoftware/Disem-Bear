@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.LDialog;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockTutorialManager : MonoBehaviour

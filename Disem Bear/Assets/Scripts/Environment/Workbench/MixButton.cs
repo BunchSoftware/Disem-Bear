@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using External.DI;
 using UnityEngine;
 
@@ -38,7 +36,7 @@ namespace Game.Environment.LMixTable
         }
         public void SetActive(bool isActive)
         {
-            if(isActive)
+            if (isActive)
             {
                 meshRenderer.material = activeMaterial;
                 meshRendererBase.material = activeMaterial;
@@ -54,7 +52,7 @@ namespace Game.Environment.LMixTable
 
         private void OnMouseDown()
         {
-            if(isActive)
+            if (isActive)
             {
                 if (timerPressButton >= timePressButton)
                 {
