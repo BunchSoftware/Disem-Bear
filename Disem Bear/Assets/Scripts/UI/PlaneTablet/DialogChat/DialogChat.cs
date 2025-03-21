@@ -1,10 +1,7 @@
 using Game.LDialog;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -78,7 +75,7 @@ namespace UI.PlaneTablet.DialogChat
                 currentTypeLineCoroutine = context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
         }
 
-        IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
+        private IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
         {
             currentIndexDialog = indexDialog;
             for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)

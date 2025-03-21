@@ -1,8 +1,6 @@
 using External.DI;
 using External.Storage;
 using Game.Music;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,7 +61,7 @@ namespace UI
 
         public void OnUpdate(float deltaTime)
         {
-           
+
         }
     }
 }

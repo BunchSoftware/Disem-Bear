@@ -1,9 +1,5 @@
-using Game.Environment;
 using Game.Environment.LMixTable;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -26,8 +22,8 @@ public class IngradientDragCell : IngradientDragBase
 
             Vector3 position = new Vector3();
 
-            position.x = Math.Clamp(positionCursor.x, dragFreeBounds.min.x + dragBounds.size.x / 2, dragFreeBounds.max.x - dragBounds.size.x / 2);
-            position.z = Math.Clamp(positionCursor.z, dragFreeBounds.min.z + dragBounds.size.z / 2, dragFreeBounds.max.z - dragBounds.size.z / 2);
+            position.x = Math.Clamp(positionCursor.x, dragFreeBounds.min.x + (dragBounds.size.x / 2), dragFreeBounds.max.x - (dragBounds.size.x / 2));
+            position.z = Math.Clamp(positionCursor.z, dragFreeBounds.min.z + (dragBounds.size.z / 2), dragFreeBounds.max.z - (dragBounds.size.z / 2));
 
             transform.position =
                 new Vector3(
@@ -46,6 +42,6 @@ public class IngradientDragCell : IngradientDragBase
     public override void OnMouseLeftClickUpObject()
     {
         if (!workbench.IsDrag && !workbench.IsEndDrag && workbench.IsOpen)
-                workbench.DropIngradient(this);
+            workbench.DropIngradient(this);
     }
 }

@@ -1,8 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.Environment.Aquarium;
 using Game.LDialog;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckGetAquariumCells : MonoBehaviour
@@ -27,7 +26,7 @@ public class CheckGetAquariumCells : MonoBehaviour
         {
             if (conditions[i].nameCell == nameCell && countCells > 0)
             {
-                dialogManager.RunConditionSkip(conditions[i].condition);
+                dialogManager.SkipReplica();
                 break;
             }
         }

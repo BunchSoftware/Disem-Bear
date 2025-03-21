@@ -1,12 +1,9 @@
-using External.Storage;
-using Game.LDialog;
-using Game.Environment.LPostTube;
-using Game.LPlayer;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Game.Environment.LModelBoard;
 using External.DI;
+using Game.Environment.LModelBoard;
+using Game.Environment.LPostTube;
+using Game.LDialog;
+using Game.LPlayer;
+using UnityEngine;
 
 namespace Game.Tutorial
 {
@@ -37,9 +34,9 @@ namespace Game.Tutorial
 
         public void OnUpdate(float deltaTime)
         {
-            if(pointerTutorialManager != null)
+            if (pointerTutorialManager != null)
                 pointerTutorialManager.OnUpdate(deltaTime);
-            if(blockTutorialManager != null)
+            if (blockTutorialManager != null)
                 blockTutorialManager.OnUpdate(deltaTime);
         }
     }

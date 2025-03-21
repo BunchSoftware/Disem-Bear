@@ -1,9 +1,6 @@
 using External.DI;
 using Game.Environment;
 using Game.LPlayer;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 

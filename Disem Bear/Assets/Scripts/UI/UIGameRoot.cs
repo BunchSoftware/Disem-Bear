@@ -1,10 +1,6 @@
 using External.DI;
-using External.Storage;
 using Game.LDialog;
 using Game.Music;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UI.PlaneTablet.DialogChat;
 using UI.PlaneTablet.Exercise;
 using UI.PlaneTablet.Shop;

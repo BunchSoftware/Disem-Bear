@@ -1,10 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using External.DI;
 using Game.Environment;
 using Game.Environment.Item;
 using Game.LPlayer;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UI;
 using UI.PlaneTablet.Exercise;
 using UnityEngine;
@@ -143,7 +143,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         }
     }
 
-    IEnumerator WaitObjectFallDown(float t)
+    private IEnumerator WaitObjectFallDown(float t)
     {
         lukeAnimator.StopPlayback();
         lukeAnimator.Play("LukeOpen");

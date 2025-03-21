@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class MovePointToPoint : MonoBehaviour
@@ -9,7 +8,7 @@ public class MovePointToPoint : MonoBehaviour
     private string state = "point1";
     public Transform point1;
     public Transform point2;
-    
+
 
 
     public bool StartMoveTo(float time)
@@ -44,7 +43,7 @@ public class MovePointToPoint : MonoBehaviour
         }
     }
 
-    IEnumerator WaitMoveObject(float time)
+    private IEnumerator WaitMoveObject(float time)
     {
         yield return new WaitForSeconds(time);
         isMove = false;

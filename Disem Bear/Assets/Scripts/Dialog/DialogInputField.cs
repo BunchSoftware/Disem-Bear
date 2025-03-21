@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-
 namespace Game.LDialog
 {
     public class DialogInputField : MonoBehaviour
@@ -12,31 +10,30 @@ namespace Game.LDialog
         [SerializeField] private Text placeHolderText;
         [SerializeField] private Button sendButton;
 
+        public UnityEvent<string> OnSendInputFieldText;
         private Font standartInputFont;
         private Font standartPlaceholderFont;
+
+        private const int MinLenghtCountInputField = 1;
 
         public void Init(DialogManager dialogManager)
         {
             standartInputFont = inputText.font;
             standartPlaceholderFont = placeHolderText.font;
+
             sendButton.onClick.RemoveAllListeners();
             sendButton.onClick.AddListener(() =>
             {
-                dialogManager.SendInputText(inputField.text);
+                if (inputField.text.Length > MinLenghtCountInputField)
+                    OnSendInputFieldText?.Invoke(inputField.text);
             });
         }
 
-        public void SetParametres(Dialog dialog)
+        public void UpdateData(Dialog dialog)
         {
-            if (dialog.fontText != null)
-                inputText.font = dialog.fontText;
-            else
-                inputText.font = standartInputFont;
+            inputText.font = dialog.fontText != null ? dialog.fontText : standartInputFont;
 
-            if (dialog.fontText != null)
-                placeHolderText.font = dialog.fontText;
-            else
-                placeHolderText.font = standartPlaceholderFont;
+            placeHolderText.font = dialog.fontText != null ? dialog.fontText : standartPlaceholderFont;
 
             inputText.color = dialog.colorTextInputField;
             inputText.fontStyle = dialog.fontStyleTextInputField;

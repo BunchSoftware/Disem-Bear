@@ -2,17 +2,13 @@ using DG.Tweening;
 using External.DI;
 using External.Storage;
 using Game.Environment.Item;
-using Game.Environment.LModelBoard;
 using Game.LPlayer;
-using Game.Music;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 
 namespace Game.Environment.LMixTable
@@ -192,7 +188,7 @@ namespace Game.Environment.LMixTable
             });
 
             Debug.Log("Workbench: Успешно иницилизирован");
-        
+
         }
 
         public void OnUpdate(float deltaTime)
@@ -290,9 +286,9 @@ namespace Game.Environment.LMixTable
 
             if (isDrag && ingradient != null)
             {
-                if(InMixTable())
+                if (InMixTable())
                 {
-                    if(!ingradientDragCellsInMixTable.Exists(x => x == pointer))
+                    if (!ingradientDragCellsInMixTable.Exists(x => x == pointer))
                         ingradientDragCellsInMixTable.Add((IngradientDragCell)pointer);
 
                     for (int i = 0; i < ingradientDragCellsInMixTable.Count; i++)
@@ -313,7 +309,7 @@ namespace Game.Environment.LMixTable
                     pointer = null;
                 }
 
-                
+
                 pickUpButton.SetActive(CheckPickUpItem());
 
                 if (CheckIngradientsInMixTable())
@@ -328,8 +324,8 @@ namespace Game.Environment.LMixTable
                 Bounds boundsIngradient = pointer.GetComponent<Collider>().bounds;
                 Bounds boundsMixTable = mixTable.GetComponent<Collider>().bounds;
 
-                float x = UnityEngine.Random.Range(boundsMixTable.min.x + boundsIngradient.size.x / 2, boundsMixTable.max.x - boundsIngradient.size.x / 2);
-                float z = UnityEngine.Random.Range(boundsMixTable.min.z + boundsIngradient.size.z / 2, boundsMixTable.max.z - boundsIngradient.size.z / 2);
+                float x = UnityEngine.Random.Range(boundsMixTable.min.x + (boundsIngradient.size.x / 2), boundsMixTable.max.x - (boundsIngradient.size.x / 2));
+                float z = UnityEngine.Random.Range(boundsMixTable.min.z + (boundsIngradient.size.z / 2), boundsMixTable.max.z - (boundsIngradient.size.z / 2));
 
                 pointer.transform.DOMove(new Vector3(x, pointer.transform.position.y, z), timeIngradientMoveToMixTable).SetEase(Ease.Linear);
 
@@ -423,7 +419,7 @@ namespace Game.Environment.LMixTable
                         ingradientDragObjectsInMixTable.Add(ingradientDragObject);
                 }
                 else
-                    ingradientDragObject.transform.DOMove(mixTable.transform.position, timeIngradientMoveToMixTable).SetEase(Ease.Linear);                  
+                    ingradientDragObject.transform.DOMove(mixTable.transform.position, timeIngradientMoveToMixTable).SetEase(Ease.Linear);
             }
 
             pointer = null;
@@ -488,7 +484,7 @@ namespace Game.Environment.LMixTable
             yield return new WaitForSeconds(time);
             ingradientSpawner.PutIngradient(countIngradiensTaken);
 
-            if(ingradientCell != null)
+            if (ingradientCell != null)
             {
                 Destroy(ingradientCell.gameObject);
             }
@@ -522,8 +518,8 @@ namespace Game.Environment.LMixTable
             return pointer;
         }
 
-        public IngradientSpawner GetIngradientSpawnerOfTypeIngradient(string typeIngradient) 
-        { 
+        public IngradientSpawner GetIngradientSpawnerOfTypeIngradient(string typeIngradient)
+        {
             IngradientSpawner ingradientSpawner = null;
 
             for (int i = 0; i < ingradientSpawners.Count; i++)
@@ -537,7 +533,7 @@ namespace Game.Environment.LMixTable
 
         public void PickUpItem()
         {
-            if(ingradientDragObjectsInMixTable.Count > 0 && !player.PlayerPickUpItem)
+            if (ingradientDragObjectsInMixTable.Count > 0 && !player.PlayerPickUpItem)
             {
                 IngradientDragObject ingradientDragObject = ingradientDragObjectsInMixTable[0];
                 ingradientDragObjectsInMixTable.Remove(ingradientDragObject);
@@ -553,7 +549,7 @@ namespace Game.Environment.LMixTable
 
                 StartCoroutine(IPickUpIngradientDragObject(ingradientDragObject, timeIngradientPickUpPlayer));
             }
-            else if(ingradientDragCellsInMixTable.Count == 1 && !player.PlayerPickUpItem)
+            else if (ingradientDragCellsInMixTable.Count == 1 && !player.PlayerPickUpItem)
             {
                 IngradientDragCell ingradientDragCell = ingradientDragCellsInMixTable[0];
                 ingradientDragCellsInMixTable.Remove(ingradientDragCell);
@@ -574,11 +570,8 @@ namespace Game.Environment.LMixTable
 
         public bool CheckPickUpItem()
         {
-            if (((ingradientDragCellsInMixTable.Count == 1 && ingradientDragObjectsInMixTable.Count == 0) ||
-                (ingradientDragCellsInMixTable.Count == 0 && ingradientDragObjectsInMixTable.Count == 1)) && !player.PlayerPickUpItem)
-                return true;
-
-            return false;
+            return ((ingradientDragCellsInMixTable.Count == 1 && ingradientDragObjectsInMixTable.Count == 0) ||
+                (ingradientDragCellsInMixTable.Count == 0 && ingradientDragObjectsInMixTable.Count == 1)) && !player.PlayerPickUpItem;
         }
 
         private IEnumerator IPickUpIngradientDragObject(IngradientDragObject ingradientDragObject, float time)
@@ -649,8 +642,8 @@ namespace Game.Environment.LMixTable
                 Bounds boundsIngradient = ingradientCell.GetComponent<Collider>().bounds;
                 Bounds boundsMixTable = mixTable.GetComponent<Collider>().bounds;
 
-                float x = UnityEngine.Random.Range(boundsMixTable.min.x + boundsIngradient.size.x / 2, boundsMixTable.max.x - boundsIngradient.size.x / 2);
-                float z = UnityEngine.Random.Range(boundsMixTable.min.z + boundsIngradient.size.z / 2, boundsMixTable.max.z - boundsIngradient.size.z / 2);
+                float x = UnityEngine.Random.Range(boundsMixTable.min.x + (boundsIngradient.size.x / 2), boundsMixTable.max.x - (boundsIngradient.size.x / 2));
+                float z = UnityEngine.Random.Range(boundsMixTable.min.z + (boundsIngradient.size.z / 2), boundsMixTable.max.z - (boundsIngradient.size.z / 2));
 
                 ingradientCell.transform.DOMove(new Vector3(x, ingradientCell.transform.position.y, z), timeIngradientMoveToMixTable).SetEase(Ease.Linear);
                 ingradientCell.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
@@ -678,8 +671,8 @@ namespace Game.Environment.LMixTable
                 Bounds boundsIngradient = ingradientDragObject.GetComponent<Collider>().bounds;
                 Bounds boundsMixTable = mixTable.GetComponent<Collider>().bounds;
 
-                float x = UnityEngine.Random.Range(boundsMixTable.min.x + boundsIngradient.size.x / 2, boundsMixTable.max.x - boundsIngradient.size.x / 2);
-                float z = UnityEngine.Random.Range(boundsMixTable.min.z + boundsIngradient.size.z / 2, boundsMixTable.max.z - boundsIngradient.size.z / 2);
+                float x = UnityEngine.Random.Range(boundsMixTable.min.x + (boundsIngradient.size.x / 2), boundsMixTable.max.x - (boundsIngradient.size.x / 2));
+                float z = UnityEngine.Random.Range(boundsMixTable.min.z + (boundsIngradient.size.z / 2), boundsMixTable.max.z - (boundsIngradient.size.z / 2));
 
                 ingradientDragObject.transform.DOMove(new Vector3(x, ingradientDragObject.transform.position.y, z), timeIngradientMoveToMixTable).SetEase(Ease.Linear);
                 ingradientDragObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
@@ -694,10 +687,11 @@ namespace Game.Environment.LMixTable
             StartCoroutine(IAnimationCreateIngradient(time));
 
         }
-        IEnumerator IAnimationCreateIngradient(float time)
+
+        private IEnumerator IAnimationCreateIngradient(float time)
         {
             yield return new WaitForSeconds(time);
-            particleWorkbench.Stop();         
+            particleWorkbench.Stop();
         }
 
         public bool CheckIngradientsInMixTable()
@@ -803,7 +797,7 @@ namespace Game.Environment.LMixTable
         }
 
 
-        
+
 
         public void AddIngradient(IngradientData ingradient)
         {

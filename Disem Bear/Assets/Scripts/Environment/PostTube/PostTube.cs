@@ -1,9 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using External.DI;
 using Game.Environment.Item;
 using Game.LPlayer;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UI;
 using UI.PlaneTablet;
 using UI.PlaneTablet.Exercise;
@@ -26,7 +26,7 @@ namespace Game.Environment.LPostTube
 
     public class PostTube : MonoBehaviour
     {
-        [SerializeField] private PostBox postBox;    
+        [SerializeField] private PostBox postBox;
         [SerializeField] private Transform startPointObject;
         [SerializeField] private Transform downPointObject;
         [SerializeField] private ParticleSystem particleSystem;
@@ -70,7 +70,7 @@ namespace Game.Environment.LPostTube
             Vector3 lastDownPointPosition = downPointObject.position;
             if (currentFallObject.TryGetComponent(out colliderCurrentFallObject))
             {
-                downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + colliderCurrentFallObject.bounds.size.y / 2, downPointObject.position.z);
+                downPointObject.position = new Vector3(downPointObject.position.x, downPointObject.position.y + (colliderCurrentFallObject.bounds.size.y / 2), downPointObject.position.z);
             }
 
             itemFlies = true;
@@ -107,7 +107,7 @@ namespace Game.Environment.LPostTube
                 ObjectFallAction(prefab);
             }
         }
-      
+
         public void ObjectFall(string typeObject)
         {
             for (int i = 0; i < postTubeObjects.Count; i++)
@@ -132,19 +132,21 @@ namespace Game.Environment.LPostTube
             ObjectFall(exerciseItem.typeItem);
         }
 
-        IEnumerator ParticleFall(float t)
+        private IEnumerator ParticleFall(float t)
         {
             yield return new WaitForSeconds(t);
             particleSystem.Play();
             yield return new WaitForSeconds(0.2f);
             particleSystem.Stop();
         }
-        IEnumerator TimeReturnDownPointPos(float t, Vector3 lastDownPointPosition)
+
+        private IEnumerator TimeReturnDownPointPos(float t, Vector3 lastDownPointPosition)
         {
             yield return new WaitForSeconds(t);
             downPointObject.position = lastDownPointPosition;
         }
-        IEnumerator PostBoxGetPackage(float t, PickUpItem pickUpItem)
+
+        private IEnumerator PostBoxGetPackage(float t, PickUpItem pickUpItem)
         {
             yield return new WaitForSeconds(t);
             gameBootstrap.OnPlayOneShotRandomSound(soundsPackageCrash);

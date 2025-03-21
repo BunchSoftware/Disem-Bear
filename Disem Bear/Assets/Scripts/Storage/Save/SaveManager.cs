@@ -1,16 +1,12 @@
 using External.API;
-using Game.Environment.Fridge;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 namespace External.Storage
 {
@@ -24,13 +20,13 @@ namespace External.Storage
 
 
         private static FilePlayer _filePlayer;
-        public static FilePlayer filePlayer 
+        public static FilePlayer filePlayer
         {
             get
             {
                 return _filePlayer;
             }
-            set 
+            set
             {
                 _filePlayer = value;
                 UpdatePlayerFile();
@@ -38,7 +34,7 @@ namespace External.Storage
         }
 
         private static FileShop _fileShop;
-        public static FileShop fileShop 
+        public static FileShop fileShop
         {
             get
             {
@@ -94,7 +90,7 @@ namespace External.Storage
             SaveManager.defaultFilePlayer = defaultFilePlayer;
             SaveManager.defaultFileShop = defaultFileShop;
 
-            if(Application.isEditor && !isInitialization)
+            if (Application.isEditor && !isInitialization)
             {
                 SaveManager.filePlayer.JSONPlayer = Clone(SaveManager.defaultFilePlayer.JSONPlayer);
                 SaveManager.fileShop.JSONShop = Clone(SaveManager.defaultFileShop.JSONShop);
@@ -265,7 +261,7 @@ namespace External.Storage
                     SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
                 });
                 OnUpdatePlayerFile?.Invoke();
-                
+
             }
         }
 

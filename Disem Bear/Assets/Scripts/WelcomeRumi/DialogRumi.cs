@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using External.API;
 using External.Storage;
 using Game.LDialog;
-using Game.Music;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class DialogRumi : MonoBehaviour, IPointerDownHandler
 {
@@ -65,7 +62,7 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    IEnumerator cor()
+    private IEnumerator cor()
     {
         yield return new WaitForSeconds(1f);
         SaveManager.RegistrationPlayer(inputField.text);
@@ -85,13 +82,13 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
         StartCoroutine(TypeLineIE(firstdialog));
     }
 
-    IEnumerator RemoveFade()
+    private IEnumerator RemoveFade()
     {
         yield return new WaitForSeconds(0.5f);
         fade.SetActive(false);
     }
 
-    IEnumerator TypeLineIE(Dialog dialog)
+    private IEnumerator TypeLineIE(Dialog dialog)
     {
         textDialog.text = "";
 

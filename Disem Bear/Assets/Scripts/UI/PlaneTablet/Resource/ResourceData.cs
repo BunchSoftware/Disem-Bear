@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ResourceData 
+public class ResourceData
 {
     public string headerResource;
     public string typeResource;

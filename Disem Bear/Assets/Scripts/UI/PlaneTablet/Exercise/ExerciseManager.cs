@@ -1,13 +1,9 @@
 using External.DI;
 using External.Storage;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UI.PlaneTablet.Shop;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -78,7 +74,7 @@ namespace UI.PlaneTablet.Exercise
                 if (content.gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exerciseGUI))
                 {
                     exerciseGUI.Init(this, (exercise, isExpandExercise) =>
-                    {                    
+                    {
                         currentExerciseGUI = exercise;
                         GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
 
@@ -94,7 +90,7 @@ namespace UI.PlaneTablet.Exercise
                         {
                             PlayerGetExercise?.Invoke(exercise.GetExercise());
                             Sort(exercise);
-                        } 
+                        }
                     }, exercises[i], i);
                     exerciseGUI.ExpandExercise(false);
                 };
@@ -191,7 +187,7 @@ namespace UI.PlaneTablet.Exercise
             exerciseData.typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone;
 
             SaveManager.filePlayer.JSONPlayer.resources.exercises.Add(exerciseData);
-            exercise.isVisible = SaveManager.filePlayer.JSONPlayer.resources.exercises[SaveManager.filePlayer.JSONPlayer.resources.exercises.Count-1].isVisible;
+            exercise.isVisible = SaveManager.filePlayer.JSONPlayer.resources.exercises[SaveManager.filePlayer.JSONPlayer.resources.exercises.Count - 1].isVisible;
 
             if (exercise.isMail)
                 SaveManager.filePlayer.JSONPlayer.resources.exercises[SaveManager.filePlayer.JSONPlayer.resources.exercises.Count - 1].typeOfExerciseCompletion = TypeOfExerciseCompletion.Run;
@@ -218,7 +214,7 @@ namespace UI.PlaneTablet.Exercise
                     PlayerGetExercise?.Invoke(exercise.GetExercise());
                     Sort(exercise);
                 }
-            }, exercise, exerciseGUIs.Count-1);
+            }, exercise, exerciseGUIs.Count - 1);
             exerciseGUI.ExpandExercise(false);
 
             SaveManager.UpdatePlayerFile();
@@ -234,7 +230,7 @@ namespace UI.PlaneTablet.Exercise
                     {
                         if (typeGiveProducts[i].typeMachineDispensingProduct == exerciseRewards[j].typeMachineDispensingReward)
                         {
-                            typeGiveProducts[i].OnGetReward?.Invoke(exerciseRewards[j]);    
+                            typeGiveProducts[i].OnGetReward?.Invoke(exerciseRewards[j]);
 
                             Debug.Log("Игрок получил награду за квест");
                             toastManager.ShowToast("Пожалуйста, заберите награду за квест");
@@ -260,7 +256,7 @@ namespace UI.PlaneTablet.Exercise
                             dispensingTasks.Enqueue(dispensingTask);
 
                             toastManager.ShowToast("Пожалуйста, заберите квестовый предмет");
-                            Debug.Log("Игрок получил квестовый предмет");                           
+                            Debug.Log("Игрок получил квестовый предмет");
                         }
                     }
                 }
@@ -271,8 +267,8 @@ namespace UI.PlaneTablet.Exercise
         {
             List<Exercise> randomExercises = new List<Exercise>();
             Exercise exerciseResult = null;
-            
-            if(exercise != null)
+
+            if (exercise != null)
             {
                 for (int i = 0; i < exerciseDatabase.exercises.Count; i++)
                 {
@@ -307,7 +303,7 @@ namespace UI.PlaneTablet.Exercise
                     }
                 }
                 exerciseResult = randomExercises[indexRandom];
-                if(exercise != null)
+                if (exercise != null)
                 {
                     for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
                     {
@@ -329,7 +325,7 @@ namespace UI.PlaneTablet.Exercise
             return exerciseResult;
         }
 
-        IEnumerator IRandomMail()
+        private IEnumerator IRandomMail()
         {
             Debug.Log("Вам сейчас прилетит письмо !");
             yield return new WaitForSeconds(intervalTimeAppearanceMail);
@@ -418,7 +414,7 @@ namespace UI.PlaneTablet.Exercise
 
                         toastManager.ShowToast("Вам пришло новое письмо, пожалуйста проверьте почтовый ящик");
                         SaveManager.UpdatePlayerFile();
-                    }  
+                    }
                 }
             }
         }

@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
 using External.DI;
+using System.Collections;
+using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class MoveCamera : MonoBehaviour
         }
     }
 
-    IEnumerator WaitMoveCamera(float time)
+    private IEnumerator WaitMoveCamera(float time)
     {
         yield return new WaitForSeconds(time);
         isMove = false;

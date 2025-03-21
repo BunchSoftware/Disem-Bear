@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,8 +41,8 @@ namespace UI.PlaneTablet.Shop
             headerText.text = product.header;
             toolTipTrigger.message = product.description;
             avatarReward.sprite = product.reward.avatarReward;
-           
-            if(product.price > 0)
+
+            if (product.price > 0)
             {
                 avatarPriceMask.gameObject.SetActive(true);
                 avatarPrice.sprite = product.avatarPriceProduct;
@@ -72,10 +69,7 @@ namespace UI.PlaneTablet.Shop
             countProductText.text = $"{product.reward.countReward}x";
             priceText.gameObject.SetActive(true);
 
-            if(product.price > 0)
-                priceText.text = $"{product.price}x";
-            else
-                priceText.text = $"Бесплатно";
+            priceText.text = product.price > 0 ? $"{product.price}x" : $"Бесплатно";
         }
 
         public Product GetProduct()

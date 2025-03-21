@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI
 {
@@ -20,11 +16,7 @@ namespace UI
         public bool IsAnimationPlaying(string animationName)
         {
             var animatorStateInfo = creditsText.GetCurrentAnimatorStateInfo(0);
-            if (animatorStateInfo.IsName(animationName))
-            {
-                return true;
-            }
-            return false;
+            return animatorStateInfo.IsName(animationName);
         }
 
         public void EndAnimation()

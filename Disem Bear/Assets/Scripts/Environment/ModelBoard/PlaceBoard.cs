@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.Environment;
 using Game.LPlayer;
 using UnityEngine;

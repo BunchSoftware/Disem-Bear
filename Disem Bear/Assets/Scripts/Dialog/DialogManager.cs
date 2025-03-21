@@ -1,17 +1,10 @@
 using External.Storage;
 using Game.Music;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Game.LDialog
 {
@@ -20,18 +13,16 @@ namespace Game.LDialog
     {
         [SerializeField] private DialogueWindow dialogueWindow;
         [SerializeField] private FileDialog fileDialog;
+
         public UnityEvent<Dialog> OnStartDialog;
         public UnityEvent<Dialog> OnEndDialog;
         public UnityEvent<Dialog> OnFullEndDialog;
-        public UnityEvent<string> SendInputFieldText;
+        public UnityEvent<string> OnSendInputFieldText;
 
-        private List<DialogPoint> dialogPoints = new List<DialogPoint>();
         private int currentIndexDialogPoint = 0;
         private int currentIndexDialog = 0;
 
-        private string currentConditionSkip = "";
-
-        private bool isCanSkipDialog = false;
+        private bool isCanSkipReplica = false;
         private bool isDialogLast = false;
         private bool isActiveInputField = false;
         private MonoBehaviour context;
@@ -44,13 +35,20 @@ namespace Game.LDialog
             this.context = context;
             this.soundManager = soundManager;
 
-            dialogPoints = fileDialog.dialogPoints;
             dialogueWindow.Init(this, soundManager);
+            dialogueWindow.OnSendInputFieldText.AddListener((text) =>
+            {
+                OnSendInputFieldText?.Invoke(text);
+                isActiveInputField = false;
+                isCanSkipReplica = true;
+                SkipReplica();
+                Debug.LogError(152);
+            });
 
             if (SaveManager.filePlayer.JSONPlayer.nameUser != null)
             {
                 currentIndexDialogPoint = SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
-                TypeLine(dialogPoints[currentIndexDialogPoint], SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
+                TypeLine(fileDialog.dialogPoints[currentIndexDialogPoint], SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
             }
         }
 
@@ -59,25 +57,18 @@ namespace Game.LDialog
             currentIndexDialogPoint = indexDialogPoint;
             SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
             SaveManager.UpdatePlayerFile();
-            TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
-            //if (indexDialogPoint >= currentIndexDialogPoint)
-            //{
-            //    currentIndexDialogPoint = indexDialogPoint;
-            //    SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
-            //    TypeLine(dialogPoints[indexDialogPoint], currentIndexDialog);
-            //}
+            TypeLine(fileDialog.dialogPoints[indexDialogPoint], currentIndexDialog);
         }
-        public void SkipDialog()
+
+        public void SkipReplica()
         {
-            if (isCanSkipDialog || isDialogLast && isActiveInputField == false)
+            if (isCanSkipReplica || (isDialogLast && isActiveInputField == false))
             {
                 Dialog dialog = null;
 
-                if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
-                    dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
-                if (dialog != null
-                    && dialog.skipDialog == true
-                    && currentConditionSkip == dialog.conditionSkipDialog)
+                if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
+                    dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
+                if (dialog != null && dialog.skipDialog == true)
                 {
                     StopTypeLine();
 
@@ -87,7 +78,7 @@ namespace Game.LDialog
                         OnFullEndDialog?.Invoke(dialog);
                         ExitDrop(dialog);
                     }
-                    else if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
+                    else if (currentIndexDialog == fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
                     {
                         dialogueWindow.ShowFullDialog(dialog);
                         isDialogLast = true;
@@ -96,78 +87,75 @@ namespace Game.LDialog
                     {
                         currentIndexDialog++;
                         SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
-                        TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
+                        TypeLine(fileDialog.dialogPoints[currentIndexDialogPoint], currentIndexDialog);
                     }
 
-                    currentConditionSkip = "";
-                    //isCanSkipDialog = false;
                     isActiveInputField = false;
                 }
             }
         }
 
-        public void SkipDialogWithFinish()
+        public void SkipReplicaWithFinish()
         {
-            if (isCanSkipDialog || isDialogLast && isActiveInputField == false)
+            if (isCanSkipReplica || (isDialogLast && isActiveInputField == false))
             {
                 Dialog dialog = null;
 
-                if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
-                    dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
+                if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
+                    dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
 
                 if (dialog != null && dialog.skipDialog == true)
                 {
                     dialogueWindow.StopTypeLine();
                     dialogueWindow.ShowFullDialog(dialog);
-                    //OnFullEndDialog?.Invoke(dialog);
                 }
             }
         }
 
         public void RunConditionSkip(string conditionSkip)
         {
-            currentConditionSkip = conditionSkip;
-            SkipDialog();
+            Dialog dialog = null;
+            if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
+                dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
+            if (conditionSkip == dialog.conditionSkipDialog)
+                SkipReplica();
         }
 
         private void TypeLine(DialogPoint dialogPoint, int indexDialog)
         {
-            if(typeLineCoroutine != null)
+            if (typeLineCoroutine != null)
                 context.StopCoroutine(typeLineCoroutine);
             typeLineCoroutine = context.StartCoroutine(TypeLineIE(dialogPoint, indexDialog));
         }
 
-        IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
+        private IEnumerator TypeLineIE(DialogPoint dialogPoint, int indexDialog)
         {
-            currentIndexDialog = indexDialog;
-            for (int i = currentIndexDialog; i < dialogPoint.dialog.Count; i++)
+            for (int i = indexDialog; i < dialogPoint.dialog.Count; i++)
             {
                 OnStartDialog?.Invoke(dialogPoint.dialog[i]);
 
                 currentIndexDialog = i;
                 SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
                 SaveManager.UpdatePlayerFile();
-                if (dialogPoint.dialog[i].isActiveInputField == false)
-                    isCanSkipDialog = true;
 
+                isCanSkipReplica = !dialogPoint.dialog[i].isActiveInputField;
                 isDialogLast = false;
                 isActiveInputField = dialogPoint.dialog[i].isActiveInputField;
 
-                dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
                 EnterDrop(dialogPoint.dialog[i]);
-                yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.ToCharArray().Length);
+                dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
+
+                yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
                 OnEndDialog?.Invoke(dialogPoint.dialog[i]);
 
                 if (dialogPoint.dialog[i].stopTheEndDialog == true)
                 {
-                    if (currentIndexDialog == dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
+                    if (currentIndexDialog == fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
                         isDialogLast = true;
                     if (dialogPoint.dialog[i].skipDialog == false)
-                    {
                         yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
-                        OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
-                        ExitDrop(dialogPoint.dialog[i]);
-                    }
+
+                    OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
                     break;
                 }
                 else
@@ -175,21 +163,20 @@ namespace Game.LDialog
 
                 OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
                 ExitDrop(dialogPoint.dialog[i]);
-
-                isCanSkipDialog = false;
-                isActiveInputField = false;
             }
         }
 
         private void StopTypeLine()
-        {;
+        {
             if (typeLineCoroutine != null)
                 context.StopCoroutine(typeLineCoroutine);
-            dialogueWindow.StopTypeLine();
-            isCanSkipDialog = false;
-            isActiveInputField = false;
 
-            OnEndDialog?.Invoke(dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog]);
+            dialogueWindow.StopTypeLine();
+            isCanSkipReplica = false;
+            isActiveInputField = false;
+            isDialogLast = false;
+
+            OnEndDialog?.Invoke(fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog]);
         }
 
         private void EnterDrop(Dialog dialog)
@@ -244,17 +231,6 @@ namespace Game.LDialog
                         dialogueWindow.animator.SetInteger("State", 4);
                     }
                     break;
-            }
-        }
-
-        public void SendInputText(string text)
-        {
-            if (text.Length >= 1)
-            {
-                SendInputFieldText?.Invoke(text);
-                isActiveInputField = false;
-                isCanSkipDialog = true;
-                SkipDialog();
             }
         }
 

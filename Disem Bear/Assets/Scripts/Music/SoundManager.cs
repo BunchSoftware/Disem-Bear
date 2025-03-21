@@ -1,10 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Audio;
-using System;
-using External.DI;
+using UnityEngine.UI;
 
 namespace Game.Music
 {
@@ -32,13 +31,13 @@ namespace Game.Music
         {
             this.context = context;
 
-            if(!this.context)
+            if (!this.context)
             {
                 Debug.LogError("CriticError-SoundManager: ѕереданный аргумент при иницилизации равен null");
                 return;
             }
 
-            if(!prefabAudioSource)
+            if (!prefabAudioSource)
             {
                 Debug.LogError("CriticError-SoundManager: Ќе указано значение переменной PrefabAudioSource");
                 return;
@@ -86,7 +85,7 @@ namespace Game.Music
 
                 audios.Add(audio);
 
-                if(!audio.loop)
+                if (!audio.loop)
                     context.StartCoroutine(EndAudioClip(audio));
             }
 

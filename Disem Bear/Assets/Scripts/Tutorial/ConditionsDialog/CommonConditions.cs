@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CommonConditions : MonoBehaviour
@@ -13,6 +11,6 @@ public class CommonConditions : MonoBehaviour
     [Serializable]
     public class CommonCondition
     {
-        
+
     }
 }

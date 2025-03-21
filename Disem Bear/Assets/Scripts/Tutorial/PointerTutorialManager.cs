@@ -1,7 +1,6 @@
 using Game.LDialog;
 using Game.LPlayer;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

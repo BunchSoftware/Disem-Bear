@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +28,7 @@ public class FPSCounter : MonoBehaviour
     {
         frameDeltaTimeArray[lastFrameIndex++] = Time.unscaledDeltaTime;
 
-        if(lastFrameIndex >= frameDeltaTimeArray.Length)
+        if (lastFrameIndex >= frameDeltaTimeArray.Length)
             lastFrameIndex = 0;
 
         textCounter.text = "FPS: " + Mathf.RoundToInt(CalculateFPS()).ToString();

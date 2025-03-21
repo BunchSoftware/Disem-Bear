@@ -3,16 +3,11 @@ using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
 using Game.Environment.LPostTube;
-using Game.Environment.LTableWithItems;
 using Game.LPlayer;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 
 namespace Game.Environment.LModelBoard
@@ -59,7 +54,7 @@ namespace Game.Environment.LModelBoard
             {
                 for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name 
+                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
                         && SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
                     {
                         PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem);
@@ -78,7 +73,7 @@ namespace Game.Environment.LModelBoard
 
             modelBoard.OnEndModelBoardOpen.AddListener(() =>
             {
-                if(currentItemInCell != null && scaleChooseObject != null)
+                if (currentItemInCell != null && scaleChooseObject != null)
                     scaleChooseObject.on = true;
             });
 
@@ -93,7 +88,7 @@ namespace Game.Environment.LModelBoard
 
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
-                
+
                 if (isClick && !modelBoard.IsOpen)
                 {
 
@@ -134,7 +129,7 @@ namespace Game.Environment.LModelBoard
 
         public void OnMouseLeftClickUpObject()
         {
-             if(!modelBoard.IsEndDrag)
+            if (!modelBoard.IsEndDrag)
                 isClick = true;
         }
 
@@ -163,7 +158,7 @@ namespace Game.Environment.LModelBoard
                     audioSourceShh = gameBootstrap.OnPlayOneShotSound(shh);
                     timerShh = 0;
                 }
-                Vector3 position = ScreenPositionInWorldPosition.GetWorldPositionOnPlaneYZ(Input.mousePosition,  modelBoard.transform.position.x);
+                Vector3 position = ScreenPositionInWorldPosition.GetWorldPositionOnPlaneYZ(Input.mousePosition, modelBoard.transform.position.x);
 
                 currentItemInCell.transform.position =
                     new Vector3(
@@ -247,7 +242,7 @@ namespace Game.Environment.LModelBoard
                             currentItemInCell = pickUpItem;
                             OnPutItem?.Invoke(currentItemInCell);
 
-                            if(pickUpItem.GetComponent<ScaleChooseObject>() == null)
+                            if (pickUpItem.GetComponent<ScaleChooseObject>() == null)
                                 scaleChooseObject = pickUpItem.AddComponent<ScaleChooseObject>();
 
                             SaveManager.UpdatePlayerFile();

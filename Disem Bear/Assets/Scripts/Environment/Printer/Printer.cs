@@ -1,4 +1,3 @@
-using External.DI;
 using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Music;
@@ -6,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static Game.Environment.Printer.Printer;
 
 namespace Game.Environment.Printer
 {
@@ -73,7 +71,7 @@ namespace Game.Environment.Printer
                     else if (isPrinterWork && !player.PlayerPickUpItem)
                     {
                         printerRenderer.GetComponent<MeshRenderer>().material = materialPrinter;
-                        
+
                         PickUpItem pickUpItem = Instantiate(outPrinterObjectInfo.outItem);
                         OnPickUpItem?.Invoke(pickUpItem);
                         player.PickUpItem(pickUpItem);
@@ -87,7 +85,7 @@ namespace Game.Environment.Printer
             Debug.Log("Printer: Успешно иницилизирован");
         }
 
-        IEnumerator WaitWhilePrintObject(PrinterObjectInfo printerObjectInfo)
+        private IEnumerator WaitWhilePrintObject(PrinterObjectInfo printerObjectInfo)
         {
             OnStartWork?.Invoke(printerObjectInfo.outItem);
             OnPutItem?.Invoke(printerObjectInfo.outItem);
