@@ -6,15 +6,25 @@ using UnityEngine;
 public class RemoveButton : MonoBehaviour, ILeftMouseDownClickable
 {
     private bool isClick = false;
+    private TriggerObject triggerObject;
 
+
+    public void Init(TriggerObject triggerObject)
+    {
+        this.triggerObject = triggerObject;
+        triggerObject.OnTriggerStayEvent.AddListener((collider) =>
+        {
+
+        });
+    }
 
     public void OnMouseLeftClickDownObject()
     {
-        throw new System.NotImplementedException();
+        isClick = true;
     }
 
     public void OnMouseLeftClickDownOtherObject()
     {
-        throw new System.NotImplementedException();
+        isClick = false;
     }
 }

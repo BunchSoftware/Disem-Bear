@@ -11,6 +11,8 @@ public class Trash : MonoBehaviour, ILeftMouseDownClickable
 {
     [SerializeField] private TriggerObject triggerObject;
     [SerializeField] private Transform pointPlaceItem;
+    [SerializeField] private MovePointToPoint removeButtonMove;
+    [SerializeField] private RemoveButton removeButton;
     private Player player;
     private ToastManager toastManager;
     private ToolBase toolBase;
