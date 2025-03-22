@@ -17,7 +17,7 @@ namespace Game.Environment.LModelBoard
     {
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
-        [SerializeField] private PlaceBoard placeBoard;
+        [SerializeField] private PlaceItem placeBoard;
         [SerializeField] private AudioClip shh;
 
         [Header("Focus Item")]
