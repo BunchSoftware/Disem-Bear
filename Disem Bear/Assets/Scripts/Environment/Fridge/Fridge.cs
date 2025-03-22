@@ -13,7 +13,7 @@ namespace Game.Environment.Fridge
     {
         [SerializeField] private GameObject content;
         [SerializeField] private GameObject prefabMagnet;
-        [SerializeField] private FileMagnets fileMagnets;
+        [SerializeField] private MagnetDatabase fileMagnets;
 
         public UnityEvent OnFridgeOpen;
         public UnityEvent OnFridgeClose;
@@ -43,22 +43,22 @@ namespace Game.Environment.Fridge
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.magnets != null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.magnets != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.magnets.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.magnets.Count; i++)
                 {
                     Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
                     magnet.name = $"Magnet {content.transform.childCount - 1}";
                     for (int j = 0; j < fileMagnets.magnets.Count; j++)
                     {
-                        if (SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
                         {
                             MagnetInfo magnetInfo = new MagnetInfo()
                             {
-                                x = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].x,
-                                y = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].y,
-                                z = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].z,
-                                typeMagnet = SaveManager.filePlayer.JSONPlayer.resources.magnets[i].typeMagnet,
+                                x = SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].x,
+                                y = SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].y,
+                                z = SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].z,
+                                typeMagnet = SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].typeMagnet,
                                 iconMagnet = fileMagnets.magnets[j].iconMagnet,
                             };
                             magnet.Init(this, i, magnetInfo, dragBounds);

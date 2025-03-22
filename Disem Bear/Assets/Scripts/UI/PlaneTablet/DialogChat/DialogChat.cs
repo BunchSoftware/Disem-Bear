@@ -17,8 +17,7 @@ namespace UI.PlaneTablet.DialogChat
         [SerializeField] private GameObject contentPanelChoices;
         [SerializeField] private GameObject prefabButtonChoice;
         private List<DialogChoiceButton> dialogChoiceButtons = new List<DialogChoiceButton>();
-        [SerializeField] private FileDialog fileDialog;
-        private List<DialogPoint> dialogPoints = new List<DialogPoint>();
+        [SerializeField] private DialogDatabase fileDialog;
         public UnityEvent<Dialog> EndDialog;
 
         private int currentIndexDialogPoint = 0;
@@ -33,38 +32,39 @@ namespace UI.PlaneTablet.DialogChat
         public void Init(MonoBehaviour context)
         {
             this.context = context;
-            dialogPoints = fileDialog.dialogPoints;
             contentPanelChoices.SetActive(false);
+
+            Debug.Log("DialogChat: Успешно иницилизирован");
         }
 
         public void StartDialog(int indexDialogPoint)
         {
             if (currentDialogMessageGroup != null)
                 currentDialogMessageGroup.StopTypeLine();
-            if (indexDialogPoint >= 0 && indexDialogPoint <= dialogPoints.Count)
+            if (indexDialogPoint >= 0 && indexDialogPoint <= fileDialog.dialogPoints.Count)
             {
                 currentIndexDialogPoint = indexDialogPoint;
-                TypeLine(dialogPoints[indexDialogPoint], 0);
+                TypeLine(fileDialog.dialogPoints[indexDialogPoint], 0);
             }
             else
                 Debug.LogError("Ошибка ! Индекс диалога выходит за рамки количества диалогов !");
         }
-        public void SkipDialog()
+        public void SkipReplica()
         {
             if (isCanSkipDialog)
             {
                 Dialog dialog = null;
 
-                if (currentIndexDialog >= 0 && currentIndexDialog <= dialogPoints[currentIndexDialogPoint].dialog.Count)
-                    dialog = dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
+                if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
+                    dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
 
-                if (dialog != null && dialog.skipDialog == true)
+                if (dialog != null)
                 {
                     StopTypeLine();
                     ExitDrop(dialog);
                     currentDialogMessageGroup.DialogFinish(dialog);
                     currentIndexDialog++;
-                    TypeLine(dialogPoints[currentIndexDialogPoint], currentIndexDialog);
+                    TypeLine(fileDialog.dialogPoints[currentIndexDialogPoint], currentIndexDialog);
                 }
             }
         }
@@ -130,7 +130,7 @@ namespace UI.PlaneTablet.DialogChat
 
                     if (dialogPoint.dialog[i].stopTheEndDialog == true)
                     {
-                        if (dialogPoint.dialog[i].skipDialog == false)
+                        if (dialogPoint.dialog[i].skipDialogButton == false)
                         {
                             yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
                             ExitDrop(dialogPoint.dialog[i]);

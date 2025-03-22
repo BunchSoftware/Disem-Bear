@@ -11,10 +11,10 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private int nextScene = 0;
     [SerializeField] private APIManager apiManager;
-    [SerializeField] private FilePlayer filePlayer;
-    [SerializeField] private FileShop fileShop;
-    [SerializeField] private FilePlayer defaultFilePlayer;
-    [SerializeField] private FileShop defaultFileShop;
+    [SerializeField] private PlayerDatabase filePlayer;
+    [SerializeField] private ShopDatabase fileShop;
+    [SerializeField] private PlayerDatabase defaultFilePlayer;
+    [SerializeField] private ShopDatabase defaultFileShop;
     [SerializeField] private GameObject fade;
     [SerializeField] private GameObject fadeEnd;
     [SerializeField] private TMP_InputField inputField;

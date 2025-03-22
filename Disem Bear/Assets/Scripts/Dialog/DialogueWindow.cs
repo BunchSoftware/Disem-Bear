@@ -34,7 +34,6 @@ namespace Game.LDialog
 
             dialogInputField.OnSendInputFieldText.AddListener((text) =>
             {
-                Debug.LogError(52);
                 OnSendInputFieldText?.Invoke(text);
             });
 
@@ -58,7 +57,8 @@ namespace Game.LDialog
                 }
                 else
                 {
-                    dialogManager.SkipReplica();
+                    if(skipDialog)
+                        dialogManager.SkipReplica();
                 }
             });
 
@@ -115,7 +115,7 @@ namespace Game.LDialog
         {
             textDialog.font = dialog.fontText != null ? dialog.fontText : standartFont;
 
-            skipDialog = dialog.skipDialog;
+            skipDialog = dialog.skipDialogButton;
 
             textDialog.fontStyle = dialog.fontStyleText;
             textDialog.fontSize = dialog.fontSizeText;

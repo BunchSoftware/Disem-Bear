@@ -65,7 +65,7 @@ namespace External.API
     {
         public bool isShopRegistration = false;
         [Header("Товары в магазине")]
-        public List<ProductSave> productSaves;
+        public List<ProductData> productSaves;
     }
 
     [Serializable]

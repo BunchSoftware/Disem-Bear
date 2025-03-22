@@ -25,8 +25,8 @@ namespace External.DI
         [Header("UI")]
         [SerializeField] private UIGameRoot uiGameRoot;
         [SerializeField] private ToastManager toastManager;
-        [SerializeField] private FilePrefabsPickUpItems filePrefabsPickUpItems;
-        private static FilePrefabsPickUpItems s_filePrefabsPickUpItems;
+        [SerializeField] private PrefabsPickUpItemsDatabase filePrefabsPickUpItems;
+        private static PrefabsPickUpItemsDatabase s_filePrefabsPickUpItems;
 
         [SerializeField] private PlayerInput playerInput = new();
 

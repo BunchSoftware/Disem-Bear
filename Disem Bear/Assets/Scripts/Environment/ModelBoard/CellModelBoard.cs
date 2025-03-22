@@ -50,14 +50,14 @@ namespace Game.Environment.LModelBoard
 
             this.draggingParent = draggingParent;
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards != null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
-                        && SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
+                        && SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
                     {
-                        PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem);
+                        PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem);
 
                         if (condition != null)
                         {
@@ -192,19 +192,19 @@ namespace Game.Environment.LModelBoard
 
                 OnPickUpItem?.Invoke(currentItemInCell);
 
-                if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards != null)
+                if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards != null)
                 {
-                    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
+                    for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Count; i++)
                     {
-                        if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
-                            && SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
+                            && SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
                         {
-                            SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem = "";
+                            SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem = "";
                         }
                     }
                 }
 
-                SaveManager.UpdatePlayerFile();
+                SaveManager.UpdatePlayerDatabase();
 
                 currentItemInCell = null;
                 scaleChooseObject = null;
@@ -227,14 +227,14 @@ namespace Game.Environment.LModelBoard
                             pickUpItem.transform.position = transform.position;
                             pickUpItem.GetComponent<BoxCollider>().enabled = false;
 
-                            if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards != null)
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards != null)
                             {
-                                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
+                                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Count; i++)
                                 {
-                                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
-                                        && SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
+                                    if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
+                                        && SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
                                     {
-                                        SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem = pickUpItem.NameItem;
+                                        SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem = pickUpItem.NameItem;
                                     }
                                 }
                             }
@@ -245,7 +245,7 @@ namespace Game.Environment.LModelBoard
                             if (pickUpItem.GetComponent<ScaleChooseObject>() == null)
                                 scaleChooseObject = pickUpItem.AddComponent<ScaleChooseObject>();
 
-                            SaveManager.UpdatePlayerFile();
+                            SaveManager.UpdatePlayerDatabase();
 
                             return true;
                         }
@@ -264,14 +264,14 @@ namespace Game.Environment.LModelBoard
 
                             PickUpItem item = Instantiate(packageItem.itemInPackage, transform);
 
-                            if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards != null)
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards != null)
                             {
-                                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
+                                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Count; i++)
                                 {
-                                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
-                                        && SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
+                                    if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].nameMasterCells == modelBoard.name
+                                        && SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems.Count >= indexCellModelBoard)
                                     {
-                                        SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem = item.NameItem;
+                                        SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].pickUpItems[indexCellModelBoard].namePickUpItem = item.NameItem;
                                     }
                                 }
                             }
@@ -284,7 +284,7 @@ namespace Game.Environment.LModelBoard
                             if (item.GetComponent<ScaleChooseObject>() == null)
                                 scaleChooseObject = item.AddComponent<ScaleChooseObject>();
 
-                            SaveManager.UpdatePlayerFile();
+                            SaveManager.UpdatePlayerDatabase();
 
                             Destroy(pickUpItem.gameObject);
                         }

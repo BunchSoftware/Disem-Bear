@@ -33,7 +33,7 @@ namespace UI.PlaneTablet.Shop
         [SerializeField] private GameObject content;
         [SerializeField] private PostBox postBox;
         [SerializeField] private PostTube postTube;
-        [SerializeField] private FileProducts fileProducts;
+        [SerializeField] private ProductDatabase fileProducts;
         [SerializeField] private List<TypeMachineDispensingProduct> typeGiveProducts;
 
         private ToastManager toastManager;
@@ -49,15 +49,15 @@ namespace UI.PlaneTablet.Shop
             this.context = context;
             List<Product> products = new List<Product>();
 
-            if (SaveManager.fileShop.JSONShop.resources.productSaves != null)
+            if (SaveManager.shopDatabase.JSONShop.resources.productSaves != null)
             {
-                for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
+                for (int i = 0; i < SaveManager.shopDatabase.JSONShop.resources.productSaves.Count; i++)
                 {
-                    Product product = FindProductToFileProducts(SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward);
+                    Product product = FindProductToFileProducts(SaveManager.shopDatabase.JSONShop.resources.productSaves[i].typeReward);
                     if (product != null)
                     {
-                        product.reward.countReward = SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward;
-                        product.isVisible = SaveManager.fileShop.JSONShop.resources.productSaves[i].isVisible;
+                        product.reward.countReward = SaveManager.shopDatabase.JSONShop.resources.productSaves[i].countReward;
+                        product.isVisible = SaveManager.shopDatabase.JSONShop.resources.productSaves[i].isVisible;
 
                         if (product.reward.countReward != 0)
                         {
@@ -70,7 +70,7 @@ namespace UI.PlaneTablet.Shop
                 }
             }
 
-            SaveManager.UpdateShopFile();
+            SaveManager.UpdateShopDatabase();
 
             for (int i = 0; i < productsGUIs.Count; i++)
             {
@@ -112,6 +112,8 @@ namespace UI.PlaneTablet.Shop
                     dispensingTask.typeMachineDispensingProduct.OnGetReward?.Invoke(dispensingTask.reward);
                 }
             });
+
+            Debug.Log("ShopManager: Успешно иницилизирован");
         }
 
         private Product FindProductToFileProducts(string typeReward)
@@ -153,25 +155,25 @@ namespace UI.PlaneTablet.Shop
 
         private bool Buy(Product product)
         {
-            if (SaveManager.fileShop.JSONShop.resources.productSaves != null)
+            if (SaveManager.shopDatabase.JSONShop.resources.productSaves != null)
             {
-                for (int i = 0; i < SaveManager.fileShop.JSONShop.resources.productSaves.Count; i++)
+                for (int i = 0; i < SaveManager.shopDatabase.JSONShop.resources.productSaves.Count; i++)
                 {
-                    if (SaveManager.fileShop.JSONShop.resources.productSaves[i].typeReward == product.reward.typeReward)
+                    if (SaveManager.shopDatabase.JSONShop.resources.productSaves[i].typeReward == product.reward.typeReward)
                     {
-                        for (int j = 0; j < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; j++)
+                        for (int j = 0; j < SaveManager.playerDatabase.JSONPlayer.resources.ingradients.Count; j++)
                         {
-                            if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].typeIngradient == product.typePriceProduct &&
-                               SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].countIngradient - product.price >= 0)
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].typeIngradient == product.typePriceProduct &&
+                               SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].countIngradient - product.price >= 0)
                             {
-                                SaveManager.filePlayer.JSONPlayer.resources.ingradients[j].countIngradient -= product.price;
-                                SaveManager.fileShop.JSONShop.resources.productSaves[i].countReward -= 1;
+                                SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].countIngradient -= product.price;
+                                SaveManager.shopDatabase.JSONShop.resources.productSaves[i].countReward -= 1;
                                 GiveProduct(product);
                                 OnBuyProduct?.Invoke(product);
 
                                 Debug.Log($"{product.reward.typeReward} был куплен");
-                                SaveManager.UpdateShopFile();
-                                SaveManager.UpdatePlayerFile();
+                                SaveManager.UpdateShopDatabase();
+                                SaveManager.UpdatePlayerDatabase();
                                 return true;
                             }
                         }
@@ -209,13 +211,13 @@ namespace UI.PlaneTablet.Shop
                     product.isVisible = isVisible;
                     productsGUIs[i].UpdateData(product);
 
-                    for (int j = 0; j < SaveManager.fileShop.JSONShop.resources.productSaves.Count; j++)
+                    for (int j = 0; j < SaveManager.shopDatabase.JSONShop.resources.productSaves.Count; j++)
                     {
-                        if (SaveManager.fileShop.JSONShop.resources.productSaves[j].typeReward == typeReward)
-                            SaveManager.fileShop.JSONShop.resources.productSaves[j].isVisible = isVisible;
+                        if (SaveManager.shopDatabase.JSONShop.resources.productSaves[j].typeReward == typeReward)
+                            SaveManager.shopDatabase.JSONShop.resources.productSaves[j].isVisible = isVisible;
                     }
 
-                    SaveManager.UpdateShopFile();
+                    SaveManager.UpdateShopDatabase();
 
                     return;
                 }
@@ -242,13 +244,13 @@ namespace UI.PlaneTablet.Shop
             product.isVisible = isVisible;
             productGUI.UpdateData(product);
 
-            for (int j = 0; j < SaveManager.fileShop.JSONShop.resources.productSaves.Count; j++)
+            for (int j = 0; j < SaveManager.shopDatabase.JSONShop.resources.productSaves.Count; j++)
             {
-                if (SaveManager.fileShop.JSONShop.resources.productSaves[j].typeReward == product.reward.typeReward)
-                    SaveManager.fileShop.JSONShop.resources.productSaves[j].isVisible = isVisible;
+                if (SaveManager.shopDatabase.JSONShop.resources.productSaves[j].typeReward == product.reward.typeReward)
+                    SaveManager.shopDatabase.JSONShop.resources.productSaves[j].isVisible = isVisible;
             }
 
-            SaveManager.UpdateShopFile();
+            SaveManager.UpdateShopDatabase();
         }
 
         private void Remove(ProductGUI productGUI)

@@ -16,9 +16,9 @@ namespace Game.Environment.LTableWithItems
         {
             this.player = player;
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems == null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems == null)
             {
-                SaveManager.filePlayer.JSONPlayer.resources.tableWithItems = new List<CellsData>();
+                SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems = new List<CellsData>();
 
                 CellsData cellsData = new CellsData();
                 cellsData.nameMasterCells = name;
@@ -32,14 +32,14 @@ namespace Game.Environment.LTableWithItems
 
                 cellsData.pickUpItems = data;
 
-                SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Add(cellsData);
+                SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Add(cellsData);
             }
             else
             {
                 bool condition = true;
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == name)
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].nameMasterCells == name)
                     {
                         condition = false;
                         break;
@@ -60,7 +60,7 @@ namespace Game.Environment.LTableWithItems
 
                     cellsData.pickUpItems = data;
 
-                    SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Add(cellsData);
+                    SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Add(cellsData);
                 }
                 Debug.Log("TableWithItems: Успешно иницилизирован");
             }

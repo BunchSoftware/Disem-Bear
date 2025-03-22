@@ -37,14 +37,14 @@ namespace Game.Environment.LTableWithItems
             this.player = player;
             this.indexCellTableWithItems = indexCellModelBoard;
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
-                        && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellModelBoard)
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                        && SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellModelBoard)
                     {
-                        PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellModelBoard].namePickUpItem);
+                        PickUpItem condition = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellModelBoard].namePickUpItem);
 
                         if (condition != null)
                         {
@@ -119,19 +119,19 @@ namespace Game.Environment.LTableWithItems
                 ScaleChooseObject scaleChooseObject = currentItemInCell.AddComponent<ScaleChooseObject>();
                 scaleChooseObject.coefficient = 1.15f;
             }
-            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
-                        && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                        && SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
                     {
-                        SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = currentItemInCell.NameItem;
+                        SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = currentItemInCell.NameItem;
                     }
                 }
             }
 
-            SaveManager.UpdatePlayerFile();
+            SaveManager.UpdatePlayerDatabase();
 
             OnPickUpItem?.Invoke(tempItemInCell);
             player.PutItem();
@@ -148,19 +148,19 @@ namespace Game.Environment.LTableWithItems
 
             OnPickUpItem?.Invoke(currentItemInCell);
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
-                        && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                        && SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
                     {
-                        SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = "";
+                        SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = "";
                     }
                 }
             }
 
-            SaveManager.UpdatePlayerFile();
+            SaveManager.UpdatePlayerDatabase();
 
             currentItemInCell = null;
 
@@ -187,19 +187,19 @@ namespace Game.Environment.LTableWithItems
                     scaleChooseObject.coefficient = 1.15f;
                 }
 
-                if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems != null)
+                if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems != null)
                 {
-                    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.tableWithItems.Count; i++)
+                    for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems.Count; i++)
                     {
-                        if (SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
-                            && SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].nameMasterCells == tableWithItems.name
+                            && SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems.Count >= indexCellTableWithItems)
                         {
-                            SaveManager.filePlayer.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = pickUpItem.NameItem;
+                            SaveManager.playerDatabase.JSONPlayer.resources.tableWithItems[i].pickUpItems[indexCellTableWithItems].namePickUpItem = pickUpItem.NameItem;
                         }
                     }
                 }
 
-                SaveManager.UpdatePlayerFile();
+                SaveManager.UpdatePlayerDatabase();
 
                 return true;
             }

@@ -29,8 +29,8 @@ namespace Game.LPlayer
         private MonoBehaviour context;
         private bool isCanMove = true;
         private bool isMoveNow = false;
-        private float timeStep = 0.847f;
-        private float timerStepDuration = 0.847f;
+        private const float TimeStep = 0.847f;
+        private float timerStepDuration = TimeStep;
         private Move move = new Move();
 
         private Vector3 preveiusPosition;
@@ -113,14 +113,14 @@ namespace Game.LPlayer
         {
             if (isMoveNow)
             {
-                if (timerStepDuration >= timeStep)
+                if (timerStepDuration >= TimeStep)
                 {
                     gameBootstrap.OnPlayOneShotSound(steps);
                     timerStepDuration = 0f;
                 }
                 timerStepDuration += deltaTime;
             }
-            if (!isMoveNow && timerStepDuration < timeStep)
+            if (!isMoveNow && timerStepDuration < TimeStep)
             {
                 timerStepDuration += deltaTime;
             }

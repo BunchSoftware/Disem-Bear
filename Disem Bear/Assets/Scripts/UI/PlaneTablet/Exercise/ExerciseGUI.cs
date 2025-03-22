@@ -44,7 +44,7 @@ namespace UI.PlaneTablet.Exercise
         [SerializeField] private Color colorDoneExerciseBackground;
         [SerializeField] private Color colorRunExerciseBackground;
 
-        [Header(" нопка обновлени€ квесьа")]
+        [Header(" нопка обновлени€ квеста")]
         [SerializeField] private Button resetButton;
 
         private TypeOfExerciseCompletion currentExerciseCompletion = TypeOfExerciseCompletion.NotDone;
@@ -53,8 +53,6 @@ namespace UI.PlaneTablet.Exercise
         private ExerciseManager exerciseManager;
         private List<ExerciseRewardGUI> exerciseRewardGUIs = new List<ExerciseRewardGUI>();
         private List<ExerciseItemGUI> exerciseItemGUIs = new List<ExerciseItemGUI>();
-
-        [HideInInspector] public bool isGetPackage = false;
         private int indexExercise = 0;
 
         public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
@@ -63,9 +61,7 @@ namespace UI.PlaneTablet.Exercise
             this.exercise = exercise;
             this.indexExercise = indexExercise;
 
-            SetExerciseCompletion(SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion);
-
-            executionButton.onClick.RemoveAllListeners();
+            SetExerciseCompletion(SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion);
 
             exerciseButton.onClick.AddListener(() =>
             {
@@ -77,18 +73,16 @@ namespace UI.PlaneTablet.Exercise
                     ExpandExercise(true);
             });
 
-            runButton.onClick.RemoveAllListeners();
-
-            runButton.onClick.AddListener((UnityAction)(() =>
+            runButton.onClick.AddListener(() =>
             {
                 SetExerciseCompletion(TypeOfExerciseCompletion.Run);
                 ActionExercise.Invoke(this, false);
-                if (!SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems)
+                if (!SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems)
                     exerciseManager.GiveExerciseItem(exercise);
 
-                SaveManager.filePlayer.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems = true;
-                SaveManager.UpdatePlayerFile();
-            }));
+                SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems = true;
+                SaveManager.UpdatePlayerDatabase();
+            });
 
             resetButton.onClick.AddListener(() =>
             {
@@ -191,11 +185,11 @@ namespace UI.PlaneTablet.Exercise
         {
             currentExerciseCompletion = exerciseCompletion;
 
-            for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+            for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
             {
-                if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
+                if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
                 {
-                    SaveManager.filePlayer.JSONPlayer.resources.exercises[i].typeOfExerciseCompletion = exerciseCompletion;
+                    SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].typeOfExerciseCompletion = exerciseCompletion;
                     break;
                 }
             }
@@ -239,21 +233,21 @@ namespace UI.PlaneTablet.Exercise
 
                         for (int i = 0; i < exercise.newExercises.Count; i++)
                         {
-                            exerciseManager.AddExercise(exercise.newExercises[i].exercise);
+                            exerciseManager.AddExercise(exercise.newExercises[i]);
                         }
 
                         UpdateData(exercise);
 
-                        for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                        for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
                         {
-                            if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
-                                SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible = false;
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
+                                SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].isVisible = false;
                         }
 
                         break;
                     }
             }
-            SaveManager.UpdatePlayerFile();
+            SaveManager.UpdatePlayerDatabase();
         }
 
         public Exercise GetExercise()
@@ -261,11 +255,10 @@ namespace UI.PlaneTablet.Exercise
             return exercise;
         }
 
-        public List<Reward> DoneExercise(string messageCondition)
+        public List<Reward> CompleteExercise(string messageCondition)
         {
-            List<Reward> exerciseRewards = exercise.DoneExercise(messageCondition);
             SetExerciseCompletion(TypeOfExerciseCompletion.Done);
-            return exerciseRewards;
+            return exercise.exerciseRewards;
         }
 
         public TypeOfExerciseCompletion GetExerciseCompletion()

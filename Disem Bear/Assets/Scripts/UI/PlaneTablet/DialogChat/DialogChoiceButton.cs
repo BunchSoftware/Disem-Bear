@@ -12,19 +12,21 @@ namespace UI.PlaneTablet.DialogChat
 
         public void Init(Action<int> ActionChoiceButton, DialogChoice dialogChoice)
         {
+            UpdateData(dialogChoice);
+            button.onClick.AddListener(() =>
+            {
+                ActionChoiceButton?.Invoke(dialogChoice.indexDialogPoint);
+            });
+        }
+
+        public void UpdateData(DialogChoice dialogChoice)
+        {
             textButton.fontStyle = dialogChoice.fontStyleText;
             textButton.fontSize = dialogChoice.fontSizeText;
             textButton.color = dialogChoice.colorText;
             textButton.text = dialogChoice.textButtonChoice;
             button.GetComponent<Image>().color = dialogChoice.colorButton;
 
-            button.onClick.RemoveAllListeners();
-
-            button.onClick.AddListener(() =>
-            {
-                ActionChoiceButton?.Invoke(dialogChoice.indexDialogPoint);
-            });
-            //button.GetComponent<Animator>().SetInteger("State", 1);
         }
     }
 }
