@@ -1,3 +1,4 @@
+using External.DI;
 using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Music;
@@ -19,6 +20,7 @@ namespace Game.Environment.Printer
         [SerializeField] private ParticleSystem particle;
         [SerializeField] private MeshRenderer printerRenderer;
         [SerializeField] private Material materialDonePrinter;
+        [SerializeField] private PlaceItem placeItem;
         [SerializeField] private AudioClip soundPrinter;
 
         public UnityEvent<PickUpItem> OnPickUpItem;
@@ -34,7 +36,7 @@ namespace Game.Environment.Printer
         private bool isClick = false;
         private PrinterObjectInfo outPrinterObjectInfo;
 
-        public void Init(SoundManager soundManager, Player player)
+        public void Init(SoundManager soundManager, Player player, GameBootstrap gameBootstrap)
         {
             animator = GetComponent<Animator>();
             materialPrinter = printerRenderer.material;
@@ -81,7 +83,7 @@ namespace Game.Environment.Printer
                     }
                 }
             });
-
+            placeItem.Init(player, gameBootstrap);
             Debug.Log("Printer: Успешно иницилизирован");
         }
 

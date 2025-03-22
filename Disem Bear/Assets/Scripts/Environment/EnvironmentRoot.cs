@@ -34,6 +34,8 @@ namespace Game.Environment
         [SerializeField] private Printer.Printer printer;
         [Header("PostTube")]
         [SerializeField] private PostTube postTube;
+        [Header("Trash")]
+        [SerializeField] private Trash trash;
 
         public void Init(Player player, PlayerMouseMove playerMouseMove, SoundManager soundManager, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
         {
@@ -61,8 +63,9 @@ namespace Game.Environment
                 modelBoards[i].Init(workbench, player, playerMouseMove, gameBootstrap);
             }
             tv.Init(playerMouseMove, player, gameBootstrap);
-            printer.Init(soundManager, player);
+            printer.Init(soundManager, player, gameBootstrap);
             postTube.Init(player, exerciseManager, toastManager, gameBootstrap);
+            trash.Init(player, gameBootstrap, toastManager);
 
             Debug.Log("EnvironmentRoot: Успешно иницилизирован");
         }

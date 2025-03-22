@@ -21,6 +21,7 @@ namespace Game.Environment.Item
         [SerializeField] private TypePickUpItem typeItem = TypePickUpItem.None;
 
         public string NameItem;
+        public bool questItem = true;
 
         private Quaternion rotation;
         private ToolBase toolBase;

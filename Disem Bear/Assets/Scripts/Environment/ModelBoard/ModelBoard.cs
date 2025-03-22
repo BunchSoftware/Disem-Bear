@@ -17,7 +17,7 @@ namespace Game.Environment.LModelBoard
     {
         [SerializeField] private List<CellModelBoard> cellBoards;
         [SerializeField] private TriggerObject triggerObject;
-        [SerializeField] private PlaceItem placeBoard;
+        [SerializeField] private PlaceItem placeItem;
         [SerializeField] private AudioClip shh;
 
         [Header("Focus Item")]
@@ -84,7 +84,7 @@ namespace Game.Environment.LModelBoard
                 OnEndModelBoardClose?.Invoke();
             });
             openObject.Init(triggerObject, playerMouseMove, player);
-            placeBoard.Init(player, gameBootstrap);
+            placeItem.Init(player, gameBootstrap);
 
             if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards == null)
             {

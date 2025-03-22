@@ -9,6 +9,7 @@ namespace Game.Environment.LTableWithItems
     public class TableWithItems : MonoBehaviour
     {
         [SerializeField] private List<CellTableWithItems> cellTables = new List<CellTableWithItems>();
+        [SerializeField] private PlaceItem placeItem;
 
         private Player player;
 
@@ -69,6 +70,7 @@ namespace Game.Environment.LTableWithItems
             {
                 cellTables[i].Init(this, player, i, gameBootstrap);
             }
+            placeItem.Init(player, gameBootstrap);
         }
     }
 }
