@@ -63,6 +63,7 @@ namespace Game.LDialog
             });
 
             dialogInputField.Init(dialogManager);
+            Debug.Log("DialogueWindow: Успешно иницилизирован");
         }
 
         public void StartTypeLine(Dialog dialog)

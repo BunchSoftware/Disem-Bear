@@ -58,6 +58,8 @@ namespace Game.LPlayer
 
                 typePickUpItem = this.pickUpItem.TypeItem;
             }
+
+            Debug.Log("Player: Успешно иницилизирован");
         }
 
         private void OnCollisionEnter(Collision collision)

@@ -27,6 +27,7 @@ namespace Game.LDialog
                 if (inputField.text.Length > MinLenghtCountInputField)
                     OnSendInputFieldText?.Invoke(inputField.text);
             });
+            Debug.Log("DialogInputField: Успешно иницилизирован");
         }
 
         public void UpdateData(Dialog dialog)

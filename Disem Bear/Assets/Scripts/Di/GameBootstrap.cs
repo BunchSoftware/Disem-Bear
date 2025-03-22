@@ -91,6 +91,8 @@ namespace External.DI
             uiGameRoot.Init(environmentRoot.tv, soundManager, toastManager);
 
             updateListeners.Add(playerInput);
+
+            Debug.Log("GameBootstrap: Успешно иницилизировал все части игры");
         }
 
 

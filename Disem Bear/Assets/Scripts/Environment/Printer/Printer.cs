@@ -29,7 +29,7 @@ namespace Game.Environment.Printer
         public UnityEvent<PickUpItem> OnStartWork;
         public UnityEvent<PickUpItem> OnEndWork;
 
-        private Material materialPrinter;
+        private Material standartMaterialPrinter;
         private Player player;
         private SoundManager soundManager;
         private Animator animator;
@@ -39,7 +39,7 @@ namespace Game.Environment.Printer
         public void Init(SoundManager soundManager, Player player, GameBootstrap gameBootstrap)
         {
             animator = GetComponent<Animator>();
-            materialPrinter = printerRenderer.material;
+            standartMaterialPrinter = printerRenderer.material;
 
             this.soundManager = soundManager;
             this.player = player;
@@ -72,7 +72,7 @@ namespace Game.Environment.Printer
                     }
                     else if (isPrinterWork && !player.PlayerPickUpItem)
                     {
-                        printerRenderer.GetComponent<MeshRenderer>().material = materialPrinter;
+                        printerRenderer.GetComponent<MeshRenderer>().material = standartMaterialPrinter;
 
                         PickUpItem pickUpItem = Instantiate(outPrinterObjectInfo.outItem);
                         OnPickUpItem?.Invoke(pickUpItem);

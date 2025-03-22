@@ -34,7 +34,6 @@ namespace Game.Environment.LModelBoard
 
         private bool isClick = false;
 
-        // Drag&Drop
         private Transform draggingParent;
         private int indexCellModelBoard = 0;
 

@@ -21,7 +21,7 @@ namespace Game.Environment.Fridge
         public bool IsOpen => isOpen;
         private bool isOpen = false;
 
-        private List<Magnet> magnets = new List<Magnet>();
+        private List<MagnetGUI> magnetGUIs = new List<MagnetGUI>();
 
         private Player player;
         private PlayerMouseMove playerMouseMove;
@@ -37,8 +37,6 @@ namespace Game.Environment.Fridge
             this.playerMouseMove = playerMouseMove;
 
             dragBounds = content.GetComponent<Collider>().bounds;
-            print(dragBounds.max.y);
-            print(dragBounds.min.y);
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
             triggerObject = GetComponentInChildren<TriggerObject>();
@@ -47,13 +45,13 @@ namespace Game.Environment.Fridge
             {
                 for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.magnets.Count; i++)
                 {
-                    Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
+                    MagnetGUI magnet = Instantiate(prefabMagnet, content.transform).GetComponent<MagnetGUI>();
                     magnet.name = $"Magnet {content.transform.childCount - 1}";
                     for (int j = 0; j < fileMagnets.magnets.Count; j++)
                     {
                         if (SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].typeMagnet == fileMagnets.magnets[j].typeMagnet)
                         {
-                            MagnetInfo magnetInfo = new MagnetInfo()
+                            Magnet magnetInfo = new Magnet()
                             {
                                 x = SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].x,
                                 y = SaveManager.playerDatabase.JSONPlayer.resources.magnets[i].y,
@@ -65,7 +63,7 @@ namespace Game.Environment.Fridge
                             break;
                         }
                     }
-                    magnets.Add(magnet);
+                    magnetGUIs.Add(magnet);
                 }
             }
 
@@ -121,10 +119,10 @@ namespace Game.Environment.Fridge
             {
                 if (fileMagnets.magnets[i].typeMagnet == typeMagnet)
                 {
-                    Magnet magnet = Instantiate(prefabMagnet, content.transform).GetComponent<Magnet>();
+                    MagnetGUI magnet = Instantiate(prefabMagnet, content.transform).GetComponent<MagnetGUI>();
                     magnet.name = $"Magnet {content.transform.childCount - 1}";
 
-                    MagnetInfo magnetInfo = new MagnetInfo();
+                    Magnet magnetInfo = new Magnet();
                     magnetInfo.iconMagnet = fileMagnets.magnets[i].iconMagnet;
                     magnetInfo.typeMagnet = fileMagnets.magnets[i].typeMagnet;
 
@@ -140,8 +138,8 @@ namespace Game.Environment.Fridge
                     magnetInfo.y = position.y;
                     magnetInfo.z = position.z;
 
-                    magnet.Init(this, magnets.Count, magnetInfo, dragBounds);
-                    magnets.Add(magnet);
+                    magnet.Init(this, magnetGUIs.Count, magnetInfo, dragBounds);
+                    magnetGUIs.Add(magnet);
 
                     MagnetData magnetSave = new MagnetData();
                     magnetSave.typeMagnet = magnet.GetMagnet().typeMagnet;
@@ -159,11 +157,11 @@ namespace Game.Environment.Fridge
 
         public void SortOrderMagnets(int indexMagnet)
         {
-            for (int i = 0; i < magnets.Count; i++)
+            for (int i = 0; i < magnetGUIs.Count; i++)
             {
-                magnets[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+                magnetGUIs[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
             }
-            magnets[indexMagnet].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            magnetGUIs[indexMagnet].GetComponent<SpriteRenderer>().sortingOrder = 1;
         }
 
         public void CreateMagnet(Reward reward)

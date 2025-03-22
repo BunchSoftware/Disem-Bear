@@ -80,6 +80,8 @@ namespace UI.PlaneTablet.Exercise
                 if (!SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems)
                     exerciseManager.GiveExerciseItem(exercise);
 
+                UpdateData(exercise);
+
                 SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems = true;
                 SaveManager.UpdatePlayerDatabase();
             });
@@ -95,23 +97,17 @@ namespace UI.PlaneTablet.Exercise
 
         public void UpdateData(Exercise exercise)
         {
+            this.exercise = exercise;
             gameObject.SetActive(exercise.isVisible);
-            runButton.gameObject.SetActive(!exercise.isMail);
+            SetExerciseCompletion(SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].typeOfExerciseCompletion);
 
-            if (exercise.isRandom && !exercise.isMail)
+            if (currentExerciseCompletion == TypeOfExerciseCompletion.NotDone && exercise.isRandom && !exercise.isMail)
                 resetButton.gameObject.SetActive(true);
             else
                 resetButton.gameObject.SetActive(false);
 
-            if (exerciseRewardGUIs.Count == 0)
+            if(exerciseItemGUIs.Count == 0)
             {
-                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
-                {
-                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
-                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
-                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
-                    exerciseRewardGUIs.Add(exerciseRewardGUI);
-                }
 
                 for (int i = 0; i < exercise.exerciseItems.Count; i++)
                 {
@@ -128,12 +124,6 @@ namespace UI.PlaneTablet.Exercise
             }
             else
             {
-                for (int i = 0; i < exerciseRewardGUIs.Count; i++)
-                {
-                    Destroy(exerciseRewardGUIs[i].gameObject);
-                }
-                exerciseRewardGUIs.Clear();
-
                 for (int i = 0; i < exerciseItemGUIs.Count; i++)
                 {
                     Destroy(exerciseItemGUIs[i].gameObject);
@@ -145,13 +135,6 @@ namespace UI.PlaneTablet.Exercise
                 else
                     headerExerciseItems.gameObject.SetActive(true);
 
-                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
-                {
-                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
-                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
-                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
-                    exerciseRewardGUIs.Add(exerciseRewardGUI);
-                }
                 for (int i = 0; i < exercise.exerciseItems.Count; i++)
                 {
                     ExerciseItemGUI exerciseItemGUI = Instantiate(prefabItem, contentItem.transform).GetComponent<ExerciseItemGUI>();
@@ -161,11 +144,40 @@ namespace UI.PlaneTablet.Exercise
                 }
             }
 
+            if (exerciseRewardGUIs.Count == 0)
+            {
+                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+                {
+                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
+                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
+                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
+                    exerciseRewardGUIs.Add(exerciseRewardGUI);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < exerciseRewardGUIs.Count; i++)
+                {
+                    Destroy(exerciseRewardGUIs[i].gameObject);
+                }
+                exerciseRewardGUIs.Clear();
+
+                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+                {
+                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
+                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
+                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
+                    exerciseRewardGUIs.Add(exerciseRewardGUI);
+                }
+            }
+
 
             headerText.text = exercise.header;
             descriptionText.text = exercise.description;
             avatar.sprite = exercise.avatar;
             avatar.preserveAspect = true;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
         }
 
         public void ExpandExercise(bool isExpandExercise)
@@ -255,7 +267,7 @@ namespace UI.PlaneTablet.Exercise
             return exercise;
         }
 
-        public List<Reward> CompleteExercise(string messageCondition)
+        public List<Reward> CompleteExercise()
         {
             SetExerciseCompletion(TypeOfExerciseCompletion.Done);
             return exercise.exerciseRewards;

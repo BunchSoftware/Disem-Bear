@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c635808ce5879c42bf13972f3250250, type: 3}
   m_Name: Internship
   m_EditorClassIdentifier: 
-  nameExercise: intership
+  nameExercise: internship
   exerciseRewards: []
   exerciseRequirements: []
-  exerciseItems: []
+  exerciseItems:
+  - typeItem: flower
+    countItem: 1
+    typeMachineDispensingItem: postOfficeTube
+    avatarItem: {fileID: 21300000, guid: 7c75ec4478c0cb3469173b0c09a0a2bc, type: 3}
   newExercises:
   - {fileID: 11400000, guid: 72ecabf5adc8f21479aa1aee03517877, type: 2}
   header: "\u043E\u0442: science.center@bee.con"

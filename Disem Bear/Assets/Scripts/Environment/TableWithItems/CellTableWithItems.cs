@@ -171,8 +171,6 @@ namespace Game.Environment.LTableWithItems
         {
             if (currentItemInCell == null)
             {
-
-
                 pickUpItem.CanTakeByCollisionPlayer = false;
                 boxCollider.enabled = false;
                 currentItemInCell = pickUpItem;

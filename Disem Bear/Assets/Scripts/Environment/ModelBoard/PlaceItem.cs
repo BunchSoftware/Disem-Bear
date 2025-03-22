@@ -13,7 +13,6 @@ public class PlaceItem : MonoBehaviour, ILeftMouseDownClickable
 
     private ScaleChooseObject scaleChooseObject;
 
-
     private Player player;
 
     private bool isClick = false;

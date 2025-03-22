@@ -1090,6 +1090,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerObject: {fileID: 889556534}
   pointPlaceItem: {fileID: 507148822}
+  removeButtonMove: {fileID: 0}
+  removeButton: {fileID: 0}
   soundsDropItem:
   - {fileID: 8300000, guid: 8c1f8d97342217c4c97ef368f28fc0d1, type: 3}
   - {fileID: 8300000, guid: dba3a6a9837120b41ab368d5181e793f, type: 3}
@@ -1130,7 +1132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &385524268
 Transform:
   m_ObjectHideFlags: 0
@@ -8610,7 +8612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 485
+      value: 475.5
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.y
@@ -8926,7 +8928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8675327711258783818, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 149.99998
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

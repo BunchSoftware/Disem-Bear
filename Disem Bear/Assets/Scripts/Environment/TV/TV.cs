@@ -14,7 +14,6 @@ public class TV : MonoBehaviour, IUpdateListener
     [SerializeField] private AudioClip TVOff;
     private GameBootstrap gameBootstrap;
 
-
     private OpenObject openObject;
 
     public void Init(PlayerMouseMove playerMouseMove, Player player, GameBootstrap gameBootstrap)

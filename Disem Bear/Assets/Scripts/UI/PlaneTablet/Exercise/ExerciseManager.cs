@@ -32,9 +32,10 @@ namespace UI.PlaneTablet.Exercise
 
         private ExerciseGUI currentExerciseGUI;
 
-        private MonoBehaviour context;
         private ToastManager toastManager;
         private TV tv;
+
+        private MonoBehaviour context;
         private Coroutine randomMail;
 
         private Queue<DispensingTask> dispensingTasks = new Queue<DispensingTask>();
@@ -171,9 +172,9 @@ namespace UI.PlaneTablet.Exercise
             LayoutRebuilder.ForceRebuildLayoutImmediate(content.gameObject.GetComponent<RectTransform>());
         }
 
-        public void DoneCurrentExercise(string messageExercise)
+        public void CompleteExercise()
         {
-            List<Reward> exerciseRewards = currentExerciseGUI.CompleteExercise(messageExercise);
+            List<Reward> exerciseRewards = currentExerciseGUI.CompleteExercise();
             GetExerciseRewards?.Invoke(exerciseRewards);
             GiveRewards(exerciseRewards);
             Sort(currentExerciseGUI);

@@ -23,7 +23,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private ExerciseManager exerciseManager;
     private MovePointToPoint movePointToPoint;
     private ToastManager toastManager;
-    private ToolBase toolBase;
 
     private bool itemInBox = false;
     public Action OnPostBoxEmpty;
@@ -44,7 +43,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
     {
         this.gameBootstrap = gameBootstrap;
-        toolBase = GetComponent<ToolBase>();
 
         TV.OnTVClose.AddListener(() =>
         {
@@ -96,17 +94,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 }
             }
         });
-
-
-        if (itemInBox)
-        {
-            toolBase.on = true;
-            toolBase.toolTipText = pickUpItemInBox.NameItem;
-        }
-        else
-        {
-            toolBase.on = false;
-        }
     }
 
     public void PutItemInBox(PickUpItem pickUpItem)
@@ -115,10 +102,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         itemInBox = true;
         pickUpItemInBox.transform.parent = transform;
         pickUpItemInBox.transform.position = transform.position;
-
-        toolBase.on = true;
-        toolBase.toolTipText = pickUpItemInBox.NameItem;
-        toolBase.OnToolTip();
 
         CheckItemInBox(pickUpItem);
     }
@@ -136,7 +119,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 
                 if (nameRequirements.Count == 0)
                 {
-                    exerciseManager.DoneCurrentExercise(conditionExercise);
+                    exerciseManager.CompleteExercise();
                 }
                 break;
             }
@@ -168,8 +151,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
         OnPostBoxEmpty?.Invoke();
         PickUpItem temp = pickUpItemInBox;
         pickUpItemInBox = null;
-        toolBase.on = false;
-        toolBase.OffToolTip();
         return temp;
     }
 

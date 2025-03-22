@@ -72,6 +72,8 @@ namespace Game.Environment.Aquarium
 
             buttonLeft.Init(this);
             buttonRight.Init(this);
+
+            Debug.Log("Aquarium: Успешно иницилизирован");
         }
 
         public void OnUpdate(float deltaTime)

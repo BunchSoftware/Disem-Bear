@@ -21,6 +21,7 @@ namespace UI
         public void Init(SoundManager soundManager)
         {
             this.soundManager = soundManager;
+            Debug.Log("ToastManager: Успешно иницилизирован");
         }
 
         public void ShowToast(string message)
@@ -29,7 +30,6 @@ namespace UI
             toast.transform.GetChild(0).GetComponent<TMP_Text>().text = message;
             toast.alpha = 0f;
 
-            // TODO: добавить сюда звук чтобы игроки текли 
             soundManager.OnPlayOneShot(toastSound);
             var seq = DOTween.Sequence();
             seq.Join(toast.DOFade(1f, 0.5f));

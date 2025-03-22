@@ -18,5 +18,6 @@ public class MenuBootstrap : Bootstrap
         uiGameRoot.Init(soundManager);
 
         updateListeners.Add(playerInput);
+        Debug.Log("MenuBootstrap: Успешно иницилизировал все части игры");
     }
 }
