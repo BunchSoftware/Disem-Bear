@@ -41,23 +41,23 @@ namespace UI.PlaneTablet.Exercise
 
         public void Init(TV tv, ToastManager toastManager, MonoBehaviour context)
         {
-            countMail = SaveManager.filePlayer.JSONPlayer.resources.countMail;
+            countMail = SaveManager.playerDatabase.JSONPlayer.resources.countMail;
             this.toastManager = toastManager;
             this.context = context;
             this.tv = tv;
             List<Exercise> exercises = new List<Exercise>();
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.exercises != null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.exercises != null)
             {
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
                 {
-                    Exercise exercise = FindExerciseToFileExercise(SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise);
+                    Exercise exercise = FindExerciseToFileExercise(SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise);
                     if (exercise != null)
                     {
-                        exercise.isVisible = SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible;
+                        exercise.isVisible = SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].isVisible;
 
                         if (exercise.isMail)
-                            SaveManager.filePlayer.JSONPlayer.resources.exercises[i].typeOfExerciseCompletion = TypeOfExerciseCompletion.Run;
+                            SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].typeOfExerciseCompletion = TypeOfExerciseCompletion.Run;
 
                         ExerciseGUI exerciseGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ExerciseGUI>();
                         exerciseGUI.name = $"Exercise {i}";
@@ -115,6 +115,8 @@ namespace UI.PlaneTablet.Exercise
                         dispensingTask.typeMachineDispensingProduct.OnGetExerciseItem?.Invoke(dispensingTask.exerciseItem);
                 }
             });
+
+            Debug.Log("ExerciseManager: Успешно иницилизирован");
         }
 
 
@@ -124,9 +126,9 @@ namespace UI.PlaneTablet.Exercise
 
             for (int i = 0; i < exerciseDatabase.exercises.Count; i++)
             {
-                if (exerciseDatabase.exercises[i].exercise.nameExercise == nameExercise)
+                if (exerciseDatabase.exercises[i].nameExercise == nameExercise)
                 {
-                    exercise = exerciseDatabase.exercises[i].exercise;
+                    exercise = exerciseDatabase.exercises[i];
                     break;
                 }
             }
@@ -152,13 +154,13 @@ namespace UI.PlaneTablet.Exercise
                 exercise.isVisible = isVisible;
                 exerciseGUI.UpdateData(exercise);
 
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == nameExercise)
-                        SaveManager.filePlayer.JSONPlayer.resources.exercises[i].isVisible = isVisible;
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == nameExercise)
+                        SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].isVisible = isVisible;
                 }
 
-                SaveManager.UpdatePlayerFile();
+                SaveManager.UpdatePlayerDatabase();
 
                 return;
             }
@@ -171,7 +173,7 @@ namespace UI.PlaneTablet.Exercise
 
         public void DoneCurrentExercise(string messageExercise)
         {
-            List<Reward> exerciseRewards = currentExerciseGUI.DoneExercise(messageExercise);
+            List<Reward> exerciseRewards = currentExerciseGUI.CompleteExercise(messageExercise);
             GetExerciseRewards?.Invoke(exerciseRewards);
             GiveRewards(exerciseRewards);
             Sort(currentExerciseGUI);
@@ -186,11 +188,11 @@ namespace UI.PlaneTablet.Exercise
             exerciseData.nameExercise = exercise.nameExercise;
             exerciseData.typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone;
 
-            SaveManager.filePlayer.JSONPlayer.resources.exercises.Add(exerciseData);
-            exercise.isVisible = SaveManager.filePlayer.JSONPlayer.resources.exercises[SaveManager.filePlayer.JSONPlayer.resources.exercises.Count - 1].isVisible;
+            SaveManager.playerDatabase.JSONPlayer.resources.exercises.Add(exerciseData);
+            exercise.isVisible = SaveManager.playerDatabase.JSONPlayer.resources.exercises[SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count - 1].isVisible;
 
             if (exercise.isMail)
-                SaveManager.filePlayer.JSONPlayer.resources.exercises[SaveManager.filePlayer.JSONPlayer.resources.exercises.Count - 1].typeOfExerciseCompletion = TypeOfExerciseCompletion.Run;
+                SaveManager.playerDatabase.JSONPlayer.resources.exercises[SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count - 1].typeOfExerciseCompletion = TypeOfExerciseCompletion.Run;
 
             ExerciseGUI exerciseGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ExerciseGUI>();
             exerciseGUI.name = $"Exercise {exerciseGUIs.Count}";
@@ -217,7 +219,7 @@ namespace UI.PlaneTablet.Exercise
             }, exercise, exerciseGUIs.Count - 1);
             exerciseGUI.ExpandExercise(false);
 
-            SaveManager.UpdatePlayerFile();
+            SaveManager.UpdatePlayerDatabase();
         }
 
         private void GiveRewards(List<Reward> exerciseRewards)
@@ -272,17 +274,17 @@ namespace UI.PlaneTablet.Exercise
             {
                 for (int i = 0; i < exerciseDatabase.exercises.Count; i++)
                 {
-                    if (!exerciseDatabase.exercises[i].exercise.isMail && exerciseDatabase.exercises[i].exercise.isRandom
-                        && exerciseDatabase.exercises[i].exercise.nameExercise != exercise.nameExercise)
-                        randomExercises.Add(exerciseDatabase.exercises[i].exercise);
+                    if (!exerciseDatabase.exercises[i].isMail && exerciseDatabase.exercises[i].isRandom
+                        && exerciseDatabase.exercises[i].nameExercise != exercise.nameExercise)
+                        randomExercises.Add(exerciseDatabase.exercises[i]);
                 }
             }
             else
             {
                 for (int i = 0; i < exerciseDatabase.exercises.Count; i++)
                 {
-                    if (!exerciseDatabase.exercises[i].exercise.isMail && exerciseDatabase.exercises[i].exercise.isRandom)
-                        randomExercises.Add(exerciseDatabase.exercises[i].exercise);
+                    if (!exerciseDatabase.exercises[i].isMail && exerciseDatabase.exercises[i].isRandom)
+                        randomExercises.Add(exerciseDatabase.exercises[i]);
                 }
             }
 
@@ -293,9 +295,9 @@ namespace UI.PlaneTablet.Exercise
                 while (!isExit)
                 {
                     indexRandom = UnityEngine.Random.Range(0, randomExercises.Count);
-                    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                    for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
                     {
-                        if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == randomExercises[indexRandom].nameExercise)
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == randomExercises[indexRandom].nameExercise)
                             break;
 
                         isExit = true;
@@ -305,9 +307,9 @@ namespace UI.PlaneTablet.Exercise
                 exerciseResult = randomExercises[indexRandom];
                 if (exercise != null)
                 {
-                    for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                    for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
                     {
-                        if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
                         {
                             ExerciseData exerciseData = new ExerciseData();
 
@@ -316,8 +318,8 @@ namespace UI.PlaneTablet.Exercise
                             exerciseData.nameExercise = exerciseResult.nameExercise;
                             exerciseData.typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone;
 
-                            SaveManager.filePlayer.JSONPlayer.resources.exercises[i] = exerciseData;
-                            SaveManager.UpdatePlayerFile();
+                            SaveManager.playerDatabase.JSONPlayer.resources.exercises[i] = exerciseData;
+                            SaveManager.UpdatePlayerDatabase();
                         }
                     }
                 }
@@ -337,8 +339,8 @@ namespace UI.PlaneTablet.Exercise
 
                 for (int i = 0; i < exerciseDatabase.exercises.Count; i++)
                 {
-                    if (exerciseDatabase.exercises[i].exercise.isMail && exerciseDatabase.exercises[i].exercise.isRandom)
-                        mailExercises.Add(exerciseDatabase.exercises[i].exercise);
+                    if (exerciseDatabase.exercises[i].isMail && exerciseDatabase.exercises[i].isRandom)
+                        mailExercises.Add(exerciseDatabase.exercises[i]);
                 }
 
                 int indexRandom = 0;
@@ -348,9 +350,9 @@ namespace UI.PlaneTablet.Exercise
                     while (!isExit)
                     {
                         indexRandom = UnityEngine.Random.Range(0, mailExercises.Count);
-                        for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.exercises.Count; i++)
+                        for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
                         {
-                            if (SaveManager.filePlayer.JSONPlayer.resources.exercises[i].nameExercise == mailExercises[indexRandom].nameExercise)
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == mailExercises[indexRandom].nameExercise)
                                 break;
 
                             isExit = true;
@@ -363,7 +365,7 @@ namespace UI.PlaneTablet.Exercise
                     if (exercise.isMail)
                     {
                         countMail++;
-                        SaveManager.filePlayer.JSONPlayer.resources.countMail = countMail;
+                        SaveManager.playerDatabase.JSONPlayer.resources.countMail = countMail;
                     }
 
                     if (exercise != null && exercise.isMail)
@@ -375,9 +377,9 @@ namespace UI.PlaneTablet.Exercise
 
                         for (int i = 0; i < exerciseDatabase.exercises.Count; i++)
                         {
-                            if (exerciseDatabase.exercises[i].exercise == exercise)
+                            if (exerciseDatabase.exercises[i] == exercise)
                             {
-                                exerciseData.nameExercise = exerciseDatabase.exercises[i].exercise.nameExercise;
+                                exerciseData.nameExercise = exerciseDatabase.exercises[i].nameExercise;
                                 break;
                             }
                         }
@@ -385,7 +387,7 @@ namespace UI.PlaneTablet.Exercise
                         exerciseData.isGetExerciesItems = false;
                         exerciseData.typeOfExerciseCompletion = TypeOfExerciseCompletion.NotDone;
 
-                        SaveManager.filePlayer.JSONPlayer.resources.exercises.Add(exerciseData);
+                        SaveManager.playerDatabase.JSONPlayer.resources.exercises.Add(exerciseData);
 
                         exerciseGUI.Init(this, (exercise, isExpandExercise) =>
                         {
@@ -413,7 +415,7 @@ namespace UI.PlaneTablet.Exercise
                         randomMail = null;
 
                         toastManager.ShowToast("Вам пришло новое письмо, пожалуйста проверьте почтовый ящик");
-                        SaveManager.UpdatePlayerFile();
+                        SaveManager.UpdatePlayerDatabase();
                     }
                 }
             }

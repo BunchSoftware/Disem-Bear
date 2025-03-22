@@ -12,7 +12,7 @@ namespace Game.LDialog
     public class DialogManager
     {
         [SerializeField] private DialogueWindow dialogueWindow;
-        [SerializeField] private FileDialog fileDialog;
+        [SerializeField] private DialogDatabase fileDialog;
 
         public UnityEvent<Dialog> OnStartDialog;
         public UnityEvent<Dialog> OnEndDialog;
@@ -42,21 +42,23 @@ namespace Game.LDialog
                 isActiveInputField = false;
                 isCanSkipReplica = true;
                 SkipReplica();
-                Debug.LogError(152);
             });
 
-            if (SaveManager.filePlayer.JSONPlayer.nameUser != null)
+            if (SaveManager.playerDatabase.JSONPlayer.nameUser != null)
             {
-                currentIndexDialogPoint = SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint;
-                TypeLine(fileDialog.dialogPoints[currentIndexDialogPoint], SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog);
+                currentIndexDialogPoint = SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialogPoint;
+                TypeLine(fileDialog.dialogPoints[currentIndexDialogPoint], SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialog);
             }
+
+
+            Debug.Log("DialogManager: Успешно иницилизирован");
         }
 
         public void StartDialog(int indexDialogPoint)
         {
             currentIndexDialogPoint = indexDialogPoint;
-            SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
-            SaveManager.UpdatePlayerFile();
+            SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+            SaveManager.UpdatePlayerDatabase();
             TypeLine(fileDialog.dialogPoints[indexDialogPoint], currentIndexDialog);
         }
 
@@ -68,7 +70,7 @@ namespace Game.LDialog
 
                 if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
                     dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
-                if (dialog != null && dialog.skipDialog == true)
+                if (dialog != null)
                 {
                     StopTypeLine();
 
@@ -86,7 +88,7 @@ namespace Game.LDialog
                     else
                     {
                         currentIndexDialog++;
-                        SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                        SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
                         TypeLine(fileDialog.dialogPoints[currentIndexDialogPoint], currentIndexDialog);
                     }
 
@@ -104,21 +106,12 @@ namespace Game.LDialog
                 if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
                     dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
 
-                if (dialog != null && dialog.skipDialog == true)
+                if (dialog != null)
                 {
                     dialogueWindow.StopTypeLine();
                     dialogueWindow.ShowFullDialog(dialog);
                 }
             }
-        }
-
-        public void RunConditionSkip(string conditionSkip)
-        {
-            Dialog dialog = null;
-            if (currentIndexDialog >= 0 && currentIndexDialog <= fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count)
-                dialog = fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog];
-            if (conditionSkip == dialog.conditionSkipDialog)
-                SkipReplica();
         }
 
         private void TypeLine(DialogPoint dialogPoint, int indexDialog)
@@ -135,8 +128,8 @@ namespace Game.LDialog
                 OnStartDialog?.Invoke(dialogPoint.dialog[i]);
 
                 currentIndexDialog = i;
-                SaveManager.filePlayer.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
-                SaveManager.UpdatePlayerFile();
+                SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialog = currentIndexDialog;
+                SaveManager.UpdatePlayerDatabase();
 
                 isCanSkipReplica = !dialogPoint.dialog[i].isActiveInputField;
                 isDialogLast = false;
@@ -152,7 +145,7 @@ namespace Game.LDialog
                 {
                     if (currentIndexDialog == fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
                         isDialogLast = true;
-                    if (dialogPoint.dialog[i].skipDialog == false)
+                    if (dialogPoint.dialog[i].skipDialogButton == false)
                         yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
 
                     OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);

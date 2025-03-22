@@ -5,13 +5,12 @@ using UnityEngine;
 namespace UI.PlaneTablet.Exercise
 {
     [Serializable]
-    public class Requirement
+    public class ExerciseRequirement
     {
         public string typeRequirement;
         public int countRequirement = 1;
         public Sprite avatarRequirement;
     }
-
 
     [Serializable]
     public class ExerciseItem
@@ -23,18 +22,17 @@ namespace UI.PlaneTablet.Exercise
     }
 
     [Serializable]
-    public class Exercise
+    [CreateAssetMenu(fileName = "Exercise", menuName = "Exercise/Exercise")]
+    public class Exercise : ScriptableObject
     {
-        private bool isCompletedExercise = false;
-
         public string nameExercise;
         [Header("Награды, требования, квестовые предметы")]
         public List<Reward> exerciseRewards;
-        public List<Requirement> exerciseRequirements;
+        public List<ExerciseRequirement> exerciseRequirements;
         public List<ExerciseItem> exerciseItems;
 
         [Header("Задания, которые откроятся после завершения этого задания")]
-        public List<FileExercise> newExercises;
+        public List<Exercise> newExercises;
 
         [Header("Настройка графического соправождения")]
         public string header;
@@ -45,23 +43,5 @@ namespace UI.PlaneTablet.Exercise
         public Sprite avatar;
 
         [HideInInspector] public bool isVisible = true;
-
-        public string conditionExercise;
-
-        public bool GetIsCompletedExercise()
-        {
-            return isCompletedExercise;
-        }
-
-        public List<Reward> DoneExercise(string messageCondition)
-        {
-            if (conditionExercise == messageCondition)
-            {
-                isCompletedExercise = true;
-                return exerciseRewards;
-            }
-            else
-                return null;
-        }
     }
 }

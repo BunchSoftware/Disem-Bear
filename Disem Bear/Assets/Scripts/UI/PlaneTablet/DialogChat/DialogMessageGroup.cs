@@ -53,7 +53,7 @@ namespace UI.PlaneTablet.DialogChat
         private IEnumerator TypeLineIE(Dialog dialog)
         {
             currentMessage.textMessage.text = "";
-            SetParametres(dialog);
+            UpdateData(dialog);
             for (int j = 0; j < dialog.textDialog.ToCharArray().Length; j++)
             {
                 currentMessage.textMessage.text += dialog.textDialog[j];
@@ -63,11 +63,11 @@ namespace UI.PlaneTablet.DialogChat
 
         public void DialogFinish(Dialog dialog)
         {
-            SetParametres(dialog);
+            UpdateData(dialog);
             currentMessage.textMessage.text = dialog.textDialog;
         }
 
-        private void SetParametres(Dialog dialog)
+        private void UpdateData(Dialog dialog)
         {
             currentMessage.textMessage.fontStyle = dialog.fontStyleText;
             currentMessage.textMessage.fontSize = dialog.fontSizeText;

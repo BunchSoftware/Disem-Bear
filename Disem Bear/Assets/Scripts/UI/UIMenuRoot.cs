@@ -22,7 +22,7 @@ namespace UI
 
             fade.FadeWhite();
 
-            if (SaveManager.filePlayer.JSONPlayer.resources != null && SaveManager.filePlayer.JSONPlayer.resources.isPlayerRegistration)
+            if (SaveManager.playerDatabase.JSONPlayer.resources != null && SaveManager.playerDatabase.JSONPlayer.resources.isPlayerRegistration)
             {
                 startButton.gameObject.SetActive(false);
                 continueButton.gameObject.SetActive(true);

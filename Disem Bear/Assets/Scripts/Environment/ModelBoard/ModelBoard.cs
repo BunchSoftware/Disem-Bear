@@ -86,9 +86,9 @@ namespace Game.Environment.LModelBoard
             openObject.Init(triggerObject, playerMouseMove, player);
             placeBoard.Init(player, gameBootstrap);
 
-            if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards == null)
+            if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards == null)
             {
-                SaveManager.filePlayer.JSONPlayer.resources.modelBoards = new List<CellsData>();
+                SaveManager.playerDatabase.JSONPlayer.resources.modelBoards = new List<CellsData>();
 
                 CellsData cellsData = new CellsData();
                 cellsData.nameMasterCells = name;
@@ -102,14 +102,14 @@ namespace Game.Environment.LModelBoard
 
                 cellsData.pickUpItems = data;
 
-                SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Add(cellsData);
+                SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Add(cellsData);
             }
             else
             {
                 bool condition = true;
-                for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Count; i++)
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Count; i++)
                 {
-                    if (SaveManager.filePlayer.JSONPlayer.resources.modelBoards[i].nameMasterCells == name)
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.modelBoards[i].nameMasterCells == name)
                     {
                         condition = false;
                         break;
@@ -130,7 +130,7 @@ namespace Game.Environment.LModelBoard
 
                     cellsData.pickUpItems = data;
 
-                    SaveManager.filePlayer.JSONPlayer.resources.modelBoards.Add(cellsData);
+                    SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Add(cellsData);
                 }
             }
 

@@ -42,7 +42,7 @@ namespace Game.LPlayer
 
         public void Init()
         {
-            PickUpItem pickUpItem = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem);
+            PickUpItem pickUpItem = GameBootstrap.FindPickUpItemToPrefabs(SaveManager.playerDatabase.JSONPlayer.resources.currentPickUpItem.namePickUpItem);
 
             if (pickUpItem != null)
             {
@@ -85,12 +85,12 @@ namespace Game.LPlayer
                     scaleChooseObject.RemoveComponent();
                 this.pickUpItem.transform.parent = transform;
 
-                SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem = this.pickUpItem.NameItem;
+                SaveManager.playerDatabase.JSONPlayer.resources.currentPickUpItem.namePickUpItem = this.pickUpItem.NameItem;
 
                 typePickUpItem = pickUpItem.TypeItem;
                 OnPickUpItem?.Invoke(pickUpItem);
 
-                SaveManager.UpdatePlayerFile();
+                SaveManager.UpdatePlayerDatabase();
             }
         }
 
@@ -107,8 +107,8 @@ namespace Game.LPlayer
                 temp = pickUpItem;
                 pickUpItem = null;
 
-                SaveManager.filePlayer.JSONPlayer.resources.currentPickUpItem.namePickUpItem = null;
-                SaveManager.UpdatePlayerFile();
+                SaveManager.playerDatabase.JSONPlayer.resources.currentPickUpItem.namePickUpItem = null;
+                SaveManager.UpdatePlayerDatabase();
                 typePickUpItem = TypePickUpItem.None;
             }
 

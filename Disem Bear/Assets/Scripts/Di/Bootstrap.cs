@@ -9,10 +9,10 @@ using UnityEngine;
 public class Bootstrap : MonoBehaviour
 {
     [Header("Save System")]
-    [SerializeField] protected FilePlayer defaultFilePlayer;
-    [SerializeField] protected FileShop defaultFileShop;
-    [SerializeField] protected FilePlayer filePlayer;
-    [SerializeField] protected FileShop fileShop;
+    [SerializeField] protected PlayerDatabase defaultFilePlayer;
+    [SerializeField] protected ShopDatabase defaultFileShop;
+    [SerializeField] protected PlayerDatabase filePlayer;
+    [SerializeField] protected ShopDatabase fileShop;
     [SerializeField] protected APIManager apiManager;
     [Header("Sound")]
     [SerializeField] protected SoundManager soundManager;

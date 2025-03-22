@@ -6,6 +6,6 @@ namespace UI.PlaneTablet.Exercise
     [CreateAssetMenu(fileName = "ExerciseDatabase", menuName = "Exercise/ExerciseDatabase")]
     public class ExerciseDatabase : ScriptableObject
     {
-        public List<FileExercise> exercises;
+        public List<Exercise> exercises;
     }
 }

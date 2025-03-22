@@ -43,10 +43,10 @@ namespace Game.Environment.LMixTable
 
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-            for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; i++)
+            for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.ingradients.Count; i++)
             {
-                if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient == typeIngradient)
-                    ingradient = SaveManager.filePlayer.JSONPlayer.resources.ingradients[i];
+                if (SaveManager.playerDatabase.JSONPlayer.resources.ingradients[i].typeIngradient == typeIngradient)
+                    ingradient = SaveManager.playerDatabase.JSONPlayer.resources.ingradients[i];
             }
 
             CheckCountIngradient();

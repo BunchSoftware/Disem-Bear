@@ -202,13 +202,13 @@ namespace Game.Environment.LMixTable
 
         public static void ReplaceIngradientData(IngradientData ingradientData)
         {
-            for (int i = 0; i < SaveManager.filePlayer.JSONPlayer.resources.ingradients.Count; i++)
+            for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.ingradients.Count; i++)
             {
-                if (SaveManager.filePlayer.JSONPlayer.resources.ingradients[i].typeIngradient == ingradientData.typeIngradient)
-                    SaveManager.filePlayer.JSONPlayer.resources.ingradients[i] = ingradientData;
+                if (SaveManager.playerDatabase.JSONPlayer.resources.ingradients[i].typeIngradient == ingradientData.typeIngradient)
+                    SaveManager.playerDatabase.JSONPlayer.resources.ingradients[i] = ingradientData;
             }
 
-            SaveManager.UpdatePlayerFile();
+            SaveManager.UpdatePlayerDatabase();
         }
 
         /// <summary>

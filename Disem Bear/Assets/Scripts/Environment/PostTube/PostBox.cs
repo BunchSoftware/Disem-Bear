@@ -66,7 +66,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
             {
                 nameRequirements.Add(exercise.exerciseRequirements[i].typeRequirement);
             }
-            conditionExercise = exercise.conditionExercise;
+            //conditionExercise = exercise.conditionExercise;
         });
 
         triggerObject.OnTriggerStayEvent.AddListener((collider) =>
