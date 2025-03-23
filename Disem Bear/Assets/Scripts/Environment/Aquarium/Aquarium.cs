@@ -70,7 +70,7 @@ namespace Game.Environment.Aquarium
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
             if (triggerObject == null)
-                Debug.LogError("Не задан триггер у аквариума");
+                Debug.LogError("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
             spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
 
             openObject.OnStartObjectOpen.AddListener(() =>
@@ -82,7 +82,7 @@ namespace Game.Environment.Aquarium
 
             openObject.OnEndObjectOpen.AddListener(() =>
             {
-                collider.enabled = false;
+                GetComponent<Collider>().enabled = false;
                 OnAquariumOpen?.Invoke();
             });
 
@@ -137,7 +137,7 @@ namespace Game.Environment.Aquarium
             buttonLeft.Init(this);
             buttonRight.Init(this);
 
-            Debug.Log("Aquarium: Успешно иницилизирован");
+            Debug.Log("Aquarium: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         }
 
         public void OnUpdate(float deltaTime)
@@ -175,8 +175,6 @@ namespace Game.Environment.Aquarium
 
             if (openObject != null)
                 openObject.OnUpdate(deltaTime);
-            if (aquarium != null)
-                aquarium.OnUpdate(deltaTime);
         }
 
         private bool TryGetMaterial(PickUpItem pickUpItem)
@@ -192,12 +190,12 @@ namespace Game.Environment.Aquarium
 
                         if (pickUpItem.TryGetComponent(out materialForAquarium))
                         {
-                            aquarium.UpdateMaterial(materialForAquarium);
+                            UpdateMaterial(materialForAquarium);
                             return true;
                         }
                         else
                         {
-                            Debug.LogError("Объект задан как материал аквариума, но не имеет скрипта MaterialForAquarium");
+                            Debug.LogError("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ MaterialForAquarium");
                         }
                         break;
                     case TypePickUpItem.Package:
@@ -206,17 +204,17 @@ namespace Game.Environment.Aquarium
                         {
                             if (packageItem.itemInPackage.TryGetComponent(out materialForAquarium))
                             {
-                                aquarium.UpdateMaterial(materialForAquarium);
+                                UpdateMaterial(materialForAquarium);
                                 return true;
                             }
                             else
                             {
-                                Debug.Log("Отказ в принятии посылки, так как нет скрипта MaterialForAquarium");
+                                Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ MaterialForAquarium");
                             }
                         }
                         else
                         {
-                            Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
+                            Debug.LogError("пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ PackageItem, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Package");
                         }
                         break;
                 }

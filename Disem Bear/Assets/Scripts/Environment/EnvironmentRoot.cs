@@ -79,9 +79,9 @@ namespace Game.Environment
             {
                 fridges[i].OnUpdate(deltaTime);
             }
-            for (int i = 0; i < aquariumOpens.Count; i++)
+            for (int i = 0; i <  aquariums.Count; i++)
             {
-                aquariumOpens[i].OnUpdate(deltaTime);
+                aquariums[i].OnUpdate(deltaTime);
             }
 
             workbench.OnUpdate(deltaTime);

@@ -95,10 +95,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5991775514266576830}
-  - component: {fileID: 8153629043193257584}
-  - component: {fileID: 6240729488719923421}
   - component: {fileID: 2193764610048899404}
   - component: {fileID: 159569152080467884}
+  - component: {fileID: 7404410844633313868}
+  - component: {fileID: 3637558816394988193}
   m_Layer: 0
   m_Name: Aquarium
   m_TagString: Untagged
@@ -128,47 +128,6 @@ Transform:
   - {fileID: 7535109557336493822}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8153629043193257584
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075308218668563968}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.6163521, y: 1.76577, z: 1.3272448}
-  m_Center: {x: 0.014092445, y: 0.27278912, z: -0.096986294}
---- !u!114 &6240729488719923421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075308218668563968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1dc32e3f61a424b836a8fe091eba74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aquarium: {fileID: 4314196002913402049}
-  triggerObject: {fileID: 8005615908522796165}
-  OnAquariumOpen:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAquariumClose:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2193764610048899404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +174,123 @@ MonoBehaviour:
   OnEndObjectClose:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7404410844633313868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075308218668563968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dfa5315f7e76b419374ca1b773fc47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  point1: {fileID: 3493502719280790306}
+  point2: {fileID: 3274850883916888992}
+--- !u!114 &3637558816394988193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075308218668563968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848072dd53638bd4784444145bcc616e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GetAquariumCells:
+    m_PersistentCalls:
+      m_Calls: []
+  materialForAquarium: {fileID: 8688015039957210573, guid: 6c6d2ca616cbefb46a5da95a54e61800, type: 3}
+  InspectorPhasesAquariums:
+  - nameColor: blue
+    phasesAquarium:
+      NullFase: {fileID: 299253766, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      FirstFase: {fileID: 156099500, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      SecondFase: {fileID: -2124305790, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      ThirdFase: {fileID: -215250127, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      NullFaseDirty: {fileID: -73224683, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      FirstFaseDirty: {fileID: -1185996402, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      SecondFaseDirty: {fileID: -482555351, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+      ThirdFaseDirty: {fileID: 930932882, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
+  - nameColor: green
+    phasesAquarium:
+      NullFase: {fileID: -302152143, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      FirstFase: {fileID: 1963923834, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      SecondFase: {fileID: -1556542021, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      ThirdFase: {fileID: -548954978, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      NullFaseDirty: {fileID: 1970756389, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      FirstFaseDirty: {fileID: 1150995354, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      SecondFaseDirty: {fileID: 1499466135, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+      ThirdFaseDirty: {fileID: 1433484011, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
+  - nameColor: orange
+    phasesAquarium:
+      NullFase: {fileID: 2066107246, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      FirstFase: {fileID: 1694744574, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      SecondFase: {fileID: 743794224, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      ThirdFase: {fileID: 2020970889, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      NullFaseDirty: {fileID: 1005252970, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      FirstFaseDirty: {fileID: 753328729, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      SecondFaseDirty: {fileID: 1200978691, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+      ThirdFaseDirty: {fileID: 616917671, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
+  - nameColor: pink
+    phasesAquarium:
+      NullFase: {fileID: -1125639144, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      FirstFase: {fileID: 138638830, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      SecondFase: {fileID: 1989711107, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      ThirdFase: {fileID: 1183931966, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      NullFaseDirty: {fileID: -1456274509, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      FirstFaseDirty: {fileID: -897941856, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      SecondFaseDirty: {fileID: 383777502, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+      ThirdFaseDirty: {fileID: 1585051394, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
+  - nameColor: purple
+    phasesAquarium:
+      NullFase: {fileID: 744996140, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      FirstFase: {fileID: -812381137, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      SecondFase: {fileID: 1499279839, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      ThirdFase: {fileID: -2047403428, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      NullFaseDirty: {fileID: 1020105, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      FirstFaseDirty: {fileID: 310789485, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      SecondFaseDirty: {fileID: 1398318364, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+      ThirdFaseDirty: {fileID: -2066787309, guid: c7328026fea4fba43aff21170cd09370, type: 3}
+  InspectorTimeCells:
+  - name: stem
+    time: 1.5
+  - name: detoxification
+    time: 7
+  - name: digestion
+    time: 14.75
+  - name: adaptation
+    time: 66.31
+  - name: metabolism
+    time: 3.5
+  - name: filtering
+    time: 590.24
+  - name: gas
+    time: 31.38
+  - name: regulation
+    time: 138.72
+  - name: reduction
+    time: 287.33
+  InspectorSpawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  buttonLeft: {fileID: 1317103055750252902}
+  buttonRight: {fileID: 3254833205347162483}
+  getCellsSounds:
+  - {fileID: 8300000, guid: 45ed248fce8795d49a8868d71cba648d, type: 3}
+  - {fileID: 8300000, guid: 314a216a287dc11418cd28bd448c49a4, type: 3}
+  changeMaterialSounds:
+  - {fileID: 8300000, guid: e64d9d545fa10ac4da3231f87e43e600, type: 3}
 --- !u!1 &1897118703045874810
 GameObject:
   m_ObjectHideFlags: 0
@@ -5274,9 +5350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3123646714360131634}
-  - component: {fileID: 4314196002913402049}
   - component: {fileID: 1765401622079548558}
-  - component: {fileID: 3677856035155606996}
   m_Layer: 0
   m_Name: AquariumSprite
   m_TagString: Untagged
@@ -5305,104 +5379,6 @@ Transform:
   - {fileID: 987092870552127078}
   m_Father: {fileID: 5991775514266576830}
   m_LocalEulerAnglesHint: {x: 0, y: 201.633, z: 0}
---- !u!114 &4314196002913402049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7207498488196955100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 848072dd53638bd4784444145bcc616e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GetAquariumCells:
-    m_PersistentCalls:
-      m_Calls: []
-  materialForAquarium: {fileID: 8688015039957210573, guid: 6c6d2ca616cbefb46a5da95a54e61800, type: 3}
-  InspectorPhasesAquariums:
-  - nameColor: blue
-    phasesAquarium:
-      NullFase: {fileID: 299253766, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      FirstFase: {fileID: 156099500, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      SecondFase: {fileID: -2124305790, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      ThirdFase: {fileID: -215250127, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      NullFaseDirty: {fileID: -73224683, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      FirstFaseDirty: {fileID: -1185996402, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      SecondFaseDirty: {fileID: -482555351, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-      ThirdFaseDirty: {fileID: 930932882, guid: 1886dc8995432394cbbc83ef8425333b, type: 3}
-  - nameColor: green
-    phasesAquarium:
-      NullFase: {fileID: -302152143, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      FirstFase: {fileID: 1963923834, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      SecondFase: {fileID: -1556542021, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      ThirdFase: {fileID: -548954978, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      NullFaseDirty: {fileID: 1970756389, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      FirstFaseDirty: {fileID: 1150995354, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      SecondFaseDirty: {fileID: 1499466135, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-      ThirdFaseDirty: {fileID: 1433484011, guid: 7ff27ebea40a1ec44a3b076ed19dad06, type: 3}
-  - nameColor: orange
-    phasesAquarium:
-      NullFase: {fileID: 2066107246, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      FirstFase: {fileID: 1694744574, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      SecondFase: {fileID: 743794224, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      ThirdFase: {fileID: 2020970889, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      NullFaseDirty: {fileID: 1005252970, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      FirstFaseDirty: {fileID: 753328729, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      SecondFaseDirty: {fileID: 1200978691, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-      ThirdFaseDirty: {fileID: 616917671, guid: 69410d4599f95d34f948a4cfea1d8aab, type: 3}
-  - nameColor: pink
-    phasesAquarium:
-      NullFase: {fileID: -1125639144, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      FirstFase: {fileID: 138638830, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      SecondFase: {fileID: 1989711107, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      ThirdFase: {fileID: 1183931966, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      NullFaseDirty: {fileID: -1456274509, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      FirstFaseDirty: {fileID: -897941856, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      SecondFaseDirty: {fileID: 383777502, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-      ThirdFaseDirty: {fileID: 1585051394, guid: 604fa3f4f9096d54cba50be7c26b497e, type: 3}
-  - nameColor: purple
-    phasesAquarium:
-      NullFase: {fileID: 744996140, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      FirstFase: {fileID: -812381137, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      SecondFase: {fileID: 1499279839, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      ThirdFase: {fileID: -2047403428, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      NullFaseDirty: {fileID: 1020105, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      FirstFaseDirty: {fileID: 310789485, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      SecondFaseDirty: {fileID: 1398318364, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-      ThirdFaseDirty: {fileID: -2066787309, guid: c7328026fea4fba43aff21170cd09370, type: 3}
-  InspectorTimeCells:
-  - name: stem
-    time: 1.5
-  - name: detoxification
-    time: 7
-  - name: digestion
-    time: 14.75
-  - name: adaptation
-    time: 66.31
-  - name: metabolism
-    time: 3.5
-  - name: filtering
-    time: 590.24
-  - name: gas
-    time: 31.38
-  - name: regulation
-    time: 138.72
-  - name: reduction
-    time: 287.33
-  InspectorSpawners:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  buttonLeft: {fileID: 1317103055750252902}
-  buttonRight: {fileID: 3254833205347162483}
 --- !u!65 &1765401622079548558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5424,20 +5400,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6949248, y: 0.6491191, z: 0.027087092}
   m_Center: {x: -0.09003713, y: 0.034814846, z: 0.0032671245}
---- !u!114 &3677856035155606996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7207498488196955100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07dfa5315f7e76b419374ca1b773fc47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  point1: {fileID: 3493502719280790306}
-  point2: {fileID: 3274850883916888992}
 --- !u!1 &7592464493916593346
 GameObject:
   m_ObjectHideFlags: 0
@@ -5956,17 +5918,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8054770960052085468, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
   m_PrefabInstance: {fileID: 6174967075574281240}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8005615908522796165 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4226710260219498653, guid: 7c7b7cad8d4da87468cf13470f5f3d03, type: 3}
-  m_PrefabInstance: {fileID: 6174967075574281240}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c6b547e3f0b90489a5c3dc1b2573b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &9212404379172060067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6038,37 +5989,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 338e06e26d53cab4aa6e800d5610c420, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8585961944429050582}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 338e06e26d53cab4aa6e800d5610c420, type: 3}
---- !u!1 &8293485541849073394 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 338e06e26d53cab4aa6e800d5610c420, type: 3}
-  m_PrefabInstance: {fileID: 9212404379172060067}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &8585961944429050582
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8293485541849073394}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.02, y: 0.020000001, z: 0.020000001}
-  m_Center: {x: 0, y: -0.000000014901161, z: 0}
 --- !u!4 &8670468889411378248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 338e06e26d53cab4aa6e800d5610c420, type: 3}
