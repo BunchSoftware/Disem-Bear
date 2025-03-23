@@ -1132,7 +1132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &385524268
 Transform:
   m_ObjectHideFlags: 0
@@ -2251,7 +2251,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1075308218668563968, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: m_Name
-      value: Aquarium (4)
+      value: Aquarium
       objectReference: {fileID: 0}
     - target: {fileID: 4314196002913402049, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: getCellsSounds.Array.size
@@ -2349,7 +2349,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8585961944429050582, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+    - {fileID: 8153629043193257584, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -8612,7 +8614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 475.5
+      value: 485
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.y

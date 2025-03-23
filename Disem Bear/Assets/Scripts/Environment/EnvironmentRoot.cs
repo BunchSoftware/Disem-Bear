@@ -27,7 +27,7 @@ namespace Game.Environment
         [Header("Board")]
         [SerializeField] private List<ModelBoard> modelBoards;
         [Header("Aquarium")]
-        [SerializeField] private List<AquariumOpen> aquariumOpens;
+        [SerializeField] private List<Aquarium.Aquarium> aquariums;
         [Header("Fridge")]
         [SerializeField] private List<Fridge.Fridge> fridges;
         [Header("Printer")]
@@ -50,9 +50,9 @@ namespace Game.Environment
                 tablesWithItems[i].Init(player, gameBootstrap);
             }
 
-            for (int i = 0; i < aquariumOpens.Count; i++)
+            for (int i = 0; i < aquariums.Count; i++)
             {
-                aquariumOpens[i].Init(player, playerMouseMove, gameBootstrap);
+               aquariums[i].Init(player, playerMouseMove, gameBootstrap);
             }
             for (int i = 0; i < fridges.Count; i++)
             {

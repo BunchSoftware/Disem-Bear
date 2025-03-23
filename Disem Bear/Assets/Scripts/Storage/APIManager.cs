@@ -30,6 +30,8 @@ namespace External.API
         public List<CellsData> modelBoards = new List<CellsData>();
         [Header("Полки и столы")]
         public List<CellsData> tableWithItems = new List<CellsData>();
+        [Header("Аквауриум")]
+        public List<AquariumData> aquariums = new List<AquariumData>();
         [Header("Магниты на холодильнике")]
         public List<MagnetData> magnets = new List<MagnetData>();
     }

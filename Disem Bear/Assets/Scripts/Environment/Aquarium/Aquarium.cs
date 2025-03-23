@@ -1,5 +1,7 @@
 using External.DI;
+using Game.Environment.Item;
 using Game.Environment.LMixTable;
+using Game.Environment.LPostTube;
 using Game.LPlayer;
 using System;
 using System.Collections;
@@ -10,10 +12,13 @@ using UnityEngine.Events;
 
 namespace Game.Environment.Aquarium
 {
-    public class Aquarium : MonoBehaviour
+    [RequireComponent(typeof(OpenObject))]
+    [RequireComponent(typeof(ScaleChooseObject))]
+    public class Aquarium : MonoBehaviour, ILeftMouseDownClickable
     {
-        public UnityEvent<string, int> GetAquariumCells;
-
+        private OpenObject openObject;
+        private ScaleChooseObject scaleChooseObject;
+        [SerializeField] private TriggerObject triggerObject;
         public MaterialForAquarium materialForAquarium;
         private List<string> currentCells = new();
         private string colorMaterial = "none";
@@ -41,11 +46,70 @@ namespace Game.Environment.Aquarium
 
         private int CountCells = 0;
 
+        public UnityEvent<string, int> GetAquariumCells;
+
+        public UnityEvent OnAquariumOpen;
+        public UnityEvent OnAquariumClose;
+
+        private Player player;
+        private PlayerMouseMove playerMouseMove;
+        private MovePointToPoint spriteMovePointToPoint;
+
+        private bool isClick = false;
+        private bool isOpen = false;
+        public bool IsOpen => isOpen;
 
 
-        public void Init(Player player, GameBootstrap gameBootstrap)
+        public void Init(Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
+            this.player = player;
+            this.playerMouseMove = playerMouseMove;
             this.gameBootstrap = gameBootstrap;
+
+            openObject = GetComponent<OpenObject>();
+            scaleChooseObject = GetComponent<ScaleChooseObject>();
+
+            if (triggerObject == null)
+                Debug.LogError("Не задан триггер у аквариума");
+            spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
+
+            openObject.OnStartObjectOpen.AddListener(() =>
+            {
+                isOpen = true;
+                spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
+                scaleChooseObject.on = false;
+            });
+
+            openObject.OnEndObjectOpen.AddListener(() =>
+            {
+                collider.enabled = false;
+                OnAquariumOpen?.Invoke();
+            });
+
+            openObject.OnEndObjectClose.AddListener(() =>
+            {
+                isOpen = false;
+                scaleChooseObject.on = true;
+                OnAquariumClose?.Invoke();
+            });
+
+            openObject.Init(triggerObject, playerMouseMove, player);
+
+            triggerObject.OnTriggerStayEvent.AddListener((collider) =>
+            {
+                if (isClick && !isOpen)
+                {
+                    isClick = false;
+
+                    if (player.PlayerPickUpItem && TryGetMaterial(player.GetPickUpItem()))
+                    {
+                        Destroy(player.GetPickUpItem().gameObject);
+                        player.PutItem();
+                        Debug.Log("Material for aquarium update");
+                    }
+                }
+            });
+
             for (int i = 0; i < InspectorSpawners.Count; i++)
             {
                 Spawners[InspectorSpawners[i].GetIngradient().typeIngradient] = InspectorSpawners[i];
@@ -108,6 +172,56 @@ namespace Game.Environment.Aquarium
                     CountCells++;
                 spendTimeCreateCell = 0;
             }
+
+            if (openObject != null)
+                openObject.OnUpdate(deltaTime);
+            if (aquarium != null)
+                aquarium.OnUpdate(deltaTime);
+        }
+
+        private bool TryGetMaterial(PickUpItem pickUpItem)
+        {
+            if (pickUpItem != null)
+            {
+                MaterialForAquarium materialForAquarium;
+                switch (pickUpItem.TypeItem)
+                {
+                    case TypePickUpItem.None:
+                        break;
+                    case TypePickUpItem.AquariumMaterial:
+
+                        if (pickUpItem.TryGetComponent(out materialForAquarium))
+                        {
+                            aquarium.UpdateMaterial(materialForAquarium);
+                            return true;
+                        }
+                        else
+                        {
+                            Debug.LogError("Объект задан как материал аквариума, но не имеет скрипта MaterialForAquarium");
+                        }
+                        break;
+                    case TypePickUpItem.Package:
+                        PackageItem packageItem;
+                        if (pickUpItem.TryGetComponent(out packageItem))
+                        {
+                            if (packageItem.itemInPackage.TryGetComponent(out materialForAquarium))
+                            {
+                                aquarium.UpdateMaterial(materialForAquarium);
+                                return true;
+                            }
+                            else
+                            {
+                                Debug.Log("Отказ в принятии посылки, так как нет скрипта MaterialForAquarium");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError("Ошибка. На обьекте нет PackageItem, но обьект указан как Package");
+                        }
+                        break;
+                }
+            }
+            return false;
         }
 
         public void QuietUpdateMaterial(MaterialForAquarium materialForAquarium)
@@ -208,122 +322,17 @@ namespace Game.Environment.Aquarium
             yield return new WaitForSeconds(2);
             DisplayCount.GetComponent<Animator>().SetBool("On", false);
         }
-        //public void ChangeCell(int ch)
-        //{
-        //    GetAllCells();
-        //    NumCell = (NumCell + ch + CellsList.Count) % CellsList.Count;
-        //    //NameIngredient = CellsList[NumCell].GetComponent<IngradientItem>().typeIngradient;
-        //    ChoiceCellSprite.sprite = CellsList[NumCell].GetComponent<SpriteRenderer>().sprite;
-        //    //NormalTimeCell = CellsList[NumCell].GetComponent<IngradientItem>().TimeInAquarium;
-        //    timerCell = 0f;
-        //}
-        //private void OnMouseDown()
-        //{
-        //    GetAllCells();
-        //}
 
-        //private void GetAllCells()
-        //{
-        //    if (CountCells != 0)
-        //    {
-        //        ParticleSystemm.Play();
-        //        StartCoroutine(WaitParticleSystem(0.3f));
-        //    }
-        //    DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
-        //    DisplayCount.GetComponent<Animator>().SetBool("On", true);
-        //    StartCoroutine(waitDisplayCount());
-        //    for (int i = 0; i < CountCells; i++)
-        //    {
-        //        //MixTable.Instance.AddIngridient(NameIngredient);
-        //    }
-        //    CountCells = 0;
-        //}
+        public void OnMouseLeftClickDownObject()
+        {
+            isClick = true;
+        }
 
-        //IEnumerator waitDisplayCount()
-        //{
-        //    yield return new WaitForSeconds(2);
-        //    DisplayCount.GetComponent<Animator>().SetBool("On", false);
-        //}
-        //private void Start()
-        //{
-        //    ParticleSystemm = transform.Find("Particle System").GetComponent<ParticleSystem>();
-        //    spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-        //    ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
-        //    if (CellsList.Count > 0)
-        //    {
-        //        //NameIngredient = CellsList[NumCell].GetComponent<IngradientItem>().typeIngradient;
-        //    }
-        //    ChoiceCellSprite.sprite = CellsList[NumCell].GetComponent<SpriteRenderer>().sprite;
-        //    //NormalTimeCell = CellsList[NumCell].GetComponent<IngradientItem>().TimeInAquarium;
+        public void OnMouseLeftClickDownOtherObject()
+        {
+            isClick = false;
+        }
 
-        //    TimeCell = NormalTimeCell;
-        //    DisplayCount = transform.Find("DisplayCount").gameObject;
-        //}
-        //private void Update()
-        //{
-        //    if (TimeWaterSpend > 0f)
-        //    {
-        //        TimeWaterSpend -= Time.deltaTime;
-        //    }
-        //    if (CountCells == 0 && OnAquarium)
-        //    {
-        //        if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.NullFaseDirty;
-        //        }
-        //        else
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.NullFase;
-        //        }
-        //    }
-        //    else if (CountCells < 4 && OnAquarium)
-        //    {
-        //        if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.FirstFaseDirty;
-        //        }
-        //        else
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.FirstFase;
-        //        }
-        //    }
-        //    else if (CountCells < 9 && OnAquarium)
-        //    {
-        //        if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.SecondFaseDirty;
-        //        }
-        //        else
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.SecondFase;
-        //        }
-        //    }
-        //    else if (CountCells < 15 && OnAquarium)
-        //    {
-        //        if (NameMaterial != "Classic" && TimeWaterSpend <= 0f)
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.ThirdFaseDirty;
-        //        }
-        //        else
-        //        {
-        //            spriteRenderer.sprite = phasesAquarium.ThirdFase;
-        //        }
-        //    }
-        //    if (NormalTemperature) TimeCell = NormalTimeCell;
-        //    else TimeCell = NormalTimeCell * 2;
-        //    if (TimeWaterSpend > 0f || NameMaterial == "Classic") timerCell += Time.deltaTime;
-        //    if (timerCell >= TimeCell)
-        //    {
-        //        if (CountCells < 15)
-        //            CountCells++;
-        //        timerCell = 0;
-        //    }
-        //}
-        //IEnumerator WaitParticleSystem(float f)
-        //{
-        //    yield return new WaitForSeconds(f);
-        //    ParticleSystemm.Stop();
-        //}
         [Serializable]
         public class TimeCell
         {
