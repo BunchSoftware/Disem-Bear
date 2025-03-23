@@ -15,7 +15,6 @@ public class CheckTakeExercise : MonoBehaviour
 
     private bool orderTaken = false;
     private bool orderStartDialog = false;
-    private string conditionOrder = "None";
     private int indexDialogPoint = 0;
 
     public void Init(DialogManager dialogManager, ExerciseManager exerciseManager, TV TV)
@@ -31,7 +30,7 @@ public class CheckTakeExercise : MonoBehaviour
     {
         for (int i = 0; i < startDialogs.Count; i++)
         {
-            if (startDialogs[i].headerOrder == exercise.header && !dialogManager.IsDialogRun())
+            if (startDialogs[i].headerOrder == exercise.header && !dialogManager.IsDialogOn())
             {
                 orderTaken = true;
                 orderStartDialog = true;
@@ -42,11 +41,10 @@ public class CheckTakeExercise : MonoBehaviour
         }
         for (int i = 0; i < conditions.Count; i++)
         {
-            if (conditions[i].headerOrder == exercise.header)
+            if (dialogManager.GetCurrentIndexDialogPoint() == conditions[i].indexDialogPoint && dialogManager.GetCurrentIndexDialog() == conditions[i].indexDialog && conditions[i].headerOrder == exercise.header)
             {
                 orderTaken = true;
                 orderStartDialog = false;
-                conditionOrder = conditions[i].condition;
                 break;
             }
         }
@@ -71,9 +69,9 @@ public class CheckTakeExercise : MonoBehaviour
     [Serializable]
     public class TakeExerciseCondition
     {
+        public int indexDialogPoint = -1;
+        public int indexDialog = -1;
         public string headerOrder = "None";
-        [Space]
-        public string condition = "None";
     }
 
     [Serializable]

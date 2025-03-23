@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: Internship
   m_EditorClassIdentifier: 
   nameExercise: internship
-  exerciseRewards: []
-  exerciseRequirements: []
-  exerciseItems:
-  - typeItem: flower
-    countItem: 1
-    typeMachineDispensingItem: postOfficeTube
-    avatarItem: {fileID: 21300000, guid: 7c75ec4478c0cb3469173b0c09a0a2bc, type: 3}
+  exerciseRewards:
+  - typeReward: ModelBoard
+    countReward: 1
+    typeMachineDispensingReward: postOfficeTube
+    avatarReward: {fileID: 0}
+  exerciseRequirements:
+  - typeRequirement: metabolism
+    countRequirement: 1
+    avatarRequirement: {fileID: 21300000, guid: b157a97722a115f4abaa3943c4fb7b51, type: 3}
+  exerciseItems: []
   newExercises:
   - {fileID: 11400000, guid: 72ecabf5adc8f21479aa1aee03517877, type: 2}
   header: "\u043E\u0442: science.center@bee.con"

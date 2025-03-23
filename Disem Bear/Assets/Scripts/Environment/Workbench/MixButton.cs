@@ -1,5 +1,6 @@
 using External.DI;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Game.Environment.LMixTable
@@ -17,6 +18,7 @@ namespace Game.Environment.LMixTable
         private Material activeMaterial;
         private Workbench workbench;
         private GameBootstrap gameBootstrap;
+        public UnityEvent pressButton;
 
         private bool isActive = true;
 
@@ -61,6 +63,7 @@ namespace Game.Environment.LMixTable
                 }
                 workbench.MixIngradients();
                 transform.parent.gameObject.GetComponent<Animator>().Play("ButtonPress");
+                pressButton?.Invoke();
             }
         }
     }

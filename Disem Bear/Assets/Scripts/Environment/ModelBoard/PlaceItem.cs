@@ -2,6 +2,7 @@ using External.DI;
 using Game.Environment;
 using Game.LPlayer;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlaceItem : MonoBehaviour, ILeftMouseDownClickable
 {
@@ -16,6 +17,8 @@ public class PlaceItem : MonoBehaviour, ILeftMouseDownClickable
     private Player player;
 
     private bool isClick = false;
+
+    public UnityEvent<string> OnPlaceItem;
 
     public void Init(Player player, GameBootstrap gameBootstrap)
     {
@@ -50,6 +53,7 @@ public class PlaceItem : MonoBehaviour, ILeftMouseDownClickable
                 {
                     if (this.player.GetPickUpItem().NameItem == nameItem)
                     {
+                        OnPlaceItem?.Invoke(nameItem);
                         gameBootstrap.OnPlayOneShotSound(soundPutItem);
                         Destroy(this.player.GetPickUpItem().gameObject);
                         this.player.PutItem();

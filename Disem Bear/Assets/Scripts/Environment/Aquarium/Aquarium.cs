@@ -138,7 +138,7 @@ namespace Game.Environment.Aquarium
             buttonLeft.Init(this);
             buttonRight.Init(this);
 
-            UpdateData(materialForAquarium);
+            QuietUpdateData(materialForAquarium);
 
             Debug.Log("Aquarium: ������� ��������������");
         }
@@ -223,6 +223,30 @@ namespace Game.Environment.Aquarium
                 }
             }
             return false;
+        }
+
+
+        private void QuietUpdateData(MaterialForAquarium materialForAquarium)
+        {
+            if (materialForAquarium != null)
+            {
+                currentCells = new List<string>(materialForAquarium.cells);
+                if (currentCells.Count > 1)
+                {
+                    buttonLeft.SetOn();
+                    buttonRight.SetOn();
+                }
+                else
+                {
+                    buttonLeft.SetOff();
+                    buttonRight.SetOff();
+                }
+                colorMaterial = materialForAquarium.colorMaterial;
+                timeMaterial = materialForAquarium.TimeMaterial;
+                indexCell = 0;
+                choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
+                spendTimeCreateCell = 0;
+            }
         }
 
         private void UpdateData(MaterialForAquarium materialForAquarium)

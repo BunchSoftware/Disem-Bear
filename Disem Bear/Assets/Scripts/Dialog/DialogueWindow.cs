@@ -40,9 +40,9 @@ namespace Game.LDialog
             animator = GetComponentInChildren<Animator>();
 
             skipButton.onClick.RemoveAllListeners();
-            skipButton.onClick.AddListener(() =>
+            skipButton.onClick.AddListener((UnityAction)(() =>
             {
-                if (dialogManager.IsDialogRun())
+                if (dialogManager.IsDialogOn())
                 {
                     if (skipDialog && !oneTap)
                     {
@@ -60,7 +60,7 @@ namespace Game.LDialog
                     if(skipDialog)
                         dialogManager.SkipReplica();
                 }
-            });
+            }));
 
             dialogInputField.Init(dialogManager);
             Debug.Log("DialogueWindow: Успешно иницилизирован");

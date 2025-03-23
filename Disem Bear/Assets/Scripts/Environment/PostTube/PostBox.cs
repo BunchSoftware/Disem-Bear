@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UI;
 using UI.PlaneTablet.Exercise;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 {
@@ -33,6 +34,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 
     private bool isClick = false;
     private GameBootstrap gameBootstrap;
+    public UnityEvent<PickUpItem> putObjectInBox;
 
     [SerializeField] private List<AudioClip> soundsLuke = new();
     [SerializeField] private List<AudioClip> soundsDropItem = new();
@@ -98,12 +100,14 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 
     public void PutItemInBox(PickUpItem pickUpItem)
     {
+        putObjectInBox?.Invoke(pickUpItem);
         pickUpItemInBox = pickUpItem;
         itemInBox = true;
         pickUpItemInBox.transform.parent = transform;
         pickUpItemInBox.transform.position = transform.position;
 
         CheckItemInBox(pickUpItem);
+
     }
 
     private void CheckItemInBox(PickUpItem pickUpItem)

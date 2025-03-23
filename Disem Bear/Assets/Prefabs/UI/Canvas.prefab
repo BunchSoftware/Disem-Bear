@@ -268,8 +268,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 826044550803591442}
   - {fileID: 8532686934222517445}
+  - {fileID: 826044550803591442}
   - {fileID: 2643979773465827789}
   - {fileID: 4137254077704993274}
   - {fileID: 7792168553706780467}
@@ -372,7 +372,7 @@ MonoBehaviour:
     OnFullEndDialog:
       m_PersistentCalls:
         m_Calls: []
-    SendInputFieldText:
+    OnSendInputFieldText:
       m_PersistentCalls:
         m_Calls: []
   dialogChat:
@@ -435,7 +435,7 @@ MonoBehaviour:
         m_Calls: []
     prefab: {fileID: 8680238589761701062, guid: 7f609e01fb054f2429693cfd4aeafc49, type: 3}
     content: {fileID: 3113373778531132939}
-    fileExercise: {fileID: 11400000, guid: e5bfdef74263fc8479d91001ff8f16f6, type: 2}
+    exerciseDatabase: {fileID: 0}
     typeGiveProducts:
     - typeMachineDispensingProduct: postOfficeTube
       OnGetReward:

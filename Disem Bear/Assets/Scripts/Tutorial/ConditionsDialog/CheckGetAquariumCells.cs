@@ -24,7 +24,8 @@ public class CheckGetAquariumCells : MonoBehaviour
     {
         for (int i = 0; i < conditions.Count; i++)
         {
-            if (conditions[i].nameCell == nameCell && countCells > 0)
+            if (dialogManager.IsDialogOn() && dialogManager.GetCurrentIndexDialogPoint() == conditions[i].indexDialogPoint && dialogManager.GetCurrentIndexDialog() == conditions[i].indexDialog && 
+                conditions[i].nameCell == nameCell && countCells > 0)
             {
                 dialogManager.SkipReplica();
                 break;
@@ -32,7 +33,7 @@ public class CheckGetAquariumCells : MonoBehaviour
         }
         for (int i = 0; i < startDialogs.Count; i++)
         {
-            if (startDialogs[i].nameCell == nameCell && countCells > 0 && !dialogManager.IsDialogRun())
+            if (startDialogs[i].nameCell == nameCell && countCells > 0 && !dialogManager.IsDialogOn())
             {
                 dialogManager.StartDialog(startDialogs[i].indexDialog);
                 startDialogs.Remove(startDialogs[i]);
@@ -44,9 +45,9 @@ public class CheckGetAquariumCells : MonoBehaviour
     [Serializable]
     public class GetAquariumCellsCondition
     {
+        public int indexDialogPoint = -1;
+        public int indexDialog = -1;
         public string nameCell;
-        [Space]
-        public string condition = "None";
     }
 
     [Serializable]

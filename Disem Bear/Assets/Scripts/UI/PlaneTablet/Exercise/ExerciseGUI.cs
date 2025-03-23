@@ -269,7 +269,7 @@ namespace UI.PlaneTablet.Exercise
 
         public List<Reward> CompleteExercise()
         {
-            SetExerciseCompletion(TypeOfExerciseCompletion.Done);
+            //SetExerciseCompletion(TypeOfExerciseCompletion.Done);
             return exercise.exerciseRewards;
         }
 

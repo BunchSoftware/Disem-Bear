@@ -21,6 +21,7 @@ namespace Game.LDialog
 
         private int currentIndexDialogPoint = 0;
         private int currentIndexDialog = 0;
+        private bool isDialogOn = false;
 
         private bool isCanSkipReplica = false;
         private bool isDialogLast = false;
@@ -73,12 +74,14 @@ namespace Game.LDialog
                 if (dialog != null)
                 {
                     StopTypeLine();
-
+                    if (currentIndexDialog == fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
+                        isDialogLast = true;
                     if (isDialogLast == true)
                     {
                         isDialogLast = false;
                         OnFullEndDialog?.Invoke(dialog);
                         ExitDrop(dialog);
+                        isDialogOn = false;
                     }
                     else if (currentIndexDialog == fileDialog.dialogPoints[currentIndexDialogPoint].dialog.Count - 1)
                     {
@@ -136,6 +139,7 @@ namespace Game.LDialog
                 isActiveInputField = dialogPoint.dialog[i].isActiveInputField;
 
                 EnterDrop(dialogPoint.dialog[i]);
+                isDialogOn = true;
                 dialogueWindow.StartTypeLine(dialogPoint.dialog[i]);
 
                 yield return new WaitForSeconds(dialogPoint.dialog[i].speedText * dialogPoint.dialog[i].textDialog.Length);
@@ -148,14 +152,14 @@ namespace Game.LDialog
                     if (dialogPoint.dialog[i].skipDialogButton == false)
                         yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
 
-                    OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
+                    //OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
                     break;
                 }
                 else
                     yield return new WaitForSeconds(dialogPoint.dialog[i].waitSecond);
 
-                OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
-                ExitDrop(dialogPoint.dialog[i]);
+                //OnFullEndDialog?.Invoke(dialogPoint.dialog[i]);
+                //ExitDrop(dialogPoint.dialog[i]);
             }
         }
 
@@ -167,7 +171,7 @@ namespace Game.LDialog
             dialogueWindow.StopTypeLine();
             isCanSkipReplica = false;
             isActiveInputField = false;
-            isDialogLast = false;
+            //isDialogLast = false;
 
             OnEndDialog?.Invoke(fileDialog.dialogPoints[currentIndexDialogPoint].dialog[currentIndexDialog]);
         }
@@ -227,10 +231,11 @@ namespace Game.LDialog
             }
         }
 
-        public bool IsDialogRun()
+        public bool IsDialogOn()
         {
-            return dialogueWindow.IsDialogRun();
+            return isDialogOn;
         }
+
 
         public int GetCurrentIndexDialog()
         {

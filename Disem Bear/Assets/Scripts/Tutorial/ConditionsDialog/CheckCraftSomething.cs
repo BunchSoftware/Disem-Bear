@@ -32,7 +32,8 @@ public class CheckCraftSomething : MonoBehaviour
     {
         for (int i = 0; i < conditions.Count; i++)
         {
-            if (conditions[i].craftObject == TypeCraftObject.Ingradient && conditions[i].name == ingradient.typeIngradient)
+            if (dialogManager.GetCurrentIndexDialogPoint() == conditions[i].indexDialogPoint && dialogManager.GetCurrentIndexDialog() == conditions[i].indexDialog && 
+                conditions[i].craftObject == TypeCraftObject.Ingradient && conditions[i].name == ingradient.typeIngradient)
             {
                 dialogManager.SkipReplica();
                 break;
@@ -53,7 +54,8 @@ public class CheckCraftSomething : MonoBehaviour
     {
         for (int i = 0; i < conditions.Count; i++)
         {
-            if (conditions[i].craftObject == TypeCraftObject.PickUpItem && conditions[i].name == pickUpItem.NameItem)
+            if (dialogManager.GetCurrentIndexDialogPoint() == conditions[i].indexDialogPoint && dialogManager.GetCurrentIndexDialog() == conditions[i].indexDialog && 
+                conditions[i].craftObject == TypeCraftObject.PickUpItem && conditions[i].name == pickUpItem.NameItem)
             {
                 dialogManager.SkipReplica();
                 break;
@@ -73,10 +75,10 @@ public class CheckCraftSomething : MonoBehaviour
     [Serializable]
     public class CraftSomethingCondition
     {
+        public int indexDialogPoint = -1;
+        public int indexDialog = -1;
         public TypeCraftObject craftObject;
         public string name;
-        [Space]
-        public string condition = "None";
     }
 
     [Serializable]
