@@ -7,12 +7,15 @@ using Game.LPlayer;
 using UI;
 using UnityEngine;
 
-public class Trash : MonoBehaviour, ILeftMouseDownClickable
+public class Trash : MonoBehaviour, ILeftMouseDownClickable, IMouseOver
 {
     [SerializeField] private TriggerObject triggerObject;
     [SerializeField] private Transform pointPlaceItem;
     [SerializeField] private MovePointToPoint removeButtonMove;
+    [SerializeField] private float timeRemoveButtonMove = 0.3f;
     [SerializeField] private RemoveButton removeButton;
+    private string stateRemoveButton = "down";
+    private float timerToDownRemoveButton = 0f;
     private Player player;
     private ToastManager toastManager;
     private ToolBase toolBase;
@@ -37,18 +40,25 @@ public class Trash : MonoBehaviour, ILeftMouseDownClickable
                 isClick = false;
                 if (this.player.PlayerPickUpItem && itemInTrash)
                 {
-                    gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
-                    gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
-                    PickUpItem playerPickUpItem = player.GetPickUpItem();
-                    player.PutItem();
-                    player.PickUpItem(PickUpItemInTrash());
-                    PutItemInTrash(playerPickUpItem);
+                    if (player.GetPickUpItem().questItem == false)
+                    {
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
+                        PickUpItem playerPickUpItem = player.GetPickUpItem();
+                        player.PutItem();
+                        player.PickUpItem(PickUpItemInTrash());
+                        PutItemInTrash(playerPickUpItem);
+                    }
+                    else
+                    {
+                        toastManager.ShowToast("Не стоит это выбрасывать!");
+                    }
                 }
                 else if (this.player.PlayerPickUpItem && itemInTrash == false)
                 {
-                    gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
                     if (player.GetPickUpItem().questItem == false)
                     {
+                        gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
                         PutItemInTrash(player.GetPickUpItem());
                         player.PutItem();
                     }
@@ -74,6 +84,30 @@ public class Trash : MonoBehaviour, ILeftMouseDownClickable
         {
             toolBase.on = false;
         }
+        removeButton.Init(triggerObject, player, this, toastManager);
+    }
+
+    public void OnUpdate(float deltaTime)
+    {
+        if (timerToDownRemoveButton < 2f)
+        {
+            timerToDownRemoveButton += deltaTime;
+        }
+        switch (stateRemoveButton)
+        {
+            case "up":
+                if (removeButtonMove.GetCurrentState() == "point1")
+                {
+                    removeButtonMove.StartMoveTo(timeRemoveButtonMove);
+                }
+                break;
+            case "down":
+                if (removeButtonMove.GetCurrentState() == "point2" && timerToDownRemoveButton > 1f && removeButton.isMouseOver == false)
+                {
+                    removeButtonMove.StartMoveTo(timeRemoveButtonMove);
+                }
+                break;
+        }
     }
 
     private void PutItemInTrash(PickUpItem pickUpItem)
@@ -88,7 +122,7 @@ public class Trash : MonoBehaviour, ILeftMouseDownClickable
         toolBase.OnToolTip();
     }
 
-    private PickUpItem PickUpItemInTrash()
+    public PickUpItem PickUpItemInTrash()
     {
         itemInTrash = false;
         PickUpItem temp = pickUpItemInTrash;
@@ -96,6 +130,16 @@ public class Trash : MonoBehaviour, ILeftMouseDownClickable
         toolBase.on = false;
         toolBase.OffToolTip();
         return temp;
+    }
+
+    public bool ItemInTrash()
+    {
+        return itemInTrash;
+    }
+
+    public PickUpItem GetItemInTrash()
+    {
+        return pickUpItemInTrash;
     }
 
     public void OnMouseLeftClickDownObject()
@@ -106,5 +150,16 @@ public class Trash : MonoBehaviour, ILeftMouseDownClickable
     public void OnMouseLeftClickDownOtherObject()
     {
         isClick = false;
+    }
+
+    public void OnMouseEnterObject()
+    {
+        stateRemoveButton = "up";
+    }
+
+    public void OnMouseExitObject()
+    {
+        stateRemoveButton = "down";
+        timerToDownRemoveButton = 0;
     }
 }

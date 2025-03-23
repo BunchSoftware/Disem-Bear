@@ -53,6 +53,11 @@ public class MovePointToPoint : MonoBehaviour
     {
         return isMove;
     }
+
+    public string GetCurrentState()
+    {
+        return state;
+    }
 }
 
 public class ObjectMoveToPosition
