@@ -16,14 +16,18 @@ namespace Game.Environment.Aquarium
     [RequireComponent(typeof(ScaleChooseObject))]
     public class Aquarium : MonoBehaviour, ILeftMouseDownClickable
     {
-        private OpenObject openObject;
-        private ScaleChooseObject scaleChooseObject;
         [SerializeField] private TriggerObject triggerObject;
-        public MaterialForAquarium materialForAquarium;
-        private List<string> currentCells = new();
-        private string colorMaterial = "none";
-        private float timeMaterial = 0f;
-        private float spendTimeCreateCell = 0f;
+        [SerializeField] private ParticleSystem particleSystem;
+
+        [SerializeField] private SpriteRenderer aquariumRenderer;
+        [SerializeField] private SpriteRenderer choiceCellSprite;
+        [SerializeField] private MovePointToPoint spriteMovePointToPoint;
+        [SerializeField] private GameObject DisplayCount;
+
+        [SerializeField] private ChangeCell buttonLeft;
+        [SerializeField] private ChangeCell buttonRight;
+
+        [SerializeField] private MaterialForAquarium materialForAquarium;
 
         [SerializeField] private List<ColorAquarium> InspectorPhasesAquariums = new();
         private Dictionary<string, PhasesAquarium> phasesAquariums = new();
@@ -31,34 +35,34 @@ namespace Game.Environment.Aquarium
         private Dictionary<string, float> timeCells = new();
         [SerializeField] private List<IngradientSpawner> InspectorSpawners = new();
         private Dictionary<string, IngradientSpawner> Spawners = new();
-        private int NumCell = 0;
-        private SpriteRenderer ChoiceCellSprite;
-        private SpriteRenderer spriteRenderer;
-        private ParticleSystem particleSystem;
-        private GameBootstrap gameBootstrap;
-        private GameObject DisplayCount;
-        [SerializeField] private ChangeCell buttonLeft;
-        [SerializeField] private ChangeCell buttonRight;
         [Header("GetCellsSounds")]
         [SerializeField] private List<AudioClip> getCellsSounds = new();
         [Header("ChangeMaterialSounds")]
         [SerializeField] private List<AudioClip> changeMaterialSounds = new();
 
-        private int CountCells = 0;
 
         public UnityEvent<string, int> GetAquariumCells;
-
         public UnityEvent OnAquariumOpen;
         public UnityEvent OnAquariumClose;
 
         private Player player;
         private PlayerMouseMove playerMouseMove;
-        private MovePointToPoint spriteMovePointToPoint;
 
         private bool isClick = false;
         private bool isOpen = false;
         public bool IsOpen => isOpen;
 
+        private OpenObject openObject;
+        private ScaleChooseObject scaleChooseObject;
+        private GameBootstrap gameBootstrap;
+
+        private List<string> currentCells = new();
+        private string colorMaterial = "none";
+        private float timeMaterial = 0f;
+        private float spendTimeCreateCell = 0f;
+
+        private int indexCell = 0;
+        private int countCells = 0;
 
         public void Init(Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
@@ -71,7 +75,6 @@ namespace Game.Environment.Aquarium
 
             if (triggerObject == null)
                 Debug.LogError("�� ����� ������� � ���������");
-            spriteMovePointToPoint = transform.Find("AquariumSprite").GetComponent<MovePointToPoint>();
 
             openObject.OnStartObjectOpen.AddListener(() =>
             {
@@ -82,8 +85,12 @@ namespace Game.Environment.Aquarium
 
             openObject.OnEndObjectOpen.AddListener(() =>
             {
-                GetComponent<Collider>().enabled = false;
                 OnAquariumOpen?.Invoke();
+            });
+
+            openObject.OnStartObjectClose.AddListener(() =>
+            {
+                spriteMovePointToPoint.StartMoveTo(openObject.timeClose);
             });
 
             openObject.OnEndObjectClose.AddListener(() =>
@@ -122,20 +129,16 @@ namespace Game.Environment.Aquarium
             {
                 timeCells[InspectorTimeCells[i].name] = InspectorTimeCells[i].time;
             }
-            particleSystem = transform.Find("Particle System").GetComponent<ParticleSystem>();
-            spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            ChoiceCellSprite = transform.Find("ChoiceCell").GetComponent<SpriteRenderer>();
-            DisplayCount = transform.Find("DisplayCount").gameObject;
 
             GetAquariumCells.AddListener((nameCell, countCell) =>
             {
                 gameBootstrap.OnPlayOneShotRandomSound(getCellsSounds);
             });
 
-            QuietUpdateMaterial(materialForAquarium);
-
             buttonLeft.Init(this);
             buttonRight.Init(this);
+
+            UpdateData(materialForAquarium);
 
             Debug.Log("Aquarium: ������� ��������������");
         }
@@ -148,28 +151,28 @@ namespace Game.Environment.Aquarium
             }
             if (phasesAquariums.ContainsKey(colorMaterial))
             {
-                if (CountCells == 0)
+                if (countCells == 0)
                 {
-                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].NullFaseDirty : phasesAquariums[colorMaterial].NullFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].NullFaseDirty : phasesAquariums[colorMaterial].NullFase;
                 }
-                else if (CountCells < 4)
+                else if (countCells < 4)
                 {
-                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].FirstFaseDirty : phasesAquariums[colorMaterial].FirstFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].FirstFaseDirty : phasesAquariums[colorMaterial].FirstFase;
                 }
-                else if (CountCells < 9)
+                else if (countCells < 9)
                 {
-                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].SecondFaseDirty : phasesAquariums[colorMaterial].SecondFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].SecondFaseDirty : phasesAquariums[colorMaterial].SecondFase;
                 }
-                else if (CountCells < 15)
+                else if (countCells < 15)
                 {
-                    spriteRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].ThirdFaseDirty : phasesAquariums[colorMaterial].ThirdFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].ThirdFaseDirty : phasesAquariums[colorMaterial].ThirdFase;
                 }
             }
             if (timeMaterial > 0f) spendTimeCreateCell += Time.deltaTime;
-            if (spendTimeCreateCell >= timeCells[currentCells[NumCell]])
+            if (spendTimeCreateCell >= timeCells[currentCells[indexCell]])
             {
-                if (CountCells < 15)
-                    CountCells++;
+                if (countCells < 15)
+                    countCells++;
                 spendTimeCreateCell = 0;
             }
 
@@ -190,7 +193,7 @@ namespace Game.Environment.Aquarium
 
                         if (pickUpItem.TryGetComponent(out materialForAquarium))
                         {
-                            UpdateMaterial(materialForAquarium);
+                            UpdateData(materialForAquarium);
                             return true;
                         }
                         else
@@ -204,7 +207,7 @@ namespace Game.Environment.Aquarium
                         {
                             if (packageItem.itemInPackage.TryGetComponent(out materialForAquarium))
                             {
-                                UpdateMaterial(materialForAquarium);
+                                UpdateData(materialForAquarium);
                                 return true;
                             }
                             else
@@ -222,31 +225,7 @@ namespace Game.Environment.Aquarium
             return false;
         }
 
-        public void QuietUpdateMaterial(MaterialForAquarium materialForAquarium)
-        {
-            if (materialForAquarium != null)
-            {
-                currentCells = new List<string>(materialForAquarium.cells);
-                if (currentCells.Count > 1)
-                {
-                    buttonLeft.SetOn();
-                    buttonRight.SetOn();
-                }
-                else
-                {
-                    buttonLeft.SetOff();
-                    buttonRight.SetOff();
-                }
-                colorMaterial = materialForAquarium.colorMaterial;
-                timeMaterial = materialForAquarium.TimeMaterial;
-                CountCells = 0;
-                NumCell = 0;
-                ChoiceCellSprite.sprite = Spawners[currentCells[NumCell]].GetSpriteIngradient();
-                spendTimeCreateCell = 0;
-            }
-        }
-
-        public void UpdateMaterial(MaterialForAquarium materialForAquarium)
+        private void UpdateData(MaterialForAquarium materialForAquarium)
         {
             if (materialForAquarium != null)
             {
@@ -265,8 +244,8 @@ namespace Game.Environment.Aquarium
                 colorMaterial = materialForAquarium.colorMaterial;
                 timeMaterial = materialForAquarium.TimeMaterial;
                 GetAllCells();
-                NumCell = 0;
-                ChoiceCellSprite.sprite = Spawners[currentCells[NumCell]].GetSpriteIngradient();
+                indexCell = 0;
+                choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
                 spendTimeCreateCell = 0;
             }
         }
@@ -274,16 +253,16 @@ namespace Game.Environment.Aquarium
         public void ChangeCellRight()
         {
             GetAllCells();
-            NumCell = (NumCell + 1 + currentCells.Count) % currentCells.Count;
-            ChoiceCellSprite.sprite = Spawners[currentCells[NumCell]].GetSpriteIngradient();
+            indexCell = (indexCell + 1 + currentCells.Count) % currentCells.Count;
+            choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
             spendTimeCreateCell = 0;
         }
 
         public void ChangeCellLeft()
         {
             GetAllCells();
-            NumCell = (NumCell - 1 + currentCells.Count) % currentCells.Count;
-            ChoiceCellSprite.sprite = Spawners[currentCells[NumCell]].GetSpriteIngradient();
+            indexCell = (indexCell - 1 + currentCells.Count) % currentCells.Count;
+            choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
             spendTimeCreateCell = 0;
         }
 
@@ -294,19 +273,19 @@ namespace Game.Environment.Aquarium
 
         private void GetAllCells()
         {
-            GetAquariumCells?.Invoke(currentCells[NumCell], CountCells);
-            if (CountCells != 0)
+            if (countCells != 0)
             {
                 particleSystem.Play();
                 StartCoroutine(WaitParticleSystem(0.3f));
+                GetAquariumCells?.Invoke(currentCells[indexCell], countCells);
+                DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = countCells.ToString();
+                DisplayCount.GetComponent<Animator>().SetBool("On", true);
+                StartCoroutine(waitDisplayCount());
+
+                Spawners[currentCells[indexCell]].PutIngradient(countCells);
+
+                countCells = 0;
             }
-            DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = CountCells.ToString();
-            DisplayCount.GetComponent<Animator>().SetBool("On", true);
-            StartCoroutine(waitDisplayCount());
-
-            Spawners[currentCells[NumCell]].PutIngradient(CountCells);
-
-            CountCells = 0;
         }
 
         private IEnumerator WaitParticleSystem(float f)
@@ -357,11 +336,5 @@ namespace Game.Environment.Aquarium
         public Sprite FirstFaseDirty;
         public Sprite SecondFaseDirty;
         public Sprite ThirdFaseDirty;
-    }
-    [Serializable]
-    public class Ground
-    {
-        public float timeExist;
-
     }
 }

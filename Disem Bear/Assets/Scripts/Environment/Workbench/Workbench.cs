@@ -86,9 +86,6 @@ namespace Game.Environment.LMixTable
             openObject = GetComponent<OpenObject>();
             scaleChooseObject = GetComponent<ScaleChooseObject>();
 
-            print(mixTable.GetComponent<Collider>().bounds.max.x);
-            print(mixTable.GetComponent<Collider>().bounds.min.x);
-
             if (mixButton == null)
                 Debug.LogError("Ошибка. Не добавлен MixButton");
             if (pickUpButton == null)
