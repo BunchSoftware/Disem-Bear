@@ -86,6 +86,7 @@ namespace Game.Environment
 
             workbench.OnUpdate(deltaTime);
             tv.OnUpdate(deltaTime);
+            trash.OnUpdate(deltaTime);
         }
     }
 }
