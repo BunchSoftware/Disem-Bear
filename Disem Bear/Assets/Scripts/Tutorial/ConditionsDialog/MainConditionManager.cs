@@ -23,6 +23,7 @@ public class MainConditionManager : MonoBehaviour
     private CheckButtonsWorkbench checkButtonsWorkbench;
     private CheckPutObjectPostBox checkPutObjectPostBox;
     private CheckPlaceSomething checkPlaceSomething;
+    private CheckPickUpObjectPostBox checkPickUpObjectPostBox;
     
 
 
@@ -40,6 +41,7 @@ public class MainConditionManager : MonoBehaviour
         checkButtonsWorkbench = GetComponent<CheckButtonsWorkbench>();
         checkPutObjectPostBox = GetComponent<CheckPutObjectPostBox>();
         checkPlaceSomething = GetComponent<CheckPlaceSomething>();
+        checkPickUpObjectPostBox = GetComponent<CheckPickUpObjectPostBox>();
 
         takeExerciseConditions.Init(dialogManager, exerciseManager, TV);
         getAquariumCellsConditions.Init(dialogManager, aquarium);
@@ -48,5 +50,6 @@ public class MainConditionManager : MonoBehaviour
         checkButtonsWorkbench.Init(pickUpButton, mixButton, clearButton, dialogManager);
         checkPutObjectPostBox.Init(postBox, dialogManager);
         checkPlaceSomething.Init(dialogManager);
+        checkPickUpObjectPostBox.Init(postBox, dialogManager);
     }
 }

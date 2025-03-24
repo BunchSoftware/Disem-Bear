@@ -35,6 +35,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
     private bool isClick = false;
     private GameBootstrap gameBootstrap;
     public UnityEvent<PickUpItem> putObjectInBox;
+    public UnityEvent<PickUpItem> pickUpObjectInBox;
 
     [SerializeField] private List<AudioClip> soundsLuke = new();
     [SerializeField] private List<AudioClip> soundsDropItem = new();
@@ -79,13 +80,16 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                     gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
                     gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                     PickUpItem playerPickUpItem = player.GetPickUpItem();
+                    putObjectInBox?.Invoke(player.GetPickUpItem());
                     player.PutItem();
                     player.PickUpItem(PickUpItemInBox());
+                    pickUpObjectInBox?.Invoke(player.GetPickUpItem());
                     PutItemInBox(playerPickUpItem);
                 }
                 else if (this.player.PlayerPickUpItem && itemInBox == false)
                 {
                     gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
+                    putObjectInBox?.Invoke(player.GetPickUpItem());
                     PutItemInBox(player.GetPickUpItem());
                     player.PutItem();
                 }
@@ -93,6 +97,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                 {
                     gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                     player.PickUpItem(PickUpItemInBox());
+                    pickUpObjectInBox?.Invoke(player.GetPickUpItem());
                 }
             }
         });
@@ -100,7 +105,6 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
 
     public void PutItemInBox(PickUpItem pickUpItem)
     {
-        putObjectInBox?.Invoke(pickUpItem);
         pickUpItemInBox = pickUpItem;
         itemInBox = true;
         pickUpItemInBox.transform.parent = transform;

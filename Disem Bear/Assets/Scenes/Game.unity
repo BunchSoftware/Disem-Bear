@@ -798,6 +798,16 @@ MonoBehaviour:
     needTargetFullEndDialog: 1
     offPointer: 0
     lineToObjectTransform: {fileID: 1095425085}
+  - indexDialogPoint: 1
+    indexDialog: 0
+    needTargetFullEndDialog: 0
+    offPointer: 0
+    lineToObjectTransform: {fileID: 1327460561}
+  - indexDialogPoint: 1
+    indexDialog: 1
+    needTargetFullEndDialog: 0
+    offPointer: 0
+    lineToObjectTransform: {fileID: 2131093811}
 --- !u!1 &264418249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +1042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &385524268
 Transform:
   m_ObjectHideFlags: 0
@@ -1048,6 +1058,7 @@ Transform:
   m_Children:
   - {fileID: 244494541}
   - {fileID: 854850601}
+  - {fileID: 591105178}
   - {fileID: 1833872762}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1570,6 +1581,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6114930717722908520, guid: ad79d4bd2f3a14d498018ae4a8e7c977, type: 3}
   m_PrefabInstance: {fileID: 496109709}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &591105177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 591105178}
+  - component: {fileID: 591105179}
+  m_Layer: 0
+  m_Name: SendPackageTutorialManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &591105178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591105177}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 385524268}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &591105179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591105177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5249201e97d9d4e82e82c7b6cc337a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postTube: {fileID: 1402415644}
+  sendPackages:
+  - indexDialogPoint: 1
+    indexDialog: 0
+    needTargetFullEndDialog: 0
+    gameObjectFall: {fileID: 4522447525192828825, guid: 32d67d30c00dff441927372d04180542, type: 3}
 --- !u!1 &633663267
 GameObject:
   m_ObjectHideFlags: 0
@@ -4602,6 +4663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointerTutorialManager: {fileID: 244494542}
   blockTutorialManager: {fileID: 854850602}
+  sendPackageTutorialManager: {fileID: 591105179}
   mainConditionManager: {fileID: 1833872764}
   postTube: {fileID: 1402415644}
   modelBoard: {fileID: 0}
@@ -5343,6 +5405,10 @@ PrefabInstance:
     - target: {fileID: 5957455057045520019, guid: feeff62b3dbf2f64e8b87ee73828a59c, type: 3}
       propertyPath: m_Name
       value: PlaceItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957455057045520019, guid: feeff62b3dbf2f64e8b87ee73828a59c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6417,6 +6483,7 @@ GameObject:
   - component: {fileID: 1833872768}
   - component: {fileID: 1833872769}
   - component: {fileID: 1833872770}
+  - component: {fileID: 1833872771}
   m_Layer: 0
   m_Name: StartAndSkipDialogManager
   m_TagString: Untagged
@@ -6580,6 +6647,23 @@ MonoBehaviour:
   - placeItem: {fileID: 1591147429}
     indexDialogPoint: 1
     on: 1
+--- !u!114 &1833872771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833872761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a52db98dddd49b49a40db419076d5f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conditions:
+  - indexDialogPoint: 1
+    indexDialog: 0
+    nameItem: PackageDocument
+  startDialogs: []
 --- !u!1001 &1845751587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7777,7 +7861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 485
+      value: 478.5
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.y
