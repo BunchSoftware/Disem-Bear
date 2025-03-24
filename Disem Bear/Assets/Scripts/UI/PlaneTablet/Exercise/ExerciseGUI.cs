@@ -18,7 +18,7 @@ namespace UI.PlaneTablet.Exercise
     public class ExerciseGUI : MonoBehaviour
     {
         [SerializeField] private GameObject prefabReward;
-        [SerializeField] private GameObject prefabItem;
+        [SerializeField] private GameObject prefabRequement;
         [SerializeField] private RectTransform description;
         [SerializeField] private Button exerciseButton;
         [SerializeField] private Image checkMark;
@@ -34,9 +34,9 @@ namespace UI.PlaneTablet.Exercise
         [SerializeField] private Image avatar;
         [SerializeField] private Image arrowUp;
         [SerializeField] private Image arrowDown;
-        [SerializeField] private Text headerExerciseItems;
+        [SerializeField] private Text headerExerciseRequirements;
         [SerializeField] private GameObject contentRewards;
-        [SerializeField] private GameObject contentItem;
+        [SerializeField] private GameObject contentRequements;
 
         [Header("Цветовой бортик с цветами")]
         [SerializeField] private Image background;
@@ -52,7 +52,7 @@ namespace UI.PlaneTablet.Exercise
         private Exercise exercise;
         private ExerciseManager exerciseManager;
         private List<ExerciseRewardGUI> exerciseRewardGUIs = new List<ExerciseRewardGUI>();
-        private List<ExerciseItemGUI> exerciseItemGUIs = new List<ExerciseItemGUI>();
+        private List<ExerciseRequementGUI> exerciseRequirementsGUIs = new List<ExerciseRequementGUI>();
         private int indexExercise = 0;
 
         public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
@@ -106,41 +106,41 @@ namespace UI.PlaneTablet.Exercise
             else
                 resetButton.gameObject.SetActive(false);
 
-            if(exerciseItemGUIs.Count == 0)
+            if(exerciseRequirementsGUIs.Count == 0)
             {
 
-                for (int i = 0; i < exercise.exerciseItems.Count; i++)
+                for (int i = 0; i < exercise.exerciseRequirements.Count; i++)
                 {
-                    ExerciseItemGUI exerciseItemGUI = Instantiate(prefabItem, contentItem.transform).GetComponent<ExerciseItemGUI>();
-                    exerciseItemGUI.countItemText.text = $"{exercise.exerciseItems[i].countItem}x";
-                    exerciseItemGUI.avatarItem.sprite = exercise.exerciseItems[i].avatarItem;
-                    exerciseItemGUIs.Add(exerciseItemGUI);
+                    ExerciseRequementGUI exerciseItemGUI = Instantiate(prefabRequement, contentRequements.transform).GetComponent<ExerciseRequementGUI>();
+                    exerciseItemGUI.countRequementText.text = $"{exercise.exerciseRequirements[i].countRequirement}x";
+                    exerciseItemGUI.avatarRequement.sprite = exercise.exerciseRequirements[i].avatarRequirement;
+                    exerciseRequirementsGUIs.Add(exerciseItemGUI);
                 }
 
-                if (exercise.exerciseItems.Count == 0)
-                    headerExerciseItems.gameObject.SetActive(false);
+                if (exercise.exerciseRequirements.Count == 0)
+                    headerExerciseRequirements.gameObject.SetActive(false);
                 else
-                    headerExerciseItems.gameObject.SetActive(true);
+                    headerExerciseRequirements.gameObject.SetActive(true);
             }
             else
             {
-                for (int i = 0; i < exerciseItemGUIs.Count; i++)
+                for (int i = 0; i < exerciseRequirementsGUIs.Count; i++)
                 {
-                    Destroy(exerciseItemGUIs[i].gameObject);
+                    Destroy(exerciseRequirementsGUIs[i].gameObject);
                 }
-                exerciseItemGUIs.Clear();
+                exerciseRequirementsGUIs.Clear();
 
-                if (exercise.exerciseItems.Count == 0)
-                    headerExerciseItems.gameObject.SetActive(false);
+                if (exercise.exerciseRequirements.Count == 0)
+                    headerExerciseRequirements.gameObject.SetActive(false);
                 else
-                    headerExerciseItems.gameObject.SetActive(true);
+                    headerExerciseRequirements.gameObject.SetActive(true);
 
-                for (int i = 0; i < exercise.exerciseItems.Count; i++)
+                for (int i = 0; i < exercise.exerciseRequirements.Count; i++)
                 {
-                    ExerciseItemGUI exerciseItemGUI = Instantiate(prefabItem, contentItem.transform).GetComponent<ExerciseItemGUI>();
-                    exerciseItemGUI.countItemText.text = $"{exercise.exerciseItems[i].countItem}x";
-                    exerciseItemGUI.avatarItem.sprite = exercise.exerciseItems[i].avatarItem;
-                    exerciseItemGUIs.Add(exerciseItemGUI);
+                    ExerciseRequementGUI exerciseItemGUI = Instantiate(prefabRequement, contentRequements.transform).GetComponent<ExerciseRequementGUI>();
+                    exerciseItemGUI.countRequementText.text = $"{exercise.exerciseRequirements[i].countRequirement}x";
+                    exerciseItemGUI.avatarRequement.sprite = exercise.exerciseRequirements[i].avatarRequirement;
+                    exerciseRequirementsGUIs.Add(exerciseItemGUI);
                 }
             }
 
@@ -248,14 +248,6 @@ namespace UI.PlaneTablet.Exercise
                             exerciseManager.AddExercise(exercise.newExercises[i]);
                         }
 
-                        UpdateData(exercise);
-
-                        for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.exercises.Count; i++)
-                        {
-                            if (SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].nameExercise == exercise.nameExercise)
-                                SaveManager.playerDatabase.JSONPlayer.resources.exercises[i].isVisible = false;
-                        }
-
                         break;
                     }
             }
@@ -269,7 +261,7 @@ namespace UI.PlaneTablet.Exercise
 
         public List<Reward> CompleteExercise()
         {
-            //SetExerciseCompletion(TypeOfExerciseCompletion.Done);
+            SetExerciseCompletion(TypeOfExerciseCompletion.Done);
             return exercise.exerciseRewards;
         }
 
