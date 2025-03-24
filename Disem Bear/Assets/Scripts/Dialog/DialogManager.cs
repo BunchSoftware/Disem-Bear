@@ -58,8 +58,9 @@ namespace Game.LDialog
         public void StartDialog(int indexDialogPoint)
         {
             currentIndexDialogPoint = indexDialogPoint;
-            SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
-            SaveManager.UpdatePlayerDatabase();
+            currentIndexDialog = 0;
+            //SaveManager.playerDatabase.JSONPlayer.resources.currentIndexDialogPoint = currentIndexDialogPoint;
+            //SaveManager.UpdatePlayerDatabase();
             TypeLine(fileDialog.dialogPoints[indexDialogPoint], currentIndexDialog);
         }
 

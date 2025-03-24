@@ -784,6 +784,11 @@ MonoBehaviour:
     offPointer: 0
     lineToObjectTransform: {fileID: 1605940979}
   - indexDialogPoint: 0
+    indexDialog: 3
+    needTargetFullEndDialog: 0
+    offPointer: 0
+    lineToObjectTransform: {fileID: 1009302873}
+  - indexDialogPoint: 0
     indexDialog: 5
     needTargetFullEndDialog: 0
     offPointer: 0
@@ -2687,6 +2692,15 @@ MonoBehaviour:
     PrinterBlock: 1
     TVBlock: 0
     ModelBoardBlock: 1
+  - indexDialogPoint: 1
+    indexDialog: 0
+    needTargetFullEndDialog: 0
+    WorkbenchBlock: 0
+    AquariumBlock: 0
+    FridgeBlock: 1
+    PrinterBlock: 1
+    TVBlock: 0
+    ModelBoardBlock: 0
 --- !u!1 &900895251
 GameObject:
   m_ObjectHideFlags: 0
@@ -7755,7 +7769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 485
+      value: 478.5
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.y
@@ -8071,7 +8085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8675327711258783818, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 149.99998
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
