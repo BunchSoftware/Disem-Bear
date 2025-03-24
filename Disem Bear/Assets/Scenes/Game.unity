@@ -1032,7 +1032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &385524268
 Transform:
   m_ObjectHideFlags: 0
@@ -2122,6 +2122,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aquarium
       objectReference: {fileID: 0}
+    - target: {fileID: 3181303285655534524, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: m_Size.z
+      value: 275.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5991775514266576830, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.309
@@ -2162,6 +2166,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8720583953296180006, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
+      propertyPath: aquariumMaterialDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 31540a10dbc3c554e86582a39ce4a2a6, type: 2}
     - target: {fileID: 8720583953296180006, guid: 497fe617ead3bc0429133d1df7434993, type: 3}
       propertyPath: 'InspectorSpawners.Array.data[0]'
       value: 
@@ -7769,7 +7777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 478.5
+      value: 485
       objectReference: {fileID: 0}
     - target: {fileID: 1347134778021539274, guid: 033f30c2ad06f384a8e533cf6c5d4a25, type: 3}
       propertyPath: m_SizeDelta.y
