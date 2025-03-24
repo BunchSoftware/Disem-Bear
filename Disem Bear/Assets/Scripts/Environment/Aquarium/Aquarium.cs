@@ -1,12 +1,17 @@
+using Assets.Scripts.Environment.Aquarium;
 using External.DI;
+using External.Storage;
 using Game.Environment.Item;
 using Game.Environment.LMixTable;
+using Game.Environment.LModelBoard;
 using Game.Environment.LPostTube;
+using Game.Environment.LTableWithItems;
 using Game.LPlayer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +21,7 @@ namespace Game.Environment.Aquarium
     [RequireComponent(typeof(ScaleChooseObject))]
     public class Aquarium : MonoBehaviour, ILeftMouseDownClickable
     {
+        [SerializeField] private AquariumMaterialDatabase aquariumMaterialDatabase;
         [SerializeField] private TriggerObject triggerObject;
         [SerializeField] private ParticleSystem particleSystem;
 
@@ -26,8 +32,6 @@ namespace Game.Environment.Aquarium
 
         [SerializeField] private ChangeCell buttonLeft;
         [SerializeField] private ChangeCell buttonRight;
-
-        [SerializeField] private MaterialForAquarium materialForAquarium;
 
         [SerializeField] private List<ColorAquarium> InspectorPhasesAquariums = new();
         private Dictionary<string, PhasesAquarium> phasesAquariums = new();
@@ -47,6 +51,7 @@ namespace Game.Environment.Aquarium
 
         private Player player;
         private PlayerMouseMove playerMouseMove;
+        private MaterialForAquarium currentMaterialForAquarium;
 
         private bool isClick = false;
         private bool isOpen = false;
@@ -57,12 +62,11 @@ namespace Game.Environment.Aquarium
         private GameBootstrap gameBootstrap;
 
         private List<string> currentCells = new();
-        private string colorMaterial = "none";
         private float timeMaterial = 0f;
         private float spendTimeCreateCell = 0f;
 
         private int indexCell = 0;
-        private int countCells = 0;
+        private int countCell = 0;
 
         public void Init(Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
@@ -102,6 +106,57 @@ namespace Game.Environment.Aquarium
 
             openObject.Init(triggerObject, playerMouseMove, player);
 
+            if(SaveManager.playerDatabase.JSONPlayer.resources.aquariums == null)
+            {
+                SaveManager.playerDatabase.JSONPlayer.resources.aquariums = new List<AquariumData>();
+
+                AquariumData aquariumData = new AquariumData();
+                aquariumData.nameMasterAquarium = transform.parent.name;
+                aquariumData.countCell = 0;
+                aquariumData.colorMaterial = "";
+
+                SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Add(aquariumData);
+
+            }
+            else
+            {
+                bool condition = true;
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                {
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                    {
+                        condition = false;
+                        break;
+                    }
+                }
+
+                if (condition)
+                {
+                    AquariumData aquariumData = new AquariumData();
+                    aquariumData.nameMasterAquarium = transform.parent.name;
+                    aquariumData.countCell = 0;
+                    aquariumData.colorMaterial = "";
+
+                    SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Add(aquariumData);
+                }
+                else
+                {
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
+                    {
+                        for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                        {
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                            {
+                                currentMaterialForAquarium = FindMaterialForAquariumToDatabase(SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].colorMaterial);
+                                countCell = SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].countCell;
+                            }
+                        }
+                    }
+                }
+            }
+
+            SaveManager.UpdatePlayerDatabase();
+
             triggerObject.OnTriggerStayEvent.AddListener((collider) =>
             {
                 if (isClick && !isOpen)
@@ -138,9 +193,20 @@ namespace Game.Environment.Aquarium
             buttonLeft.Init(this);
             buttonRight.Init(this);
 
-            QuietUpdateData(materialForAquarium);
+            QuietUpdateData(currentMaterialForAquarium);
 
             Debug.Log("Aquarium: ������� ��������������");
+        }
+
+        private MaterialForAquarium FindMaterialForAquariumToDatabase(string colorMaterial)
+        {
+            for (int i = 0; i < aquariumMaterialDatabase.materialForAquariums.Count; i++)
+            {
+                if (aquariumMaterialDatabase.materialForAquariums[i].colorMaterial == colorMaterial)
+                    return aquariumMaterialDatabase.materialForAquariums[i];
+            }
+
+            return null;
         }
 
         public void OnUpdate(float deltaTime)
@@ -149,30 +215,44 @@ namespace Game.Environment.Aquarium
             {
                 timeMaterial -= Time.deltaTime;
             }
-            if (phasesAquariums.ContainsKey(colorMaterial))
+            if (phasesAquariums.ContainsKey(currentMaterialForAquarium.colorMaterial))
             {
-                if (countCells == 0)
+                if (countCell == 0)
                 {
-                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].NullFaseDirty : phasesAquariums[colorMaterial].NullFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[currentMaterialForAquarium.colorMaterial].NullFaseDirty : phasesAquariums[currentMaterialForAquarium.colorMaterial].NullFase;
                 }
-                else if (countCells < 4)
+                else if (countCell < 4)
                 {
-                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].FirstFaseDirty : phasesAquariums[colorMaterial].FirstFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[currentMaterialForAquarium.colorMaterial].FirstFaseDirty : phasesAquariums[currentMaterialForAquarium.colorMaterial].FirstFase;
                 }
-                else if (countCells < 9)
+                else if (countCell < 9)
                 {
-                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].SecondFaseDirty : phasesAquariums[colorMaterial].SecondFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[currentMaterialForAquarium.colorMaterial].SecondFaseDirty : phasesAquariums[currentMaterialForAquarium.colorMaterial].SecondFase;
                 }
-                else if (countCells < 15)
+                else if (countCell < 15)
                 {
-                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[colorMaterial].ThirdFaseDirty : phasesAquariums[colorMaterial].ThirdFase;
+                    aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[currentMaterialForAquarium.colorMaterial].ThirdFaseDirty : phasesAquariums[currentMaterialForAquarium.colorMaterial].ThirdFase;
                 }
             }
             if (timeMaterial > 0f) spendTimeCreateCell += Time.deltaTime;
             if (spendTimeCreateCell >= timeCells[currentCells[indexCell]])
             {
-                if (countCells < 15)
-                    countCells++;
+                if (countCell < 15)
+                {
+                    countCell++;
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
+                    {
+                        for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                        {
+                            if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                            {
+                                SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].countCell = countCell;
+                            }
+                        }
+                    }
+
+                    SaveManager.UpdatePlayerDatabase();
+                }
                 spendTimeCreateCell = 0;
             }
 
@@ -228,9 +308,22 @@ namespace Game.Environment.Aquarium
 
         private void QuietUpdateData(MaterialForAquarium materialForAquarium)
         {
-            if (materialForAquarium != null)
+            currentMaterialForAquarium = materialForAquarium;
+            if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
             {
-                currentCells = new List<string>(materialForAquarium.cells);
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                {
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                    {
+                        SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].colorMaterial = materialForAquarium.colorMaterial;
+                    }
+                }
+            }
+
+            SaveManager.UpdatePlayerDatabase();
+            if (currentMaterialForAquarium != null)
+            {
+                currentCells = new List<string>(currentMaterialForAquarium.cells);
                 if (currentCells.Count > 1)
                 {
                     buttonLeft.SetOn();
@@ -241,8 +334,7 @@ namespace Game.Environment.Aquarium
                     buttonLeft.SetOff();
                     buttonRight.SetOff();
                 }
-                colorMaterial = materialForAquarium.colorMaterial;
-                timeMaterial = materialForAquarium.TimeMaterial;
+                timeMaterial = currentMaterialForAquarium.TimeMaterial;
                 indexCell = 0;
                 choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
                 spendTimeCreateCell = 0;
@@ -251,10 +343,23 @@ namespace Game.Environment.Aquarium
 
         private void UpdateData(MaterialForAquarium materialForAquarium)
         {
-            if (materialForAquarium != null)
+            currentMaterialForAquarium = materialForAquarium;
+            if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
+            {
+                for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                {
+                    if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                    {
+                        SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].colorMaterial = materialForAquarium.colorMaterial;
+                    }
+                }
+            }
+
+            SaveManager.UpdatePlayerDatabase();
+            if (currentMaterialForAquarium != null)
             {
                 gameBootstrap.OnPlayOneShotRandomSound(changeMaterialSounds);
-                currentCells = new List<string>(materialForAquarium.cells);
+                currentCells = new List<string>(currentMaterialForAquarium.cells);
                 if (currentCells.Count > 1)
                 {
                     buttonLeft.SetOn();
@@ -265,8 +370,7 @@ namespace Game.Environment.Aquarium
                     buttonLeft.SetOff();
                     buttonRight.SetOff();
                 }
-                colorMaterial = materialForAquarium.colorMaterial;
-                timeMaterial = materialForAquarium.TimeMaterial;
+                timeMaterial = currentMaterialForAquarium.TimeMaterial;
                 GetAllCells();
                 indexCell = 0;
                 choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
@@ -297,18 +401,31 @@ namespace Game.Environment.Aquarium
 
         private void GetAllCells()
         {
-            if (countCells != 0)
+            if (countCell != 0)
             {
                 particleSystem.Play();
                 StartCoroutine(WaitParticleSystem(0.3f));
-                GetAquariumCells?.Invoke(currentCells[indexCell], countCells);
-                DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = countCells.ToString();
+                GetAquariumCells?.Invoke(currentCells[indexCell], countCell);
+                DisplayCount.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().text = countCell.ToString();
                 DisplayCount.GetComponent<Animator>().SetBool("On", true);
                 StartCoroutine(waitDisplayCount());
 
-                Spawners[currentCells[indexCell]].PutIngradient(countCells);
+                Spawners[currentCells[indexCell]].PutIngradient(countCell);
 
-                countCells = 0;
+                countCell = 0;
+
+                if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
+                {
+                    for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                    {
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                        {
+                            SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].countCell = 0;
+                        }
+                    }
+                }
+
+                SaveManager.UpdatePlayerDatabase();
             }
         }
 

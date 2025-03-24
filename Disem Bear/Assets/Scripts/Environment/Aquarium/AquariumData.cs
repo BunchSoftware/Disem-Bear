@@ -1,12 +1,13 @@
 using Game.Environment.Aquarium;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class AquariumData
 {
     public string nameMasterAquarium;
-    public MaterialForAquarium materialForAquarium;
+    public string colorMaterial;
     public int countCell;
 }

@@ -132,7 +132,10 @@ namespace Game.Environment.LModelBoard
 
                     SaveManager.playerDatabase.JSONPlayer.resources.modelBoards.Add(cellsData);
                 }
+
             }
+
+            SaveManager.UpdatePlayerDatabase();
 
             for (int i = 0; i < cellBoards.Count; i++)
             {
