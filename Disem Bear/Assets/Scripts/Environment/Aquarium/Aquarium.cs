@@ -82,13 +82,13 @@ namespace Game.Environment.Aquarium
 
             openObject.OnStartObjectOpen.AddListener(() =>
             {
-                isOpen = true;
                 spriteMovePointToPoint.StartMoveTo(openObject.timeOpen);
                 scaleChooseObject.on = false;
             });
 
             openObject.OnEndObjectOpen.AddListener(() =>
             {
+                isOpen = true;
                 OnAquariumOpen?.Invoke();
             });
 
@@ -169,6 +169,12 @@ namespace Game.Environment.Aquarium
                         player.PutItem();
                         Debug.Log("Material for aquarium update");
                     }
+                }
+                else if (isClick && isOpen)
+                {
+                    isClick = false;
+
+                    GetAllCells();
                 }
             });
 
@@ -392,11 +398,6 @@ namespace Game.Environment.Aquarium
             indexCell = (indexCell - 1 + currentCells.Count) % currentCells.Count;
             choiceCellSprite.sprite = Spawners[currentCells[indexCell]].GetSpriteIngradient();
             spendTimeCreateCell = 0;
-        }
-
-        private void OnMouseDown()
-        {
-            GetAllCells();
         }
 
         private void GetAllCells()
