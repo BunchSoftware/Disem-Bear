@@ -684,7 +684,8 @@ namespace External.API
                 using (System.Net.NetworkInformation.Ping pinger = new System.Net.NetworkInformation.Ping())
                 {
                     PingReply reply = pinger.Send(nameOrAddress);
-                    return reply.Status == IPStatus.Success;
+                    return false;
+                    //return reply.Status == IPStatus.Success;
                 }
             }
             catch (Exception)

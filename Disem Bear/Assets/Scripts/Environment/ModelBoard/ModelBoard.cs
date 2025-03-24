@@ -54,7 +54,6 @@ namespace Game.Environment.LModelBoard
 
         public bool IsEndDrag => isEndDrag;
         private bool isEndDrag = false;
-
         public void Init(Workbench workbench, Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
             this.player = player;

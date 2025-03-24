@@ -10,6 +10,7 @@ namespace Game.Environment
 
         private Vector3 maxScale;
         private Vector3 minScale;
+        public bool IncreaseScale => increaseScale;
         private bool increaseScale = false;
         private AudioClip audioClip;
         private GameBootstrap gameBootstrap;
@@ -58,22 +59,22 @@ namespace Game.Environment
 
         public void OnMouseEnterObject()
         {
+            increaseScale = true;
             if (on && timerForSound >= 0.3f)
             {
                 timerForSound = 0f;
                 gameBootstrap.OnPlayOneShotSound(audioClip);
             }
-            increaseScale = true;
         }
 
         public void OnMouseExitObject()
         {
+            increaseScale = false;
             if (on && timerForSound >= 0.3f)
             {
                 timerForSound = 0f;
                 gameBootstrap.OnPlayOneShotSound(audioClip);
             }
-            increaseScale = false;
         }
     }
 }
