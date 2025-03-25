@@ -202,6 +202,14 @@ namespace External.Storage
             });
         }
 
+        public static async void CreateGlobalEvent(GlobalEvent globalEvent)
+        {
+            await Task.Run(() =>
+            {
+                apiManager.CreateGlobalEvent(globalEvent);
+            });
+        }
+
         public static async void UpdateShopDatabase()
         {
             if (playerDatabase.JSONPlayer.nameUser != "" && shopDatabase.JSONShop.nameShop != "")

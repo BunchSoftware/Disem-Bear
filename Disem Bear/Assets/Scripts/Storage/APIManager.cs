@@ -94,6 +94,16 @@ namespace External.API
         public ResourceShop resources;
     }
 
+    public class GlobalEvent
+    {
+        public int id;
+        public string name;
+        public string text;
+        public int once_in_hours;
+        public string start_date_time;
+        public int duration_in_minutes;
+    }
+
     [Serializable]
     // Ошибка при записи логов
     public class JSONErrorLog
@@ -196,11 +206,11 @@ namespace External.API
 
         public async void RegistrationPlayer(string userName, ResourcePlayer resourcePlayer)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, URL);
@@ -230,11 +240,11 @@ namespace External.API
 
         public async Task<ResourcePlayer> GetResourcePlayer(string userName)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -258,11 +268,11 @@ namespace External.API
 
         public async Task<bool> HasPlayerInServer(string userName)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return false;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -282,11 +292,11 @@ namespace External.API
 
         public async void SetResourcePlayer(string userName, ResourcePlayer resourcePlayer)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, URL);
@@ -308,6 +318,8 @@ namespace External.API
                 if (jsonError != null && jsonError.Detail == "No Player matches the given query.")
                 {
                     Debug.Log($"Игрок {userName} отсутсвует на сервере. Ошибка: No Player matches the given query.");
+                    RegistrationPlayer(userName, resourcePlayer);
+                    SetResourcePlayer(userName,resourcePlayer);
                     return;
                 }
 
@@ -317,11 +329,11 @@ namespace External.API
 
         public async void DeletePlayer(string userName)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, URL);
@@ -347,11 +359,11 @@ namespace External.API
 
         public async Task<List<JSONPlayer>> GetListPlayers()
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -375,11 +387,11 @@ namespace External.API
         #region LogPlayer
         public async void CreateLogPlayer(string userName, string comment, ResourceChangedPlayer resourceChangedPlayer)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, URL);
@@ -413,11 +425,11 @@ namespace External.API
 
         public async Task<List<LogPlayer>> GetListLogsPlayer(string userName)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/logs/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/logs/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -441,11 +453,11 @@ namespace External.API
         #region Shop
         public async void RegistrationShop(string userName, string nameShop, ResourceShop resourceShop)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, URL);
@@ -470,11 +482,11 @@ namespace External.API
 
         public async Task<ResourceShop> GetResourceShopPlayer(string userName, string nameShop)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -500,11 +512,11 @@ namespace External.API
 
         public async void SetResourceShopPlayer(string userName, string nameShop, ResourceShop resourceShop)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, URL);
@@ -535,11 +547,11 @@ namespace External.API
 
         public async Task<List<JSONShop>> GetListShopPlayer(string userName)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -563,11 +575,11 @@ namespace External.API
 
         public async void DeleteShop(string userName, string nameShop)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{nameShop}/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, URL);
@@ -595,11 +607,11 @@ namespace External.API
 
         public async void CreateLogShop(string userName, string shopName, string comment, ResourceChangedShop resourceChangedShop)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, URL);
@@ -633,11 +645,11 @@ namespace External.API
 
         public async Task<List<LogShop>> GetListLogsShop(string userName, string shopName)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return null;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{shopName}/logs/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/players/{userName}/shops/{shopName}/logs/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);
@@ -659,14 +671,58 @@ namespace External.API
         }
 
         #endregion
+        #region Event
 
-        public async void GetLogsGame()
+        public async void CreateGlobalEvent(GlobalEvent globalEvent)
         {
-            if (CheckInternetConnection("2025.nti-gamedev.ru") == false)
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
                 return;
             if (UUID.Length != 0)
             {
-                string URL = $"https://2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/events/\r\n";
+
+                HttpClient client = new HttpClient();
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, URL);
+                FormUrlEncodedContent content = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("name", globalEvent.name),
+                        new KeyValuePair<string, string>("text", globalEvent.text),
+                        new KeyValuePair<string, string>("once_in_hours", globalEvent.once_in_hours.ToString()),
+                        new KeyValuePair<string, string>("duration_in_minutes", globalEvent.duration_in_minutes.ToString()),
+                        new KeyValuePair<string, string>("start_date_time", globalEvent.start_date_time),
+                    });
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                    Debug.Log(100);
+                    Debug.Log(await response.Content.ReadAsStringAsync());
+                }
+                catch
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    JSONError jsonError = null;
+                    try
+                    {
+                        jsonError = JsonConvert.DeserializeObject<JSONError>(json);
+                    }
+                    catch { }
+
+                    Debug.LogError(jsonError.Detail);
+
+                    Debug.Log($"Данное событие {globalEvent.name} уже зарегистрировано или непредвиденная ошибка");
+                }
+            }
+        }
+        #endregion
+        public async void GetLogsGame()
+        {
+            if (CheckInternetConnection("final.2025.nti-gamedev.ru") == false)
+                return;
+            if (UUID.Length != 0)
+            {
+                string URL = $"https://final.2025.nti-gamedev.ru/api/games/{UUID}/logs/\r\n";
 
                 HttpClient client = new HttpClient();
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, URL);

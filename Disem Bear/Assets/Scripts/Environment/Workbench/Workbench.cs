@@ -536,11 +536,21 @@ namespace Game.Environment.LMixTable
                 ingradientDragObjectsInMixTable.Remove(ingradientDragObject);
 
                 ingradientDragObject.GetComponent<Rigidbody>().isKinematic = false;
-                PickUpItem pickUpItem = ingradientDragObject.GetComponent<PickUpItem>();
-                pickUpItem.enabled = true;
-                pickUpItem.GetComponent<Collider>().enabled = false;
-
                 ingradientDragObject.transform.DOMove(player.transform.position, timeIngradientPickUpPlayer).SetEase(Ease.Linear);
+                
+                openObject.OnStartObjectClose.AddListener(() =>
+                {
+                    if (ingradientDragObject != null)
+                    {
+                        PickUpItem pickUpItem = ingradientDragObject.GetComponent<PickUpItem>();
+                        pickUpItem.enabled = true;
+                        pickUpItem.GetComponent<Collider>().enabled = false;
+
+                        player.PickUpItem(ingradientDragObject.GetComponent<PickUpItem>());
+                        Destroy(ingradientDragObject.gameObject);
+                    }
+                });
+
 
                 pickUpButton.SetActive(false);
 
@@ -551,17 +561,27 @@ namespace Game.Environment.LMixTable
                 IngradientDragCell ingradientDragCell = ingradientDragCellsInMixTable[0];
                 ingradientDragCellsInMixTable.Remove(ingradientDragCell);
 
-                PickUpItem pickUpItem = Instantiate(GameBootstrap.FindPickUpItemToPrefabs(ingradientDragCell.GetNameIngradient())).GetComponent<PickUpItem>();
-                pickUpItem.GetComponent<Rigidbody>().isKinematic = false;
-                pickUpItem.enabled = true;
-                pickUpItem.GetComponent<Collider>().enabled = false;
-                pickUpItem.name = ingradientDragCell.GetNameIngradient();
-                pickUpItem.NameItem = ingradientDragCell.GetNameIngradient();
 
                 ingradientDragCell.transform.DOMove(player.transform.position, timeIngradientPickUpPlayer).SetEase(Ease.Linear);
                 pickUpButton.SetActive(false);
 
-                StartCoroutine(IPickUpIngradientPickUpItem(pickUpItem, ingradientDragCell, timeIngradientPickUpPlayer));
+                openObject.OnStartObjectClose.AddListener(() =>
+                {
+                    if (ingradientDragCell != null)
+                    {
+                        PickUpItem pickUpItem = Instantiate(GameBootstrap.FindPickUpItemToPrefabs(ingradientDragCell.GetNameIngradient())).GetComponent<PickUpItem>();
+                        pickUpItem.GetComponent<Rigidbody>().isKinematic = false;
+                        pickUpItem.enabled = true;
+                        pickUpItem.GetComponent<Collider>().enabled = false;
+                        pickUpItem.name = ingradientDragCell.GetNameIngradient();
+                        pickUpItem.NameItem = ingradientDragCell.GetNameIngradient();
+
+                        player.PickUpItem(pickUpItem);
+                        Destroy(ingradientDragCell.gameObject);
+                    }
+                });
+
+                StartCoroutine(IPickUpIngradientPickUpItem(ingradientDragCell, timeIngradientPickUpPlayer));
             }
         }
 
@@ -575,22 +595,37 @@ namespace Game.Environment.LMixTable
         {
             yield return new WaitForSeconds(time);
 
-            ingradientDragObject.GetComponent<Collider>().enabled = true;
+            if (ingradientDragObject != null)
+            {
+                ingradientDragObject.GetComponent<Collider>().enabled = true;
+                PickUpItem pickUpItem = ingradientDragObject.GetComponent<PickUpItem>();
+                pickUpItem.enabled = true;
+                pickUpItem.GetComponent<Collider>().enabled = false;
 
-            player.PickUpItem(ingradientDragObject.GetComponent<PickUpItem>());
+                player.PickUpItem(ingradientDragObject.GetComponent<PickUpItem>());
 
-            Destroy(ingradientDragObject);
+                Destroy(ingradientDragObject.gameObject);
+            }
         }
 
-        private IEnumerator IPickUpIngradientPickUpItem(PickUpItem pickUpItem, IngradientDragCell ingradientDragCell, float time)
+        private IEnumerator IPickUpIngradientPickUpItem(IngradientDragCell ingradientDragCell, float time)
         {
             yield return new WaitForSeconds(time);
 
-            pickUpItem.GetComponent<Collider>().enabled = true;
 
-            Destroy(ingradientDragCell.gameObject);
+            if (ingradientDragCell != null)
+            {
+                PickUpItem pickUpItem = Instantiate(GameBootstrap.FindPickUpItemToPrefabs(ingradientDragCell.GetNameIngradient())).GetComponent<PickUpItem>();
+                pickUpItem.GetComponent<Rigidbody>().isKinematic = false;
+                pickUpItem.enabled = true;
+                pickUpItem.GetComponent<Collider>().enabled = false;
+                pickUpItem.name = ingradientDragCell.GetNameIngradient();
+                pickUpItem.NameItem = ingradientDragCell.GetNameIngradient();
 
-            player.PickUpItem(pickUpItem.GetComponent<PickUpItem>());
+                Destroy(ingradientDragCell.gameObject);
+
+                player.PickUpItem(pickUpItem.GetComponent<PickUpItem>());
+            }
         }
 
         public void MixIngradients()

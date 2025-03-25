@@ -80,7 +80,7 @@ public class PostBox : MonoBehaviour, ILeftMouseDownClickable
                     gameBootstrap.OnPlayOneShotRandomSound(soundsDropItem);
                     gameBootstrap.OnPlayOneShotRandomSound(soundsPickUpItem);
                     PickUpItem playerPickUpItem = player.GetPickUpItem();
-                    putObjectInBox?.Invoke(player.GetPickUpItem());
+                    putObjectInBox?.Invoke(playerPickUpItem);
                     player.PutItem();
                     player.PickUpItem(PickUpItemInBox());
                     pickUpObjectInBox?.Invoke(player.GetPickUpItem());

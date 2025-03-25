@@ -42,7 +42,7 @@ namespace Game.LDialog
             skipButton.onClick.RemoveAllListeners();
             skipButton.onClick.AddListener((UnityAction)(() =>
             {
-                if (dialogManager.IsDialogOn())
+                if (isDialogRun)
                 {
                     if (skipDialog && !oneTap)
                     {

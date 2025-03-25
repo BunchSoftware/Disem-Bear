@@ -1,6 +1,9 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using Game.Environment.Aquarium;
 using Game.Environment.LMixTable;
+using Game.Environment.LModelBoard;
 using Game.LDialog;
+using NUnit.Framework;
 using UI;
 using UI.PlaneTablet.Exercise;
 using UnityEngine;
@@ -15,6 +18,12 @@ public class MainConditionManager : MonoBehaviour
     [SerializeField] private MixButton mixButton;
     [SerializeField] private ClearButton clearButton;
     [SerializeField] private PostBox postBox;
+    [SerializeField] private CellModelBoard cellBoard1;
+    [SerializeField] private CellModelBoard cellBoard2;
+    [SerializeField] private CellModelBoard cellBoard3;
+    [SerializeField] private CellModelBoard cellBoard4;
+
+
     private ExerciseManager exerciseManager;
     private CheckTakeExercise takeExerciseConditions;
     private CheckGetAquariumCells getAquariumCellsConditions;
@@ -23,8 +32,10 @@ public class MainConditionManager : MonoBehaviour
     private CheckButtonsWorkbench checkButtonsWorkbench;
     private CheckPutObjectPostBox checkPutObjectPostBox;
     private CheckPlaceSomething checkPlaceSomething;
+    private CheckModelBoardTakeItem checkModelBoardTakeItem;
     private CheckPickUpObjectPostBox checkPickUpObjectPostBox;
-    
+    private CheckAquariumDirty checkAquariumDirty;
+
 
 
     private DialogManager dialogManager;
@@ -41,7 +52,9 @@ public class MainConditionManager : MonoBehaviour
         checkButtonsWorkbench = GetComponent<CheckButtonsWorkbench>();
         checkPutObjectPostBox = GetComponent<CheckPutObjectPostBox>();
         checkPlaceSomething = GetComponent<CheckPlaceSomething>();
+        checkModelBoardTakeItem = GetComponent<CheckModelBoardTakeItem>();
         checkPickUpObjectPostBox = GetComponent<CheckPickUpObjectPostBox>();
+        checkAquariumDirty = GetComponent<CheckAquariumDirty>();
 
         takeExerciseConditions.Init(dialogManager, exerciseManager, TV);
         getAquariumCellsConditions.Init(dialogManager, aquarium);
@@ -50,6 +63,8 @@ public class MainConditionManager : MonoBehaviour
         checkButtonsWorkbench.Init(pickUpButton, mixButton, clearButton, dialogManager);
         checkPutObjectPostBox.Init(postBox, dialogManager);
         checkPlaceSomething.Init(dialogManager);
+        checkModelBoardTakeItem.Init(dialogManager, cellBoard1, cellBoard2, cellBoard3, cellBoard4);
         checkPickUpObjectPostBox.Init(postBox, dialogManager);
+        checkAquariumDirty.Init(dialogManager);
     }
 }
