@@ -41,8 +41,8 @@ namespace UI.PlaneTablet.Shop
         private List<ProductGUI> productsGUIs = new List<ProductGUI>();
         public Action<Product> OnBuyProduct;
 
-        private Queue<DispensingTask> dispensingTasks = new Queue<DispensingTask>();
-
+        private List<DispensingTask> dispensingTasks = new List<DispensingTask>();
+        private const int MaxObjectFall = 3;
         public void Init(MonoBehaviour context, TV tv, ToastManager toastManager)
         {
             this.toastManager = toastManager;
@@ -60,9 +60,9 @@ namespace UI.PlaneTablet.Shop
                         product.isVisible = SaveManager.shopDatabase.JSONShop.resources.productSaves[i].isVisible;
 
                         if (product.reward.countReward != 0)
-                        {
-                            prefab.name = $"Product {i}";
+                        {     
                             ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
+                            productGUI.name = $"Product {i}";
                             productsGUIs.Add(productGUI);
                             products.Add(product);
                         }
@@ -80,16 +80,23 @@ namespace UI.PlaneTablet.Shop
                 {
                     if (postBox.ItemInBox() == false && postTube.IsItemFlies() == false)
                     {
-                        if (Buy(product))
+                        if (dispensingTasks.Count < MaxObjectFall)
                         {
-                            if (product.reward.countReward != -1)
-                                product.reward.countReward--;
-                            productGUI.UpdateData(product);
-                            toastManager.ShowToast("Товар был куплен, посмотрите в доставке");
+                            if (Buy(product))
+                            {
+                                if (product.reward.countReward != -1)
+                                    product.reward.countReward--;
+                                productGUI.UpdateData(product);
+                                toastManager.ShowToast("Товар был куплен, посмотрите в доставке");
+                            }
+                            else
+                            {
+                                toastManager.ShowToast("Недостаточно средств для обмена !");
+                            }
                         }
                         else
                         {
-                            toastManager.ShowToast("Недостаточно средств для обмена !");
+                            toastManager.ShowToast("Достигнуто максимальное количество предметов на выдачу");
                         }
                     }
                     else
@@ -108,8 +115,13 @@ namespace UI.PlaneTablet.Shop
             {
                 if (dispensingTasks.Count > 0)
                 {
-                    DispensingTask dispensingTask = dispensingTasks.Dequeue();
-                    dispensingTask.typeMachineDispensingProduct.OnGetReward?.Invoke(dispensingTask.reward);
+                    Debug.Log(dispensingTasks.Count);
+                    for (int i = 0; i < dispensingTasks.Count; i++)
+                    {
+                        DispensingTask dispensingTask = dispensingTasks[i];
+                        dispensingTask.typeMachineDispensingProduct.OnGetReward?.Invoke(dispensingTask.reward);
+                    }
+                    dispensingTasks.Clear();
                 }
             });
 
@@ -129,25 +141,17 @@ namespace UI.PlaneTablet.Shop
 
         private void Sort()
         {
-            for (int j = 0; j < productsGUIs.Count; j++)
+            for (int i = productsGUIs.Count - 1; i > -1; i--)
             {
-                if (productsGUIs[j].GetProduct().reward.countReward == -1)
+                if (productsGUIs[i].GetProduct().isImporttant)
                 {
-                    content.transform.GetChild(j).SetAsFirstSibling();
+                    content.transform.GetChild(i).SetSiblingIndex(0);
                 }
             }
-
-            for (var i = 1; i < productsGUIs.Count; i++)
+            productsGUIs.Clear();
+            for (int i = 0; i < content.transform.childCount; i++)
             {
-                for (var j = 0; j < productsGUIs.Count - i; j++)
-                {
-                    if (productsGUIs[j].GetProduct().reward.countReward != -1)
-                    {
-                        var temp = productsGUIs[j];
-                        productsGUIs[j] = productsGUIs[j + 1];
-                        productsGUIs[j + 1] = temp;
-                    }
-                }
+                productsGUIs.Add(content.transform.GetChild(i).GetComponent<ProductGUI>());
             }
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
@@ -155,31 +159,31 @@ namespace UI.PlaneTablet.Shop
 
         private bool Buy(Product product)
         {
-            if (SaveManager.shopDatabase.JSONShop.resources.productSaves != null)
-            {
-                for (int i = 0; i < SaveManager.shopDatabase.JSONShop.resources.productSaves.Count; i++)
+                if (SaveManager.shopDatabase.JSONShop.resources.productSaves != null)
                 {
-                    if (SaveManager.shopDatabase.JSONShop.resources.productSaves[i].typeReward == product.reward.typeReward)
+                    for (int i = 0; i < SaveManager.shopDatabase.JSONShop.resources.productSaves.Count; i++)
                     {
-                        for (int j = 0; j < SaveManager.playerDatabase.JSONPlayer.resources.ingradients.Count; j++)
+                        if (SaveManager.shopDatabase.JSONShop.resources.productSaves[i].typeReward == product.reward.typeReward)
                         {
-                            if (SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].typeIngradient == product.typePriceProduct &&
-                               SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].countIngradient - product.price >= 0)
+                            for (int j = 0; j < SaveManager.playerDatabase.JSONPlayer.resources.ingradients.Count; j++)
                             {
-                                SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].countIngradient -= product.price;
-                                SaveManager.shopDatabase.JSONShop.resources.productSaves[i].countReward -= 1;
-                                GiveProduct(product);
-                                OnBuyProduct?.Invoke(product);
+                                if (SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].typeIngradient == product.typePriceProduct &&
+                                   SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].countIngradient - product.price >= 0)
+                                {
+                                    SaveManager.playerDatabase.JSONPlayer.resources.ingradients[j].countIngradient -= product.price;
+                                    SaveManager.shopDatabase.JSONShop.resources.productSaves[i].countReward -= 1;
+                                    GiveProduct(product);
+                                    OnBuyProduct?.Invoke(product);
 
-                                Debug.Log($"{product.reward.typeReward} был куплен");
-                                SaveManager.UpdateShopDatabase();
-                                SaveManager.UpdatePlayerDatabase();
-                                return true;
+                                    Debug.Log($"{product.reward.typeReward} был куплен");
+                                    SaveManager.UpdateShopDatabase();
+                                    SaveManager.UpdatePlayerDatabase();
+                                    return true;
+                                }
                             }
                         }
                     }
-                }
-            }
+                }          
             return false;
         }
 
@@ -195,7 +199,14 @@ namespace UI.PlaneTablet.Shop
                         dispensingTask.typeMachineDispensingProduct = typeGiveProducts[i];
                         dispensingTask.reward = product.reward;
 
-                        dispensingTasks.Enqueue(dispensingTask);
+                        if (dispensingTasks.Count < MaxObjectFall)
+                        {
+                            dispensingTasks.Add(dispensingTask);
+                        }
+                        else
+                        {
+                            toastManager.ShowToast("Достигнуто максимальное количество предметов на выдачу");
+                        }
                     }
                 }
             }
@@ -253,11 +264,65 @@ namespace UI.PlaneTablet.Shop
             SaveManager.UpdateShopDatabase();
         }
 
-        private void Remove(ProductGUI productGUI)
+        public void Remove(ProductGUI productGUI)
         {
             productsGUIs.Remove(productGUI);
             GameObject.Destroy(productGUI.gameObject);
             Sort();
+        }
+
+        public ProductGUI AddProduct(Product product)
+        {
+            product.isVisible = true;
+            ProductData productData = new ProductData();
+
+            productData.typeReward = product.reward.typeReward;
+            productData.countReward = -1;
+            productData.isVisible = true;
+
+            SaveManager.shopDatabase.JSONShop.resources.productSaves.Add(productData);
+
+            ProductGUI productGUI = GameObject.Instantiate(prefab, content.transform).GetComponent<ProductGUI>();
+            productGUI.name = $"Product {productsGUIs.Count}";
+            productsGUIs.Add(productGUI);
+            productGUI.Init(
+                (product) =>
+                {
+                    if (postBox.ItemInBox() == false && postTube.IsItemFlies() == false)
+                    {
+                        if (dispensingTasks.Count < MaxObjectFall)
+                        {
+                            if (Buy(product))
+                            {
+                                if (product.reward.countReward != -1)
+                                    product.reward.countReward--;
+                                productGUI.UpdateData(product);
+                                toastManager.ShowToast("Товар был куплен, посмотрите в доставке");
+                            }
+                            else
+                            {
+                                toastManager.ShowToast("Недостаточно средств для обмена !");
+                            }
+                        }
+                        else
+                        {
+                            toastManager.ShowToast("Достигнуто максимальное количество предметов на выдачу");
+                        }
+                    }
+                    else
+                    {
+                        toastManager.ShowToast("Доставка занята другим предметом, заберите его, а потом закажите новый");
+                    }
+                },
+                () =>
+                {
+                    Remove(productGUI);
+                }, product);
+
+            productGUI.UpdateData(product);
+            Sort();
+            SaveManager.UpdatePlayerDatabase();
+            return productGUI;
         }
     }
 }

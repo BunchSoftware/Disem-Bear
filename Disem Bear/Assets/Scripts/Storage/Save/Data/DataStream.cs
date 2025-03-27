@@ -95,8 +95,16 @@ namespace External.Storage
         {
             if (data == null)
                 return;
-            stream = IsCreateFileSave(path) == false ? File.Create(path) : File.Open(path, FileMode.Open);
 
+            if(IsCreateFileSave(path) == false)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+                stream = File.Create(path);
+            }
+            else
+            {
+                stream = File.Open(path, FileMode.Open);
+            }
 
             string key = "93a1b87b-a4be-4ca8-8fdd-9d312af679a4"; // Ключ для шифрования
             string ivSecret = "BufaBufo"; // вектор шифрования

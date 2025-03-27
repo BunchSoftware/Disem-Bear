@@ -20,12 +20,14 @@ namespace UI
         [SerializeField] private ExerciseManager exerciseManager;
         [SerializeField] private ResourceManager resourceManager;
         [SerializeField] private SettingsController settingsController;
+        [SerializeField] private SettingsNotification settingsNotification;
 
         private bool isActivePause = false;
 
         public void Init(TV tv, SoundManager soundManager, ToastManager toastManager)
         {
             settingsController.Init();
+            settingsNotification.Init();
             dialogManager.Init(this, soundManager);
             shopManager.Init(this, tv, toastManager);
             exerciseManager.Init(tv, toastManager, this);
@@ -88,6 +90,10 @@ namespace UI
         public ExerciseManager GetExerciseManager()
         {
             return exerciseManager;
+        }
+        public ShopManager GetShopManager()
+        {
+            return shopManager;
         }
 
         public void OnDestroy()

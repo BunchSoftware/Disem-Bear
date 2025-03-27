@@ -13,6 +13,16 @@ namespace External.Storage
             return base.Deserialize<JSONPlayer>(pathSaveFile);
         }
 
+        public void SaveUGCPoint(string pathSaveFile, UGCPoint ugcPoint)
+        {
+            base.Serialize(pathSaveFile, ugcPoint);
+        }
+
+        public UGCPoint LoadUGCPoint(string pathSaveFile)
+        {
+            return base.Deserialize<UGCPoint>(pathSaveFile);
+        }
+
         public void SaveJSONShop(string pathSaveFile, JSONShop JSONShop)
         {
             base.Serialize(pathSaveFile, JSONShop);

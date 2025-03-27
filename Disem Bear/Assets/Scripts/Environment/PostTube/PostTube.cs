@@ -38,6 +38,7 @@ namespace Game.Environment.LPostTube
         public UnityEvent<PostTubeObject> OnGetPostTubeObject;
 
         private GameBootstrap gameBootstrap;
+        private ToastManager toastManager;
         [Header("SoundsPackageCrash")]
         [SerializeField] private List<AudioClip> soundsPackageCrash = new();
         [SerializeField] private List<AudioClip> soundsPackageFall = new();
@@ -45,10 +46,11 @@ namespace Game.Environment.LPostTube
         private bool itemFlies = false;
 
         private Queue<ObjectFallTask> objectFallTasks = new Queue<ObjectFallTask>();
-
+        private const int MaxObjectFall = 3;
         public void Init(Player player, ExerciseManager exerciseManager, ToastManager toastManager, GameBootstrap gameBootstrap)
         {
             this.gameBootstrap = gameBootstrap;
+            this.toastManager = toastManager;
             postBox.Init(player, exerciseManager, toastManager, gameBootstrap);
 
             postBox.OnPostBoxEmpty += () =>
@@ -95,12 +97,19 @@ namespace Game.Environment.LPostTube
 
         public void ObjectFall(GameObject prefab)
         {
-            if (postBox.ItemInBox())
+            if (itemFlies || objectFallTasks.Count >= 1)
             {
                 ObjectFallTask objectFallTask = new ObjectFallTask();
                 objectFallTask.objectFall = prefab;
 
-                objectFallTasks.Enqueue(objectFallTask);
+                if (objectFallTasks.Count <= MaxObjectFall)
+                {
+                    objectFallTasks.Enqueue(objectFallTask);
+                }
+                else
+                {
+                    toastManager.ShowToast("Достигнуто максимальное количество предметов на выдачу");
+                }
             }
             else
             {

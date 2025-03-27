@@ -34,6 +34,7 @@ namespace UI
         }
         private IEnumerator PlayVideo()
         {
+            yield return new WaitForSeconds(1f);
             for (int i = 0; i < videoClips.Count; i++)
             {
                 currentVideoClips = i;

@@ -13,6 +13,7 @@ namespace UI
         [SerializeField] private Button continueButton;
         [SerializeField] private Button newGameButton;
         [SerializeField] private SettingsController settingsController;
+        
         private SoundManager soundManager;
 
         public void Init(SoundManager soundManager)

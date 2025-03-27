@@ -13,8 +13,10 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
     [SerializeField] private APIManager apiManager;
     [SerializeField] private PlayerDatabase filePlayer;
     [SerializeField] private ShopDatabase fileShop;
+    [SerializeField] private UGCDatabase fileUGC;
     [SerializeField] private PlayerDatabase defaultFilePlayer;
     [SerializeField] private ShopDatabase defaultFileShop;
+    [SerializeField] private UGCDatabase defaultFileUGC;
     [SerializeField] private GameObject fade;
     [SerializeField] private GameObject fadeEnd;
     [SerializeField] private TMP_InputField inputField;
@@ -75,7 +77,7 @@ public class DialogRumi : MonoBehaviour, IPointerDownHandler
         fade.SetActive(true);
         StartCoroutine(RemoveFade());
         textDialog = GetComponent<TextMeshProUGUI>();
-        SaveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
+        SaveManager.Init(apiManager, filePlayer, fileShop, fileUGC, defaultFilePlayer, defaultFileShop, defaultFileUGC);
         Dialog firstdialog = new();
         firstdialog.textDialog = "Привет пушистик. Сегодня я научу тебя магии. Ах да, думаю стоит начать со знакомства :)";
         firstdialog.speedText = 0.05f;

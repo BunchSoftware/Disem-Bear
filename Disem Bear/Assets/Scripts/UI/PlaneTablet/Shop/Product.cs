@@ -8,6 +8,7 @@ namespace UI.PlaneTablet.Shop
     {
         public string header;
         public float durationOfAppearance = -1;
+        public bool isImporttant = false;
         [HideInInspector] public bool isVisible = true;
         public Reward reward;
         [Header("PriceProduct")]

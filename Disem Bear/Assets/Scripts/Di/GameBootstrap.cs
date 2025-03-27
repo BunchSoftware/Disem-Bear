@@ -1,9 +1,12 @@
+using External.API;
 using External.Storage;
 using Game.Environment;
 using Game.Environment.Item;
 using Game.LPlayer;
 using Game.Tutorial;
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,6 +30,7 @@ namespace External.DI
         [SerializeField] private ToastManager toastManager;
         [SerializeField] private PrefabsPickUpItemsDatabase filePrefabsPickUpItems;
         private static PrefabsPickUpItemsDatabase s_filePrefabsPickUpItems;
+        [SerializeField] private EventsManager eventsManager;
 
         [SerializeField] private PlayerInput playerInput = new();
 
@@ -36,6 +40,15 @@ namespace External.DI
         {
             fade.FadeWhite();
             StartCoroutine(IWaitFadePanel(WaitTimePanel));
+
+
+            GlobalEvent globalEvent = new GlobalEvent();
+            globalEvent.name = "1252";
+            globalEvent.text = "25265151414";
+            globalEvent.start_date_time = "152";
+            globalEvent.once_in_hours = 1;
+            globalEvent.duration_in_minutes = 52;
+            //SaveManager.CreateGlobalEvent(globalEvent);
         }
 
         private IEnumerator IWaitFadePanel(float time)
@@ -72,6 +85,9 @@ namespace External.DI
             #endregion
             Init();
             toastManager.Init(soundManager);
+
+            eventsManager.Init(toastManager);
+            updateListeners.Add(eventsManager);
 
 
             player.Init();

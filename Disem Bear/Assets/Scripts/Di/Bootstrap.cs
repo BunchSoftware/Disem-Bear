@@ -11,8 +11,10 @@ public class Bootstrap : MonoBehaviour
     [Header("Save System")]
     [SerializeField] protected PlayerDatabase defaultFilePlayer;
     [SerializeField] protected ShopDatabase defaultFileShop;
+    [SerializeField] protected UGCDatabase defaultFileUGC;
     [SerializeField] protected PlayerDatabase filePlayer;
     [SerializeField] protected ShopDatabase fileShop;
+    [SerializeField] protected UGCDatabase fileUGC;
     [SerializeField] protected APIManager apiManager;
     [Header("Sound")]
     [SerializeField] protected SoundManager soundManager;
@@ -40,7 +42,7 @@ public class Bootstrap : MonoBehaviour
 
         apiManager.Init();
 
-        SaveManager.Init(apiManager, filePlayer, fileShop, defaultFilePlayer, defaultFileShop);
+        SaveManager.Init(apiManager, filePlayer, fileShop, fileUGC, defaultFilePlayer, defaultFileShop, defaultFileUGC);
 
         musicManager.Init(this);
         soundManager.Init(this);

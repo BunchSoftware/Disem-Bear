@@ -22,6 +22,7 @@ namespace Game.LDialog
         private int currentIndexDialogPoint = 0;
         private int currentIndexDialog = 0;
         private bool isDialogOn = false;
+        private bool isDialogRun = false;
 
         private bool isCanSkipReplica = false;
         private bool isDialogLast = false;
@@ -236,8 +237,6 @@ namespace Game.LDialog
         {
             return isDialogOn;
         }
-
-
         public int GetCurrentIndexDialog()
         {
             return currentIndexDialog;

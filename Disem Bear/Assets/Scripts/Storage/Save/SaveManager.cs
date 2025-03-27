@@ -1,7 +1,9 @@
 using External.API;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
@@ -17,6 +19,7 @@ namespace External.Storage
 
         private static PlayerDatabase defaultFilePlayer;
         private static ShopDatabase defaultFileShop;
+        private static UGCDatabase defaultFileUGC;
 
         private static PlayerDatabase _playerDatabase;
         public static PlayerDatabase playerDatabase
@@ -46,11 +49,28 @@ namespace External.Storage
             }
         }
 
+        private static UGCDatabase _ugcDatabase;
+
+        public static UGCDatabase ugcDatabase
+        {
+            get
+            {
+                return _ugcDatabase;
+            }
+            set
+            {
+                _ugcDatabase = value;
+            }
+        }
+
         public static Action OnUpdateShopFile;
         public static Action OnUpdatePlayerFile;
+        public static Action OnUpdateUGCFile;
 
         private static string pathToFileResourcePlayer = Application.persistentDataPath + $"/rp.buf";
         private static string pathToFileResourceShop = Application.persistentDataPath + $"/rs.buf";
+        public readonly static string pathToDirectoryMod = Application.dataPath +  "/Mods/";
+        public readonly static string pathToDirectoryModExport = Application.dataPath + "/Mods/Export/";
 
         private static bool isInitialization = false;
 
@@ -74,25 +94,26 @@ namespace External.Storage
 
             if (ReferenceEquals(source, null)) return default;
 
-            using var stream = new MemoryStream();
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, source);
-            stream.Seek(0, SeekOrigin.Begin);
-            return (T)formatter.Deserialize(stream);
+
+            string json = JsonConvert.SerializeObject(source);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
-        public static void Init(APIManager apiManager, PlayerDatabase filePlayer, ShopDatabase fileShop, PlayerDatabase defaultFilePlayer, ShopDatabase defaultFileShop)
+        public static void Init(APIManager apiManager, PlayerDatabase filePlayer, ShopDatabase fileShop, UGCDatabase ugcDatabase, PlayerDatabase defaultFilePlayer, ShopDatabase defaultFileShop, UGCDatabase defaultFileUGC)
         {
             SaveManager.apiManager = apiManager;
             SaveManager.playerDatabase = filePlayer;
             SaveManager.shopDatabase = fileShop;
+            SaveManager.ugcDatabase = ugcDatabase;
             SaveManager.defaultFilePlayer = defaultFilePlayer;
             SaveManager.defaultFileShop = defaultFileShop;
+            SaveManager.defaultFileUGC = defaultFileUGC;
 
             if (Application.isEditor && !isInitialization)
             {
                 SaveManager.playerDatabase.JSONPlayer = Clone(SaveManager.defaultFilePlayer.JSONPlayer);
                 SaveManager.shopDatabase.JSONShop = Clone(SaveManager.defaultFileShop.JSONShop);
+                SaveManager.ugcDatabase.ugcPoints = Clone(SaveManager.defaultFileUGC.ugcPoints);
 #if UNITY_EDITOR
                 EditorApplication.playModeStateChanged += (state) =>
                 {
@@ -100,6 +121,7 @@ namespace External.Storage
                     {
                         SaveManager.playerDatabase.JSONPlayer = new JSONPlayer();
                         SaveManager.shopDatabase.JSONShop = new JSONShop();
+                        SaveManager.ugcDatabase.ugcPoints = new List<UGCPoint>();
                         isInitialization = false;
                     }
                 };
@@ -111,24 +133,24 @@ namespace External.Storage
             {
                 try
                 {
-                    if (filePlayer.JSONPlayer.resources.isPlayerRegistration == false)
-                        filePlayer.JSONPlayer = SaveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
+                    if (_playerDatabase.JSONPlayer.resources.isPlayerRegistration == false)
+                        _playerDatabase.JSONPlayer = SaveManagerIO.LoadJSONPlayer(pathToFileResourcePlayer);
 
-                    if (filePlayer.JSONPlayer == null)
+                    if (_playerDatabase.JSONPlayer == null)
                     {
-                        filePlayer.JSONPlayer = new JSONPlayer();
-                        filePlayer.JSONPlayer.resources = new ResourcePlayer();
-                        SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, filePlayer.JSONPlayer);
+                        _playerDatabase.JSONPlayer = new JSONPlayer();
+                        _playerDatabase.JSONPlayer.resources = new ResourcePlayer();
+                        SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, _playerDatabase.JSONPlayer);
                     }
 
-                    if (fileShop.JSONShop.nameShop == "")
-                        fileShop.JSONShop = SaveManagerIO.LoadJSONShop(pathToFileResourceShop);
+                    if (_shopDatabase.JSONShop.nameShop == "")
+                        _shopDatabase.JSONShop = SaveManagerIO.LoadJSONShop(pathToFileResourceShop);
 
-                    if (fileShop.JSONShop == null)
+                    if (_shopDatabase.JSONShop == null)
                     {
-                        fileShop.JSONShop = new JSONShop();
-                        fileShop.JSONShop.resources = new ResourceShop();
-                        SaveManagerIO.SaveJSONShop(pathToFileResourceShop, fileShop.JSONShop);
+                        _shopDatabase.JSONShop = new JSONShop();
+                        _shopDatabase.JSONShop.resources = new ResourceShop();
+                        SaveManagerIO.SaveJSONShop(pathToFileResourceShop, _shopDatabase.JSONShop);
                     }
 
                     isInitialization = true;
@@ -171,7 +193,7 @@ namespace External.Storage
 
                     resourceChangedShop.changedResources = changedResources;
 
-                    apiManager.CreateLogShop(playerDatabase.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
+                    //apiManager.CreateLogShop(playerDatabase.JSONPlayer.nameUser, nameShop, "Магазин был иницилизирован", resourceChangedShop);
                     UpdateShopDatabase();
                 }
             });
@@ -187,8 +209,6 @@ namespace External.Storage
 
                 playerDatabase.JSONPlayer.resources.isPlayerRegistration = true;
 
-
-                apiManager.RegistrationPlayer(nameUser, playerDatabase.JSONPlayer.resources);
                 apiManager.SetResourcePlayer(nameUser, playerDatabase.JSONPlayer.resources);
                 ResourceChangedPlayer resourceChangedPlayer = new ResourceChangedPlayer();
                 Dictionary<string, string> changedResources = new Dictionary<string, string>
@@ -199,6 +219,14 @@ namespace External.Storage
 
                 apiManager.CreateLogPlayer(nameUser, "Игрок был иницилизирован", resourceChangedPlayer);
                 UpdatePlayerDatabase();
+            });
+        }
+
+        public static async void CreateGlobalEvent(GlobalEvent globalEvent)
+        {
+            await Task.Run(() =>
+            {
+                apiManager.CreateGlobalEvent(globalEvent);
             });
         }
 
@@ -220,12 +248,31 @@ namespace External.Storage
 
                     resourceChangedShop.changedResources = changedResources;
 
-                    apiManager.CreateLogShop(playerDatabase.JSONPlayer.nameUser, shopDatabase.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
+                    //apiManager.CreateLogShop(playerDatabase.JSONPlayer.nameUser, shopDatabase.JSONShop.nameShop, "Данные магазина были изменены", resourceChangedShop);
                     SaveManagerIO.SaveJSONShop(pathToFileResourceShop, shopDatabase.JSONShop);
 
                 });
                 OnUpdateShopFile?.Invoke();
             }
+        }
+
+        public static async void UpdateUGCDatabse()
+        {
+            await Task.Run(() =>
+            {
+                SaveManagerIO.SaveJSONPlayer(pathToFileResourcePlayer, playerDatabase.JSONPlayer);
+            });
+            OnUpdateUGCFile?.Invoke();
+        }
+
+        public static void ExportUGC(UGCPoint ugcPoint, string pathToFile)
+        {
+            SaveManagerIO.SaveUGCPoint(Path.GetFullPath(pathToFile), ugcPoint);
+        }
+
+        public static UGCPoint ImportUGC(string pathToUGC)
+        {
+           return SaveManagerIO.LoadUGCPoint(pathToUGC);
         }
 
         public static async void UpdatePlayerDatabase()
@@ -363,6 +410,11 @@ namespace External.Storage
         public static void ResetFileShop()
         {
             SaveManager.shopDatabase.JSONShop = Clone(SaveManager.defaultFileShop.JSONShop);
+        }
+
+        public static void ResetFileUGC()
+        {
+            SaveManager.ugcDatabase.ugcPoints = Clone(SaveManager.defaultFileUGC.ugcPoints);
         }
     }
 }

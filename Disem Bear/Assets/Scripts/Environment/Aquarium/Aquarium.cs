@@ -21,6 +21,8 @@ namespace Game.Environment.Aquarium
     [RequireComponent(typeof(ScaleChooseObject))]
     public class Aquarium : MonoBehaviour, ILeftMouseDownClickable
     {
+        [SerializeField] private Sprite rainbowSprite;
+
         [SerializeField] private AquariumMaterialDatabase aquariumMaterialDatabase;
         [SerializeField] private TriggerObject triggerObject;
         [SerializeField] private ParticleSystem particleSystem;
@@ -48,6 +50,7 @@ namespace Game.Environment.Aquarium
         public UnityEvent<string, int> GetAquariumCells;
         public UnityEvent OnAquariumOpen;
         public UnityEvent OnAquariumClose;
+        public UnityEvent OnAquariumBecomeDirty;
 
         private Player player;
         private PlayerMouseMove playerMouseMove;
@@ -67,6 +70,9 @@ namespace Game.Environment.Aquarium
 
         private int indexCell = 0;
         private int countCell = 0;
+        private bool aquariumDirty = false;
+
+        public bool on = false;
 
         public void Init(Player player, PlayerMouseMove playerMouseMove, GameBootstrap gameBootstrap)
         {
@@ -217,10 +223,6 @@ namespace Game.Environment.Aquarium
 
         public void OnUpdate(float deltaTime)
         {
-            if (timeMaterial > 0f)
-            {
-                timeMaterial -= Time.deltaTime;
-            }
             if (phasesAquariums.ContainsKey(currentMaterialForAquarium.colorMaterial))
             {
                 if (countCell == 0)
@@ -240,28 +242,40 @@ namespace Game.Environment.Aquarium
                     aquariumRenderer.sprite = timeMaterial <= 0f ? phasesAquariums[currentMaterialForAquarium.colorMaterial].ThirdFaseDirty : phasesAquariums[currentMaterialForAquarium.colorMaterial].ThirdFase;
                 }
             }
-            if (timeMaterial > 0f) spendTimeCreateCell += Time.deltaTime;
-            if (spendTimeCreateCell >= timeCells[currentCells[indexCell]])
-            {
-                if (countCell < 15)
+            if (on) {
+                if (timeMaterial > 0f)
                 {
-                    countCell++;
-                    if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
+                    aquariumDirty = false;
+                    timeMaterial -= Time.deltaTime;
+                }
+                
+                if (timeMaterial > 0f) spendTimeCreateCell += Time.deltaTime;
+                else if (aquariumDirty == false)
+                {
+                    aquariumDirty = true;
+                    OnAquariumBecomeDirty?.Invoke();
+                }
+                if (spendTimeCreateCell >= timeCells[currentCells[indexCell]])
+                {
+                    if (countCell < 15)
                     {
-                        for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
+                        countCell++;
+                        if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums != null)
                         {
-                            if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                            for (int i = 0; i < SaveManager.playerDatabase.JSONPlayer.resources.aquariums.Count; i++)
                             {
-                                SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].countCell = countCell;
+                                if (SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].nameMasterAquarium == transform.parent.name)
+                                {
+                                    SaveManager.playerDatabase.JSONPlayer.resources.aquariums[i].countCell = countCell;
+                                }
                             }
                         }
+
+                        SaveManager.UpdatePlayerDatabase();
                     }
-
-                    SaveManager.UpdatePlayerDatabase();
+                    spendTimeCreateCell = 0;
                 }
-                spendTimeCreateCell = 0;
             }
-
             if (openObject != null)
                 openObject.OnUpdate(deltaTime);
         }

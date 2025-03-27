@@ -54,9 +54,12 @@ namespace UI.PlaneTablet.Exercise
         private List<ExerciseRewardGUI> exerciseRewardGUIs = new List<ExerciseRewardGUI>();
         private List<ExerciseRequementGUI> exerciseRequirementsGUIs = new List<ExerciseRequementGUI>();
         private int indexExercise = 0;
+        private const int MaxObjectFall = 3;
 
-        public void Init(ExerciseManager exerciseManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
+        private ToastManager toastManager;
+        public void Init(ExerciseManager exerciseManager, ToastManager toastManager, Action<ExerciseGUI, bool> ActionExercise, Exercise exercise, int indexExercise)
         {
+            this.toastManager = toastManager;
             this.exerciseManager = exerciseManager;
             this.exercise = exercise;
             this.indexExercise = indexExercise;
@@ -75,15 +78,22 @@ namespace UI.PlaneTablet.Exercise
 
             runButton.onClick.AddListener(() =>
             {
-                SetExerciseCompletion(TypeOfExerciseCompletion.Run);
-                ActionExercise.Invoke(this, false);
-                if (!SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems)
-                    exerciseManager.GiveExerciseItem(exercise);
+                if (exerciseManager.CountDispensingTasks < MaxObjectFall)
+                {
+                    SetExerciseCompletion(TypeOfExerciseCompletion.Run);
+                    ActionExercise.Invoke(this, false);
+                    if (!SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems)
+                        exerciseManager.GiveExerciseItem(exercise);
 
-                UpdateData(exercise);
+                    UpdateData(exercise);
 
-                SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems = true;
-                SaveManager.UpdatePlayerDatabase();
+                    SaveManager.playerDatabase.JSONPlayer.resources.exercises[indexExercise].isGetExerciesItems = true;
+                    SaveManager.UpdatePlayerDatabase();
+                }
+                else
+                {
+                    toastManager.ShowToast("Достигнуто максимальное количество предметов на выдачу");
+                }
             });
 
             resetButton.onClick.AddListener(() =>
@@ -108,16 +118,17 @@ namespace UI.PlaneTablet.Exercise
 
             if(exerciseRequirementsGUIs.Count == 0)
             {
-
-                for (int i = 0; i < exercise.exerciseRequirements.Count; i++)
-                {
-                    ExerciseRequementGUI exerciseItemGUI = Instantiate(prefabRequement, contentRequements.transform).GetComponent<ExerciseRequementGUI>();
-                    exerciseItemGUI.countRequementText.text = $"{exercise.exerciseRequirements[i].countRequirement}x";
-                    exerciseItemGUI.avatarRequement.sprite = exercise.exerciseRequirements[i].avatarRequirement;
-                    exerciseRequirementsGUIs.Add(exerciseItemGUI);
+                if (exercise.exerciseRequirements != null) {
+                    for (int i = 0; i < exercise.exerciseRequirements.Count; i++)
+                    {
+                        ExerciseRequementGUI exerciseItemGUI = Instantiate(prefabRequement, contentRequements.transform).GetComponent<ExerciseRequementGUI>();
+                        exerciseItemGUI.countRequementText.text = $"{exercise.exerciseRequirements[i].countRequirement}x";
+                        exerciseItemGUI.avatarRequement.sprite = exercise.exerciseRequirements[i].avatarRequirement;
+                        exerciseRequirementsGUIs.Add(exerciseItemGUI);
+                    }
                 }
 
-                if (exercise.exerciseRequirements.Count == 0)
+                if (exercise.exerciseRequirements == null || exercise.exerciseRequirements.Count == 0)
                     headerExerciseRequirements.gameObject.SetActive(false);
                 else
                     headerExerciseRequirements.gameObject.SetActive(true);
@@ -146,12 +157,15 @@ namespace UI.PlaneTablet.Exercise
 
             if (exerciseRewardGUIs.Count == 0)
             {
-                for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+                if (exercise.exerciseRewards != null)
                 {
-                    ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
-                    exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
-                    exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
-                    exerciseRewardGUIs.Add(exerciseRewardGUI);
+                    for (int i = 0; i < exercise.exerciseRewards.Count; i++)
+                    {
+                        ExerciseRewardGUI exerciseRewardGUI = Instantiate(prefabReward, contentRewards.transform).GetComponent<ExerciseRewardGUI>();
+                        exerciseRewardGUI.countRewardText.text = $"{exercise.exerciseRewards[i].countReward}x";
+                        exerciseRewardGUI.avatarReward.sprite = exercise.exerciseRewards[i].avatarReward;
+                        exerciseRewardGUIs.Add(exerciseRewardGUI);
+                    }
                 }
             }
             else
@@ -216,6 +230,12 @@ namespace UI.PlaneTablet.Exercise
                             doneButton.gameObject.SetActive(false);
                             executionButton.gameObject.SetActive(false);
                         }
+                        else
+                        {
+                            runButton.gameObject.SetActive(false);
+                            doneButton.gameObject.SetActive(false);
+                            executionButton.gameObject.SetActive(false);
+                        }
                         checkMark.gameObject.SetActive(false);
                         break;
                     }
@@ -228,6 +248,12 @@ namespace UI.PlaneTablet.Exercise
                             doneButton.gameObject.SetActive(false);
                             executionButton.gameObject.SetActive(true);
                         }
+                        else
+                        {
+                            runButton.gameObject.SetActive(false);
+                            doneButton.gameObject.SetActive(false);
+                            executionButton.gameObject.SetActive(false);
+                        }
                         checkMark.gameObject.SetActive(false);
                         break;
                     }
@@ -238,6 +264,12 @@ namespace UI.PlaneTablet.Exercise
                         {
                             runButton.gameObject.SetActive(false);
                             doneButton.gameObject.SetActive(true);
+                            executionButton.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            runButton.gameObject.SetActive(false);
+                            doneButton.gameObject.SetActive(false);
                             executionButton.gameObject.SetActive(false);
                         }
                         checkMark.gameObject.SetActive(true);

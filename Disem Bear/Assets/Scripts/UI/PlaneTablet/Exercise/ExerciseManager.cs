@@ -38,8 +38,8 @@ namespace UI.PlaneTablet.Exercise
         private MonoBehaviour context;
         private Coroutine randomMail;
 
-        private Queue<DispensingTask> dispensingTasks = new Queue<DispensingTask>();
-
+        public int CountDispensingTasks => dispensingTasks.Count;
+        private List<DispensingTask> dispensingTasks = new List<DispensingTask>();
         public void Init(TV tv, ToastManager toastManager, MonoBehaviour context)
         {
             countMail = SaveManager.playerDatabase.JSONPlayer.resources.countMail;
@@ -74,7 +74,7 @@ namespace UI.PlaneTablet.Exercise
 
                 if (content.gameObject.transform.GetChild(i).TryGetComponent<ExerciseGUI>(out exerciseGUI))
                 {
-                    exerciseGUI.Init(this, (exercise, isExpandExercise) =>
+                    exerciseGUI.Init(this, toastManager, (exercise, isExpandExercise) =>
                     {
                         currentExerciseGUI = exercise;
                         GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
@@ -110,10 +110,14 @@ namespace UI.PlaneTablet.Exercise
 
                 if (dispensingTasks.Count > 0)
                 {
-                    DispensingTask dispensingTask = dispensingTasks.Dequeue();
-
-                    if (dispensingTask.exerciseItem != null)
-                        dispensingTask.typeMachineDispensingProduct.OnGetExerciseItem?.Invoke(dispensingTask.exerciseItem);
+                    Debug.Log(dispensingTasks.Count);
+                    for (int i = 0; i < dispensingTasks.Count; i++)
+                    {
+                        DispensingTask dispensingTask = dispensingTasks[i];
+                        if (dispensingTask.exerciseItem != null)
+                            dispensingTask.typeMachineDispensingProduct.OnGetExerciseItem?.Invoke(dispensingTask.exerciseItem);
+                    }
+                    dispensingTasks.Clear();
                 }
             });
 
@@ -199,7 +203,7 @@ namespace UI.PlaneTablet.Exercise
             exerciseGUI.name = $"Exercise {exerciseGUIs.Count}";
             exerciseGUIs.Add(exerciseGUI);
 
-            exerciseGUI.Init(this, (exercise, isExpandExercise) =>
+            exerciseGUI.Init(this, toastManager, (exercise, isExpandExercise) =>
             {
                 currentExerciseGUI = exercise;
                 GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());
@@ -219,6 +223,8 @@ namespace UI.PlaneTablet.Exercise
                 }
             }, exercise, exerciseGUIs.Count - 1);
             exerciseGUI.ExpandExercise(false);
+
+            exerciseGUI.UpdateData(exercise);
 
             SaveManager.UpdatePlayerDatabase();
         }
@@ -256,7 +262,7 @@ namespace UI.PlaneTablet.Exercise
                             DispensingTask dispensingTask = new DispensingTask();
                             dispensingTask.typeMachineDispensingProduct = typeGiveProducts[i];
                             dispensingTask.exerciseItem = exercise.exerciseItems[j];
-                            dispensingTasks.Enqueue(dispensingTask);
+                            dispensingTasks.Add(dispensingTask);
 
                             toastManager.ShowToast("Пожалуйста, заберите квестовый предмет");
                             Debug.Log("Игрок получил квестовый предмет");
@@ -390,7 +396,7 @@ namespace UI.PlaneTablet.Exercise
 
                         SaveManager.playerDatabase.JSONPlayer.resources.exercises.Add(exerciseData);
 
-                        exerciseGUI.Init(this, (exercise, isExpandExercise) =>
+                        exerciseGUI.Init(this, toastManager, (exercise, isExpandExercise) =>
                         {
                             currentExerciseGUI = exercise;
                             GetCurrentExercise?.Invoke(currentExerciseGUI.GetExercise());

@@ -11,6 +11,9 @@ namespace Game.Tutorial
     {
         [SerializeField] private PointerTutorialManager pointerTutorialManager;
         [SerializeField] private BlockTutorialManager blockTutorialManager;
+        [SerializeField] private SendPackageTutorialManager sendPackageTutorialManager;
+        [SerializeField] private OnAquariumTutorialManager onAquariumTutorialManager;
+        [SerializeField] private SetActiveTabsInTVTutorial setActiveTabsInTVTutorial;
         [SerializeField] private MainConditionManager mainConditionManager;
         [SerializeField] private PostTube postTube;
         [SerializeField] private ModelBoard modelBoard;
@@ -26,6 +29,12 @@ namespace Game.Tutorial
             pointerTutorialManager.Init(dialogManager, player);
 
             blockTutorialManager.Init(dialogManager);
+
+            sendPackageTutorialManager.Init(dialogManager);
+
+            onAquariumTutorialManager.Init(dialogManager);
+
+            setActiveTabsInTVTutorial.Init(dialogManager);
 
             mainConditionManager.Init(dialogManager);
 
