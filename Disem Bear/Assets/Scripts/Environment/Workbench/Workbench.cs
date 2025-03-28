@@ -542,11 +542,11 @@ namespace Game.Environment.LMixTable
                 {
                     if (ingradientDragObject != null)
                     {
-                        PickUpItem pickUpItem = Instantiate(ingradientDragObject).GetComponent<PickUpItem>();
+                        PickUpItem pickUpItem = ingradientDragObject.GetComponent<PickUpItem>();
                         pickUpItem.enabled = true;
                         pickUpItem.GetComponent<Collider>().enabled = false;
 
-                        player.PickUpItem(pickUpItem);
+                        player.PickUpItem(ingradientDragObject.GetComponent<PickUpItem>());
                         Destroy(ingradientDragObject.gameObject);
                     }
                 });
@@ -598,11 +598,12 @@ namespace Game.Environment.LMixTable
             if (ingradientDragObject != null)
             {
                 ingradientDragObject.GetComponent<Collider>().enabled = true;
-                PickUpItem pickUpItem =  Instantiate(ingradientDragObject).GetComponent<PickUpItem>();
+                PickUpItem pickUpItem = ingradientDragObject.GetComponent<PickUpItem>();
                 pickUpItem.enabled = true;
                 pickUpItem.GetComponent<Collider>().enabled = false;
 
-                player.PickUpItem(pickUpItem);
+                player.PickUpItem(ingradientDragObject.GetComponent<PickUpItem>());
+
                 Destroy(ingradientDragObject.gameObject);
             }
         }

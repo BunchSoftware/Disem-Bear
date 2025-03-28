@@ -109,6 +109,14 @@ namespace External.DI
             updateListeners.Add(playerInput);
 
             Debug.Log("GameBootstrap: Успешно иницилизировал все части игры");
+
+            GlobalEvent globalEvent = new GlobalEvent();
+            globalEvent.name = "1252";
+            globalEvent.text = "25265151414";
+            globalEvent.start_date_time = "152";
+            globalEvent.once_in_hours = 1;
+            globalEvent.duration_in_minutes = 52;
+            SaveManager.CreateGlobalEvent(globalEvent);
         }
 
 
